@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="0BA4D29C996742F782666A8E847C04CA" trl="N">
+    <value column="Text" isTrl="N" original="CI">CI</value>
+  </row>
+  <row id="0DEC48A4B23948E2A859EBD9CC003491" trl="N">
+    <value column="Text" isTrl="N" original="Cédula">Cédula</value>
+  </row>
+  <row id="0F3F3F4065F143A8A41E76F8F0822830" trl="N">
+    <value column="Text" isTrl="N" original="AUTORIZADO POR:">AUTORIZADO POR:</value>
+  </row>
+  <row id="1499A6D9FE1D449796ED4C54248F8F79" trl="N">
+    <value column="Text" isTrl="N" original="Val. a Cancelar">Val. a Cancelar</value>
+  </row>
+  <row id="15CB7911FF944B4AA29793B595D46620" trl="N">
+    <value column="Text" isTrl="N" original="Nombre">Nombre</value>
+  </row>
+  <row id="160750FCEB07453AA841C6204C128F80" trl="N">
+    <value column="Text" isTrl="N" original="DECIMO CUARTO SUELDO 2016">DECIMO CUARTO SUELDO 2016</value>
+  </row>
+  <row id="167382C499A1413D8B642A38A5D39E6E" trl="N">
+    <value column="Text" isTrl="N" original="Tipo de Pago(Pago Directo=P,Acreditación en Cuenta=A,Retencion Pago Directo=RP,Retencion Acreditación en Cuenta=RA)">Tipo de Pago(Pago Directo=P,Acreditación en Cuenta=A,Retencion Pago Directo=RP,Retencion Acreditación en Cuenta=RA)</value>
+  </row>
+  <row id="193206A919A74346BE04DBCF368D2BA8" trl="N">
+    <value column="Text" isTrl="N" original="PERIODO">PERIODO</value>
+  </row>
+  <row id="2126B30C3DFB4357B68CE78C20748F4A" trl="N">
+    <value column="Text" isTrl="N" original="Ajuste 2">Ajuste 2</value>
+  </row>
+  <row id="212A2CD4290440F18283562D2BF035DA" trl="N">
+    <value column="Text" isTrl="N" original="Apellidos">Apellidos</value>
+  </row>
+  <row id="27CECDE04AD74B45A846E739EE0FC5A0" trl="N">
+    <value column="Text" isTrl="N" original="Liquidación Decimos Cuarto Contable">Liquidación Decimos Cuarto Contable</value>
+  </row>
+  <row id="3AFED4EC84234B5186EE73B7E6A458CE" trl="N">
+    <value column="Text" isTrl="N" original="No">No</value>
+  </row>
+  <row id="3BCC1CCB507649AFBCEAA0055495D575" trl="N">
+    <value column="Text" isTrl="N" original="Fecha de Jubilación">Fecha de Jubilación</value>
+  </row>
+  <row id="3CA094CDEA05474EA2BBAC21042B60BE" trl="N">
+    <value column="Text" isTrl="N" original="A Pagar">A Pagar</value>
+  </row>
+  <row id="4FFE982287DE4884A3A589CA4DB4F807" trl="N">
+    <value column="Text" isTrl="N" original="Regimen Laboral">Regimen Laboral</value>
+  </row>
+  <row id="527870373BDF4F60B04AC38D7B8FE35D" trl="N">
+    <value column="Text" isTrl="N" original="Genero">Genero</value>
+  </row>
+  <row id="567A7FC2F6694CDDB6902BE34FDE3735" trl="N">
+    <value column="Text" isTrl="N" original="REVISADO POR:">REVISADO POR:</value>
+  </row>
+  <row id="69D4F666563B431E84EB11FCA8B8C2D6" trl="N">
+    <value column="Text" isTrl="N" original="Genero">Genero</value>
+  </row>
+  <row id="6AB7BD90A28242DFBEB5CA4FF08DDC02" trl="N">
+    <value column="Text" isTrl="N" original="PERIODO">PERIODO</value>
+  </row>
+  <row id="6DA7ED2FD12841E6838B5CCAF0F8D102" trl="N">
+    <value column="Text" isTrl="N" original="Días laborados (360 días equivalen a un año)">Días laborados (360 días equivalen a un año)</value>
+  </row>
+  <row id="6FBCFDDFAE5747D1A717E2DDBEF5F996" trl="N">
+    <value column="Text" isTrl="N" original="Categoría Contable:">Categoría Contable:</value>
+  </row>
+  <row id="7016DE9BF53F4AB986EB2DE426381327" trl="N">
+    <value column="Text" isTrl="N" original="ELABORADO Y APROBADO POR:">ELABORADO Y APROBADO POR:</value>
+  </row>
+  <row id="7483B93E81A745DB8D48E31298148882" trl="N">
+    <value column="Text" isTrl="N" original="DETERMINE EN HORAS LA JORNADA PARCIAL PERMANENTE SEMANAL ESTIPULADO EN EL CONTRATO">DETERMINE EN HORAS LA JORNADA PARCIAL PERMANENTE SEMANAL ESTIPULADO EN EL CONTRATO</value>
+  </row>
+  <row id="75818D67AE2E455584FC9E0975EFE727" trl="N">
+    <value column="Text" isTrl="N" original="Nombre">Nombre</value>
+  </row>
+  <row id="764CC846FED340A69A1F6A1B490B7765" trl="N">
+    <value column="Text" isTrl="N" original="Fecha de Impresión">Fecha de Impresión</value>
+  </row>
+  <row id="7BF69BB509F041D69FDAD387428199A5" trl="N">
+    <value column="Text" isTrl="N" original="Nombres">Nombres</value>
+  </row>
+  <row id="8599FDF42D2E4E729CE77A557DE9BEAC" trl="N">
+    <value column="Text" isTrl="N" original="ELABORADO Y APROBADO POR:">ELABORADO Y APROBADO POR:</value>
+  </row>
+  <row id="979C4FA2C3CC432FB239F9229C6277A7" trl="N">
+    <value column="Text" isTrl="N" original="No">No</value>
+  </row>
+  <row id="9949C6E04BF943B3A102824250A06FB0" trl="N">
+    <value column="Text" isTrl="N" original="No. Días">No. Días</value>
+  </row>
+  <row id="9D4D3738A4794E919FC4847EF04C9E1E" trl="N">
+    <value column="Text" isTrl="N" original="Fecha Ingreso">Fecha Ingreso</value>
+  </row>
+  <row id="9F05A9216A364C4194B2EFE426D3D428" trl="N">
+    <value column="Text" isTrl="N" original="DECIMO CUARTO SUELDO 2016">DECIMO CUARTO SUELDO 2016</value>
+  </row>
+  <row id="A3CF369400674C59B87B72B809162BDB" trl="N">
+    <value column="Text" isTrl="N" original="Nombre">Nombre</value>
+  </row>
+  <row id="B0B7DC9F11D54E8296F69E47DB2BF386" trl="N">
+    <value column="Text" isTrl="N" original="Ajuste 1">Ajuste 1</value>
+  </row>
+  <row id="B83C4EC4BC944398B71F7E7C2C0A0144" trl="N">
+    <value column="Text" isTrl="N" original="Solo si su trabajador posee algun tipo de discapacidad ponga una X">Solo si su trabajador posee algun tipo de discapacidad ponga una X</value>
+  </row>
+  <row id="BA1BC780D4BD4277AC66D9CCD2CE0BE5" trl="N">
+    <value column="Text" isTrl="N" original="valor Retención">valor Retención</value>
+  </row>
+  <row id="BF77697E23E84D2F87BB33FEE1451F27" trl="N">
+    <value column="Text" isTrl="N" original="REVISADO POR:">REVISADO POR:</value>
+  </row>
+  <row id="C105D594140A437EA01FB4102787B739" trl="N">
+    <value column="Text" isTrl="N" original="Fecha Ingreso">Fecha Ingreso</value>
+  </row>
+  <row id="C39F109E5D2C4B9B9D1C0AFF98905957" trl="N">
+    <value column="Text" isTrl="N" original="No">No</value>
+  </row>
+  <row id="C633D025E6254F43A3BFB15D2A154393" trl="N">
+    <value column="Text" isTrl="N" original="SUPERVISADO POR:">SUPERVISADO POR:</value>
+  </row>
+  <row id="C9D659D9595F4CFCB7FBA81581F0C1AC" trl="N">
+    <value column="Text" isTrl="N" original="ELABORADO POR:">ELABORADO POR:</value>
+  </row>
+  <row id="CCD1B337C1FF45B6A0AC4D35C4A8526A" trl="N">
+    <value column="Text" isTrl="N" original="Ocupación">Ocupación</value>
+  </row>
+  <row id="CF48BD6ED00B477799C876E1FA4DCFEB" trl="N">
+    <value column="Text" isTrl="N" original="TOTAL GENERAL">TOTAL GENERAL</value>
+  </row>
+  <row id="D2760E122821444EB29189F7F30CFCEF" trl="N">
+    <value column="Text" isTrl="N" original="CI">CI</value>
+  </row>
+  <row id="F33CBE8AF67B430A8D2BAB313A61D307" trl="N">
+    <value column="Text" isTrl="N" original="ELABORADO Y APROBADO POR:">ELABORADO Y APROBADO POR:</value>
+  </row>
+  <row id="FD60C1C02B96430D9B9695BA330EC381" trl="N">
+    <value column="Text" isTrl="N" original="REVISADO POR:">REVISADO POR:</value>
+  </row>
+  <row id="FE19352ADC5047CA997A695BA8EBD14E" trl="N">
+    <value column="Text" isTrl="N" original="Valor Provisionado">Valor Provisionado</value>
+  </row>
+</compiereTrl>

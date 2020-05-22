@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSPR_MESSAGE_TRG">
+    <trigger name="SSPR_MESSAGE_TRG" table="SSPR_CONCEPT_ACCT" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+  
+  
+
+
+  BEGIN
+
+   IF(:NEW.em_ssbp_sfb_budget_item_id is null)THEN
+	       RAISE_APPLICATION_ERROR(-20000, '@sspr_Message@');
+
+   END IF;
+   END SSPR_MESSAGE_TRG
+]]></body>
+    </trigger>
+  </database>

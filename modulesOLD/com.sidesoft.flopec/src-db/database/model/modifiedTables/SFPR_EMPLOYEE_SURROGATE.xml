@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE SFPR_EMPLOYEE_SURROGATE">
+    <table name="SFPR_EMPLOYEE_SURROGATE" primaryKey="SFPR_EMPLOYEE_SURROGATE_KEY">
+      <column name="EM_SSFL_VESSEL_TYPE_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SSFL_VESSEL_TYPE" name="EM_SSFL_ESURROGATE_VTYPE">
+        <reference local="EM_SSFL_VESSEL_TYPE_ID" foreign="SSFL_VESSEL_TYPE_ID"/>
+      </foreign-key>
+    </table>
+  </database>

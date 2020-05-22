@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptSqb_QuickBillingTicketClose" pageWidth="212" pageHeight="445" columnWidth="204" leftMargin="4" rightMargin="4" topMargin="4" bottomMargin="4">
+	<property name="ireport.zoom" value="2.593742460100008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="136"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+organizacion
+,direccion
+,organizacion_ident
+,usuario
+,(select min(to_char(ci.dateinvoiced,'dd/MM/yyyy HH24:MI:SS')) from c_invoice ci where ci.docstatus = 'CO'
+AND ci.createdby = $P{DOCUMENT_ID}
+and to_char(ci.dateinvoiced,'dd/MM/yyyy') = to_char(now(),'dd/MM/yyyy')) as h_inicio
+,(select max(to_char(ci.dateinvoiced,'dd/MM/yyyy HH24:MI:SS')) from c_invoice ci where ci.docstatus = 'CO'
+AND ci.createdby = $P{DOCUMENT_ID}
+and to_char(ci.dateinvoiced,'dd/MM/yyyy') = to_char(now(),'dd/MM/yyyy')) as h_fin
+,producto
+,sum(parcial) as parcial
+,sum(iva12) as iva12
+,sum(qtyinvoiced) as cantidad
+from
+(
+select
+ci.c_invoice_id as invoice_id
+, ci.documentno as factura
+, ci.documentno || '     '||to_char(dateinvoiced,'dd/MM/yyyy HH24:MI:SS') as factura_fecha
+, slci_date_name_month(ci.dateinvoiced,cbp.ad_language) as fecha_factura
+, cbp.name as cliente
+, cbpl.name as direccion_cliente
+, coalesce(cbpl.phone,cbpl.phone2) as telefono
+, cbp.taxid as id_ruc
+, cpt.name as condicion_pago
+, cil.qtyinvoiced as cantidad
+, mp.name as producto
+, cil.priceactual as precio
+, imp.importe_imponible as parcial
+, 0 as descuento
+, imp.basecero as basecero
+, imp.base12 as tarifa12
+, imp.iva12 as iva12
+,upper(ao.name) as organizacion
+,coalesce(cl.address1,'') || coalesce(cl.address2,'') as direccion
+,aoi.taxid as organizacion_ident
+,coalesce(sqb_get_partner_email(ci.c_bpartner_id),'') as email
+,au.name as usuario
+,cil.qtyinvoiced
+from c_invoice ci
+left join c_bpartner cbp on cbp.c_bpartner_id = ci.c_bpartner_id
+left join c_bpartner_location cbpl on cbpl.c_bpartner_location_id = ci.c_bpartner_location_id and cbpl.isbillto='Y'
+left join c_invoiceline cil on cil.c_invoice_id = ci.c_invoice_id
+left join m_product mp on mp.m_product_id = cil.m_product_id
+left join c_paymentterm cpt on cpt.c_paymentterm_id = ci.c_paymentterm_id
+left join
+(
+
+		SELECT
+		c_invoice_id,
+		SUM(importe_bruto) AS importe_bruto,
+		SUM(importe_imponible) AS importe_imponible,
+		SUM(impuesto) AS impuesto,
+		sum(basecero) as basecero,
+		SUM(BASE12) AS base12,
+		sum(iva) as iva12
+		FROM
+		(select ci.c_invoice_id,
+		((sum(case when IsTaxDeductable='Y' and ct.rate = 0 then cilt.taxbaseamt when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxbaseamt end)
+		+ sum((case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxamt else 0 end))))
+		as importe_bruto,
+		((sum((case when IsTaxDeductable='Y' and ct.rate = 0 then cilt.taxbaseamt else 0 end) +
+		(case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxbaseamt else 0 end) +
+		(case when IsTaxDeductable='Y' and ct.rate = 0 then cilt.taxamt else 0 end)))) as importe_imponible,
+		((sum((case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxamt else 0 end)))) as impuesto,
+
+		sum(case when IsTaxDeductable='Y' and ct.rate = 0 then cilt.taxbaseamt else 0 end) AS basecero,
+		sum(case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxbaseamt else 0 end) AS base12,
+		sum(case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxamt else 0 end) AS iva
+		from c_invoice ci
+		left join c_invoicelinetax cilt on cilt.c_invoice_id = ci.C_INVOICE_ID
+		left join c_tax ct on ct.c_tax_id = cilt.c_tax_id
+		group by ci.c_invoice_id
+		) impuesto
+		group by c_invoice_id
+
+) imp on imp.c_invoice_id = ci.c_invoice_id
+left join ad_org ao on ao.ad_org_id = ci.ad_org_id
+left join ad_orginfo aoi on ao.ad_org_id = aoi.ad_org_id
+left join c_location cl on cl.c_location_id = aoi.c_location_id
+left join ad_user au on au.ad_user_id = ci.createdby
+where ci.docstatus = 'CO'
+AND (ci.createdby = $P{DOCUMENT_ID} or  $P{DOCUMENT_ID} is null)
+and to_char(ci.dateinvoiced,'dd/MM/yyyy') = to_char(now(),'dd/MM/yyyy')
+order by mp.name asc
+) report_close
+group by 1,2,3,4,5,6,7
+order by producto]]>
+	</queryString>
+	<field name="organizacion" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="organizacion_ident" class="java.lang.String"/>
+	<field name="usuario" class="java.lang.String"/>
+	<field name="h_inicio" class="java.lang.String"/>
+	<field name="h_fin" class="java.lang.String"/>
+	<field name="producto" class="java.lang.String"/>
+	<field name="parcial" class="java.math.BigDecimal"/>
+	<field name="iva12" class="java.math.BigDecimal"/>
+	<field name="cantidad" class="java.math.BigDecimal"/>
+	<variable name="V_TOTALLINEA" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{parcial}]]></variableExpression>
+	</variable>
+	<variable name="V_TOTAL_VAT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{iva12}]]></variableExpression>
+	</variable>
+	<variable name="V_TOTALFACTURA" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{V_TOTALLINEA}.add($V{V_TOTAL_VAT})]]></variableExpression>
+	</variable>
+	<title>
+		<band height="104">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="204" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{organizacion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="21" width="204" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="48" y="65" width="156" height="10"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="52" width="204" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIERRE DE TURNO]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="0" y="34" width="204" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["RUC: " +$F{organizacion_ident}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="46" width="203" height="6"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<text><![CDATA[                                                                                                         ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="65" width="48" height="10"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[USUARIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="78" width="48" height="13"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INICIO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="48" y="78" width="156" height="13"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{h_inicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="91" width="48" height="13"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="48" y="91" width="156" height="13"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{h_fin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="75" width="203" height="3"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<text><![CDATA[                                                                                                         ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="13" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="23" y="0" width="137" height="13"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="160" y="0" width="44" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="0" width="23" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cant.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="23" y="0" width="137" height="12"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{producto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="160" y="0" width="44" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{parcial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="0" width="21" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="40">
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="160" y="27" width="44" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{V_TOTALFACTURA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="160" y="14" width="44" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{V_TOTAL_VAT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="160" y="2" width="44" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{V_TOTALLINEA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="102" y="2" width="58" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBTOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="14" width="58" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="27" width="58" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

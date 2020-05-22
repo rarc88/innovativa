@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="0843BD4EB94E4A7BB00DEE218C5DB22F" trl="N">
+    <value column="Name" isTrl="Y" original="Petitioner">Solicitante</value>
+    <value column="PrintName" isTrl="Y" original="Petitioner">Solicitante</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="090C2F0383D5452C9D571832AE1F43D6" trl="N">
+    <value column="Name" isTrl="N" original="Available_Value">Available_Value</value>
+    <value column="PrintName" isTrl="N" original="Available_Value">Available_Value</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2AFF8B79C13548F1B34BBAE7D8773E20" trl="N">
+    <value column="Name" isTrl="Y" original="Value to be discounted ">Valor a descontar</value>
+    <value column="PrintName" isTrl="Y" original="Value to be discounted ">Valor a descontar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="32DCA2BE1ADC49C7975F2175E667B396" trl="N">
+    <value column="Name" isTrl="N" original="Sfbtr_Transfer_From_ID">Sfbtr_Transfer_From_ID</value>
+    <value column="PrintName" isTrl="N" original="Sfbtr_Transfer_From_ID">Sfbtr_Transfer_From_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="36E7AFBC811445A1B5D9CE8526499A94" trl="N">
+    <value column="Name" isTrl="Y" original="Available value">Valor disponible</value>
+    <value column="PrintName" isTrl="Y" original="Available value">Valor disponible</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="In this field the value of the Real Value () field of the budget line must be loaded, according to the combination Product, Activity, source of Financing, budget item (values and the header already defined)">En este campo debe cargarse el valor del campo Valor Real () de la línea del presupuesto, según la combinación Producto, Actividad, fuente de Financiamiento, partida presupuestaria (valores e la cabecera ya definidos)</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="418813B6A10E495F86C28220D2BBC6B3" trl="N">
+    <value column="Name" isTrl="Y" original="Type">Tipo</value>
+    <value column="PrintName" isTrl="Y" original="Type">Tipo</value>
+    <value column="Description" isTrl="Y" original="A distinct item characteristic used for processes and sometimes grouped within a category.">Característica única de un ítem utilizada en los procesos y a veces agrupada dentro de una categoría.</value>
+    <value column="Help" isTrl="Y" original="Indicates the type of document, can store 2 values: Budget Ceiling Adjustment, Budget Transfers">Indica el tipo de documento, puede almacenar 2 valores: Ajuste de Techo presupuestario, Transferencias presupuestarias</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="48D50D84C167432DB041D11F73317E0E" trl="N">
+    <value column="Name" isTrl="Y" original="Value to increase">Valor a incrementar</value>
+    <value column="PrintName" isTrl="Y" original="Value to increase">Valor a incrementar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="5EE6CE6B07B9460CAC3B2EB115C0757B" trl="N">
+    <value column="Name" isTrl="Y" original="Budgetary Reforms">Reforma presupuestaria</value>
+    <value column="PrintName" isTrl="Y" original="Budgetary Reforms">Reforma presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="617FA7AD58DD4F55BA11B910A71F0736" trl="N">
+    <value column="Name" isTrl="Y" original="Resolution">Resolución</value>
+    <value column="PrintName" isTrl="Y" original="Resolution">Resolución</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="80498C5B28F341BBA963D48234DDF0D5" trl="N">
+    <value column="Name" isTrl="Y" original="Registration Date">Fecha de registro</value>
+    <value column="PrintName" isTrl="Y" original="Registration Date">Fecha de registro</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="8563547BCED346F2B7B1262A0130425E" trl="N">
+    <value column="Name" isTrl="Y" original="Deprocess Budget Reform">Reactivar</value>
+    <value column="PrintName" isTrl="Y" original="Deprocess Budget Reform">Reactivar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="9D270314B1C84CFB9FABF1BEB3980E58" trl="N">
+    <value column="Name" isTrl="Y" original="Value to be discounted">Valor a descontar</value>
+    <value column="PrintName" isTrl="Y" original="Value to be discounted">Valor a descontar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="AE8C730FDC2F497ABBBECC06981B6719" trl="N">
+    <value column="Name" isTrl="Y" original="Value to adjust">Valor a ajustar</value>
+    <value column="PrintName" isTrl="Y" original="Value to adjust">Valor a ajustar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CB0A4AA4F29B46659B15C21422FAB45D" trl="N">
+    <value column="Name" isTrl="Y" original="Actionbutton">Botón</value>
+    <value column="PrintName" isTrl="Y" original="Actionbutton">Botón</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D15A1DD34382403F92FB434604AC0017" trl="N">
+    <value column="Name" isTrl="N" original="Sfbtr_Transfer_To_ID">Sfbtr_Transfer_To_ID</value>
+    <value column="PrintName" isTrl="N" original="Sfbtr_Transfer_To_ID">Sfbtr_Transfer_To_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F44B703B2E06474C8BF83910BD8E8814" trl="N">
+    <value column="Name" isTrl="Y" original="Value to increase">Valor a incrementar</value>
+    <value column="PrintName" isTrl="Y" original="Value to increase">Valor a incrementar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE C_INVOICE">
+    <table name="C_INVOICE" primaryKey="C_INVOICE_KEY">
+      <column name="EM_SSFL_BILLING_PERIOD_FROM" primaryKey="false" required="false" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_BILLING_PERIOD_TO" primaryKey="false" required="false" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_ISFOREIGN" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_BANK_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_OBSERVATION" primaryKey="false" required="false" type="VARCHAR" size="300" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_INVOICE_REFERENCE" primaryKey="false" required="false" type="VARCHAR" size="50" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_TYPE_RECAP" primaryKey="false" required="false" type="VARCHAR" size="60" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_PRINT_TYPE_RECAP" primaryKey="false" required="false" type="VARCHAR" size="60" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_DESCRIPTIONVOYAGE" primaryKey="false" required="false" type="VARCHAR" size="255" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_REVISED" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_DEFERRED" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="FIN_FINANCIAL_ACCOUNT" name="EM_SSFL_C_INVOICE_FF_AC">
+        <reference local="EM_SSFL_BANK_ID" foreign="FIN_FINANCIAL_ACCOUNT_ID"/>
+      </foreign-key>
+      <check name="EM_SSFL_DEFERRED_CHECK"><![CDATA[EM_SSFL_DEFERRED IN ('Y', 'N')]]></check>
+      <check name="EM_SSFL_INVOICE_ISFOREIGN_CHK"><![CDATA[EM_SSFL_ISFOREIGN IN ('Y', 'N')]]></check>
+      <check name="EM_SSFL_INVOICE_REVISED_CHK"><![CDATA[EM_SSFL_REVISED IN ('Y', 'N')]]></check>
+    </table>
+  </database>

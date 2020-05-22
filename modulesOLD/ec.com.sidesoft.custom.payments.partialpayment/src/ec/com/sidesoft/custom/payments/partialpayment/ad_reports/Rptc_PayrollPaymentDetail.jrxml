@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rptc_PayrollPaymentDetail" pageWidth="1633" pageHeight="1387" orientation="Landscape" columnWidth="1593" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+a.documentno as pago,
+b.documentno as nomina,
+c.name as periodo,
+case when typeofincome = 'O' then 'Otros'
+when typeofincome = 'H' then 'Pago en Cheque'
+when typeofincome = 'C' then 'Efectivo'
+when typeofincome = 'D' then 'Deposito en Cuenta' end as tipoingreso,
+d.name as tercero,
+a.datepayment,
+f.name as depatartamento,
+g.name as ccentrocostos,
+h.name as user1,
+i.name as user2,
+j.name as categoriacontable,
+l.name as banco,
+k.AccountNo AS CUENTA,
+m.totalnet as valor
+from scpp_payment_detail_v x
+LEFT JOIN scpp_approvalpayment a ON x.SSPR_Payroll_id = A.SSPR_Payroll_id
+left join SSPR_Payroll B on x.SSPR_Payroll_id = b.SSPR_Payroll_id
+left join c_period c on a.c_period_id	= c.c_period_id
+LEFT JOIN scpp_approvalpaymentline e ON a.scpp_approvalpayment_id = e.scpp_approvalpayment_id
+left join c_bpartner d on e.c_bpartner_id = d.c_bpartner_id
+left join sshr_department f on e.sshr_department_id = f.sshr_department_id
+left join c_costcenter g on e.c_costcenter_id = g.c_costcenter_id
+left join user1 h on e.user1_id = h.user1_id
+left join user2 i on e.user2_id = i.user2_id
+left join sspr_category_acct j on d.em_sspr_category_acct_id = j.sspr_category_acct_id
+LEFT JOIN C_BP_BankAccount k ON d.C_BPARTNER_ID = k.C_BPARTNER_ID
+LEFT JOIN SSFI_BANKTRANSFER l ON k.em_ssfi_banktransfer_id = l.ssfi_banktransfer_id
+left join SSPR_Payroll_Ticket m on e.scpp_approvalpaymentline_id = m.em_scpp_approvalpaymentline_id
+WHERE x.scpp_payment_detail_v_id = $P{DOCUMENT_ID}
+order by f.name, g.name, d.name]]>
+	</queryString>
+	<field name="pago" class="java.lang.String"/>
+	<field name="nomina" class="java.lang.String"/>
+	<field name="periodo" class="java.lang.String"/>
+	<field name="tipoingreso" class="java.lang.String"/>
+	<field name="tercero" class="java.lang.String"/>
+	<field name="datepayment" class="java.sql.Timestamp"/>
+	<field name="depatartamento" class="java.lang.String"/>
+	<field name="ccentrocostos" class="java.lang.String"/>
+	<field name="user1" class="java.lang.String"/>
+	<field name="user2" class="java.lang.String"/>
+	<field name="categoriacontable" class="java.lang.String"/>
+	<field name="banco" class="java.lang.String"/>
+	<field name="cuenta" class="java.lang.String"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<variable name="variable1" class="java.math.BigDecimal" resetType="Group" resetGroup="DEPARTAMENTO" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="variable2" class="java.math.BigDecimal" resetType="Group" resetGroup="CENTROCOSTOS" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="variable3" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<group name="DEPARTAMENTO">
+		<groupExpression><![CDATA[$F{depatartamento}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="100" y="0" width="407" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{depatartamento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[DEPARTAMENTO :]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="26">
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="1497" y="6" width="93" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{variable1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1333" y="6" width="164" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL DEPARTAMENTO]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1330" y="5" width="257" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="CENTROCOSTOS">
+		<groupExpression><![CDATA[$F{ccentrocostos}]]></groupExpression>
+		<groupHeader>
+			<band height="64">
+				<staticText>
+					<reportElement x="0" y="40" width="62" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[No. Pago]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="62" y="40" width="70" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[No. Nomina]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="132" y="40" width="56" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Periodo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="188" y="40" width="120" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Tipo Ingreso]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="308" y="40" width="157" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Tercero]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="465" y="40" width="67" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Fecha Pago]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="532" y="40" width="170" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Departamento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="702" y="40" width="138" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Centro de Costos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="840" y="40" width="132" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Dimesion 1]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="972" y="40" width="132" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Dimension 2]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1104" y="40" width="141" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Categoria. Contable]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1245" y="40" width="147" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Banco]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1392" y="40" width="105" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Cuenta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1497" y="40" width="93" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Valor]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="123" y="0" width="384" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{ccentrocostos}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="123" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CENTRO DE COSTOS :]]></text>
+				</staticText>
+				<line>
+					<reportElement x="288" y="37" width="1302" height="1"/>
+				</line>
+				<line>
+					<reportElement x="288" y="59" width="1302" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="1497" y="4" width="93" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{variable2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1333" y="4" width="164" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL CENTRO COSTOS]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1333" y="2" width="257" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="12" width="252" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE DE PAGOS PARCIALES DE NOMINA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="8" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="62" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pago}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="62" y="0" width="70" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomina}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="132" y="0" width="56" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{periodo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="188" y="0" width="120" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoingreso}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="308" y="0" width="157" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tercero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="465" y="0" width="67" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{datepayment}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="532" y="0" width="170" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{depatartamento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="702" y="0" width="138" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ccentrocostos}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="840" y="0" width="132" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{user1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="972" y="0" width="132" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{user2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1104" y="0" width="141" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{categoriacontable}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1245" y="0" width="147" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{banco}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1392" y="0" width="105" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cuenta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="1497" y="0" width="93" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="25" splitType="Stretch">
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="1497" y="5" width="93" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{variable3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1333" y="5" width="164" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL GENERAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1333" y="2" width="257" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

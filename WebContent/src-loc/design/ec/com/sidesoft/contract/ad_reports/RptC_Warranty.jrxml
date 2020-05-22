@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptC_Warranty" pageWidth="1152" pageHeight="972" orientation="Landscape" columnWidth="1112" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Document_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DateFrom" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DateTo" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Status" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select a.documentno,a.name,b.name as contratista,a.amount,c.name as plazo, d.name as administrador,
+f.name as formagarantia,g.name as tipogarantia,e.validity_date_policy as fechapoliza,e.amount_insured montoasegurado
+from ssct_contract a
+left join c_bpartner b on a.c_bpartner_id = b.c_bpartner_id
+left join ssct_contractterm c on a.ssct_contractterm_id = c.ssct_contractterm_id
+left join c_bpartner d on a.c_bpartner_administrator_id = d.c_bpartner_id
+left join ssct_warranty e on a.ssct_contract_id = e.ssct_contract_id
+left join ssct_warrantyform f on e.ssct_warrantyform_id = f.ssct_warrantyform_id
+left join ssct_warrantytypes g on e.ssct_warrantytypes_id = g.ssct_warrantytypes_id
+where (a.documentno = $P{Document_ID} or $P{Document_ID} is null)
+and (e.validity_date_policy between $P{DateFrom} and $P{DateTo})
+and (e.ssct_warrantystatus_id = $P{Status} or $P{Status} is null)
+order by a.documentno]]>
+	</queryString>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="contratista" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="plazo" class="java.lang.String"/>
+	<field name="administrador" class="java.lang.String"/>
+	<field name="formagarantia" class="java.lang.String"/>
+	<field name="tipogarantia" class="java.lang.String"/>
+	<field name="fechapoliza" class="java.sql.Timestamp"/>
+	<field name="montoasegurado" class="java.math.BigDecimal"/>
+	<group name="Document_G">
+		<groupExpression><![CDATA[$F{documentno}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="405" y="0" width="66" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Monto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="471" y="0" width="79" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Plazo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="550" y="0" width="154" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Administrador del Contrato]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="233" y="0" width="172" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Contratista]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="101" y="0" width="132" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Nombre de Contrato]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="0" width="100" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[No. Contrato]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="704" y="0" width="120" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Forma de Garantia]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="824" y="0" width="118" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Tipo de Garantia]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="942" y="0" width="83" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Fecha Vigencia]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1025" y="0" width="87" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Monto Asegurado]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField isBlankWhenNull="true">
+					<reportElement x="1" y="0" width="100" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{documentno}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="101" y="0" width="132" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="233" y="0" width="172" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{contratista}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="405" y="0" width="66" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{amount}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="471" y="0" width="79" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{plazo}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="550" y="0" width="154" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{administrador}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="704" y="0" width="120" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{formagarantia}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="824" y="0" width="118" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{tipogarantia}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="942" y="0" width="83" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{fechapoliza}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1025" y="0" width="88" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoasegurado}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="5" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="221" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Garantias]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="4" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

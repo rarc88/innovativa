@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rpt_Budget_Execution" printOrder="Horizontal" pageWidth="1480" pageHeight="792" columnWidth="1440" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5a185614-1453-4bd9-ab66-bc97e0e96b64">
+	<property name="ireport.zoom" value="1.771561000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="106"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<parameter name="C_Year_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Budget_Type" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Periodfrom" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="C_Costcenter_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Area_Filter" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sfb_accumulated" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NUMBERFORMAT" class="java.text.DecimalFormat" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new DecimalFormat("###,##0.00", new DecimalFormatSymbols())]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[--Sacar los valores de las lineas del preuspuesto
+select A.*,
+	COALESCE(REFORMAS.reformas,0) as reformas
+
+	,buda.name as "producto"
+	,user1.name as "fuente_financiamiento"
+	,ccen.name as "actividad"
+	,bi.name as "partida"
+	,yr.year as "ejercicio"
+,CASE WHEN COALESCE($P{Periodfrom},'N')='N' THEN ''
+	ELSE
+	CASE WHEN COALESCE($P{sfb_accumulated},'N')='Y' THEN 'ACUMULADO A : ' ELSE '' END||(sescr_monthtoletters((select PERIODNO from c_period where c_period_id = $P{Periodfrom})))
+	END as "periodo"
+	,NOW() 	AS "fechaimpresion"
+from
+    (
+	SELECT
+		c.ad_org_id,a.line
+	,a.budgeted_value as "presupuesto_inicial"
+		,a.adjusted_value AS "presupuesto_codificado"
+		,(a.committed_value - COALESCE(g.total_orden,0)) as "presupuesto_certificado"
+		,ROUND(COALESCE(CASE WHEN a.adjusted_value=0 THEN 0 ELSE ((a.committed_value - COALESCE(g.total_orden,0))/a.adjusted_value)*100 END,0)) as "porcentaje_ceritificado"
+		,COALESCE(g.total_orden,0) as "presupuesto_comprometido"
+		,ROUND(CASE WHEN a.adjusted_value =0 THEN 0 ELSE  (COALESCE(g.total_orden,0)/a.adjusted_value)*100   END,0) as "porcent_comprometido"
+		,a.executed_value as "presupuesto_ejecutado"
+		,ROUND(CASE WHEN a.adjusted_value =0 THEN 0 ELSE (a.executed_value/a.adjusted_value)*100 END) as "porcentaje_ejecutado"
+		,(COALESCE(g.total_orden,0)-a.executed_value) as "presupuesto_por_ejecutar"
+		,ROUND(CASE WHEN a.adjusted_value =0 THEN 0 ELSE (((COALESCE(g.total_orden,0)-a.executed_value))/a.adjusted_value)*100 END) as "porcentaje_por_ejecutar"
+		,(a.adjusted_value - (a.committed_value - COALESCE(g.total_orden,0)) - COALESCE(g.total_orden,0)) as "saldo_disponible"
+		,ROUND(CASE WHEN a.adjusted_value =0 THEN 0 ELSE ((a.adjusted_value - (a.committed_value - COALESCE(g.total_orden,0)) - COALESCE(g.total_orden,0)) / a.adjusted_value)*100 END)  as "porcentaje_disponible"
+		--,a.paidout_value as "pagado"
+		,a.sfb_budget_area_id
+		,a.user1_id
+		,a.c_costcenter_id
+		,a.sfb_budget_item_id
+		,c.c_year_id
+		,c.type_of_budget
+		,a.sfb_budget_line_id
+
+        FROM (
+
+SELECT
+	CASE
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 1  THEN (sfb_bl.jan_budgeted_value)
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 2 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.feb_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 3 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.mar_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 4 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.apr_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 5 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.may_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 6 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jun_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 7 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jul_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 8 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.aug_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 9 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.sep_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 10 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.oct_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value + sfb_bl.oct_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 11 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.nov_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value + sfb_bl.oct_budgeted_value + sfb_bl.nov_budgeted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 12 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.dec_budgeted_value)  ELSE (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value + sfb_bl.oct_budgeted_value + sfb_bl.nov_budgeted_value + sfb_bl.dec_budgeted_value) END
+	 ELSE sfb_bl.budgeted_value END as "budgeted_value"
+	 ,CASE
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 1  THEN (sfb_bl.jan_Executed_value)
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 2 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.feb_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 3 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.mar_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 4 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.apr_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 5 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.may_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 6 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jun_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 7 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jul_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 8 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.aug_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 9 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.sep_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 10 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.oct_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value + sfb_bl.oct_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 11 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.nov_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value + sfb_bl.oct_Executed_value + sfb_bl.nov_Executed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 12 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.dec_Executed_value)  ELSE (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value + sfb_bl.oct_Executed_value + sfb_bl.nov_Executed_value + sfb_bl.dec_Executed_value) END
+	 ELSE sfb_bl.Executed_value END as "executed_value"
+	 ,CASE
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 1  THEN (sfb_bl.jan_adjusted_value)
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 2 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.feb_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 3 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.mar_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 4 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.apr_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 5 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.may_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 6 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jun_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 7 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jul_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 8 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.aug_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 9 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.sep_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 10 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.oct_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value + sfb_bl.oct_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 11 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.nov_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value + sfb_bl.oct_adjusted_value + sfb_bl.nov_adjusted_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 12 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.dec_adjusted_value)  ELSE (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value + sfb_bl.oct_adjusted_value + sfb_bl.nov_adjusted_value + sfb_bl.dec_adjusted_value) END
+	 ELSE sfb_bl.adjusted_value END as "adjusted_value"
+	 ,CASE
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 1  THEN (sfb_bl.jan_actual_value)
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 2 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.feb_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 3 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.mar_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 4 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.apr_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 5 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.may_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 6 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jun_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 7 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jul_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 8 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.aug_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 9 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.sep_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 10 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.oct_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value + sfb_bl.oct_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 11 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.nov_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value + sfb_bl.oct_actual_value + sfb_bl.nov_actual_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 12 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.dec_actual_value)  ELSE (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value + sfb_bl.oct_actual_value + sfb_bl.nov_actual_value + sfb_bl.dec_actual_value) END
+	 ELSE sfb_bl.actual_value END as "actual_value"
+	 ,CASE
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 1  THEN (sfb_bl.jan_committed_value)
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 2 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.feb_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 3 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.mar_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 4 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.apr_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 5 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.may_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 6 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jun_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 7 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jul_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 8 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.aug_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value + sfb_bl.aug_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 9 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.sep_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value + sfb_bl.aug_committed_value + sfb_bl.sep_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 10 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.oct_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value + sfb_bl.aug_committed_value + sfb_bl.sep_committed_value + sfb_bl.oct_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 11 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.nov_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value + sfb_bl.aug_committed_value + sfb_bl.sep_committed_value + sfb_bl.oct_committed_value + sfb_bl.nov_committed_value) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 12 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.dec_committed_value)  ELSE (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value + sfb_bl.aug_committed_value + sfb_bl.sep_committed_value + sfb_bl.oct_committed_value + sfb_bl.nov_committed_value + sfb_bl.dec_committed_value) END
+	 ELSE sfb_bl.committed_value END as "committed_value"
+	 ,CASE
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 1  THEN (sfb_bl.jan_available_balance)
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 2 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.feb_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 3 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.mar_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 4 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.apr_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 5 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.may_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 6 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jun_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 7 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.jul_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 8 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.aug_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 9 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.sep_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance + sfb_bl.sep_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 10 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.oct_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance + sfb_bl.sep_available_balance + sfb_bl.oct_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 11 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.nov_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance + sfb_bl.sep_available_balance + sfb_bl.oct_available_balance + sfb_bl.nov_available_balance) END
+		WHEN (select PERIODNO from c_period where c_period_id = $P{Periodfrom}) = 12 THEN CASE WHEN COALESCE($P{sfb_accumulated},'N') = 'N' THEN (sfb_bl.dec_available_balance)  ELSE (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance + sfb_bl.sep_available_balance + sfb_bl.oct_available_balance + sfb_bl.nov_available_balance + sfb_bl.dec_available_balance) END
+	 ELSE sfb_bl.available_balance END as "available_balance"
+	 ,sfb_bl.sfb_budget_area_id
+	,sfb_bl.user1_id
+	,sfb_bl.c_costcenter_id
+	,sfb_bl.sfb_budget_item_id
+	,sfb_bl.sfb_budget_version_id
+	,sfb_bl.sfb_budget_line_id
+	,sfb_bl.line
+FROM sfb_budget_line sfb_bl
+) a
+		left join sfb_budget_version b on a.sfb_budget_version_id = b.sfb_budget_version_id AND b.Version_Status = 'AP'
+		left join sfb_budget c on b.sfb_budget_id = c.sfb_budget_id
+		left join sfb_budget_line_detail_v e on a.sfb_budget_line_id = e.sfb_budget_line_id
+		left join (SELECT  fcl.*
+				FROM sfb_budget_certificate   fc
+					JOIN sfb_budget_cert_line fcl on fcl.sfb_budget_certificate_id = fc.sfb_budget_certificate_id
+				WHERE  fc.c_year_id = $P{C_Year_ID}
+					AND (COALESCE($P{Periodfrom},'N')='N'
+						OR (COALESCE($P{Periodfrom},'N')<>'N' AND COALESCE($P{sfb_accumulated},'N')='N' AND (select PERIODNO from c_period where c_period_id = $P{Periodfrom})=to_number(TO_CHAR(fc.date_issue,'MM'))
+						)
+						OR (COALESCE($P{Periodfrom},'N')<>'N' AND COALESCE($P{sfb_accumulated},'N')<>'N' AND (select PERIODNO from c_period where c_period_id =$P{Periodfrom} )>=to_number(TO_CHAR(fc.date_issue,'MM'))
+						)
+					)
+			) f on e.sfb_budget_cert_line_id = f.sfb_budget_cert_line_id
+left join (SELECT sfbcv.budgetline_id, SUM(sfbcv.totalamt) as "total_orden"
+	FROM sfb_budget_commitems_v sfbcv
+		WHERE COALESCE($P{Periodfrom},'N')='N'
+				OR (COALESCE($P{Periodfrom},'N')<>'N' AND COALESCE($P{sfb_accumulated},'N')='N' AND (select PERIODNO from c_period where c_period_id =$P{Periodfrom})=to_number(TO_CHAR(sfbcv.date_transaction,'MM')))
+				OR (COALESCE($P{Periodfrom},'N')<>'N' AND COALESCE($P{sfb_accumulated},'N')<>'N' AND (select PERIODNO from c_period where c_period_id =$P{Periodfrom} )>=to_number(TO_CHAR(sfbcv.date_transaction,'MM')))
+		GROUP BY sfbcv.budgetline_id) g on a.sfb_budget_line_id = g.budgetline_id
+    GROUP BY a.line,c.type_of_budget, a.user1_id,a.c_costcenter_id,a.sfb_budget_area_id, a.c_costcenter_id, a.user1_id, a.sfb_budget_item_id, a.budgeted_value, a.adjusted_value, a.committed_value, a.executed_value,c.c_year_id,a.sfb_budget_line_id,c.ad_org_id, g.total_orden
+--, a.paidout_value
+    ) A
+	LEFT JOIN (SELECT
+			sum(d.codigo) as "reformas"
+			,a.sfb_budget_area_id
+			,a.user1_id
+			,a.c_costcenter_id
+			,a.sfb_budget_item_id
+			,a.sfb_budget_line_id
+		FROM sfb_budget_line a
+			left join sfb_budget_log_v d on a.sfb_budget_line_id = d.presupuesto_id
+			WHERE COALESCE($P{Periodfrom},'N')='N'
+								OR (COALESCE($P{Periodfrom},'N')<>'N' AND COALESCE($P{sfb_accumulated},'N')='N' AND (select PERIODNO from c_period where c_period_id =$P{Periodfrom} )=to_number(TO_CHAR(d.REG_Date,'MM'))
+									)
+								OR (COALESCE($P{Periodfrom},'N')<>'N' AND COALESCE($P{sfb_accumulated},'N')<>'N' AND (select PERIODNO from c_period where c_period_id =$P{Periodfrom})>=to_number(TO_CHAR(d.REG_Date,'MM'))
+									)
+		GROUP BY  a.sfb_budget_area_id,a.user1_id,a.c_costcenter_id,a.sfb_budget_item_id,a.sfb_budget_line_id
+) REFORMAS on A.sfb_budget_line_id =  REFORMAS.sfb_budget_line_id
+			AND a.sfb_budget_area_id = REFORMAS.sfb_budget_area_id
+			AND A.user1_id = REFORMAS.user1_id
+			AND A.c_costcenter_id = REFORMAS.c_costcenter_id
+			AND A.sfb_budget_item_id = REFORMAS.sfb_budget_item_id
+	LEFT JOIN sfb_budget_area buda on buda.sfb_budget_area_id = A.sfb_budget_area_id
+	LEFT JOIN user1 on user1.user1_id =A.user1_id
+	LEFT JOIN c_costcenter ccen on ccen.c_costcenter_id = A.c_costcenter_id
+	LEFT JOIN sfb_budget_item bi on bi.sfb_budget_item_id = A.sfb_budget_item_id
+	LEFT JOIN c_year yr on yr.c_year_id = A.c_year_id
+WHERE A.type_of_budget = $P{Budget_Type}
+AND yr.c_year_id = $P{C_Year_ID}
+AND (ccen.c_costcenter_id = $P{C_Costcenter_ID} OR $P{C_Costcenter_ID} is null) -- Actividad
+AND (buda.sfb_budget_area_id = $P{Area_Filter} OR $P{Area_Filter} is null) --Area CBO
+order by cast(NULLIF(regexp_replace(buda.name, '\D', '', 'g'), '') AS integer), A.line]]>
+	</queryString>
+	<field name="ad_org_id" class="java.lang.String"/>
+	<field name="line" class="java.math.BigDecimal"/>
+	<field name="presupuesto_inicial" class="java.math.BigDecimal"/>
+	<field name="presupuesto_codificado" class="java.math.BigDecimal"/>
+	<field name="presupuesto_certificado" class="java.math.BigDecimal"/>
+	<field name="porcentaje_ceritificado" class="java.math.BigDecimal"/>
+	<field name="presupuesto_comprometido" class="java.math.BigDecimal"/>
+	<field name="porcent_comprometido" class="java.math.BigDecimal"/>
+	<field name="presupuesto_ejecutado" class="java.math.BigDecimal"/>
+	<field name="porcentaje_ejecutado" class="java.math.BigDecimal"/>
+	<field name="presupuesto_por_ejecutar" class="java.math.BigDecimal"/>
+	<field name="porcentaje_por_ejecutar" class="java.math.BigDecimal"/>
+	<field name="saldo_disponible" class="java.math.BigDecimal"/>
+	<field name="porcentaje_disponible" class="java.math.BigDecimal"/>
+	<field name="sfb_budget_area_id" class="java.lang.String"/>
+	<field name="user1_id" class="java.lang.String"/>
+	<field name="c_costcenter_id" class="java.lang.String"/>
+	<field name="sfb_budget_item_id" class="java.lang.String"/>
+	<field name="c_year_id" class="java.lang.String"/>
+	<field name="type_of_budget" class="java.lang.String"/>
+	<field name="sfb_budget_line_id" class="java.lang.String"/>
+	<field name="reformas" class="java.math.BigDecimal"/>
+	<field name="producto" class="java.lang.String"/>
+	<field name="fuente_financiamiento" class="java.lang.String"/>
+	<field name="actividad" class="java.lang.String"/>
+	<field name="partida" class="java.lang.String"/>
+	<field name="ejercicio" class="java.lang.String"/>
+	<field name="periodo" class="java.lang.String"/>
+	<field name="fechaimpresion" class="java.sql.Timestamp"/>
+	<variable name="SUM_G_Pre_Inicial" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_inicial}]]></variableExpression>
+	</variable>
+	<variable name="SUM_G_Reformas" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Sum">
+		<variableExpression><![CDATA[$F{reformas}]]></variableExpression>
+	</variable>
+	<variable name="SUM_G_Pres_Codificado" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_codificado}]]></variableExpression>
+	</variable>
+	<variable name="SUM_G_Pres_Certificado" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_certificado}]]></variableExpression>
+	</variable>
+	<variable name="G_Porcentaje_Cerficado" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Average">
+		<variableExpression><![CDATA[$F{porcentaje_ceritificado}]]></variableExpression>
+	</variable>
+	<variable name="SUM_G_Pres_Comprometido" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_comprometido}]]></variableExpression>
+	</variable>
+	<variable name="G_Porcentaje_Comprometido" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Average">
+		<variableExpression><![CDATA[$F{porcent_comprometido}]]></variableExpression>
+	</variable>
+	<variable name="SUM_G_Pres_Ejecutado" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_ejecutado}]]></variableExpression>
+	</variable>
+	<variable name="G_Porcentaje_Ejecutado" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Average">
+		<variableExpression><![CDATA[$F{porcentaje_ejecutado}]]></variableExpression>
+	</variable>
+	<variable name="SUM_G_Pres_Por_Ejecutar" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_por_ejecutar}]]></variableExpression>
+	</variable>
+	<variable name="G_Porcentaje_por_Ejecutar" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Average">
+		<variableExpression><![CDATA[$F{porcentaje_por_ejecutar}]]></variableExpression>
+	</variable>
+	<variable name="SUM_G_Saldo_Disponible" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_disponible}]]></variableExpression>
+	</variable>
+	<variable name="G_Porcentaje_Disponible" class="java.math.BigDecimal" resetType="Group" resetGroup="Producto" calculation="Average">
+		<variableExpression><![CDATA[$F{porcentaje_disponible}]]></variableExpression>
+	</variable>
+	<variable name="SUM_Pres_Inicial" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_inicial}]]></variableExpression>
+	</variable>
+	<variable name="SUM_Reformas" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{reformas}]]></variableExpression>
+	</variable>
+	<variable name="SUM_Pres_Codificado" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_codificado}]]></variableExpression>
+	</variable>
+	<variable name="SUM_Pres_Certificado" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_certificado}]]></variableExpression>
+	</variable>
+	<variable name="Porcentaje_Certificado" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{porcentaje_ceritificado}]]></variableExpression>
+	</variable>
+	<variable name="SUM_Pres_Comprometido" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_comprometido}]]></variableExpression>
+	</variable>
+	<variable name="Porcentaje_Comprometido" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{porcent_comprometido}]]></variableExpression>
+	</variable>
+	<variable name="SUM_Pres_Ejecutado" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_ejecutado}]]></variableExpression>
+	</variable>
+	<variable name="Porcentaje_Ejecutado" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{porcentaje_ejecutado}]]></variableExpression>
+	</variable>
+	<variable name="SUM_Pres_Por_Ejecutar" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{presupuesto_por_ejecutar}]]></variableExpression>
+	</variable>
+	<variable name="Porcentaje_Por_Ejecutar" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{porcentaje_por_ejecutar}]]></variableExpression>
+	</variable>
+	<variable name="SUM_Saldo_Disponible" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_disponible}]]></variableExpression>
+	</variable>
+	<variable name="Porcentaje_Disponible" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{porcentaje_disponible}]]></variableExpression>
+	</variable>
+	<group name="Producto">
+		<groupExpression><![CDATA[$F{producto}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement x="1321" y="20" width="59" height="30" uuid="70f84b3f-c280-45d4-9e0f-988d0da6025b"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Saldo disponible]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1183" y="20" width="88" height="30" uuid="abc115f6-ca4b-4abe-a232-af1f848e945d"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Presupuesto por ejecutar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="651" y="20" width="50" height="30" uuid="ce78f7a9-1b3b-4898-800f-ade0a4e64ca4"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reformas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="375" y="20" width="208" height="30" uuid="d6fca73e-4f1f-4542-8837-a574d34101a9"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Partida presupuestaria]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1056" y="20" width="70" height="30" uuid="3a9170dd-d5fa-4fc8-8e7c-0d8c32c6467e"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Presupuesto ejecutado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1126" y="20" width="57" height="30" uuid="d5a263f9-f134-4d02-87c8-07c9fb6a6751"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[% Ejecutado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="975" y="20" width="81" height="30" uuid="5c4f27bc-e472-4391-97ef-ed7b4b9aa8af"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[% comprometido]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="155" y="20" width="141" height="30" uuid="68ea7ed2-bb87-4f3a-9a2a-693d5fd9b7e9"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Actividad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="842" y="20" width="59" height="30" uuid="774165b0-bfc0-4a1c-9a47-1afcbb5059f4"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[% certificado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="296" y="20" width="79" height="30" uuid="f9db89bb-3a37-4024-9da3-f393f23ec4d5"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fuente de Financiamiento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="20" width="155" height="30" uuid="3a36dcf6-90ae-4fe4-abfb-8d9d9234a5c1"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="901" y="20" width="74" height="30" uuid="d1947e22-97a8-413f-9a84-830edd629b50"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Presupuesto comprometido]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1380" y="20" width="60" height="30" uuid="2ce03476-84f2-4b6e-a8dc-6d37f83fc41e"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[% Disponible]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1271" y="20" width="50" height="30" uuid="3d11590c-b871-459c-a394-2f338c8f8857"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[% por Ejecutar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="772" y="20" width="70" height="30" uuid="0b722edf-a449-420b-84e8-542fa61ee840"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Presupuesto certificado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="701" y="20" width="71" height="30" uuid="5b10010e-c0df-4d77-8107-9fc4e1f434ba"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Presupuesto Codificado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="583" y="20" width="68" height="30" uuid="22d15f48-22ca-486d-a05a-1519143427bf"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Presupuesto inicial]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1440" height="20" uuid="c1ddd1f2-b19d-41b8-8230-8be2adb701d5"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{producto}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="12">
+				<staticText>
+					<reportElement x="0" y="0" width="583" height="12" uuid="f9f5ab73-c7de-4843-b23f-43ef9f57361b"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Totales :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="583" y="0" width="68" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="0a1c381f-e81d-48c1-8816-dee697874ab6"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_G_Pre_Inicial}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="651" y="0" width="50" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="f2126bbe-899c-4e95-9ca6-4dfcdb44cd58"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_G_Reformas}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="701" y="0" width="71" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="7e8e0cbf-657d-4300-a19c-1643097b5135"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_G_Pres_Codificado}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="772" y="0" width="70" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="ed48a5f9-0f11-4a2f-8122-7e1f1573351b"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_G_Pres_Certificado}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="901" y="0" width="74" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="5d2854a4-f545-4e3a-8f8f-792a13e48179"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_G_Pres_Comprometido}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1056" y="0" width="70" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="407c94ba-c42b-42e9-b22c-4d9f3d86fe34"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_G_Pres_Ejecutado}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="842" y="0" width="59" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="416c721b-c667-40df-98c7-f7d36479237a"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Math.round(($V{G_Porcentaje_Cerficado}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="975" y="0" width="81" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="b143aaaa-d0f2-467d-b80d-e6a15e81c694"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Math.round(($V{G_Porcentaje_Comprometido}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1126" y="0" width="57" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="9f13a6e3-e136-4811-bf4c-24aa989ed24a"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Math.round(($V{G_Porcentaje_Ejecutado}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1183" y="0" width="88" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="a1174af5-4a36-43ee-9a17-324ca74b65fb"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_G_Pres_Por_Ejecutar}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1321" y="0" width="59" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="1e3e748d-4ad2-49d6-bb85-374f3767cea0"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_G_Saldo_Disponible}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1380" y="0" width="60" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="af0a27fc-cae1-4004-bbf9-fd41637b5e69"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Math.round(($V{G_Porcentaje_Disponible}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1271" y="0" width="50" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="84ec4a3f-6f88-4392-9eb2-1bb233aa94f0"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Math.round(($V{G_Porcentaje_por_Ejecutar}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="91" splitType="Stretch">
+			<staticText>
+				<reportElement x="155" y="0" width="1285" height="44" uuid="8428a794-9d91-4bb9-9309-745fde58ec8b"/>
+				<box rightPadding="155"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EJECUCIÓN PRESUPUESTARIA]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top" isUsingCache="true">
+				<reportElement key="image-1" x="0" y="0" width="155" height="91" uuid="51fa4e38-adf8-4dd8-a9c3-39c4057ae740"/>
+				<imageExpression><![CDATA[org.openbravo.erpCommon.utility.Utility.showImageLogo("yourcompanylegal", $F{ad_org_id})]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="21" width="155" height="20" uuid="dd5f91de-58d5-4734-8a1f-c8ad95d53aba"/>
+				<box leftPadding="90" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EJERCICIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="155" height="20" uuid="fbbdb042-0dc1-47d3-9c8c-8cb10f245b27"/>
+				<box leftPadding="90" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="155" y="21" width="1285" height="20" uuid="177f5114-de32-4ba3-8bba-8cd123e55a39"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ejercicio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="155" y="41" width="1285" height="20" uuid="b26d013c-b924-4f7e-9dd8-95bdd83c89ab"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{periodo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="12" width="1380" height="9" uuid="c174bae0-10ac-4b1a-91ed-f792f3489022"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PÁGINA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1407" y="12" width="6" height="9" uuid="e6f75c42-ed7c-4910-815e-b73713bf13f0"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1380" y="12" width="27" height="9" uuid="f8b0aa43-4cc7-419c-bb45-3e218761e926"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="1413" y="12" width="27" height="9" uuid="cfc11a69-37cf-4906-9f59-140e4a5390ce"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy / HH:mm:ss">
+				<reportElement x="1321" y="0" width="119" height="12" uuid="09b35790-21e3-490a-80f6-9d566db1a162"/>
+				<box rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaimpresion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="1321" height="12" uuid="071ef066-41e7-45cf-9e7d-68308422c88f"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Fecha Impresión:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="375" y="0" width="208" height="24" uuid="36a7aa4b-72fb-4721-bd48-a79095066200"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partida}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1056" y="0" width="70" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="6d50730e-8167-432a-9efa-fac9eb96de63"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presupuesto_ejecutado}]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1126" y="0" width="57" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="78669290-7682-44f0-8b9d-8e14c167b6bc"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcentaje_ejecutado}+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="155" y="0" width="141" height="24" uuid="c6a349e5-48df-4f9b-a1ba-c7338886e5eb"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actividad}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="296" y="0" width="79" height="24" uuid="1173bcf6-0a97-47aa-9294-b0b9e0088860"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fuente_financiamiento}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="155" height="24" uuid="4e848f49-d9d8-4eda-bb2a-0c71a86e32a9"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="901" y="0" width="74" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="7907f974-2a26-469d-9e4e-cfc4a69d1957"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presupuesto_comprometido}]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="583" y="0" width="68" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="7e014162-c08b-4c42-bb6b-828fe2299286"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presupuesto_inicial}]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="651" y="0" width="50" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="de61458e-bc11-45a5-8372-5998f23442ec"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reformas}]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="701" y="0" width="71" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="5027fbfd-ee0a-4381-9718-1a94fadebb31"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presupuesto_codificado}]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="772" y="0" width="70" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="d989778c-5bc7-49cd-bcc8-50cdc3031470"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presupuesto_certificado}]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1183" y="0" width="88" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="ab0a6bca-8a61-4bbb-be72-436656f19fbe"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presupuesto_por_ejecutar}]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1271" y="0" width="50" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="ef638be3-2f12-4b89-9d1f-f7aefe9d5531"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcentaje_por_ejecutar}+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1321" y="0" width="59" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="9734598c-7f54-46a3-8661-f2ca068058c1"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_disponible}]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1380" y="0" width="60" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="b4cc6f48-635b-4844-9b14-bdf38367e335"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcentaje_disponible}+"%"]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="842" y="0" width="59" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="173eda54-f1db-49c7-b802-e58b4c7394be"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcentaje_ceritificado}+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="975" y="0" width="81" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="352217d7-538d-4f2c-8204-7c581771b9d4"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcent_comprometido}+"%"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="110" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="583" height="20" uuid="e53ed2eb-59da-4f58-8df6-6ba35dc69159"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gran Total : ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="583" y="0" width="68" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="e2152d36-5d96-44e6-b352-f4f227d60f29"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_Pres_Inicial}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="651" y="0" width="50" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="175d30ad-52b7-46e4-979b-fa7638d60bf7"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_Reformas}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="701" y="0" width="71" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0962b753-1724-4590-bb8a-36e28106f992"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_Pres_Codificado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="772" y="0" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="b3996778-f8af-4a99-8718-332572685bef"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_Pres_Certificado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="842" y="0" width="59" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0ba4d8bd-da8b-4850-a0e6-52075b52b2c6"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(Math.round(($V{Porcentaje_Certificado}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="901" y="0" width="74" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="3691d5f0-c1ca-4b49-b0eb-531ac72611d7"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_Pres_Comprometido}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="975" y="0" width="81" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="5038d5ed-8cfd-4161-9d81-50e493d8cc5c"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(Math.round(($V{Porcentaje_Comprometido}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1056" y="0" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d3ec240a-a1f3-47c8-b652-45d292fcc01c"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_Pres_Ejecutado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1126" y="0" width="57" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d210ed3a-f3aa-4ace-822f-4bd381b385cc"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(Math.round(($V{Porcentaje_Ejecutado}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1183" y="0" width="88" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="77d054b2-1018-4a47-842d-5a88c2777476"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_Pres_Por_Ejecutar}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1271" y="0" width="50" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1c86f4d6-9b97-4e54-a0de-16f488dd3c08"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(Math.round(($V{Porcentaje_Por_Ejecutar}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1321" y="0" width="59" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="7a1c630e-9fc6-4086-9f7c-4386cd5cb2b6"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_Saldo_Disponible}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="1380" y="0" width="60" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="99b1f83a-71f1-4bf2-b424-7738d925765c"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(Math.round(($V{Porcentaje_Disponible}.doubleValue()) * 100) / 100d)+"%"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="651" y="90" width="287" height="20" uuid="00e032c9-63b1-482e-ae73-780bd929e287"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Aprobado Por :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="90" width="287" height="20" uuid="0276bcf5-8102-4ad7-a9d4-9630f4dc0e96"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Revisado Por :]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

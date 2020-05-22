@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_BUDGET_CERTIFICATE_TRG">
+    <trigger name="SFB_BUDGET_CERTIFICATE_TRG" table="SFB_BUDGET_CERTIFICATE" fires="before" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+ 
+v_year VARCHAR2(10);
+
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF (INSERTING OR UPDATING) THEN
+  
+    SELECT year INTO v_year
+    FROM C_YEAR
+    WHERE c_year_id = :new.c_year_id;
+
+    IF (cast(v_year as double precision) <> extract(year from TO_DATE(:new.date_issue))) THEN
+
+      RAISE_APPLICATION_ERROR(-20000, '@SFB_NoDateWithinYear@');
+
+    END IF;
+ 
+  ELSIF (DELETING AND :old.process = 'Y') THEN
+
+    RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyProcessedBudgetCertificate@');
+    
+  END IF;
+    
+  END SFB_BUDGET_CERTIFICATE_TRG
+]]></body>
+    </trigger>
+  </database>

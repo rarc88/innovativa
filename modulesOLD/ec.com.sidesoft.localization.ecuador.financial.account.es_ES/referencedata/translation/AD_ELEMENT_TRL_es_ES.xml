@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="06E523738CEF40C992650F80749A6EC9" trl="N">
+    <value column="Name" isTrl="Y" original="Deposit">Deposito</value>
+    <value column="PrintName" isTrl="Y" original="Deposit">Deposito</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="3BA74FD96C67469CA81FF32B85898877" trl="N">
+    <value column="Name" isTrl="Y" original="Deposit Number">Nº Deposito</value>
+    <value column="PrintName" isTrl="Y" original="Deposit Number">Nº Deposito</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

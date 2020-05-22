@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
+<!-- 2019-07-23T00:14:05 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1_sub" pageWidth="1050" pageHeight="792" orientation="Landscape" columnWidth="1050" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="13de6ed1-8349-472c-9a85-adc34f8b0e81">
+	<property name="ireport.zoom" value="0.9090909090909091"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<import value="org.apache.commons.lang.StringUtils"/>
+	<parameter name="certlineid" class="java.lang.String"/>
+	<parameter name="dateend" class="java.util.Date"/>
+	<parameter name="datestar" class="java.util.Date"/>
+	<parameter name="simpleDateFormat" class="java.text.SimpleDateFormat" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="astAtdatestart" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{simpleDateFormat}.format($P{datestar})]]></defaultValueExpression>
+	</parameter>
+	<parameter name="astAtdateend" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{simpleDateFormat}.format($P{dateend})]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dl_sqldatestart" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdatestart} == "" || $P{astAtdatestart} == null ? " ": " and i.dateinvoiced >= ' "+$P{astAtdatestart}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dl_sqldateend" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdateend} == "" || $P{astAtdateend} == null ? " ": " and i.dateinvoiced <=  '" + $P{astAtdateend}+ "'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="jb_sqldatestart" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdatestart} == "" || $P{astAtdatestart} == null ? " ": " and gl.datedoc >= ' "+$P{astAtdatestart}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="jb_sqldateend" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdateend} == "" || $P{astAtdateend} == null ? " ": " and gl.datedoc <=  '" + $P{astAtdateend}+ "'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pd_sqldatestart" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdatestart} == "" || $P{astAtdatestart} == null ? " ": " and fp.paymentdate >= ' "+$P{astAtdatestart}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pd_sqldateend" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdateend} == "" || $P{astAtdateend} == null ? " ": " and fp.paymentdate <=  '" + $P{astAtdateend}+ "'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="bdir_sqldatestart" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdatestart} == "" || $P{astAtdatestart} == null ? " ": " and bdir.budgetdate >= ' "+$P{astAtdatestart}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="bdir_sqldateend" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdateend} == "" || $P{astAtdateend} == null ? " ": " and bdir.budgetdate <=  '" + $P{astAtdateend}+ "'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="vd_sqldatestart" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdatestart} == "" || $P{astAtdatestart} == null ? " ": " and vst.viaticaldate >= ' "+$P{astAtdatestart}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="vd_sqldateend" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{astAtdateend} == "" || $P{astAtdateend} == null ? " ": " and vst.viaticaldate <=  '" + $P{astAtdateend}+ "'"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="budget_cert_line_id" class="java.lang.String"/>
+	<parameter name="validcombination" class="java.lang.String"/>
+	<parameter name="farea" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="fppresupcode" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="fppresupname" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="fbarea" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="flinenegocio" class="java.lang.String"/>
+	<parameter name="fadjusted_value" class="java.math.BigDecimal">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="fexecutedvalue" class="java.math.BigDecimal"/>
+	<parameter name="existaccountparameter" class="java.lang.String">
+		<defaultValueExpression><![CDATA[StringUtils.equals($P{validcombination}, "") || StringUtils.equals($P{validcombination}, null)? "" :" and exists(select 1 from fact_acct fac inner join  c_elementvalue acct on acct.c_elementvalue_id =  fac.account_ID where (fac.line_id = il.c_invoiceline_id or fac.record_id = i.c_invoice_id) and amtsourcecr > 0 and acct.c_elementvalue_id = (select max(account_id) from c_validcombination where c_validcombination_id = '" + $P{validcombination}+ "' ))"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="existsaccoutparameter01" class="java.lang.String">
+		<defaultValueExpression><![CDATA[StringUtils.equals($P{validcombination}, "") || StringUtils.equals($P{validcombination}, null)? "" :"and exists ( select 1 from  ssve_viatical_settlement psd inner join fact_acct fac on fac.record_id = psd.ssve_viatical_settlement_id inner join  c_elementvalue acct on acct.c_elementvalue_id = fac.account_id   where psd.ssve_viatical_settlement_id = vst.ssve_viatical_settlement_id and acct.c_elementvalue_id = (select max(account_id) from c_validcombination where c_validcombination_id = '" + $P{validcombination}+ "' ) )  "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sqlnumerocuenta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[StringUtils.equals($P{validcombination}, "")||StringUtils.equals($P{validcombination},null)? "": " and acct.c_elementvalue_id = (select max(account_id) from c_validcombination where c_validcombination_id = '" +$P{validcombination}+"') "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fbcdocumentno" class="java.lang.String"/>
+	<parameter name="fbudgetcertlineid" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select dl.sfb_budget_cert_line_det_v_id as id , dc.name as ftipotransaccion, bp.name as ftercero, i.documentno as fndocumento, i.dateinvoiced as ffecha, 
+il.linenetamt as fbase, 
+(select sum(tl.taxamt) from  c_invoicelinetax tl where tl.c_invoice_id = i.c_invoice_id group by tl.c_invoice_id) as fiva,
+i.grandtotal as ftotal,
+coalesce((select max(acct.value) from  fact_acct fac 
+                   inner join  c_elementvalue acct on acct.c_elementvalue_id =  fac.account_ID 
+				   where fac.line_id = il.c_invoiceline_id and amtsourcecr > 0 $P!{sqlnumerocuenta} ),
+		(select max(acct.value) from fact_acct fac 
+		 inner join  c_elementvalue acct on acct.c_elementvalue_id =  fac.account_ID
+		 where fac.record_id = i.c_invoice_id and  amtsourcecr > 0 $P!{sqlnumerocuenta} )
+		)   as  faccoutcount
+from sfb_budget_cert_line_det_v  dl 
+inner join c_invoice i on dl.c_invoice_id = i.c_invoice_id
+inner join c_doctype dc on dc.c_doctype_id = i.c_doctype_id
+inner join c_bpartner bp on bp.c_bpartner_id =  i.c_bpartner_id
+inner join c_invoiceline il on il.c_invoiceline_id = dl.c_invoiceline_id
+where   dc.docbasetype = 'API' and i.issotrx = 'N' and dl.EM_Sfb_Budget_Cert_Line_ID = $P{fbudgetcertlineid} $P!{dl_sqldatestart} $P!{dl_sqldateend}  $P!{existaccountparameter}
+group by id, ftipotransaccion, ftercero, fndocumento, ffecha, fbase, faccoutcount, ftotal, i.c_invoice_id
+UNION
+select dl.sfb_budget_cert_line_det_v_id as id,   dc.name as ftipotransaccion, bp.name as ftercero, 
+i.documentno as fndocumento, 
+i.dateinvoiced as ffecha, il.linenetamt as fbase,  
+(select sum(tl.taxamt) from  c_invoicelinetax tl where tl.c_invoice_id = i.c_invoice_id group by tl.c_invoice_id) as fiva,
+i.grandtotal as ftotal,
+coalesce((select max(acct.value) from  fact_acct fac 
+                   inner join  c_elementvalue acct on acct.c_elementvalue_id =  fac.account_ID 
+				   where fac.line_id = il.c_invoiceline_id and amtsourcecr > 0  $P!{sqlnumerocuenta}  ),
+		(select max(acct.value) from fact_acct fac 
+		 inner join  c_elementvalue acct on acct.c_elementvalue_id =  fac.account_ID
+		 where fac.record_id = i.c_invoice_id and  amtsourcecr > 0  $P!{sqlnumerocuenta}  )
+		)   as  faccoutcount
+from sfb_budget_cert_line_det_v  dl 
+inner join c_invoice i on dl.c_invoice_id = i.c_invoice_id
+inner join c_doctype dc on dc.c_doctype_id = i.c_doctype_id
+inner join c_bpartner bp on bp.c_bpartner_id =  i.c_bpartner_id
+inner join c_invoiceline il on il.c_invoiceline_id = dl.c_invoiceline_id
+where   dc.docbasetype = 'APC' and i.issotrx = 'N' and dl.EM_Sfb_Budget_Cert_Line_ID = $P{fbudgetcertlineid} $P!{dl_sqldatestart} $P!{dl_sqldateend} $P!{existaccountparameter}
+group by id,   ftipotransaccion, ftercero, fndocumento, ffecha, fbase, faccoutcount, ftotal, i.c_invoice_id
+UNION
+select jb.sfb_budget_journaline_det_v_id as id,'Asientos' as ftipotransaccion, '' as ftercero, gl.documentno as  fndocumento, 
+gl.datedoc as ffecha, 
+(case when gll.amtsourcedr = 0 then gll.amtsourcecr else  gll.amtsourcedr end) as  fbase , 0 as fiva, 
+(case when gll.amtsourcedr = 0 then gll.amtsourcecr else  gll.amtsourcedr end) as ftotal,
+(acct.value)  as faccoutcount
+from  sfb_budget_journaline_det_v jb 
+inner join gl_journal gl on gl.gl_journal_id = jb.gl_journal_id
+inner join gl_journalline gll on gll.gl_journalline_id = jb.gl_journalline_id 
+inner join fact_acct fac on gll.gl_journalline_id = fac.line_id
+inner join c_elementvalue acct on acct.c_elementvalue_id =  fac.account_id 
+where  jb.Sfb_Budget_Cert_Line_ID = $P{fbudgetcertlineid} $P!{jb_sqldatestart} $P!{jb_sqldateend} $P!{sqlnumerocuenta}
+group by id,  ftipotransaccion, ftipotransaccion, ftercero, fndocumento, ffecha, fbase, faccoutcount, ftotal
+UNION
+select pd.sfb_budget_payment_det_v_id as id , 'Pago' as ftipotransaccion,bp.name as ftercero , bp.value as fndocumento , fp.paymentdate as ffecha, 
+fpd.amount as fbase, 0 as fiva, fpd.amount  as ftotal, 
+(acct.value)  as faccoutcount 
+from sfb_budget_payment_det_v pd 
+inner join fin_payment fp on fp.fin_payment_id = pd.fin_payment_id
+inner join c_bpartner bp on bp.c_bpartner_id = pd.c_bpartner_id
+inner join fin_payment_detail fpd on fpd.fin_payment_detail_id = pd.fin_payment_detail_id
+inner join fact_acct fac on fac.line_id = fpd.fin_payment_detail_id 
+inner join  c_elementvalue acct on ( acct.c_elementvalue_id = fac.account_ID and  amtsourcecr > 0)
+where pd.Sfb_Budget_Cert_Line_ID = $P{fbudgetcertlineid} $P!{pd_sqldatestart} $P!{pd_sqldateend} $P!{sqlnumerocuenta} 
+group by id,  ftipotransaccion, ftipotransaccion, ftercero, fndocumento, ffecha, fbase, faccoutcount, ftotal
+UNION 
+select bdir.scbd_budget_direct_id as id  , 'Ejecució presupuestaria' as ftipotransaccion, '' as ftercero,
+bdir.documentno as fndocumento,bdir.budgetdate as ffecha, bdir.totalamt as fbase, 0 as fiva, bdir.totalamt as ftotal, '' as faccoutcount
+from scbd_budget_direct  bdir 
+where bdir.SFB_Budget_Cert_Line_ID = $P{fbudgetcertlineid} $P!{bdir_sqldatestart} $P!{bdir_sqldateend}
+group by id, ftipotransaccion, ftipotransaccion, ftercero, fndocumento, ffecha, fbase, faccoutcount, ftotal
+UNION 
+select vd.ssve_viatical_details_v_id as id , 'Liquidación de viaticos' as ftipotransaccion, bp.name as ftercero, vst.documentno as fndocumento, 
+vst.viaticaldate as ffecha,
+totalamt_viatical as fbase,0 as fiva, vd.totalamt_viatical as ftotal,
+(select max(acct.value) from  ssve_viatical_settlement psd
+ inner join fact_acct fac on fac.record_id = psd.ssve_viatical_settlement_id
+ inner join  c_elementvalue acct on (acct.c_elementvalue_id =   fac.account_id $P!{sqlnumerocuenta}  )
+ where psd.ssve_viatical_settlement_id = vst.ssve_viatical_settlement_id 
+) as faccoutcount
+from  ssve_viatical_details_v vd 
+inner join ssve_viatical_settlement vst on vst.ssve_viatical_settlement_id = vd.ssve_viatical_settlement_id
+inner join c_bpartner bp on bp.c_bpartner_id =  vst.c_bpartner_id
+inner join ssve_viatsettlementline vstl on vst.ssve_viatical_settlement_id = vstl.ssve_viatical_settlement_id
+where vd.SFB_Budget_Cert_Line_ID = $P{fbudgetcertlineid} $P!{vd_sqldatestart} $P!{vd_sqldateend} $P!{existsaccoutparameter01}
+group by id,  ftipotransaccion, ftipotransaccion, ftercero, fndocumento, ffecha, fbase, faccoutcount, ftotal]]>
+	</queryString>
+	<field name="id" class="java.lang.String"/>
+	<field name="ftipotransaccion" class="java.lang.String"/>
+	<field name="ftercero" class="java.lang.String"/>
+	<field name="fndocumento" class="java.lang.String"/>
+	<field name="ffecha" class="java.util.Date"/>
+	<field name="fbase" class="java.math.BigDecimal"/>
+	<field name="fiva" class="java.math.BigDecimal"/>
+	<field name="ftotal" class="java.math.BigDecimal"/>
+	<field name="faccoutcount" class="java.lang.String"/>
+	<variable name="v_total" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{ftotal}]]></variableExpression>
+	</variable>
+	<variable name="v_count" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Count">
+		<variableExpression><![CDATA[$F{fndocumento}]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupFooter>
+			<band height="33">
+				<line>
+					<reportElement positionType="Float" x="2" y="0" width="1030" height="1" uuid="5db66521-97c1-4cd0-938b-e16db35ae81c">
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+				<textField pattern="###0.0000">
+					<reportElement x="821" y="6" width="109" height="20" uuid="ee01b8cc-cf50-47ed-978e-85db865fe3a4">
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{v_total}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement positionType="Float" x="120" y="38" width="115" height="20" uuid="585cf73c-6556-45c2-a522-56fac0fddeda">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de transaccion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="235" y="38" width="128" height="20" uuid="869f256b-afaa-4a39-9e47-edaa996e9f50">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tercero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="363" y="38" width="121" height="20" uuid="fc77a2e5-6544-4bb5-b3ac-05ca6b937090">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Num. Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="484" y="38" width="112" height="20" uuid="334a9331-286c-48f2-b0aa-e0b9c095f163">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="596" y="38" width="113" height="20" uuid="7bf227d0-b089-481d-b093-4fa8b943ea9f">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Base]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="-1" y="34" width="1030" height="1" uuid="b1276929-a889-49b8-9944-898731d027d5">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="59" width="1030" height="1" uuid="692fd177-9766-4704-b7c4-a8b4e24077a5">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="709" y="38" width="112" height="20" uuid="8cfc6aad-6e36-4225-9797-905c4baf4a2c">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="821" y="38" width="109" height="20" uuid="a11d7063-2ca5-4fd8-9929-ad274e23492a">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="930" y="38" width="100" height="20" uuid="7b1c5a88-724b-42ae-a3b7-a795c67f5b05">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cuenta contable]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="120" y="4" width="115" height="20" uuid="af32ba62-4195-4c6a-b7c6-5b290d304dea">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{farea}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="235" y="4" width="128" height="20" uuid="c5f5c880-4b3f-46eb-b9ae-7f45c858fe01">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fppresupcode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="363" y="4" width="121" height="20" uuid="821db87e-1889-452f-a334-ca6a522e92f4">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fppresupname}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="484" y="4" width="112" height="20" uuid="6b8fa3c5-7416-45d7-8e38-84bf7ce0a81b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fbarea}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="596" y="4" width="113" height="20" uuid="89955d49-3a1a-4889-8208-873ac1c4cbb6">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{flinenegocio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.0000" isBlankWhenNull="true">
+				<reportElement x="709" y="4" width="112" height="20" uuid="31c2cfb3-cf33-4b55-bde6-5a26cd32e394">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fadjusted_value}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.0000" isBlankWhenNull="true">
+				<reportElement x="821" y="4" width="108" height="20" uuid="28a71da7-b7eb-49ca-851d-cc81d34804d9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fexecutedvalue}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="38" width="120" height="20" uuid="5cf965a1-c930-4fec-b67d-049c67dba2e6">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[# Certificado]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="235" y="0" width="128" height="22" uuid="20fe847f-e260-4044-a48c-b22a19120f22">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ftercero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="363" y="0" width="121" height="22" uuid="78736470-f4aa-408e-a18a-8a15f5fb82be">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fndocumento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="484" y="0" width="112" height="22" uuid="83ffc9dc-c79a-431d-8ae4-dda59a5bc7d7">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ffecha}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="596" y="0" width="113" height="22" uuid="4d767d6a-2ef9-4d57-81fd-0f473ad4b58f">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fbase}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="120" y="0" width="115" height="22" uuid="a7136c13-0eb1-49a5-ae7f-0eb7e4a55160">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ftipotransaccion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0000" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="709" y="0" width="112" height="22" uuid="32a756e1-71b2-4f99-b3d0-db2780e8030c">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fiva}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0000" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="821" y="0" width="109" height="22" uuid="55e6e248-b10b-44c6-82bf-944bd49af33f">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ftotal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="930" y="0" width="100" height="22" uuid="97bac343-a961-4a03-9513-de41d6ff72a4">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{faccoutcount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="0" width="120" height="22" uuid="10b8ff5b-00e6-48de-8b1a-bd34ad2700e4">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{fbcdocumentno}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="10">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="A6A0D7E092F74AB28F067DC46F88D472" trl="N">
+    <value column="Name" isTrl="N" original="Purchase Order Report">Reporte Ordenes de Compra</value>
+    <value column="Description" isTrl="N" original="Purchase Order Report">Reporte Ordenes de Compra</value>
+    <value column="Help" isTrl="N" original="This report displays a detailed list of the purchase orders issued to the suppliers.">Este informe muestra una lista detallada de las órdenes de compra emitidas a los proveedores.</value>
+  </row>
+  <row id="741DC9BE9E954E4398F49CBB20B54D0C" trl="N">
+    <value column="Name" isTrl="N" original="Print Accounting">Imprimir Contabilidad</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="74540AA83D3943BD8834DA5DDFD2D704" trl="N">
+    <value column="Name" isTrl="Y" original="Receivable and Payable by Voyage">Cobros y Pagos por Viaje</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

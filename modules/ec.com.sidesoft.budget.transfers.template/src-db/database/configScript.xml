@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.34312"/>
+    <columnDataChange tablename="AD_COLUMN" columnname="AD_VAL_RULE_ID" pkRow="45AF1E4BD7F24AE1B0D24704FD72C49B">
+      <oldValue/>
+      <newValue><![CDATA[C183FF4699124526B9AB66F32BBB74CF]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="FIELDLENGTH" pkRow="5C825BB50604448A8758857D891C79A2">
+      <oldValue><![CDATA[255]]></oldValue>
+      <newValue><![CDATA[1000]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_FIELD" columnname="DISPLAYLENGTH" pkRow="C1684BBCE8FC4F969D6E5CA0E686AF64">
+      <oldValue><![CDATA[255]]></oldValue>
+      <newValue><![CDATA[1000]]></newValue>
+    </columnDataChange>
+  </vector>

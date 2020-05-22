@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFB_LOAD_AMORTIZATION">
+    <function name="SFB_LOAD_AMORTIZATION" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+  Cur_Parameter RECORD;
+  Cur_Line RECORD;
+  
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+  
+  v_ResultStr VARCHAR2(2000) := '';
+  v_Certificate_ID VARCHAR2(32);
+  v_Amortization_ID VARCHAR2(32);
+  v_Loaded VARCHAR2(60);
+  v_Budget_Item_ID VARCHAR2(32);
+  
+  v_n_insertions NUMBER;
+  v_Message VARCHAR2(2000):='';
+  v_Line NUMBER:= 10;
+BEGIN
+
+ --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+    v_n_insertions := 0;
+    
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID, i.AD_User_ID        
+      FROM AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+      )
+    LOOP
+
+      v_Certificate_ID := Cur_Parameter.Record_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;
+      
+    END LOOP; -- Get Parameter
+    
+    SELECT AD_Client_ID, AD_Org_ID, A_Amortization_ID, Load_Amortization
+    INTO v_Client_ID, v_Org_ID, v_Amortization_ID, v_Loaded
+    FROM SFB_Budget_Certificate
+    WHERE sfb_budget_certificate_id = v_Certificate_ID;
+    
+    IF (v_Loaded = 'N') THEN
+      FOR Cur_Line IN
+        (SELECT sum(certified_Value) AS certified_Value, costcenter_ID, user1_ID, documentno, budget_Item_ID, A_Asset_ID, A_Asset_Group_ID
+         FROM 
+          (SELECT AL.amortizationamt AS certified_Value, AL.C_Costcenter_ID AS costcenter_ID, AL.User1_ID AS user1_ID, A.documentno, 
+           COALESCE(ASS.EM_SFB_Budget_Item_ID, ASSG.EM_SFB_Budget_Item_ID) AS budget_Item_ID, ASS.A_Asset_ID, ASSG.A_Asset_Group_ID
+           FROM A_Amortization A
+           RIGHT JOIN A_AmortizationLine AL ON A.a_amortization_id = AL.a_amortization_id
+           LEFT JOIN A_Asset ASS ON AL.a_asset_id = ASS.a_asset_id
+           LEFT JOIN A_Asset_Group ASSG ON ASS.a_asset_group_id = ASSG.a_asset_group_id
+           WHERE A.A_Amortization_ID = v_Amortization_ID
+          ) T
+         GROUP BY A_Asset_Group_ID, A_Asset_ID, costcenter_ID, user1_ID, documentno, budget_Item_ID
+         HAVING sum(certified_Value) > 0
+        )
+      LOOP
+        
+        IF (Cur_Line.budget_Item_ID IS NOT NULL AND Cur_Line.costcenter_ID IS NOT NULL AND Cur_Line.user1_ID IS NOT NULL) THEN
+        
+          INSERT INTO SFB_Budget_Cert_Line
+          (sfb_budget_cert_line_id, ad_client_id, ad_org_id, isactive, created, createdby, updated, updatedby, sfb_budget_item_id, c_costcenter_id, concept, committed_value, executed_value, description, sfb_budget_certificate_id,
+           certified_value, line, budget_certified_value, budget_committed_value, budget_executed_value, actual_value, available_balance, budget_available_balance, budget_actual_value, user1_id, a_asset_id, a_asset_group_id)
+          VALUES
+          (get_uuid(), v_Client_ID, v_Org_ID, 'Y', now(), v_User_ID, now(), v_User_ID, Cur_Line.budget_Item_ID, Cur_Line.costcenter_ID, 'Nómina ' || Cur_Line.documentno, 0, 0, NULL, v_Certificate_ID,
+           Cur_Line.certified_Value, v_Line, 0, 0, 0, 0, 0, 0, 0, Cur_Line.user1_ID, Cur_line.A_Asset_ID, Cur_Line.A_Asset_Group_ID
+          );
+          
+          v_Line := v_Line + 10;
+                    
+        END IF;
+        
+      END LOOP;
+      
+      v_ResultStr:='UpdatingRecord';
+                  
+      UPDATE SFB_Budget_Certificate
+      SET Load_Amortization = 'Y',
+          Updated = now(),          
+          UpdatedBy = TO_CHAR(v_User_ID),
+          Processed = 'Y'
+      WHERE SFB_Budget_Certificate_ID = v_Certificate_ID;
+    
+    ELSE
+    
+      DELETE FROM SFB_BUDGET_CERT_LINE WHERE SFB_Budget_Certificate_ID = v_Certificate_ID;
+            
+      v_ResultStr:='UpdatingRecord';
+                  
+      UPDATE SFB_Budget_Certificate
+      SET Load_Amortization = 'N',
+          Updated = now(),          
+          UpdatedBy = TO_CHAR(v_User_ID),
+          Processed = 'N'
+      WHERE SFB_Budget_Certificate_ID = v_Certificate_ID;
+    
+    END IF;
+    
+    v_Message := '@RowsInserted@: ' || v_n_insertions || '.';
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message);
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message);
+    RETURN;
+    
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    ROLLBACK;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr);
+    RETURN;
+END SFB_LOAD_AMORTIZATION
+]]></body>
+    </function>
+  </database>

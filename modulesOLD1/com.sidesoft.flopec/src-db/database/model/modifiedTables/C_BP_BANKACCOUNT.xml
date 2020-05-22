@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE C_BP_BANKACCOUNT">
+    <table name="C_BP_BANKACCOUNT" primaryKey="C_BP_BANKACCOUNT_KEY">
+      <column name="EM_SSFL_IBAN" primaryKey="false" required="false" type="VARCHAR" size="34" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+    </table>
+  </database>

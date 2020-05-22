@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.34312"/>
+    <columnDataChange tablename="AD_REF_LIST" columnname="ISACTIVE" pkRow="800256">
+      <oldValue><![CDATA[N]]></oldValue>
+      <newValue><![CDATA[Y]]></newValue>
+    </columnDataChange>    
+    <columnDataChange tablename="AD_FIELD" columnname="DISPLAYLOGIC" pkRow="510">
+      <oldValue><![CDATA[@ElementType@='A']]></oldValue>
+      <newValue/>
+    </columnDataChange>
+  </vector>

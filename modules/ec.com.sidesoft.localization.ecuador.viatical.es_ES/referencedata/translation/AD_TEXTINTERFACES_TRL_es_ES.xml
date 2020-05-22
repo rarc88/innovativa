@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="040DB8D250F6413186C78A717B534F97" trl="N">
+    <value column="Text" isTrl="N" original="MOVILIZACIONES">MOVILIZACIONES</value>
+  </row>
+  <row id="071887A2C95A433A8612B71D8B25BC79" trl="N">
+    <value column="Text" isTrl="N" original="Withholding #:">Withholding #:</value>
+  </row>
+  <row id="0774C7B62F71418DA42BEEFE4AC884CB" trl="N">
+    <value column="Text" isTrl="N" original="COEFICIENTE O PORCENTAJE">COEFICIENTE O PORCENTAJE</value>
+  </row>
+  <row id="0B76B62DAFF54CFAA3FE87B2AB892D5B" trl="N">
+    <value column="Text" isTrl="N" original="Nombre:">Nombre:</value>
+  </row>
+  <row id="0C175EDA81A940C0897A6A1AF07D34E5" trl="N">
+    <value column="Text" isTrl="N" original="INFORME DE LICENCIA CON REMUNERACIÓN">INFORME DE LICENCIA CON REMUNERACIÓN</value>
+  </row>
+  <row id="0CC6B3D161694255ADF231B9D2654E7A" trl="N">
+    <value column="Text" isTrl="N" original="TIPO DE TRANSPORTE">TIPO DE TRANSPORTE</value>
+  </row>
+  <row id="0D4F0F9F56EE42E7921B667ECC7E122F" trl="N">
+    <value column="Text" isTrl="N" original="EN EL PAIS">EN EL PAIS</value>
+  </row>
+  <row id="0D7B54C4BE3A4749AD317D5C56AF41F4" trl="N">
+    <value column="Text" isTrl="N" original="dd-mm-aaaa">dd-mm-aaaa</value>
+  </row>
+  <row id="0F09333B55D84AE7BD1CCF4A64DB5314" trl="N">
+    <value column="Text" isTrl="N" original="TIPO DE CUENTA">TIPO DE CUENTA</value>
+  </row>
+  <row id="0F139575620C408E921AC0F695C9C73D" trl="N">
+    <value column="Text" isTrl="N" original="RUTA">RUTA</value>
+  </row>
+  <row id="12BF8817DCCC4AA598AE82437884694B" trl="N">
+    <value column="Text" isTrl="N" original="Payment Order:">Payment Order:</value>
+  </row>
+  <row id="14459891916D4A878306F0957598F0AA" trl="N">
+    <value column="Text" isTrl="N" original="NOMBRE DEL BANCO">NOMBRE DEL BANCO</value>
+  </row>
+  <row id="1960683391C04D79A0A8D87921CCA043" trl="N">
+    <value column="Text" isTrl="N" original="EN EL EXTERIOR">EN EL EXTERIOR</value>
+  </row>
+  <row id="1D63CAA99FDE4D158AB8CFD368BC323B" trl="N">
+    <value column="Text" isTrl="N" original="DATOS GENERALES">DATOS GENERALES</value>
+  </row>
+  <row id="1DFAF315D69B4F6497E6EB8B538EA0E3" trl="N">
+    <value column="Text" isTrl="N" original="hh:mm">hh:mm</value>
+  </row>
+  <row id="1E7D12582DCD4C5A9C97C2298B85D30F" trl="N">
+    <value column="Text" isTrl="N" original="NOMBRE:">NOMBRE:</value>
+  </row>
+  <row id="1F0B7916DF104E7980284D9CE30B507E" trl="N">
+    <value column="Text" isTrl="N" original="NOTA El presente informe deberá presentarse dentro del término máximo de 4 días de cumplida la licencia, caso contrario la liquidación se demorará e incluso de no presentarlo tendría que restituir los valores pagados. Cuando la licencia sea superior al número de horas o días autorizados, se deberá adjuntar la autorización por escrito de la Máxima Autoridad o su Delegado">NOTA El presente informe deberá presentarse dentro del término máximo de 4 días de cumplida la licencia, caso contrario la liquidación se demorará e incluso de no presentarlo tendría que restituir los valores pagados. Cuando la licencia sea superior al número de horas o días autorizados, se deberá adjuntar la autorización por escrito de la Máxima Autoridad o su Delegado</value>
+  </row>
+  <row id="223C723B84C44A2E8C601D033917CC17" trl="N">
+    <value column="Text" isTrl="N" original="VIATICOS">VIATICOS</value>
+  </row>
+  <row id="2AA1C8B7AA834789AB2C2BC8B4C151FC" trl="N">
+    <value column="Text" isTrl="N" original="Typedoc:">Typedoc:</value>
+  </row>
+  <row id="2CCFC4C72F094ABDB502DA5409921DBC" trl="N">
+    <value column="Text" isTrl="N" original="TRANSPORTE">TRANSPORTE</value>
+  </row>
+  <row id="2E5C715A4ED442B0B628FB3086E877EC" trl="N">
+    <value column="Text" isTrl="N" original="SON:">SON:</value>
+  </row>
+  <row id="2FE143261E6F499B83F5AA27EFE107E2" trl="N">
+    <value column="Text" isTrl="N" original="FIRMA DEL SERVIDOR SOLICITANTE">FIRMA DEL SERVIDOR SOLICITANTE</value>
+  </row>
+  <row id="32C69ECD2DBE42D3B9E84DE0BF05177F" trl="N">
+    <value column="Text" isTrl="N" original="VIATICO DIARIO">VIATICO DIARIO</value>
+  </row>
+  <row id="35C94961141141DB82B0805E749BB6B8" trl="N">
+    <value column="Text" isTrl="N" original="SALIDA">SALIDA</value>
+  </row>
+  <row id="3CAB9A6D1188406992D6093EC7959F18" trl="N">
+    <value column="Text" isTrl="N" original="Documentno:">Documentno:</value>
+  </row>
+  <row id="3D191D4B0E2244C49BA439B51DD4CD73" trl="N">
+    <value column="Text" isTrl="N" original="NOTA">NOTA</value>
+  </row>
+  <row id="4561A7FFA12E494CA90D2D06FA195471" trl="N">
+    <value column="Text" isTrl="N" original="NOTA: Esta solicitud seberá ser presentada para su Autorización, con por lo menos 6 días de anticipación a la licencia">NOTA: Esta solicitud seberá ser presentada para su Autorización, con por lo menos 6 días de anticipación a la licencia</value>
+  </row>
+  <row id="458F86D560B24078AA8B9B7B6FE46338" trl="N">
+    <value column="Text" isTrl="N" original="DATOS PARA TRANSFERENCIA">DATOS PARA TRANSFERENCIA</value>
+  </row>
+  <row id="46F62467CEBF4D318553DD2A2C4812C4" trl="N">
+    <value column="Text" isTrl="N" original="SELECCIONE LO QUE REQUIERA SOLICITAR:">SELECCIONE LO QUE REQUIERA SOLICITAR:</value>
+  </row>
+  <row id="4DCA081010C749AC8F622B8326AF6C99" trl="N">
+    <value column="Text" isTrl="N" original="ASIGNACION SEGUN TABLA">ASIGNACION SEGUN TABLA</value>
+  </row>
+  <row id="532E7C9DE16343C99800A9E5A4934C87" trl="N">
+    <value column="Text" isTrl="N" original="PUESTO">PUESTO</value>
+  </row>
+  <row id="53D48DEC510A4A9C8A999621DA8382EB" trl="N">
+    <value column="Text" isTrl="N" original="Reviewed by">Reviewed by</value>
+  </row>
+  <row id="5416F251182E46AFA0A179AC3CA32285" trl="N">
+    <value column="Text" isTrl="N" original="FIRMA RESPONSABLE UNIDAD SOLICITANTE">FIRMA RESPONSABLE UNIDAD SOLICITANTE</value>
+  </row>
+  <row id="5C486C6507FD41F09838ED650A534397" trl="N">
+    <value column="Text" isTrl="N" original="LLEGADA">LLEGADA</value>
+  </row>
+  <row id="5E7F3987593E4150857474E7AC9290A0" trl="N">
+    <value column="Text" isTrl="N" original="SUBDIRECCIÓN ADMINISTRATIVA">SUBDIRECCIÓN ADMINISTRATIVA</value>
+  </row>
+  <row id="63EEFADFC97E4CE78BD584A5BED94BE6" trl="N">
+    <value column="Text" isTrl="N" original="NOMBRE DEL TRANSPORTE">NOMBRE DEL TRANSPORTE</value>
+  </row>
+  <row id="69257B3E54FD49CFBCD6E4FD9F55F75C" trl="N">
+    <value column="Text" isTrl="N" original="N° DE CUENTA">N° DE CUENTA</value>
+  </row>
+  <row id="695033860D10415C848EBEED99C9AE5D" trl="N">
+    <value column="Text" isTrl="N" original="Entry">Entry</value>
+  </row>
+  <row id="6A598AF531FA478EBE858247FAC77CCB" trl="N">
+    <value column="Text" isTrl="N" original="NOMBRE DE LA UNIDAD DEL SERVIDOR:">NOMBRE DE LA UNIDAD DEL SERVIDOR:</value>
+  </row>
+  <row id="6BC2F64C47234B8B9D67782488187C76" trl="N">
+    <value column="Text" isTrl="N" original="Date:">Date:</value>
+  </row>
+  <row id="711AAF1FD15D4B8D842145F9E7DB3E13" trl="N">
+    <value column="Text" isTrl="N" original="DATOS GENERALES">DATOS GENERALES</value>
+  </row>
+  <row id="713AF1D8C90E49BCACEA510E535ACF83" trl="N">
+    <value column="Text" isTrl="N" original="Nro.">Nro.</value>
+  </row>
+  <row id="736FF747F4DE415283BA1B4727F231E1" trl="N">
+    <value column="Text" isTrl="N" original="Date:">Date:</value>
+  </row>
+  <row id="75D8C3C90B79412B9347FB3B4ECCE1AF" trl="N">
+    <value column="Text" isTrl="N" original="Detail:">Detail:</value>
+  </row>
+  <row id="76E92DD94A5B4D7BAE0A65B4BC4FE3D0" trl="N">
+    <value column="Text" isTrl="N" original="SOLICITUD DE LICENCIA CON REMUNERACIÓN">SOLICITUD DE LICENCIA CON REMUNERACIÓN</value>
+  </row>
+  <row id="78D04A8E9F0748FEA2B56C81D0B79960" trl="N">
+    <value column="Text" isTrl="N" original="FECHA LLEGADA (dd-mm-aaaa) (LUGAR HABITUAL DE TRABAJO)">FECHA LLEGADA (dd-mm-aaaa) (LUGAR HABITUAL DE TRABAJO)</value>
+  </row>
+  <row id="7C30C8EBFE9248E3ACC5A587168717A1" trl="N">
+    <value column="Text" isTrl="N" original="FECHA DE INFORME">FECHA DE INFORME</value>
+  </row>
+  <row id="7D4A7ABEA47F4A4A9386A50BB6610FCA" trl="N">
+    <value column="Text" isTrl="N" original="APELLIDOS - NOMBRES DEL SERVIDOR">APELLIDOS - NOMBRES DEL SERVIDOR</value>
+  </row>
+  <row id="7F260457C85B40538F95AE62957412F8" trl="N">
+    <value column="Text" isTrl="N" original="JEFE INMEDIATO SUPERIOR">JEFE INMEDIATO SUPERIOR</value>
+  </row>
+  <row id="7F2CF3FDC2D04C998167C3497D77C580" trl="N">
+    <value column="Text" isTrl="N" original="ITINERARIO">ITINERARIO</value>
+  </row>
+  <row id="86DCEBFCB8484205B60E5FDD3AB975C1" trl="N">
+    <value column="Text" isTrl="N" original="Legal Entity:">Legal Entity:</value>
+  </row>
+  <row id="8700F493A9BA493A910135754EFA9EB9" trl="N">
+    <value column="Text" isTrl="N" original="NOTA: En caso de haber utilizado transporte público aéreo o terrestre, se deberá adjuntar obligatoriamente los pasajes a bordo o boletos, de acuerdo a lo que establece el último inciso del artículo 14 de la Norma Técnica Para El Pago De Viáticos, Subsistencias, Movilizaciones Y Alimentación, Dentro Del País Para Las Y Los Obreros En Las Instituciones Del Estado, expedido con Acuerdo Ministerial 165 publicado en el Registro Oficial Suplemento 326 de 4 de septiembre de 2014">NOTA: En caso de haber utilizado transporte público aéreo o terrestre, se deberá adjuntar obligatoriamente los pasajes a bordo o boletos, de acuerdo a lo que establece el último inciso del artículo 14 de la Norma Técnica Para El Pago De Viáticos, Subsistencias, Movilizaciones Y Alimentación, Dentro Del País Para Las Y Los Obreros En Las Instituciones Del Estado, expedido con Acuerdo Ministerial 165 publicado en el Registro Oficial Suplemento 326 de 4 de septiembre de 2014</value>
+  </row>
+  <row id="8798EA2BADD74C3E9FCB2C2840AE0776" trl="N">
+    <value column="Text" isTrl="N" original="VALOR DE LA COMISIÓN">VALOR DE LA COMISIÓN</value>
+  </row>
+  <row id="87EC2821D1E246CFBBB7F09709C399DD" trl="N">
+    <value column="Text" isTrl="N" original="Typedoc:">Typedoc:</value>
+  </row>
+  <row id="88506D90DB094F54B85CF83A47AAFB1D" trl="N">
+    <value column="Text" isTrl="N" original="APELLIDOS - NOMBRES DEL SERVIDOR">APELLIDOS - NOMBRES DEL SERVIDOR</value>
+  </row>
+  <row id="8A9241FA1AA04979A9BAE0817BB91C7C" trl="N">
+    <value column="Text" isTrl="N" original="LLEGADA">LLEGADA</value>
+  </row>
+  <row id="8B676CD9FE564764BBDBE9B795DDDF6E" trl="N">
+    <value column="Text" isTrl="N" original="MÁXIMA AUTORIDAD O DELEGADO">MÁXIMA AUTORIDAD O DELEGADO</value>
+  </row>
+  <row id="8BB5873CF3354327901A2EDA82291592" trl="N">
+    <value column="Text" isTrl="N" original="(Aéreo, terrestre, otros)">(Aéreo, terrestre, otros)</value>
+  </row>
+  <row id="8CC1CEA446814B2A80B34FAE659CA3E2" trl="N">
+    <value column="Text" isTrl="N" original="HORA LLEGADA (hh:mm) (LUGAR HABITUAL DE TRABAJO)">HORA LLEGADA (hh:mm) (LUGAR HABITUAL DE TRABAJO)</value>
+  </row>
+  <row id="8D878F42D025456A8466BB987DD7AB5F" trl="N">
+    <value column="Text" isTrl="N" original="Estos datos se refieren al tiempo efectivamente utilizado en la Comisión, desde la salida del lugar de residencia o trabajo habituales o del cumplimiento de la licencia según sea el caso, hasta su llegada de estos sitios">Estos datos se refieren al tiempo efectivamente utilizado en la Comisión, desde la salida del lugar de residencia o trabajo habituales o del cumplimiento de la licencia según sea el caso, hasta su llegada de estos sitios</value>
+  </row>
+  <row id="8DABFE2F92D847DF8773A6DF74C4E207" trl="N">
+    <value column="Text" isTrl="N" original="NOMBRE:">NOMBRE:</value>
+  </row>
+  <row id="91FDFF7DA0FF4D73AEFFB5785185CCCC" trl="N">
+    <value column="Text" isTrl="N" original="Nro. SOLICITUD LICENCIA CON REMUNERACION">Nro. SOLICITUD LICENCIA CON REMUNERACION</value>
+  </row>
+  <row id="9392BC56CE2E441BB270A752AF9322DE" trl="N">
+    <value column="Text" isTrl="N" original="ALIMENTACIÓN">ALIMENTACIÓN</value>
+  </row>
+  <row id="95A89C997D7D4A16AAD2A656B262D35D" trl="N">
+    <value column="Text" isTrl="N" original="OBSERVACIONES">OBSERVACIONES</value>
+  </row>
+  <row id="96517999177E40018F48A718B13C8E53" trl="N">
+    <value column="Text" isTrl="N" original="Reviewed by">Reviewed by</value>
+  </row>
+  <row id="970F7E775C624FA585DD406A347AFBAA" trl="N">
+    <value column="Text" isTrl="N" original="HORA SALIDA (hh.mm)">HORA SALIDA (hh.mm)</value>
+  </row>
+  <row id="99ABF71F7D8546529E80D98948536D68" trl="N">
+    <value column="Text" isTrl="N" original="SUBDIRECCIÓN ADMINISTRATIVA">SUBDIRECCIÓN ADMINISTRATIVA</value>
+  </row>
+  <row id="9B9459E734984701B903E7F3E031C9FC" trl="N">
+    <value column="Text" isTrl="N" original="CIUDAD - PROVINCIA DE LA COMISION:">CIUDAD - PROVINCIA DE LA COMISION:</value>
+  </row>
+  <row id="9BBB1BF536414CCC9157AD38054F5F04" trl="N">
+    <value column="Text" isTrl="N" original="FECHA dd-mm-aaaa">FECHA dd-mm-aaaa</value>
+  </row>
+  <row id="A145353AF8934F54AE0A4A926C974B9A" trl="N">
+    <value column="Text" isTrl="N" original="INFORME DE ACTIVIDADES Y PRODUCTOS ALCANZADOS">INFORME DE ACTIVIDADES Y PRODUCTOS ALCANZADOS</value>
+  </row>
+  <row id="A669DCF655894AC9978836F1B2A7F561" trl="N">
+    <value column="Text" isTrl="N" original="NUMERO DE NOCHES/DIAS">NUMERO DE NOCHES/DIAS</value>
+  </row>
+  <row id="A6ECAD972B00469EB2A3F8688D21A644" trl="N">
+    <value column="Text" isTrl="N" original="TRANSPORTE UTILIZADO">TRANSPORTE UTILIZADO</value>
+  </row>
+  <row id="A890903F37944397A0E3B63D5C5420BE" trl="N">
+    <value column="Text" isTrl="N" original="NOMBRE UNIDAD DEL SERVIDOR">NOMBRE UNIDAD DEL SERVIDOR</value>
+  </row>
+  <row id="A9DB2499EBA54FC8BA36A3A7652A1493" trl="N">
+    <value column="Text" isTrl="N" original="PUESTO">PUESTO</value>
+  </row>
+  <row id="ACBC96E421C8428A9BF0C7CAC016AB8C" trl="N">
+    <value column="Text" isTrl="N" original="Approved by">Approved by</value>
+  </row>
+  <row id="AD619C9805614D3B9CF40542CDD42E5A" trl="N">
+    <value column="Text" isTrl="N" original="f)">f)</value>
+  </row>
+  <row id="AE0973EDF5194C8485922098D9E4626B" trl="N">
+    <value column="Text" isTrl="N" original="SERVIDORES QUE INTEGRAN LA COMISION:">SERVIDORES QUE INTEGRAN LA COMISION:</value>
+  </row>
+  <row id="B131E15629474851A1A1561431E461AC" trl="N">
+    <value column="Text" isTrl="N" original="SALIDA">SALIDA</value>
+  </row>
+  <row id="B58E6BFEA5C04966A91717E1BD4A8611" trl="N">
+    <value column="Text" isTrl="N" original="FECHA DE SOLICITUD (dd-mm-aaaa)">FECHA DE SOLICITUD (dd-mm-aaaa)</value>
+  </row>
+  <row id="B7767BF26FDC477AB2DDBCECDDC654D7" trl="N">
+    <value column="Text" isTrl="N" original="FIRMAS DE APROBACION">FIRMAS DE APROBACION</value>
+  </row>
+  <row id="BB2AC546CAE645EC94B3136A954DC38C" trl="N">
+    <value column="Text" isTrl="N" original="Legal Entity:">Legal Entity:</value>
+  </row>
+  <row id="BD0C30B6E541435F9756A9F56C9BA39B" trl="N">
+    <value column="Text" isTrl="N" original="Detail:">Detail:</value>
+  </row>
+  <row id="C06FA0973F8E47288304845A9422E5F0" trl="N">
+    <value column="Text" isTrl="N" original="SUBSISTENCIAS">SUBSISTENCIAS</value>
+  </row>
+  <row id="C55C73DC660B4BC7837B6F19662937FD" trl="N">
+    <value column="Text" isTrl="N" original="NOMBRE DEL TRANSPORTE">NOMBRE DEL TRANSPORTE</value>
+  </row>
+  <row id="C7BB3BF4C57143AEA56B81C79D092B31" trl="N">
+    <value column="Text" isTrl="N" original="FECHA SALIDA (dd-mm-aaaa)">FECHA SALIDA (dd-mm-aaaa)</value>
+  </row>
+  <row id="CAA31A2F2E374DE28D0035D389EC3717" trl="N">
+    <value column="Text" isTrl="N" original="FECHA">FECHA</value>
+  </row>
+  <row id="CCF312DC0843437DB9EA18DAB2458B57" trl="N">
+    <value column="Text" isTrl="N" original="Approved by">Approved by</value>
+  </row>
+  <row id="D45D21B4EE464CB1BC7F03BC11243F60" trl="N">
+    <value column="Text" isTrl="N" original="Journal Entries Report">Journal Entries Report</value>
+  </row>
+  <row id="D5CC53C4694B4075B062ACF07D54754C" trl="N">
+    <value column="Text" isTrl="N" original="HORA hh.mm">HORA hh.mm</value>
+  </row>
+  <row id="DD0B5B6A340444949908196BA2C3B6AC" trl="N">
+    <value column="Text" isTrl="N" original="HORA">HORA</value>
+  </row>
+  <row id="DD9FF28479DC4052AADB6320EB9D37DC" trl="N">
+    <value column="Text" isTrl="N" original="Entry">Entry</value>
+  </row>
+  <row id="E1D86C863A974B5C8C19F80E6C26705D" trl="N">
+    <value column="Text" isTrl="N" original="Documentno:">Documentno:</value>
+  </row>
+  <row id="E4C1209E90A84E728D660BD4300A2535" trl="N">
+    <value column="Text" isTrl="N" original="DESCRIPCION DE LAS ACTIVIDADES A EJECUTARSE">DESCRIPCION DE LAS ACTIVIDADES A EJECUTARSE</value>
+  </row>
+  <row id="F072A52B26B7483A94AB4D16B7FFDA46" trl="N">
+    <value column="Text" isTrl="N" original="VALOR SOLICITADO:">VALOR SOLICITADO:</value>
+  </row>
+  <row id="F49DBD9540434CFFB4F519CC043A7BA8" trl="N">
+    <value column="Text" isTrl="N" original="- De no existir disponibilidad presupuestaria, tanto la solicitud como la autorización quedarán insubsistentes - El informe de Licencia con remuneración deberá presentarse dentro del término máximo de 4 días de cumplida la licencia - Está prohibido conceder licencias para el cumplimiento de servicios institucionales durante los días de descanso obligatorio, con excepción de las Máximas Autoridades o de casos excepcionales debidamente justificados por la Máxima Autoridad o su Delegado">- De no existir disponibilidad presupuestaria, tanto la solicitud como la autorización quedarán insubsistentes - El informe de Licencia con remuneración deberá presentarse dentro del término máximo de 4 días de cumplida la licencia - Está prohibido conceder licencias para el cumplimiento de servicios institucionales durante los días de descanso obligatorio, con excepción de las Máximas Autoridades o de casos excepcionales debidamente justificados por la Máxima Autoridad o su Delegado</value>
+  </row>
+  <row id="F66BEF92F338494FA5753B140D55CDBD" trl="N">
+    <value column="Text" isTrl="N" original="TIPO DE TRANSPORTE (Aéreo, terrestre, otros)">TIPO DE TRANSPORTE (Aéreo, terrestre, otros)</value>
+  </row>
+  <row id="F6CA6D6E1DC44049B4AA34BA4DC67F37" trl="N">
+    <value column="Text" isTrl="N" original="RUTA">RUTA</value>
+  </row>
+  <row id="F78219C33EA449D985A90F0F9E241528" trl="N">
+    <value column="Text" isTrl="N" original="Hora Inicio de Labores del día de retorno">Hora Inicio de Labores del día de retorno</value>
+  </row>
+  <row id="F84D2377E6C140CC97829E8B608790FD" trl="N">
+    <value column="Text" isTrl="N" original="Journal Entries Report">Journal Entries Report</value>
+  </row>
+  <row id="FB4DE88E47AD482DB4ED3516B7499753" trl="N">
+    <value column="Text" isTrl="N" original="CIUDAD - PROVINCIA DE LA COMISION">CIUDAD - PROVINCIA DE LA COMISION</value>
+  </row>
+  <row id="FBEF592197B74BBA8A9174B380DAEC9C" trl="N">
+    <value column="Text" isTrl="N" original="FIRMA SERVIDOR COMISIONADO">FIRMA SERVIDOR COMISIONADO</value>
+  </row>
+  <row id="FCC0D56090124266B4D7112F27A1065F" trl="N">
+    <value column="Text" isTrl="N" original="SERVIDORES QUE INTEGRAN LA COMISION">SERVIDORES QUE INTEGRAN LA COMISION</value>
+  </row>
+  <row id="FDC8081864004B34834878E10781ACA6" trl="N">
+    <value column="Text" isTrl="N" original="Nombre:">Nombre:</value>
+  </row>
+</compiereTrl>

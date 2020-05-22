@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="59FE5E1B88FA4CCBBFD0139B5077D77C" trl="N">
+    <value column="Name" isTrl="N" original="Account Element Dependent  Selector ">Account Element Dependent  Selector </value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="79A1D62850CA4A0C9236DDD986412A09" trl="N">
+    <value column="Name" isTrl="N" original="Period Select Secondary Account">Period Select Secondary Account</value>
+    <value column="Description" isTrl="N" original="Period Select Secondary Account">Period Select Secondary Account</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7F77A1CD89B44728A6B54159450BEC7C" trl="N">
+    <value column="Name" isTrl="N" original="Element Value Dependen Selector">Element Value Dependen Selector</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="BF83D71AE8794E78AD2C4E16FA5DA0CE" trl="N">
+    <value column="Name" isTrl="N" original="Element Value Selector">Element Value Selector</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

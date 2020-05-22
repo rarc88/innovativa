@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="00516DE7B13E4764813E3EEA21758AB0" trl="N">
+    <value column="Name" isTrl="N" original="Charterer">Charterer</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1D3BD1BE3683401A830BFEF96F828DFA" trl="N">
+    <value column="Name" isTrl="Y" original="Cost Center">Centro de Costo</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="Add Cost Centers to be related to your User Defined Dimension 1.  Each Cost Center is added by creating a line.">Add Cost Centers to be related to your User Defined Dimension 1.  Each Cost Center is added by creating a line.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="Once User Defined Dimension 1 header has been properly filled in and saved each Cost Center line can be registered in this tab one by one.">Once User Defined Dimension 1 header has been properly filled in and saved each Cost Center line can be registered in this tab one by one.</value>
+  </row>
+  <row id="1FB07F6DCF024A3590EC3C5B302D1032" trl="N">
+    <value column="Name" isTrl="Y" original="WS Contract B">Contract B WS</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="229A06EA3FF34FCBA11072459626A9EF" trl="N">
+    <value column="Name" isTrl="N" original="Recap">Recap</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="284C8F026A144C95A86E1F0C82620C88" trl="N">
+    <value column="Name" isTrl="Y" original="Voyage">Viaje</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2F3EC512E71342F383F5145055BA3208" trl="N">
+    <value column="Name" isTrl="Y" original="Voyage">Viaje</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3509CE4E28E54B17A78D379A9F3A84C4" trl="N">
+    <value column="Name" isTrl="Y" original="Lines">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3B87DC380E474FC4A794D7014B53620B" trl="N">
+    <value column="Name" isTrl="Y" original="Fare A">Tarifa A</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4968AB79030A4931A21ACE72498B6AF7" trl="N">
+    <value column="Name" isTrl="Y" original="Port">Puerto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5F72B0435F214C4092714D73DCA89F71" trl="N">
+    <value column="Name" isTrl="Y" original="Load Type">Tipo de Carga</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="6310C689B9C74FA89684186C2F434E4E" trl="N">
+    <value column="Name" isTrl="Y" original="Vessel Type">Tipo de Buque</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="8AB1CF2389ED4A529811E3DAE6DCC4D7" trl="N">
+    <value column="Name" isTrl="Y" original="Withholding Authorization Settings ">Configuración de Autorización de Retenciones</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9F0944F4EB764A33A27AC35D4F5AD592" trl="N">
+    <value column="Name" isTrl="Y" original="Owner">Propio</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A30D49B20A974F518052384A3D5471A1" trl="N">
+    <value column="Name" isTrl="Y" original="Ws Contract">Contrato Ws</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="D77C2ECBABBD4B39883E2CF580A8E2C0" trl="N">
+    <value column="Name" isTrl="Y" original="Fare B">Tarifa B</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="DD474DBB95634AB9B47A252FA7CB3593" trl="N">
+    <value column="Name" isTrl="Y" original="Print Type Port">Imprimir Tipo de Puerto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

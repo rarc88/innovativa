@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MENU" version="">
+  <row id="156448EE2414419E94A23BE0C6EDD393" trl="N">
+    <value column="Name" isTrl="Y" original="Create Sales Orders from Expenses">Crear pedidos de venta según gastos</value>
+    <value column="Description" isTrl="Y" original="Create Sales Orders for Customers from Expense Reports">Crear pedidos de venta para clientes según informes de gastos</value>
+  </row>
+  <row id="1AC0F3CE975E417EA84793AE32D64F3C" trl="N">
+    <value column="Name" isTrl="Y" original="Project Status Summary">Resumen del estado del proyecto</value>
+    <value column="Description" isTrl="Y" original="Project Status of Project Cycle">Estado del proyecto en el ciclo del proyecto</value>
+  </row>
+  <row id="3985E5E5932643BA8B98AA7ABA2B490E" trl="Y">
+    <value column="Name" isTrl="Y" original="Multiphase Project">Proyecto multifase</value>
+    <value column="Description" isTrl="Y" original="Create and edit projects and tasks potentially requiring sales invoicing.">Crea y edita proyectos y tareas que puedan requerir facturas de venta.</value>
+  </row>
+  <row id="3B311BB2556745B2BACB50B0A688B8AF" trl="N">
+    <value column="Name" isTrl="Y" original="Project Progress">Progreso de Proyectos</value>
+    <value column="Description" isTrl="Y" original="Report that shows the progress of the projects.">Progreso de Proyectos</value>
+  </row>
+  <row id="465DE68EDDA049E896FEB6925C8FD3C1" trl="N">
+    <value column="Name" isTrl="N" original="Project Detail Accounting Report">Project Detail Accounting Report</value>
+    <value column="Description" isTrl="N" original="Project Detail Accounting Report">Project Detail Accounting Report</value>
+  </row>
+  <row id="74DD05651CF945C5B5DE02FA47D32767" trl="Y">
+    <value column="Name" isTrl="Y" original="Employee Expenses">Gastos no reembolsados</value>
+    <value column="Description" isTrl="Y" original="View internal employee expenses before processing them.">Muestra los gastos internos de los empleados antes de procesarlos.</value>
+  </row>
+  <row id="754364E365DE43A6A31B5E7EED4EDECA" trl="N">
+    <value column="Name" isTrl="Y" original="Project Profitability">Rentabilidad de Proyectos</value>
+    <value column="Description" isTrl="Y" original="Project Profitability">Rentabilidad de Proyectos</value>
+  </row>
+  <row id="75DD6B76EB7B4A0EB467CBBC9594A1E5" trl="N">
+    <value column="Name" isTrl="Y" original="Project POs not Issued">Proposal Report</value>
+    <value column="Description" isTrl="Y" original="Lists Project Lines with generated Purchase Orders of a Work Order or Asset Project, which are not issued to the Project">Report proposal query</value>
+  </row>
+  <row id="88935B842D9848BB8EE621459DD0EF10" trl="N">
+    <value column="Name" isTrl="Y" original="Service Project">Proyecto de servicio</value>
+    <value column="Description" isTrl="Y" original="Create and edit potential projects which your business partner's are bidding on.  Create plans to purchase and proposals to your products if a business partner bid is won.">Crea y edita los proyectos potenciales que sus terceros están licitando. Crea planes de compra y propuestas para sus productos si el tercero gana la licitación.</value>
+  </row>
+  <row id="8D9665BB42654198B7EA94141A8EFDCE" trl="N">
+    <value column="Name" isTrl="Y" original="Invoiceable Expenses">Gastos para facturar</value>
+    <value column="Description" isTrl="Y" original="View expenses before invoicing them to customers.">Muestra los gastos antes de facturarlos a los clientes.</value>
+  </row>
+  <row id="96444BA5666D405AA80D89783A531C6A" trl="N">
+    <value column="Name" isTrl="Y" original="Transactions">Transacciones</value>
+    <value column="Description" isTrl="Y" original="Open a folder where you can create, edit, and add data to be used to complete a given transaction.">Abre una carpeta en la que puede crear, editar y añadir los datos necesarios para completar una transacción determinada.</value>
+  </row>
+  <row id="A01890B5957A49C5898F4F1ACE8C6CA8" trl="N">
+    <value column="Name" isTrl="Y" original="Project Cycle Report">Ciclo del proyecto</value>
+    <value column="Description" isTrl="Y" original="Report Projects based on Project Cycle">Informes del proyecto basados en el ciclo del mismo</value>
+  </row>
+  <row id="A1E1344AFAED4BE7942D091E35CF8A38" trl="N">
+    <value column="Name" isTrl="Y" original="Project and Service Management">Gestión de Proyectos y Servicios</value>
+    <value column="Description" isTrl="Y" original="Project and Services Management addresses services and multiphase projects and helps on analyzing project related reports.">Abre una carpeta en la que puede crear y editar los servicios y proyectos, analizar los informes y añadir los gastos de los empleados.</value>
+  </row>
+  <row id="B9F7D4F9E80B49C795289EE9F72CE031" trl="N">
+    <value column="Name" isTrl="Y" original="Expense Type">Tipo de gasto</value>
+    <value column="Description" isTrl="Y" original="Maintain Expense Report Types">Mantenimiento de los informes de los tipos</value>
+  </row>
+  <row id="BBCBE22583044595B5950E9A25B099AC" trl="N">
+    <value column="Name" isTrl="Y" original="Project Lines not Issued">Proyecto líneas no incluidas</value>
+    <value column="Description" isTrl="Y" original="Lists Project Lines of a Work Order or Asset Project, which are not issued to the Project">Listado de las líneas de un pedido de trabajo o activos del proyecto no incluidos en el proyecto</value>
+  </row>
+  <row id="BBEAEDB437FE4D3096D8BC4E428623DE" trl="N">
+    <value column="Name" isTrl="Y" original="Issue to Project">Suministro para el proyecto</value>
+    <value column="Description" isTrl="Y" original="Issue Material to Project from Receipt or manual Inventory Location">Suministro de material para el proyecto desde una recepción o desde inventario</value>
+  </row>
+  <row id="CAF9A0870C164E8DA35D1D67024873BF" trl="N">
+    <value column="Name" isTrl="Y" original="Resource Type">Tipo de Recurso</value>
+    <value column="Description" isTrl="Y" original="Maintain Resource Types">Mantenimiento de los tipos de recurso</value>
+  </row>
+  <row id="CC0458888EB842F7879172518E89F5C6" trl="N">
+    <value column="Name" isTrl="Y" original="Generate PO from Project">Generar PC de un proyecto</value>
+    <value column="Description" isTrl="Y" original="Generate PO from Project Line(s)">Generar PC de las líneas de un proyecto</value>
+  </row>
+  <row id="CE1ED0664ED14D3EA539150392CF32C5" trl="N">
+    <value column="Name" isTrl="Y" original="Proposal Report">Consulta de presupuestos</value>
+    <value column="Description" isTrl="Y" original="Report proposal query">Consulta de presupuestos</value>
+  </row>
+  <row id="D0EBFF8113E945BCA9E6B51AB20418E9" trl="N">
+    <value column="Name" isTrl="Y" original="Project Type">Tipo de proyecto</value>
+    <value column="Description" isTrl="Y" original="Define projects types with typical phases and tasks to be used in projects.">Define los tipos de proyectos así como sus fases y tareas específicas para utilizar en los proyectos.</value>
+  </row>
+  <row id="DB453D5C10154C959B798239A67341FE" trl="N">
+    <value column="Name" isTrl="Y" original="Create AP Expense Invoices">Crear facturas de gastos AP </value>
+    <value column="Description" isTrl="Y" original="Create AP Invoices from Expenses to be paid to employees">Crear AP facturas de gastos para pagar a los empleados </value>
+  </row>
+  <row id="E3830E33FCDE4453BFF92EBC9C9BD5B0" trl="N">
+    <value column="Name" isTrl="Y" original="Expense Sheet">Informe de gasto</value>
+    <value column="Description" isTrl="Y" original="Create a time or expense sheet in order to submit employee or invoicable expenses.">Crea una hoja de horarios o gastos a fin de  presentar los gastos de empleados o los gastos con factura.</value>
+  </row>
+  <row id="E68FD0CD588C441AAE2186C11482F562" trl="N">
+    <value column="Name" isTrl="Y" original="Expense Report">Informe de gastos</value>
+    <value column="Description" isTrl="Y" original="Report expense">Informe de gastos</value>
+  </row>
+  <row id="E8C0D74A1B74485790CD76136B1F1ACB" trl="N">
+    <value column="Name" isTrl="Y" original="Service Project Report">Informe Proyectos de servicio</value>
+    <value column="Description" isTrl="Y" original="Service Project Report">Informe Proyectos de servicio</value>
+  </row>
+  <row id="EFB827C48D7E40ED93351E318347EFC8" trl="N">
+    <value column="Name" isTrl="Y" original="Analysis Tools">Herramientas de análisis</value>
+    <value column="Description" isTrl="Y" original="Open a folder where you can find reports and tools to analyze data.">Abre una carpeta en la que puede encontrar los informes y herramientas necesarios para analizar los datos.</value>
+  </row>
+  <row id="FDEFCB94BB3F4B9499783048056719A5" trl="N">
+    <value column="Name" isTrl="Y" original="Resource">Recurso</value>
+    <value column="Description" isTrl="Y" original="Maintain Resources">Mantenimiento de recursos</value>
+  </row>
+  <row id="FE1BE1476352457AB8AE59AAF148EF08" trl="N">
+    <value column="Name" isTrl="Y" original="Project Proposal Tracker">Seguimiento de presupuestos</value>
+    <value column="Description" isTrl="Y" original="View all proposals made to you during a Budget Project.">Muestra todas las propuestas que reciba durante un proyecto de presupuesto.</value>
+  </row>
+  <row id="FF80E51683C141AB8C8B9974E9686A52" trl="N">
+    <value column="Name" isTrl="Y" original="Setup">Configuración</value>
+    <value column="Description" isTrl="Y" original="Open a folder where you can define all information to be used in this module.">Abre una carpeta en la que puede definir toda la información necesaria para este módulo.</value>
+  </row>
+</compiereTrl>

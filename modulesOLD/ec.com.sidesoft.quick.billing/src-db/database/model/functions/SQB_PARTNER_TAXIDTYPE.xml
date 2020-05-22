@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SQB_PARTNER_TAXIDTYPE">
+    <function name="SQB_PARTNER_TAXIDTYPE" type="VARCHAR">
+      <parameter name="p_bpartner" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_Taxid_Type CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+
+
+  v_SqlWithholding 	CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+
+ v_CountWithholding NUMBER; --OBTG:NUMBER--
+
+  BEGIN
+
+
+	SELECT
+	COALESCE((SELECT COUNT(*) AS CONTAR FROM AD_MODULE WHERE JAVAPACKAGE='com.sidesoft.localization.ecuador.withholdings'),0) 
+	INTO v_CountWithholding
+	FROM DUAL;
+
+	IF (v_CountWithholding=1) THEN
+
+		v_SqlWithholding:='select EM_Sswh_Taxidtype from c_bpartner where c_bpartner_id ='''  ||  p_bpartner || '''';
+                EXECUTE IMMEDIATE v_SqlWithholding INTO v_Taxid_Type;
+                                
+        END IF;
+        
+    RETURN COALESCE(v_Taxid_Type,'ND');
+END SQB_PARTNER_TAXIDTYPE
+]]></body>
+    </function>
+  </database>

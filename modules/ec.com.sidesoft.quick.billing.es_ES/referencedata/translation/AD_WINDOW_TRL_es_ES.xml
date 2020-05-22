@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="21BD12EF81124FC5895BC046E59D7D57" trl="N">
+    <value column="Name" isTrl="Y" original="Configuration Quick Billing">Configuración Facturación Rápida</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3A4D34306AB743069FF5A867CF0A3BBF" trl="N">
+    <value column="Name" isTrl="Y" original="Quick Billing">Facturación Rápida</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

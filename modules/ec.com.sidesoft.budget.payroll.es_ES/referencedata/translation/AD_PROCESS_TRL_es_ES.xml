@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="B3B0123940E4496DBB47FD77D77C2841" trl="N">
+    <value column="Name" isTrl="Y" original="Print Payroll Certificate">Imprimir Certificado de Nómina</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="CA8A303601BD4FBBAC2ADF1511FC6AC8" trl="N">
+    <value column="Name" isTrl="N" original="Load Payroll">Load Payroll</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="238B95F5888D449FAFB4E8EFFE7208B5" trl="N">
+    <value column="Name" isTrl="Y" original="Configuration Quick Billing">Configuración Facturación Rápida</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="48C293F03F8C4CC3973D0FA0EB2EADAA" trl="N">
+    <value column="Name" isTrl="Y" original="Line">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5BD8F7E1D6284F6184A2991A689BEDD7" trl="N">
+    <value column="Name" isTrl="Y" original="Product">Producto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="635982A20EAB4602B35FD3F89047FBA5" trl="N">
+    <value column="Name" isTrl="Y" original="User">Usuario</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9F688A63255A41D29DBB91EAA4FAEA19" trl="N">
+    <value column="Name" isTrl="Y" original="Quick Billing">Facturación Rápida</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

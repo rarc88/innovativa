@@ -1,0 +1,356 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_BUDGET_LINE_TRG">
+    <trigger name="SFB_BUDGET_LINE_TRG" table="SFB_BUDGET_LINE" fires="before" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+
+  v_NewBudgetedTotal  NUMBER;
+  v_OldBudgetedTotal  NUMBER;
+  v_NewAdjustedTotal  NUMBER;
+  v_OldAdjustedTotal  NUMBER;
+  v_NewCommittedTotal NUMBER;
+  v_OldCommittedTotal NUMBER;
+  v_NewExecutedTotal  NUMBER;
+  v_OldExecutedTotal  NUMBER;
+  v_NewPaidOutTotal   NUMBER;
+  v_Budget_Status     VARCHAR2(60);
+  v_Version_Status    VARCHAR2(60);
+  v_Budget_Version_ID VARCHAR2(32);
+  v_Isnegative        CHAR(1);
+  v_IsExchange        CHAR(1);
+  v_Cert_Update       BOOLEAN := false;
+  v_Log_Update        BOOLEAN := false;
+  v_PaidOut_Update    BOOLEAN := false;
+  v_TBN_Update        BOOLEAN := false;
+  v_TBN_UpdateError   BOOLEAN := false;
+ 
+BEGIN
+   
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+ 
+  --Status restrictions
+  IF (INSERTING OR UPDATING) THEN
+ 
+    v_Budget_Version_ID := :new.sfb_budget_version_id;
+    v_IsExchange := :new.isexchange;
+   
+    IF (UPDATING) THEN
+
+      -- Second IF in order to avoid Postgresql lazy evaluation issue.
+      IF (COALESCE(:old.jan_committed_value, '0') <> COALESCE(:new.jan_committed_value, '0') OR
+          COALESCE(:old.feb_committed_value, '0') <> COALESCE(:new.feb_committed_value, '0') OR
+          COALESCE(:old.mar_committed_value, '0') <> COALESCE(:new.mar_committed_value, '0') OR
+          COALESCE(:old.apr_committed_value, '0') <> COALESCE(:new.apr_committed_value, '0') OR
+          COALESCE(:old.may_committed_value, '0') <> COALESCE(:new.may_committed_value, '0') OR
+          COALESCE(:old.jun_committed_value, '0') <> COALESCE(:new.jun_committed_value, '0') OR
+          COALESCE(:old.jul_committed_value, '0') <> COALESCE(:new.jul_committed_value, '0') OR
+          COALESCE(:old.aug_committed_value, '0') <> COALESCE(:new.aug_committed_value, '0') OR
+          COALESCE(:old.sep_committed_value, '0') <> COALESCE(:new.sep_committed_value, '0') OR
+          COALESCE(:old.oct_committed_value, '0') <> COALESCE(:new.oct_committed_value, '0') OR
+          COALESCE(:old.nov_committed_value, '0') <> COALESCE(:new.nov_committed_value, '0') OR
+          COALESCE(:old.dec_committed_value, '0') <> COALESCE(:new.dec_committed_value, '0') OR
+          COALESCE(:old.jan_executed_value, '0') <> COALESCE(:new.jan_executed_value, '0') OR
+          COALESCE(:old.feb_executed_value, '0') <> COALESCE(:new.feb_executed_value, '0') OR
+          COALESCE(:old.mar_executed_value, '0') <> COALESCE(:new.mar_executed_value, '0') OR
+          COALESCE(:old.apr_executed_value, '0') <> COALESCE(:new.apr_executed_value, '0') OR
+          COALESCE(:old.may_executed_value, '0') <> COALESCE(:new.may_executed_value, '0') OR
+          COALESCE(:old.jun_executed_value, '0') <> COALESCE(:new.jun_executed_value, '0') OR
+          COALESCE(:old.jul_executed_value, '0') <> COALESCE(:new.jul_executed_value, '0') OR
+          COALESCE(:old.aug_executed_value, '0') <> COALESCE(:new.aug_executed_value, '0') OR
+          COALESCE(:old.sep_executed_value, '0') <> COALESCE(:new.sep_executed_value, '0') OR
+          COALESCE(:old.oct_executed_value, '0') <> COALESCE(:new.oct_executed_value, '0') OR
+          COALESCE(:old.nov_executed_value, '0') <> COALESCE(:new.nov_executed_value, '0') OR
+          COALESCE(:old.dec_executed_value, '0') <> COALESCE(:new.dec_executed_value, '0')) THEN
+                      
+        v_Cert_Update := true;
+ 
+      END IF;
+ 
+      IF (COALESCE(:old.jan_adjusted_value, '0') <> COALESCE(:new.jan_adjusted_value, '0') OR
+          COALESCE(:old.feb_adjusted_value, '0') <> COALESCE(:new.feb_adjusted_value, '0') OR
+          COALESCE(:old.mar_adjusted_value, '0') <> COALESCE(:new.mar_adjusted_value, '0') OR
+          COALESCE(:old.apr_adjusted_value, '0') <> COALESCE(:new.apr_adjusted_value, '0') OR
+          COALESCE(:old.may_adjusted_value, '0') <> COALESCE(:new.may_adjusted_value, '0') OR
+          COALESCE(:old.jun_adjusted_value, '0') <> COALESCE(:new.jun_adjusted_value, '0') OR
+          COALESCE(:old.jul_adjusted_value, '0') <> COALESCE(:new.jul_adjusted_value, '0') OR
+          COALESCE(:old.aug_adjusted_value, '0') <> COALESCE(:new.aug_adjusted_value, '0') OR
+          COALESCE(:old.sep_adjusted_value, '0') <> COALESCE(:new.sep_adjusted_value, '0') OR
+          COALESCE(:old.oct_adjusted_value, '0') <> COALESCE(:new.oct_adjusted_value, '0') OR
+          COALESCE(:old.nov_adjusted_value, '0') <> COALESCE(:new.nov_adjusted_value, '0') OR
+          COALESCE(:old.dec_adjusted_value, '0') <> COALESCE(:new.dec_adjusted_value, '0')) THEN
+ 
+        v_Log_Update := true;
+ 
+      END IF; 
+      
+      IF (COALESCE(:old.paidout_value, '0') <> COALESCE(:new.paidout_value, '0') OR
+          COALESCE(:old.jan_paidout_value, '0') <> COALESCE(:new.jan_paidout_value, '0') OR
+          COALESCE(:old.feb_paidout_value, '0') <> COALESCE(:new.feb_paidout_value, '0') OR
+          COALESCE(:old.mar_paidout_value, '0') <> COALESCE(:new.mar_paidout_value, '0') OR
+          COALESCE(:old.apr_paidout_value, '0') <> COALESCE(:new.apr_paidout_value, '0') OR
+          COALESCE(:old.may_paidout_value, '0') <> COALESCE(:new.may_paidout_value, '0') OR
+          COALESCE(:old.jun_paidout_value, '0') <> COALESCE(:new.jun_paidout_value, '0') OR
+          COALESCE(:old.jul_paidout_value, '0') <> COALESCE(:new.jul_paidout_value, '0') OR
+          COALESCE(:old.aug_paidout_value, '0') <> COALESCE(:new.aug_paidout_value, '0') OR
+          COALESCE(:old.sep_paidout_value, '0') <> COALESCE(:new.sep_paidout_value, '0') OR
+          COALESCE(:old.oct_paidout_value, '0') <> COALESCE(:new.oct_paidout_value, '0') OR
+          COALESCE(:old.nov_paidout_value, '0') <> COALESCE(:new.nov_paidout_value, '0') OR
+          COALESCE(:old.dec_paidout_value, '0') <> COALESCE(:new.dec_paidout_value, '0')) THEN
+ 
+        v_PaidOut_Update := true;
+ 
+      END IF; 
+      
+      IF (:old.istbn = 'Y' AND
+          :old.committed_value = 0 AND 
+          :old.executed_value = 0 AND
+          (
+            :old.c_costcenter_id <> :new.c_costcenter_id OR
+            :old.user1_id <> :new.user1_id OR
+            :old.sfb_budget_area_id <> :new.sfb_budget_area_id
+          )
+         ) THEN
+        
+        v_TBN_Update := true;
+      
+      END IF;
+      
+      IF (:old.istbn = 'Y' AND
+          (:old.committed_value <> 0 OR :old.executed_value <> 0) AND
+          (
+            :old.c_costcenter_id <> :new.c_costcenter_id OR
+            :old.user1_id <> :new.user1_id OR
+            :old.sfb_budget_area_id <> :new.sfb_budget_area_id
+          )
+         ) THEN
+        
+        v_TBN_UpdateError := true;
+      
+      END IF;
+                      
+    END IF;
+ 
+  ELSIF(DELETING) THEN
+ 
+    v_Budget_Version_ID := :old.sfb_budget_version_id;
+    v_IsExchange := :old.isexchange;
+ 
+  END IF;
+ 
+  SELECT budget_status, version_status INTO v_Budget_Status, v_Version_Status
+  FROM SFB_BUDGET_VERSION bv LEFT JOIN SFB_BUDGET b ON bv.sfb_budget_id = b.sfb_budget_id
+  WHERE sfb_budget_version_id = v_Budget_Version_ID;
+ 
+  IF(v_Budget_Status = 'AP' AND v_IsExchange = 'N' AND NOT v_Cert_Update AND NOT v_Log_Update AND NOT v_PaidOut_Update AND NOT v_TBN_Update) THEN
+ 
+    IF (INSERTING) THEN
+      IF :new.insertprocess<>'Y' THEN
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyApprovedBudget@');
+      END IF;
+    END IF;
+    IF (DELETING) THEN
+      IF :old.insertprocess<>'Y' OR :old.committed_value <> 0 OR :old.executed_value <> 0 OR :old.adjusted_value <> 0 THEN
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyApprovedBudget@');
+      END IF;
+    END IF;
+    IF (UPDATING) THEN
+      IF v_TBN_UpdateError THEN
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyCommittedExcecutedLine@');
+      ELSE
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyApprovedBudget@');
+      END IF;
+    END IF;
+ 
+  ELSIF(v_Version_Status = 'CP') THEN
+ 
+    RAISE_APPLICATION_ERROR(-20000, '@SFB_CopiedVersion@');
+     
+  END IF; --End check status restrictions
+ 
+  IF (INSERTING OR UPDATING) THEN
+ 
+    IF (v_Budget_Status = 'DR' AND v_Version_Status = 'DR') THEN
+ 
+      :new.jan_adjusted_value := :new.jan_budgeted_value;
+      :new.feb_adjusted_value := :new.feb_budgeted_value;
+      :new.mar_adjusted_value := :new.mar_budgeted_value;
+      :new.apr_adjusted_value := :new.apr_budgeted_value;
+      :new.may_adjusted_value := :new.may_budgeted_value;
+      :new.jun_adjusted_value := :new.jun_budgeted_value;
+      :new.jul_adjusted_value := :new.jul_budgeted_value;
+      :new.aug_adjusted_value := :new.aug_budgeted_value;
+      :new.sep_adjusted_value := :new.sep_budgeted_value;
+      :new.oct_adjusted_value := :new.oct_budgeted_value;
+      :new.nov_adjusted_value := :new.nov_budgeted_value;
+      :new.dec_adjusted_value := :new.dec_budgeted_value;
+ 
+    END IF;
+ 
+    v_NewBudgetedTotal :=  :new.jan_budgeted_value + :new.feb_budgeted_value + :new.mar_budgeted_value +
+                           :new.apr_budgeted_value + :new.may_budgeted_value + :new.jun_budgeted_value +
+                           :new.jul_budgeted_value + :new.aug_budgeted_value + :new.sep_budgeted_value +
+                           :new.oct_budgeted_value + :new.nov_budgeted_value + :new.dec_budgeted_value;
+ 
+    v_NewAdjustedTotal :=  :new.jan_adjusted_value + :new.feb_adjusted_value + :new.mar_adjusted_value +
+                           :new.apr_adjusted_value + :new.may_adjusted_value + :new.jun_adjusted_value +
+                           :new.jul_adjusted_value + :new.aug_adjusted_value + :new.sep_adjusted_value +
+                           :new.oct_adjusted_value + :new.nov_adjusted_value + :new.dec_adjusted_value;
+ 
+    v_NewCommittedTotal := :new.jan_committed_value + :new.feb_committed_value + :new.mar_committed_value +
+                           :new.apr_committed_value + :new.may_committed_value + :new.jun_committed_value +
+                           :new.jul_committed_value + :new.aug_committed_value + :new.sep_committed_value +
+                           :new.oct_committed_value + :new.nov_committed_value + :new.dec_committed_value;
+ 
+    v_NewExecutedTotal :=  :new.jan_executed_value + :new.feb_executed_value + :new.mar_executed_value +
+                           :new.apr_executed_value + :new.may_executed_value + :new.jun_executed_value +
+                           :new.jul_executed_value + :new.aug_executed_value + :new.sep_executed_value +
+                           :new.oct_executed_value + :new.nov_executed_value + :new.dec_executed_value;
+   
+    v_NewPaidOutTotal :=   :new.jan_paidout_value + :new.feb_paidout_value + :new.mar_paidout_value +
+                           :new.apr_paidout_value + :new.may_paidout_value + :new.jun_paidout_value +
+                           :new.jul_paidout_value + :new.aug_paidout_value + :new.sep_paidout_value +
+                           :new.oct_paidout_value + :new.nov_paidout_value + :new.dec_paidout_value;
+   
+    SELECT isnegative INTO v_Isnegative
+    FROM SFB_BUDGET_ITEM
+    WHERE sfb_budget_item_id = :new.sfb_budget_item_id;
+ 
+  END IF;
+ 
+  IF (UPDATING OR DELETING) THEN
+ 
+    v_OldBudgetedTotal :=  :old.jan_budgeted_value + :old.feb_budgeted_value + :old.mar_budgeted_value +
+                           :old.apr_budgeted_value + :old.may_budgeted_value + :old.jun_budgeted_value +
+                           :old.jul_budgeted_value + :old.aug_budgeted_value + :old.sep_budgeted_value +
+                           :old.oct_budgeted_value + :old.nov_budgeted_value + :old.dec_budgeted_value;
+ 
+    v_OldAdjustedTotal :=  :old.jan_adjusted_value + :old.feb_adjusted_value + :old.mar_adjusted_value +
+                           :old.apr_adjusted_value + :old.may_adjusted_value + :old.jun_adjusted_value +
+                           :old.jul_adjusted_value + :old.aug_adjusted_value + :old.sep_adjusted_value +
+                           :old.oct_adjusted_value + :old.nov_adjusted_value + :old.dec_adjusted_value;
+ 
+    v_OldCommittedTotal := :old.jan_committed_value + :old.feb_committed_value + :old.mar_committed_value +
+                           :old.apr_committed_value + :old.may_committed_value + :old.jun_committed_value +
+                           :old.jul_committed_value + :old.aug_committed_value + :old.sep_committed_value +
+                           :old.oct_committed_value + :old.nov_committed_value + :old.dec_committed_value;
+ 
+    v_OldExecutedTotal :=  :old.jan_executed_value + :old.feb_executed_value + :old.mar_executed_value +
+                           :old.apr_executed_value + :old.may_executed_value + :old.jun_executed_value +
+                           :old.jul_executed_value + :old.aug_executed_value + :old.sep_executed_value +
+                           :old.oct_executed_value + :old.nov_executed_value + :old.dec_executed_value;
+ 
+    IF (DELETING) THEN
+ 
+      SELECT isnegative INTO v_Isnegative
+      FROM SFB_BUDGET_ITEM
+      WHERE sfb_budget_item_id = :old.sfb_budget_item_id;
+ 
+    END IF;  
+ 
+  END IF;
+ 
+  IF (INSERTING OR UPDATING) THEN   
+ 
+    -- Set Line Totals allways in positive.
+    :new.budgeted_value    := v_NewBudgetedTotal;
+    :new.adjusted_value    := v_NewAdjustedTotal;
+    :new.committed_value   := v_NewCommittedTotal;
+    :new.available_balance := v_NewAdjustedTotal - v_NewCommittedTotal;
+    :new.executed_value    := v_NewExecutedTotal;
+    :new.actual_value      := v_NewAdjustedTotal - v_NewExecutedTotal;
+    :new.paidout_value     := v_NewPaidOutTotal;
+ 
+    -- Set avaliable_balance for each month
+    :new.jan_available_balance := :new.jan_adjusted_value - :new.jan_committed_value;
+    :new.feb_available_balance := :new.feb_adjusted_value - :new.feb_committed_value;
+    :new.mar_available_balance := :new.mar_adjusted_value - :new.mar_committed_value;
+    :new.apr_available_balance := :new.apr_adjusted_value - :new.apr_committed_value;
+    :new.may_available_balance := :new.may_adjusted_value - :new.may_committed_value;
+    :new.jun_available_balance := :new.jun_adjusted_value - :new.jun_committed_value;
+    :new.jul_available_balance := :new.jul_adjusted_value - :new.jul_committed_value;
+    :new.aug_available_balance := :new.aug_adjusted_value - :new.aug_committed_value;
+    :new.sep_available_balance := :new.sep_adjusted_value - :new.sep_committed_value;
+    :new.oct_available_balance := :new.oct_adjusted_value - :new.oct_committed_value;
+    :new.nov_available_balance := :new.nov_adjusted_value - :new.nov_committed_value;
+    :new.dec_available_balance := :new.dec_adjusted_value - :new.dec_committed_value;
+ 
+    -- Set actual_value for each month
+    :new.jan_actual_value := :new.jan_adjusted_value - :new.jan_executed_value;
+    :new.feb_actual_value := :new.feb_adjusted_value - :new.feb_executed_value;
+    :new.mar_actual_value := :new.mar_adjusted_value - :new.mar_executed_value;
+    :new.apr_actual_value := :new.apr_adjusted_value - :new.apr_executed_value;
+    :new.may_actual_value := :new.may_adjusted_value - :new.may_executed_value;
+    :new.jun_actual_value := :new.jun_adjusted_value - :new.jun_executed_value;
+    :new.jul_actual_value := :new.jul_adjusted_value - :new.jul_executed_value;
+    :new.aug_actual_value := :new.aug_adjusted_value - :new.aug_executed_value;
+    :new.sep_actual_value := :new.sep_adjusted_value - :new.sep_executed_value;
+    :new.oct_actual_value := :new.oct_adjusted_value - :new.oct_executed_value;
+    :new.nov_actual_value := :new.nov_adjusted_value - :new.nov_executed_value;
+    :new.dec_actual_value := :new.dec_adjusted_value - :new.dec_executed_value;
+ 
+    IF (v_Isnegative = 'Y') THEN
+ 
+      v_NewBudgetedTotal := v_NewBudgetedTotal * -1;
+      v_OldBudgetedTotal := v_OldBudgetedTotal * -1;
+ 
+      v_NewAdjustedTotal := v_NewAdjustedTotal * -1;
+      v_OldAdjustedTotal := v_OldAdjustedTotal * -1;
+ 
+      v_NewCommittedTotal := v_NewCommittedTotal * -1;
+      v_OldCommittedTotal := v_OldCommittedTotal * -1;
+ 
+      v_NewExecutedTotal := v_NewExecutedTotal * -1;
+      v_OldExecutedTotal := v_OldExecutedTotal * -1;
+     
+    END IF;
+ 
+    IF (UPDATING) THEN
+   
+      UPDATE SFB_BUDGET_VERSION SET total_budgeted_amount  = total_budgeted_amount  + v_NewBudgetedTotal  - v_OldBudgetedTotal,
+                                    total_adjusted_amount  = total_adjusted_amount  + v_NewAdjustedTotal  - v_OldAdjustedTotal,
+                                    total_committed_amount = total_committed_amount + v_NewCommittedTotal - V_OldCommittedTotal,
+                                    total_executed_amount  = total_executed_amount  + v_NewExecutedTotal  - V_OldExecutedTotal
+      WHERE sfb_budget_version_id = :new.sfb_budget_version_id;
+ 
+    ELSE
+ 
+      UPDATE SFB_BUDGET_VERSION SET total_budgeted_amount  = total_budgeted_amount  + v_NewBudgetedTotal,
+                                    total_adjusted_amount  = total_adjusted_amount  + v_NewAdjustedTotal,
+                                    total_committed_amount = total_committed_amount + v_NewCommittedTotal,
+                                    total_executed_amount  = total_executed_amount  + v_NewExecutedTotal
+      WHERE sfb_budget_version_id = :new.sfb_budget_version_id;
+  
+    END IF;
+ 
+  END IF;
+ 
+  IF (DELETING ) THEN
+ 
+    IF (v_Isnegative = 'Y') THEN
+ 
+      v_NewBudgetedTotal := v_NewBudgetedTotal * -1;
+      v_OldBudgetedTotal := v_OldBudgetedTotal * -1;
+ 
+      v_NewAdjustedTotal := v_NewAdjustedTotal * -1;
+      v_OldAdjustedTotal := v_OldAdjustedTotal * -1;
+ 
+      v_NewCommittedTotal := v_NewCommittedTotal * -1;
+      v_OldCommittedTotal := v_OldCommittedTotal * -1;
+ 
+      v_NewExecutedTotal := v_NewExecutedTotal * -1;
+      v_OldExecutedTotal := v_OldExecutedTotal * -1;
+     
+    END IF;
+ 
+    UPDATE SFB_BUDGET_VERSION SET total_budgeted_amount  = total_budgeted_amount  - v_OldBudgetedTotal,
+                                  total_adjusted_amount  = total_adjusted_amount  - v_OldAdjustedTotal,
+                                  total_committed_amount = total_committed_amount - v_OldCommittedTotal,
+                                  total_executed_amount  = total_executed_amount  - v_OldExecutedTotal
+    WHERE sfb_budget_version_id = :old.sfb_budget_version_id;
+ 
+  END IF; 
+ 
+  END SFB_BUDGET_LINE_TRG
+]]></body>
+    </trigger>
+  </database>

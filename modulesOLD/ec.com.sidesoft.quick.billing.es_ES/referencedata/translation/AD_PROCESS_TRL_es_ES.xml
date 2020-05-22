@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="08D0DB2EDFE94D8BAA35F573AA5A0EA3" trl="N">
+    <value column="Name" isTrl="Y" original="Report Quick Billing">Reporte de Facturación Rápida</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1D419EB151AE45A9A5C8B86371B9818A" trl="N">
+    <value column="Name" isTrl="Y" original="Close Box By User">Cierre de Caja</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="6AA269C7FB70428AB269794614AD4742" trl="N">
+    <value column="Name" isTrl="Y" original="To Invoice">Facturar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="CE79F602A7ED4013B679524DA94C6066" trl="N">
+    <value column="Name" isTrl="N" original="GENERIC PRINT TICKET">GENERIC PRINT TICKET</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="EBCCB232196040B294F2E29F1846F9AC" trl="N">
+    <value column="Name" isTrl="Y" original="Save and Assign">Guardar y Asignar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

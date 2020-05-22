@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rpt_C_Advances_Per_diem" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="49"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+'Y' as "showlogo",
+ORD.AD_ORG_ID AS "organizationid",
+ORD.Deliverynotes AS "observation",
+ORG.NAME AS "organization_name",
+ORD.DOCUMENTNO AS "order_document",
+CBP.NAME AS "bpartner_name",
+CBP.VALUE AS "bpartner_value" ,
+ORD.DESCRIPTION AS  "description",
+ORD.DATEORDERED AS "date_ordered",
+ORD.DATEPROMISED AS "date_promised",
+ORD.EM_SSFL_ENDDATE AS "date_to",
+POSIT.NAME AS "bpartner_position",
+(CASE WHEN CBP.AD_LANGUAGE= 'es_EC' THEN ssfl_convert_numbertoletters(GRANDTOTAL)
+     WHEN CBP.AD_LANGUAGE= 'en_US' THEN ssfl_cnvrt_numtoletters_usa(GRANDTOTAL)
+END) AS "value_letters",
+ssfl_return_description_order(ORD.C_ORDER_ID) AS "product_name",
+ORD.GRANDTOTAL AS "grandtotal",
+to_char(ORD.GRANDTOTAL) || ' -  ' || ssfl_return_description_order(ORD.C_ORDER_ID) as "value_product"
+FROM C_ORDER ORD
+LEFT JOIN C_BPARTNER CBP ON CBP.C_BPARTNER_ID = ORD.C_BPARTNER_ID
+LEFT JOIN AD_ORG ORG ON ORG.AD_ORG_ID = ORD.AD_ORG_ID
+LEFT JOIN SSPR_CONTRACT CONT ON CONT.C_BPARTNER_ID = CBP.C_BPARTNER_ID
+LEFT JOIN SSPR_CONTRACT_POSITION CONTP ON CONTP.SSPR_CONTRACT_ID = CONT.SSPR_CONTRACT_ID
+LEFT JOIN SSPR_POSITION POSIT ON POSIT.SSPR_POSITION_ID = CONTP.SSPR_POSITION_ID
+WHERE ORD.C_ORDER_ID = $P{DOCUMENT_ID}]]>
+	</queryString>
+	<field name="showlogo" class="java.lang.String"/>
+	<field name="organizationid" class="java.lang.String"/>
+	<field name="observation" class="java.lang.String"/>
+	<field name="organization_name" class="java.lang.String"/>
+	<field name="order_document" class="java.lang.String"/>
+	<field name="bpartner_name" class="java.lang.String"/>
+	<field name="bpartner_value" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="date_ordered" class="java.sql.Timestamp"/>
+	<field name="date_promised" class="java.sql.Timestamp"/>
+	<field name="date_to" class="java.sql.Timestamp"/>
+	<field name="bpartner_position" class="java.lang.String"/>
+	<field name="value_letters" class="java.lang.String"/>
+	<field name="product_name" class="java.lang.String"/>
+	<field name="grandtotal" class="java.math.BigDecimal"/>
+	<field name="value_product" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="131" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="55" width="83" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Revision: 0.3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="123" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Writting by: GSR/GFI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="82" width="129" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Approved by: DMO/GGR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="69" width="159" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Complies with SGI: OCB/DPA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="82" width="82" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Effective Date:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="82" width="81" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{date_ordered}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="435" y="55" width="118" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identifier: PA-70 / F6]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="149" y="0" width="404" height="43"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{organization_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="125" y="98" width="283" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[ADVANCE AND SETTLEMENT SERVICES COMMISSION VIATICAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="111" width="32" height="12"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="111" width="89" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{order_document}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="true">
+				<reportElement key="image-1" x="1" y="0" width="147" height="55">
+					<printWhenExpression><![CDATA[new Boolean($F{showlogo}.equalsIgnoreCase("Y"))]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.awt.Image"><![CDATA[org.openbravo.erpCommon.utility.Utility.showImageLogo("yourcompanylegal", $F{organizationid})]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="146" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="46" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="14" width="47" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAME:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="29" width="62" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REASON:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="40" width="77" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESTINATION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="54" width="47" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FROM:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="54" width="54" height="11"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="1" width="48" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="15" width="56" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POSITION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="67" width="111" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANTICIPATED VALUE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="29" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ARE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="94" width="148" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Received According]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="317" y="94" width="150" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Authorized by]]></text>
+			</staticText>
+			<line>
+				<reportElement x="85" y="141" width="150" height="1"/>
+			</line>
+			<line>
+				<reportElement x="317" y="142" width="150" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="61" y="1" width="100" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{date_ordered}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="61" y="15" width="100" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bpartner_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="63" y="28" width="492" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{observation}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="48" y="55" width="100" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{date_promised}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="449" y="55" width="106" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{date_to}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="30" y="80" width="480" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{value_letters}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="510" y="81" width="45" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOLARES]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="426" y="1" width="129" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bpartner_value}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="426" y="15" width="129" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bpartner_position}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="41" width="477" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="112" y="67" width="443" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{value_product}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="201" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="1" width="554" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIATICAL Details]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="22" width="92" height="47"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="369" y="22" width="184" height="27"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="69" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="89" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="109" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="129" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="93" y="129" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="185" y="129" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="277" y="129" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="369" y="129" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="461" y="129" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="93" y="109" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="277" y="109" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="369" y="109" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="185" y="109" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="461" y="109" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="93" y="89" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="277" y="89" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="369" y="89" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="185" y="89" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="461" y="89" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="93" y="69" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="277" y="69" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="369" y="69" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="185" y="69" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="461" y="69" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="93" y="149" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="277" y="149" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="149" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="369" y="149" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="185" y="149" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="461" y="149" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="93" y="22" width="92" height="47"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="185" y="22" width="92" height="47"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="277" y="22" width="92" height="47"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="461" y="49" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="369" y="49" width="92" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="369" y="169" width="184" height="29"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="22" width="92" height="47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUMBER OF NIGHTS / DAYS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="22" width="92" height="47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASSIGNMENT AS TABLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="22" width="92" height="47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERCENTAGE OR COEFFICIENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="22" width="92" height="47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIATICUM DAILY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="22" width="186" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="49" width="92" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IN THE COUNTRY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="49" width="92" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ABROAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="169" width="76" height="29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL VIATICAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="169" width="26" height="29"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="170" width="26" height="29"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<line>
+				<reportElement x="395" y="186" width="63" height="1"/>
+			</line>
+			<line>
+				<reportElement x="487" y="187" width="63" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="303" splitType="Stretch">
+			<staticText>
+				<reportElement x="93" y="0" width="374" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXPENSES NOT COVERED BY THE VIATICAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="33" width="100" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AIRPLANE TICKETS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="48" width="100" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(ATTACHMENT TICKETS)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="62" width="100" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AIRPORT TAXES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="109" width="100" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(B) TOTAL EXPENSES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="125" width="100" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL TO RECEIVE A+B]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="77" width="100" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTHER (OFFICIAL COMMUNICATIONS)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="140" width="100" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(LESS ADVANCE)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="154" width="136" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LIQUID TO RECEIVE (RETURN)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="173" width="36" height="16"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="194" width="146" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRESENTED BY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="194" width="146" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AUTHORIZED BY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="194" width="146" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEEN GOOD]]></text>
+			</staticText>
+			<line>
+				<reportElement x="26" y="247" width="146" height="1"/>
+			</line>
+			<line>
+				<reportElement x="202" y="247" width="146" height="1"/>
+			</line>
+			<line>
+				<reportElement x="389" y="248" width="146" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="25" y="247" width="147" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERVER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="247" width="146" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AREA MANAGER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="248" width="146" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FINANCIAL MANAGER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="265" width="100" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DISTRIBUTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="277" width="124" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COPY1: ACCOUNTING]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="288" width="147" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COPY2: DEPT. PERSONAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="108" y="46" width="269" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="382" y="33" width="33" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="62" width="33" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="77" width="33" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="92" width="33" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="109" width="33" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="125" width="33" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="139" width="33" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="154" width="33" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[US $]]></text>
+			</staticText>
+			<line>
+				<reportElement x="108" y="76" width="269" height="1"/>
+			</line>
+			<line>
+				<reportElement x="108" y="91" width="269" height="1"/>
+			</line>
+			<line>
+				<reportElement x="1" y="106" width="376" height="1"/>
+			</line>
+			<line>
+				<reportElement x="136" y="123" width="241" height="1"/>
+			</line>
+			<line>
+				<reportElement x="136" y="138" width="241" height="1"/>
+			</line>
+			<line>
+				<reportElement x="136" y="153" width="241" height="1"/>
+			</line>
+			<line>
+				<reportElement x="172" y="167" width="205" height="1"/>
+			</line>
+			<line>
+				<reportElement x="416" y="46" width="133" height="1"/>
+			</line>
+			<line>
+				<reportElement x="416" y="77" width="133" height="1"/>
+			</line>
+			<line>
+				<reportElement x="416" y="90" width="133" height="1"/>
+			</line>
+			<line>
+				<reportElement x="416" y="107" width="133" height="1"/>
+			</line>
+			<line>
+				<reportElement x="416" y="122" width="133" height="1"/>
+			</line>
+			<line>
+				<reportElement x="416" y="137" width="133" height="1"/>
+			</line>
+			<line>
+				<reportElement x="416" y="153" width="133" height="1"/>
+			</line>
+			<line>
+				<reportElement x="416" y="166" width="133" height="1"/>
+			</line>
+			<line>
+				<reportElement x="37" y="187" width="175" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

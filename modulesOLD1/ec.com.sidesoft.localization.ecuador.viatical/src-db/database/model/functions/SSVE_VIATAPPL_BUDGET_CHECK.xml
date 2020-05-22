@@ -1,0 +1,368 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSVE_VIATAPPL_BUDGET_CHECK">
+    <function name="SSVE_VIATAPPL_BUDGET_CHECK" type="NULL">
+      <parameter name="p_ep_instance" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[p_message         VARCHAR2(2000);    
+p_record_id       VARCHAR2(60);      
+p_docaction       VARCHAR2(60);      
+p_user            VARCHAR2(60);      
+p_result          NUMBER;
+
+v_ResultStr       VARCHAR2(2000):='';
+v_currency_id     VARCHAR2(32);      
+v_hashcode        VARCHAR2(32);      
+V_CONVERTED       NUMBER;
+v_amt NUMBER:= -1;      -- Revenue (-) 
+v_count           INTEGER;
+v_count_doctype   INTEGER:= 1;
+v_budgeted        CHAR(1);
+v_baccount_lines  VARCHAR2(2000):='';
+v_nbaccount_lines VARCHAR2(2000):='';
+v_bamount_lines   VARCHAR2(2000):='';
+
+TYPE RECORD IS REF CURSOR;
+cur_params        RECORD;
+cur_lines         RECORD;
+
+BEGIN
+
+  FOR Cur_Params IN (
+    SELECT *
+    FROM ad_ep_instance_para
+    WHERE ad_ep_instance_id = p_ep_instance
+    ) LOOP
+    IF (cur_params.parametername LIKE 'DocAction') THEN
+      p_docaction := Cur_Params.p_string;
+    ELSIF (cur_params.parametername LIKE 'Record_ID') THEN
+      p_record_id := cur_params.p_string;
+    ELSIF (cur_params.parametername LIKE 'User') THEN
+      p_user := cur_params.p_string;
+    ELSIF (cur_params.parametername LIKE 'Message') THEN
+      p_message := cur_params.p_text;
+    ELSIF (cur_params.parametername LIKE 'Result') THEN
+      p_result := cur_params.p_number;
+    END IF;
+  END LOOP;
+
+  IF (p_docaction = 'CO') THEN
+
+    IF (v_count_doctype > 0) THEN
+
+      v_resultstr := 'Update budget (committed certificate value).';
+      
+      SELECT MAX(VL.LINE) INTO v_count FROM SSVE_VIATICALLINE VL WHERE VL.SSVE_VIATICAL_ID = P_RECORD_ID;
+
+      FOR CUR_LINES IN (
+        (
+          SELECT (CASE WHEN EXTRACT(YEAR FROM TO_DATE(V.VIATICALDATE)) = EXTRACT(YEAR FROM TO_DATE(BC.DATE_ISSUE)) THEN 1 ELSE 0 END) AS SAMEYEAR,
+                 (CASE WHEN V.C_CURRENCY_ID = BC.C_CURRENCY_ID THEN 1 ELSE 0 END) AS SAMECURRENCY,
+                 (CASE WHEN COALESCE(VL.HASHCODE, V.HASHCODE) = BC.HASH_CODE THEN 1 ELSE 0 END) AS SAMEHASHCODE,
+                 (CASE WHEN VL.AD_ORG_ID = BCL.AD_ORG_ID THEN 1 ELSE 0 END) AS SAMEORG,
+                 (CASE WHEN (BCL.AVAILABLE_BALANCE >= VL.LINENETAMT) AND (BCL.AVAILABLE_BALANCE >= V.TOTALAMT) THEN 1 ELSE 0 END) AS ENOUGHAMOUNT,
+                 V.AD_CLIENT_ID, V.AD_ORG_ID, V.VIATICALDATE, V.C_CURRENCY_ID, V.ISNOTBUDGETABLE AS HEADER_ISNOTBUDGETABLE,
+                 VL.LINE, VL.LINENETAMT AS LINETOTALAMT, VL.SFB_BUDGET_CERT_LINE_ID AS LINECERTIFICATE,
+                 VL.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE,
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SSVE_VIATICALLINE VL ON V.SSVE_VIATICAL_ID = VL.SSVE_VIATICAL_ID
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON VL.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               LEFT JOIN SFB_BUDGET_CERTIFICATE BC ON BCL.SFB_BUDGET_CERTIFICATE_ID = BC.SFB_BUDGET_CERTIFICATE_ID
+          WHERE VL.LINENETAMT <> 0
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID 
+        )
+        UNION ALL
+        (
+          SELECT (CASE WHEN EXTRACT(YEAR FROM TO_DATE(V.VIATICALDATE)) = EXTRACT(YEAR FROM TO_DATE(BC.DATE_ISSUE)) THEN 1 ELSE 0 END) AS SAMEYEAR,
+                 (CASE WHEN V.C_CURRENCY_ID = BC.C_CURRENCY_ID THEN 1 ELSE 0 END) AS SAMECURRENCY,
+                 (CASE WHEN COALESCE(VT.HASHCODE, V.HASHCODE) = BC.HASH_CODE THEN 1 ELSE 0 END) AS SAMEHASHCODE,
+                 (CASE WHEN VT.AD_ORG_ID = BCL.AD_ORG_ID THEN 1 ELSE 0 END) AS SAMEORG,
+                 (CASE WHEN (BCL.AVAILABLE_BALANCE >= VT.LINENETAMT) AND (BCL.AVAILABLE_BALANCE >= V.TOTALAMT) THEN 1 ELSE 0 END) AS ENOUGHAMOUNT,
+                 v.ad_client_id, v.ad_org_id, v.viaticaldate, v.c_currency_id, v.isnotbudgetable as header_isnotbudgetable,
+                 COALESCE(v_count, 0) + VT.LINE AS LINE, VT.LINENETAMT AS LINETOTALAMT, VT.SFB_BUDGET_CERT_LINE_ID AS LINECERTIFICATE,
+                 VT.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE,
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SSVE_VIATICAL_TRANSP VT ON V.SSVE_VIATICAL_ID = VT.SSVE_VIATICAL_ID
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON VT.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               LEFT JOIN SFB_BUDGET_CERTIFICATE BC ON BCL.SFB_BUDGET_CERTIFICATE_ID = BC.SFB_BUDGET_CERTIFICATE_ID
+          WHERE VT.LINENETAMT <> 0
+                AND VT.ISREFUNDABLE = 'Y'
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID 
+        )
+        UNION ALL
+        (
+          SELECT (CASE WHEN EXTRACT(YEAR FROM TO_DATE(V.VIATICALDATE)) = EXTRACT(YEAR FROM TO_DATE(BC.DATE_ISSUE)) THEN 1 ELSE 0 END) AS SAMEYEAR,
+                 (CASE WHEN V.C_CURRENCY_ID = BC.C_CURRENCY_ID THEN 1 ELSE 0 END) AS SAMECURRENCY,
+                 (CASE WHEN V.HASHCODE = BC.HASH_CODE THEN 1 ELSE 0 END) AS SAMEHASHCODE,
+                 (CASE WHEN V.AD_ORG_ID = BCL.AD_ORG_ID THEN 1 ELSE 0 END) AS SAMEORG,
+                 (CASE WHEN (BCL.AVAILABLE_BALANCE >= V.BUDGETADDITFUNDS) AND (BCL.AVAILABLE_BALANCE >= V.TOTALAMT) THEN 1 ELSE 0 END) AS ENOUGHAMOUNT,
+                 V.AD_CLIENT_ID, V.AD_ORG_ID, V.VIATICALDATE, V.C_CURRENCY_ID, V.ISNOTBUDGETABLE AS HEADER_ISNOTBUDGETABLE,
+                 -30 AS LINE, V.BUDGETADDITFUNDS AS LINETOTALAMT, V.SFB_BUDGET_CERT_LINE_ID AS LINECERTIFICATE,
+                 V.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE,
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON V.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               LEFT JOIN SFB_BUDGET_CERTIFICATE BC ON BCL.SFB_BUDGET_CERTIFICATE_ID = BC.SFB_BUDGET_CERTIFICATE_ID
+          WHERE V.BUDGETADDITFUNDS <> 0
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID
+        )
+        UNION ALL
+        (
+          SELECT (CASE WHEN EXTRACT(YEAR FROM TO_DATE(V.VIATICALDATE)) = EXTRACT(YEAR FROM TO_DATE(BC.DATE_ISSUE)) THEN 1 ELSE 0 END) AS SAMEYEAR,
+                 (CASE WHEN V.C_CURRENCY_ID = BC.C_CURRENCY_ID THEN 1 ELSE 0 END) AS SAMECURRENCY,
+                 (CASE WHEN V.HASHCODE = BC.HASH_CODE THEN 1 ELSE 0 END) AS SAMEHASHCODE,
+                 (CASE WHEN V.AD_ORG_ID = BCL.AD_ORG_ID THEN 1 ELSE 0 END) AS SAMEORG,
+                 (CASE WHEN (BCL.AVAILABLE_BALANCE >= V.BUDGETMOBILAMT) AND (BCL.AVAILABLE_BALANCE >= V.TOTALAMT) THEN 1 ELSE 0 END) AS ENOUGHAMOUNT,
+                 V.AD_CLIENT_ID, V.AD_ORG_ID, V.VIATICALDATE, V.C_CURRENCY_ID, V.ISNOTBUDGETABLE AS HEADER_ISNOTBUDGETABLE,
+                 -20 AS LINE, V.BUDGETMOBILAMT AS LINETOTALAMT, V.SFB_BUDGET_CERT_LINE_ID AS LINECERTIFICATE,
+                 V.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE,
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON V.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               LEFT JOIN SFB_BUDGET_CERTIFICATE BC ON BCL.SFB_BUDGET_CERTIFICATE_ID = BC.SFB_BUDGET_CERTIFICATE_ID
+          WHERE V.BUDGETMOBILAMT <> 0
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID
+        )
+        UNION ALL
+        (
+          SELECT (CASE WHEN EXTRACT(YEAR FROM TO_DATE(V.VIATICALDATE)) = EXTRACT(YEAR FROM TO_DATE(BC.DATE_ISSUE)) THEN 1 ELSE 0 END) AS SAMEYEAR,
+                 (CASE WHEN V.C_CURRENCY_ID = BC.C_CURRENCY_ID THEN 1 ELSE 0 END) AS SAMECURRENCY,
+                 (CASE WHEN V.HASHCODE = BC.HASH_CODE THEN 1 ELSE 0 END) AS SAMEHASHCODE,
+                 (CASE WHEN V.AD_ORG_ID = BCL.AD_ORG_ID THEN 1 ELSE 0 END) AS SAMEORG,
+                 (CASE WHEN (BCL.AVAILABLE_BALANCE >= V.BUDGETFEEDINGAMT) AND (BCL.AVAILABLE_BALANCE >= V.TOTALAMT) THEN 1 ELSE 0 END) AS ENOUGHAMOUNT,
+                 V.AD_CLIENT_ID, V.AD_ORG_ID, V.VIATICALDATE, V.C_CURRENCY_ID, V.ISNOTBUDGETABLE AS HEADER_ISNOTBUDGETABLE,
+                 -10 AS LINE, V.BUDGETFEEDINGAMT AS LINETOTALAMT, V.SFB_BUDGET_CERT_LINE_ID AS LINECERTIFICATE,
+                 V.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE,
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON V.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               left join sfb_budget_certificate bc on bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id
+          WHERE V.BUDGETFEEDINGAMT <> 0
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID
+        )
+        ORDER BY LINE 
+      )
+      LOOP
+
+        IF (cur_lines.lines_isnotbudgetable = 'N' AND cur_lines.header_isnotbudgetable = 'N') THEN
+
+         IF (cur_lines.linetotalamt <> 0) THEN
+           
+            IF (cur_lines.linecertificate IS NULL) THEN
+
+              RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCertificateLine@');
+      
+            ELSIF (cur_lines.sameorg = 0) THEN
+
+              RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCertificateOrganization@');
+
+            ELSIF(cur_lines.samecurrency = 0) THEN
+
+              RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCertificateCurrency@');
+
+            ELSIF(cur_lines.samehashcode = 0) THEN
+
+              RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCertificateHashcode@');
+
+            ELSIF(cur_lines.sameyear = 0) THEN
+
+              RAISE_APPLICATION_ERROR(-20000, '@SFB_NoDateWithinYear@');
+
+            ELSIF(cur_lines.enoughamount = 0) THEN
+
+              IF (COALESCE(v_bamount_lines, '0') <> COALESCE('', '0')) THEN
+
+                v_bamount_lines := v_bamount_lines || ', ';
+
+              END IF;
+
+              v_bamount_lines := v_bamount_lines || cur_lines.line;
+
+              -- IF there are some amount errors then save error lines only 
+              IF (COALESCE(v_bamount_lines, '0') <> COALESCE('', '0')) THEN
+
+                CONTINUE;
+
+              END IF;
+
+            ELSE
+              -- Get budget currency
+              SELECT b.c_currency_id INTO v_currency_id
+              FROM SFB_BUDGET_LINE bl 
+                   LEFT JOIN sfb_budget_version bv ON bl.sfb_budget_version_id = bv.sfb_budget_version_id 
+                   LEFT JOIN sfb_budget b ON bv.sfb_budget_id = b.sfb_budget_id 
+              WHERE bl.ad_client_id = cur_lines.ad_client_id AND bl.ad_org_id = cur_lines.ad_org_id 
+              AND bl.c_costcenter_id = cur_lines.c_costcenter_id AND bl.user1_id = cur_lines.user1_id AND bl.sfb_budget_item_id = cur_lines.sfb_budget_item_id
+              AND bv.version_status = 'AP' AND b.type_of_budget = cur_lines.type_of_budget AND b.c_year_id = cur_lines.c_year_id;
+
+              IF (cur_lines.c_currency_id = v_currency_id) THEN
+
+                v_converted := cur_lines.linetotalamt;
+
+              ELSE
+
+                v_converted := C_Currency_Round(C_Currency_Convert(cur_lines.linetotalamt, cur_lines.c_currency_id, v_currency_id, cur_lines.viaticaldate, null, cur_lines.ad_client_id, cur_lines.ad_org_id), v_currency_id, null);
+
+              END IF;
+
+              IF (v_converted IS NULL) THEN
+
+                RAISE_APPLICATION_ERROR(-20000, '@NoConversionRateHeader@');
+
+              END IF;
+
+              v_resultstr := 'Add amount to committed value';
+              UPDATE SFB_BUDGET_CERT_LINE 
+              SET committed_value = committed_value + cur_lines.linetotalamt, budget_committed_value = budget_committed_value + v_converted
+              WHERE sfb_budget_cert_line_id = cur_lines.sfb_budget_cert_line_id;  
+
+            END IF;
+
+          END IF;
+        END IF;
+
+      END LOOP;
+
+      IF (COALESCE(v_bamount_lines, '0') <> COALESCE('', '0')) THEN
+
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_NoEnoughAmount@' || ' (' || v_bamount_lines || ')');
+
+      END IF;
+
+      UPDATE ssve_viatical SET isbudgeted = 'Y' WHERE ssve_viatical_id = p_record_id;
+
+    END IF;
+    
+  ELSIF (p_docaction = 'RE') THEN
+
+    SELECT isbudgeted INTO v_budgeted
+    FROM ssve_viatical
+    WHERE ssve_viatical_id = p_record_id;
+
+    IF (v_budgeted = 'Y') THEN
+
+      v_resultstr := 'Update budget (committed certificate value).';
+    
+      FOR cur_lines IN (
+        (
+          SELECT V.AD_CLIENT_ID, V.AD_ORG_ID, V.VIATICALDATE, V.C_CURRENCY_ID, V.ISNOTBUDGETABLE AS HEADER_ISNOTBUDGETABLE,
+                 VL.LINENETAMT AS LINETOTALAMT, VL.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE, 
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SSVE_VIATICALLINE VL ON V.SSVE_VIATICAL_ID = VL.SSVE_VIATICAL_ID
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON VL.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               LEFT JOIN SFB_BUDGET_CERTIFICATE BC ON BCL.SFB_BUDGET_CERTIFICATE_ID = BC.SFB_BUDGET_CERTIFICATE_ID
+          WHERE VL.LINENETAMT <> 0
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID
+        )
+        UNION ALL
+        (
+          SELECT V.AD_CLIENT_ID, V.AD_ORG_ID, V.VIATICALDATE, V.C_CURRENCY_ID, V.ISNOTBUDGETABLE AS HEADER_ISNOTBUDGETABLE,
+                 VT.LINENETAMT AS LINETOTALAMT, VT.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE, 
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SSVE_VIATICAL_TRANSP VT ON V.SSVE_VIATICAL_ID = VT.SSVE_VIATICAL_ID
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON VT.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               LEFT JOIN SFB_BUDGET_CERTIFICATE BC ON BCL.SFB_BUDGET_CERTIFICATE_ID = BC.SFB_BUDGET_CERTIFICATE_ID
+          WHERE VT.LINENETAMT <> 0
+                AND VT.ISREFUNDABLE = 'Y'
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID
+        )
+        UNION ALL
+        (
+          SELECT V.AD_CLIENT_ID, V.AD_ORG_ID, V.VIATICALDATE, V.C_CURRENCY_ID, V.ISNOTBUDGETABLE AS HEADER_ISNOTBUDGETABLE,
+                 V.BUDGETADDITFUNDS AS LINETOTALAMT, V.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE, 
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON V.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               LEFT JOIN SFB_BUDGET_CERTIFICATE BC ON BCL.SFB_BUDGET_CERTIFICATE_ID = BC.SFB_BUDGET_CERTIFICATE_ID
+          WHERE V.BUDGETADDITFUNDS <> 0
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID
+        )
+        UNION ALL
+        (
+          SELECT V.AD_CLIENT_ID, V.AD_ORG_ID, V.VIATICALDATE, V.C_CURRENCY_ID, V.ISNOTBUDGETABLE AS HEADER_ISNOTBUDGETABLE,
+                 V.BUDGETMOBILAMT AS LINETOTALAMT, V.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE, 
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON V.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               LEFT JOIN SFB_BUDGET_CERTIFICATE BC ON BCL.SFB_BUDGET_CERTIFICATE_ID = BC.SFB_BUDGET_CERTIFICATE_ID
+          WHERE V.BUDGETMOBILAMT <> 0
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID
+        )
+        UNION ALL
+        (
+          SELECT V.AD_CLIENT_ID, V.AD_ORG_ID, V.VIATICALDATE, V.C_CURRENCY_ID, V.ISNOTBUDGETABLE AS HEADER_ISNOTBUDGETABLE,
+                 V.BUDGETFEEDINGAMT AS LINETOTALAMT, V.ISNOTBUDGETABLE AS LINES_ISNOTBUDGETABLE, 
+                 BCL.C_COSTCENTER_ID, BCL.USER1_ID, BCL.SFB_BUDGET_CERT_LINE_ID, BCL.SFB_BUDGET_ITEM_ID,
+                 BC.TYPE_OF_BUDGET, BC.C_YEAR_ID
+          FROM SSVE_VIATICAL V 
+               LEFT JOIN SFB_BUDGET_CERT_LINE BCL ON V.SFB_BUDGET_CERT_LINE_ID = BCL.SFB_BUDGET_CERT_LINE_ID
+               LEFT JOIN SFB_BUDGET_CERTIFICATE BC ON BCL.SFB_BUDGET_CERTIFICATE_ID = BC.SFB_BUDGET_CERTIFICATE_ID
+          WHERE V.BUDGETFEEDINGAMT <> 0
+                AND V.SSVE_VIATICAL_ID = P_RECORD_ID
+        )
+      )
+      LOOP
+
+        IF (cur_lines.lines_isnotbudgetable = 'N' AND cur_lines.header_isnotbudgetable = 'N' AND cur_lines.linetotalamt <> 0) THEN
+
+          -- Get budget currency
+          SELECT b.c_currency_id INTO v_currency_id
+          FROM SFB_BUDGET_LINE bl 
+               LEFT JOIN sfb_budget_version bv ON bl.sfb_budget_version_id = bv.sfb_budget_version_id 
+               LEFT JOIN sfb_budget b ON bv.sfb_budget_id = b.sfb_budget_id 
+          WHERE bl.ad_client_id = cur_lines.ad_client_id AND bl.ad_org_id = cur_lines.ad_org_id 
+          AND bl.c_costcenter_id = cur_lines.c_costcenter_id AND bl.user1_id = cur_lines.user1_id AND bl.sfb_budget_item_id = cur_lines.sfb_budget_item_id
+          AND bv.version_status = 'AP' AND b.type_of_budget = cur_lines.type_of_budget AND b.c_year_id = cur_lines.c_year_id;
+
+          IF (cur_lines.c_currency_id = v_currency_id) THEN
+
+            v_converted := cur_lines.linetotalamt;
+
+          ELSE
+
+            v_converted := C_Currency_Round(C_Currency_Convert(cur_lines.linetotalamt, cur_lines.c_currency_id, v_currency_id, cur_lines.viaticaldate, null, cur_lines.ad_client_id, cur_lines.ad_org_id), v_currency_id, null);
+
+          END IF;
+
+          IF (v_converted IS NULL) THEN
+
+            RAISE_APPLICATION_ERROR(-20000, '@NoConversionRateHeader@');
+
+          END IF;
+
+          v_resultstr := 'Subtract amount to committed value';
+          UPDATE SFB_BUDGET_CERT_LINE 
+          SET committed_value = committed_value - cur_lines.linetotalamt, budget_committed_value = budget_committed_value - v_converted
+          WHERE sfb_budget_cert_line_id = cur_lines.sfb_budget_cert_line_id;
+
+        END IF;
+
+      END LOOP;
+
+      UPDATE ssve_viatical SET isbudgeted = 'N' WHERE ssve_viatical_id = p_record_id;
+
+    END IF;
+  
+  END IF;
+
+EXCEPTION
+WHEN OTHERS THEN
+  DBMS_OUTPUT.PUT_LINE('SFB_BUDGET_CHECK exception: '|| v_ResultStr);
+  RAISE;
+END SSVE_VIATAPPL_BUDGET_CHECK
+]]></body>
+    </function>
+  </database>

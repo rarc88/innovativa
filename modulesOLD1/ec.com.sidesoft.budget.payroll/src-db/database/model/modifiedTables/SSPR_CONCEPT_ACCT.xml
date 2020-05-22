@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE SSPR_CONCEPT_ACCT">
+    <table name="SSPR_CONCEPT_ACCT" primaryKey="SSPR_CONCEPT_ACCT_KEY">
+      <column name="EM_SSBP_SFB_BUDGET_ITEM_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SFB_BUDGET_ITEM" name="EM_SSBP_CONCEPT_ACCT_BUDG_ITEM">
+        <reference local="EM_SSBP_SFB_BUDGET_ITEM_ID" foreign="SFB_BUDGET_ITEM_ID"/>
+      </foreign-key>
+    </table>
+  </database>

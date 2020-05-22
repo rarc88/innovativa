@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="08F3D279D3B14409B08BA1B20AFB49B5" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Log">Registro de cambios Presupuesto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="0A2549C1620A40FE97819805A62BDA07" trl="N">
+    <value column="Name" isTrl="N" original="Line Detail">Línea de Detalle</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1A86D076DEC5495A90556E8F92F55AD4" trl="Y">
+    <value column="Name" isTrl="Y" original="Certificate Line">Línea de Certificado</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1CC1226A77CB42FAAAC34A3F57C4BB17" trl="N">
+    <value column="Name" isTrl="Y" original="Enabled Document Type">Tipo de Documento Habilitado</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2CC678D2B22D4E7B8C4B8D7F427111A9" trl="N">
+    <value column="Name" isTrl="N" original="Header">Cabecera</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="40996836B1E54A9C83144ECE6F3516A9" trl="Y">
+    <value column="Name" isTrl="Y" original="Header">Cabecera</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4424435BE1A947EBACC7715D27FDDEC7" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Item">Partida presupuestaria</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4BFC8CE8B36A45208577E8CA31214D03" trl="N">
+    <value column="Name" isTrl="Y" original="Lines">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="6DD3453108EF48FBA7ECD80467CAC30B" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Area">Area de Presupuesto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="75815B3AE59745FC8B20DF1BAB99D6CA" trl="N">
+    <value column="Name" isTrl="Y" original="Header">Cabecera</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="This window allows to manage the G/L item payments made in a G/L Journal.">This window allows to manage the G/L item payments made in a G/L Journal.</value>
+  </row>
+  <row id="85FEE4E76F834420BEDEBF64B4F3BC65" trl="N">
+    <value column="Name" isTrl="N" original="Certificate Line">Línea de Certificado</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9B63557BA200471C8946158BE84AC654" trl="Y">
+    <value column="Name" isTrl="Y" original="Header">Cabecera</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A2F03EC28895498489FDA6B8FD065FD2" trl="N">
+    <value column="Name" isTrl="N" original="Payment Details">Payment Details</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A395ADEF43E64BD691BC57D3A43A07E5" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Area">Area de Presupuesto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="ACE8AF6384114709A43CB7308DAF08BE" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Item">Partida presupuestaria</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="B06E7BD4909F46FAA0AC1A14C99A0137" trl="Y">
+    <value column="Name" isTrl="Y" original="Line">Línea</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="B84376CDE8D848F5A29D3EF007D4647D" trl="N">
+    <value column="Name" isTrl="Y" original="Budgetary certificates">Cédulas presupuestarias</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Detailed report of budgetary certificates">Reporte detallado de cédulas presupuestarias</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="C0DB6EF67093493AB8242FFC724B749D" trl="N">
+    <value column="Name" isTrl="Y" original="Change logs">Registro de Cambios</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="D8FBF5CBE0804C088D3E14E33C7DE4CA" trl="Y">
+    <value column="Name" isTrl="Y" original="Version">Versión</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="DF695B33ABCE43D3833FADEA30F201A3" trl="N">
+    <value column="Name" isTrl="N" original="Journal Detail">Detalle Diario</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E3DFF177C32F40789744BBBC23655E00" trl="N">
+    <value column="Name" isTrl="Y" original="Lines">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="Lines tab contains a list of the documents to be paid or already paid by the payment.">Lines tab contains a list of the documents to be paid or already paid by the payment.</value>
+  </row>
+  <row id="E4722D69573647429268AB7DAE006967" trl="Y">
+    <value column="Name" isTrl="Y" original="Accounting">Contabilidad</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E73DBF26531A45CD8FC74D37F538C98A" trl="N">
+    <value column="Name" isTrl="Y" original="TBN Changes">Cambios TBN</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="EF1C3532EEF243E1B24E95AA61D6021A" trl="N">
+    <value column="Name" isTrl="Y" original="Create Line Budget">Crear Línea de Presupuesto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="F4B98464BBE349C69E28A667EF7F8554" trl="N">
+    <value column="Name" isTrl="N" original="Line Detail">Línea de Detalle</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="FE6FA17CF7C94263A9B9BAD31DF0D7D8" trl="N">
+    <value column="Name" isTrl="Y" original="Deferred Invoices">Facturas diferidas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="FF7861363CC545E497684C3F717631CE" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Configuration">Configuración de Presupuesto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

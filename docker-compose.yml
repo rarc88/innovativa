@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  innovativa:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      JAVA_HOME: /usr/lib/jvm/java-1.8.0-openjdk-amd64
+      CATALINA_OPTS: "-server -Djava.awt.headless=true -Xms384M -Xmx1024M"
+      CATALINA_BASE: /opt/tomcat
+      CATALINA_HOME: /opt/tomcat
+    image: innovativa
+    container_name: innovativa
+    restart: unless-stopped
+    ports:
+      - 8084:8080
+    volumes:
+      - ./:/opt/innovativa
+    working_dir: /opt/innovativa
+    command: /bin/sh -c "./clean.sh && ant update.database compile.complete smartbuild"
+    networks:
+      - default
+
+networks:
+  default:
+    external:
+      name: sidesoft

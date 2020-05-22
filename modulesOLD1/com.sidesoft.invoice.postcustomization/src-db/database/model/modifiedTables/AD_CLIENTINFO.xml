@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE AD_CLIENTINFO">
+    <table name="AD_CLIENTINFO" primaryKey="AD_CLIENTINFO_KEY">
+      <column name="EM_SIPC_IS_TAX_EXPENCE" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault/>
+      </column>
+      <check name="EM_SIPC_AD_CINFO_IS_T_EXP_CHK"><![CDATA[EM_SIPC_IS_TAX_EXPENCE IN ('Y', 'N')]]></check>
+    </table>
+  </database>

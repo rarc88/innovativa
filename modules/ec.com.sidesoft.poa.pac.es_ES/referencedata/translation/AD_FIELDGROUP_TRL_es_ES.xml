@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_FIELDGROUP" version="">
+  <row id="03FEBDEF2FD64EBCB33192C236BC5B69" trl="N">
+    <value column="Name" isTrl="Y" original="Financial Soruces">Fuentes de Financiamiento</value>
+  </row>
+  <row id="5012AED702F2419B92A5CE8A96B681A3" trl="N">
+    <value column="Name" isTrl="Y" original="Week on Time">Tiempo en Semana</value>
+  </row>
+  <row id="636791E0200C4C238BAF2FF5252933D4" trl="N">
+    <value column="Name" isTrl="Y" original="Goal">Metas</value>
+  </row>
+  <row id="6E5D36E2844C4748AA612D07D88BBE67" trl="N">
+    <value column="Name" isTrl="Y" original="Budget">Presupuesto</value>
+  </row>
+  <row id="EAB82A627D0D4BCDAAEC2F73F01BEC96" trl="N">
+    <value column="Name" isTrl="Y" original="Requisition Calendars">Cronograma de Requisiciones</value>
+  </row>
+  <row id="F1F56C0B19CA42D9A9BD84E8665AB38D" trl="N">
+    <value column="Name" isTrl="Y" original="Detailed Information Products">Información Detallada de los Productos</value>
+  </row>
+</compiereTrl>

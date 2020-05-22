@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="48C11A70389344F298C765377148118A" trl="N">
+    <value column="Name" isTrl="Y" original="Process Budget Reform">Procesar reforma presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4D9BC99E5D0046F8ABBD079630CB33AC" trl="N">
+    <value column="Name" isTrl="Y" original="Deprocess Budget Reform">Reactivar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="C3E51A40BA4F4DEDA5B4BCE5F8F82AE9" trl="N">
+    <value column="Name" isTrl="Y" original="Printing Process Budget Reforms">Proceso de impresion Reformas Presupuestarias</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

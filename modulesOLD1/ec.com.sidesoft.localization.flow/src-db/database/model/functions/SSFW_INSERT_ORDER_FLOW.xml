@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSFW_INSERT_ORDER_FLOW">
+    <function name="SSFW_INSERT_ORDER_FLOW" type="NULL">
+      <parameter name="p_ep_instance" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[p_message         VARCHAR2(2000);    
+p_record_id       VARCHAR2(60);      
+p_docaction       VARCHAR2(60);      
+p_user            VARCHAR2(60);      
+p_result          NUMBER;
+V_CLIENT	  VARCHAR2(32);      
+V_ORG		  VARCHAR2(32);      
+
+v_ResultStr       VARCHAR2(2000):='';
+v_currency_id     VARCHAR2(32);      
+v_hashcode        VARCHAR2(32);      
+v_converted       NUMBER;
+v_amt NUMBER:= -1;      -- Revenue (-)
+v_count           INTEGER;
+v_count_doctype   INTEGER;
+v_budgeted        CHAR(1);
+v_baccount_lines  VARCHAR2(2000):='';
+v_nbaccount_lines VARCHAR2(2000):='';
+v_bamount_lines   VARCHAR2(2000):='';
+--
+v_doctype	  VARCHAR2(32);      
+v_approval_doctype VARCHAR2(32);      
+V_budget_area_id  VARCHAR2(32);      
+v_ordertotal      NUMBER;
+V_approval_level  VARCHAR2(60);      
+V_approver1_id	  VARCHAR2(32);      
+V_approval1	  CHAR(1);
+V_approver2_id	  VARCHAR2(32);      
+V_approval2	  CHAR(1);
+V_observations1   VARCHAR2(255);      
+V_observations2   VARCHAR2(255);      
+v_approver1	  VARCHAR2(32);      
+v_approver2	  VARCHAR2(32);      
+v_approver_id     VARCHAR2(32);      
+V_COUNT_APP_ORDER INTEGER;
+V_ISSOTRX	  CHAR(1);
+
+v_available       NUMBER; --OBTG:NUMBER--
+v_real_1          NUMBER; --OBTG:NUMBER--
+v_real_2          NUMBER; --OBTG:NUMBER--
+v_line    	  NUMBER; --OBTG:NUMBER--
+V_PROCES_ACTIVE   CHAR(1);
+
+
+TYPE RECORD IS REF CURSOR;
+cur_params        RECORD;
+cur_lines         RECORD;
+
+BEGIN
+
+ 
+
+  FOR Cur_Params IN (
+
+    SELECT *
+
+    FROM ad_ep_instance_para
+
+    WHERE ad_ep_instance_id = p_ep_instance
+
+    ) LOOP
+
+    IF (cur_params.parametername LIKE 'DocAction') THEN
+      p_docaction := Cur_Params.p_string;
+    ELSIF (cur_params.parametername LIKE 'Record_ID') THEN
+      p_record_id := cur_params.p_string;
+    ELSIF (cur_params.parametername LIKE 'User') THEN
+      p_user := cur_params.p_string;
+    ELSIF (cur_params.parametername LIKE 'Message') THEN
+      p_message := cur_params.p_text;
+    ELSIF (cur_params.parametername LIKE 'Result') THEN
+      p_result := cur_params.p_number;
+    END IF;
+
+  END LOOP;
+
+
+SELECT FLOW_PAYMENT_ACTIVE INTO V_PROCES_ACTIVE FROM SSFW_ACTIVE_PROCESS;
+
+
+IF (V_PROCES_ACTIVE = 'Y') THEN 
+
+  IF (p_docaction = 'CO') THEN 
+
+    -- Is a Document Type that has been enabled for the budget.
+    SELECT count(*) INTO v_count_doctype
+    FROM C_ORDER co, ssfw_approval_doctype AD
+    WHERE AD_ISORGINCLUDED(co.ad_org_id, AD.ad_org_id, co.ad_client_id) <> -1 
+          AND AD.c_doctype_id = co.c_doctype_id
+          ---AND CO.em_sfb_budget_area_id = AD.em_sfb_budget_area_id
+          AND AD.isactive = 'Y'
+          AND co.c_order_id = p_record_id; 
+
+    IF (v_count_doctype > 0) THEN
+
+    
+      v_resultstr := 'Update budget (committed certificate value).'; 
+
+      --OBTENGO DATOS DE PEDIDO DE COMPRA
+      SELECT CO.c_doctype_id,CO.AD_CLIENT_ID, CO.AD_ORG_ID,AD.approval_level,co.grandtotal,AD.ssfw_approval_doctype_ID,CO.ISSOTRX
+      ---,em_sfb_budget_area_id
+      INTO v_doctype,V_CLIENT,V_ORG,V_approval_level,v_ordertotal,v_approval_doctype,V_ISSOTRX
+      ---,V_budget_area_id
+      FROM C_ORDER co, ssfw_approval_doctype AD
+      WHERE AD_ISORGINCLUDED(co.ad_org_id, AD.ad_org_id, co.ad_client_id) <> -1 
+          AND AD.c_doctype_id = co.c_doctype_id
+          AND AD.isactive = 'Y'
+          AND co.c_order_id = p_record_id;
+
+      --VALIDO Q SEA ORDEN DE COMPRA
+
+      IF ( V_ISSOTRX='N') THEN 
+      
+	      --OBTENGO CONFIGURACION DE RANGOS DE APROVACION
+	      SELECT approver1_id, approver2_id, approver_id 
+	      into v_approver1, v_approver2, v_approver_id 
+	      FROM ssfw_approval_range
+	      where ssfw_approval_doctype_id = v_approval_doctype and (v_ordertotal between range_begin and range_end) AND ISACTIVE='Y';
+
+
+	      --VALIDO TIPO DE APROVACION 
+	      IF (V_approval_level = 'S') THEN 
+
+		V_approver1_id:='100';
+		V_approval1:='Y';
+		V_approver2_id:=v_approver_id;
+		V_approval2:='N';
+		V_observations1:='<Openbravo>No Aplica';
+		V_observations2:='';
+
+	      ELSE
+
+		V_approver1_id:=v_approver1;
+		V_approval1:='N';
+		V_approver2_id:=v_approver2;
+		V_approval2:='N';
+		V_observations1:='';
+		V_observations2:='';
+
+	      END IF;
+	      
+
+	      --VERIFICO SI YA ESTA REGISTRA LA ORDEN EN LA TABLA PARA INSERTAR O ACTUALIZAR
+	      SELECT COUNT(*) INTO V_COUNT_APP_ORDER FROM  ssfw_order_approval WHERE c_order_id = p_record_id;
+
+	      IF ( V_COUNT_APP_ORDER = 0 ) THEN 
+
+		      --INSERT IN ORDER APPROVAL        
+		      INSERT INTO ssfw_order_approval(
+			   ssfw_order_approval_id, ad_client_id, ad_org_id, isactive, created, 
+			   createdby, updated, updatedby, c_order_id, approver1_id, approval1, 
+			   approver2_id, approval2, observations1, observations2)
+			VALUES (GET_UUID(), V_CLIENT, V_ORG, 'Y', now(), 
+			    p_user, now(), p_user, p_record_id, V_approver1_id, V_approval1, 
+			    V_approver2_id, V_approval2, V_observations1, V_observations2);
+
+	      ELSE 
+		      --UPDATE IN ORDER APPROVAL        
+		      UPDATE ssfw_order_approval 
+		      SET
+			updated = now(),
+			updatedby = p_user, 
+			approver1_id = V_approver1_id,
+			approval1 = approval1, 
+			approver2_id = V_approver2_id,
+			approval2 = V_approval2, 
+			observations1 = V_observations1, 
+			observations2 = V_observations2
+			WHERE c_order_id = p_record_id;
+
+	      END IF;           
+   END IF ;
+  ELSE
+
+   RAISE_APPLICATION_ERROR(-20000, '@ERROR=NO SE HA CONFIGURADO EL APROBADOR PARA ESE TIPO DE DOCUMENTO@');
+    
+  END IF;
+END IF;
+END IF;
+
+RETURN;
+END SSFW_INSERT_ORDER_FLOW
+]]></body>
+    </function>
+  </database>

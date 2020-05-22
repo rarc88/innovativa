@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SQB_PARTNER_UPDATE_BUDGET">
+    <function name="SQB_PARTNER_UPDATE_BUDGET" type="NULL">
+      <parameter name="p_invoice" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_SqlInvoiceID	CHARACTER VARYING(32):=''; --OBTG:VARCHAR2--
+ v_SqlUpdateInvoice	CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+ v_SqlParamFE 		CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+
+
+ v_CountBudget NUMBER; --OBTG:NUMBER--
+  
+  BEGIN
+	v_SqlInvoiceID:= p_invoice;
+
+	SELECT
+	COALESCE((SELECT COUNT(*) AS CONTAR FROM AD_MODULE WHERE JAVAPACKAGE='com.sidesoft.flopec.budget'),0) 
+	INTO v_CountBudget
+	FROM DUAL;
+
+	IF (v_CountBudget=1) THEN
+
+		v_SqlUpdateInvoice:='UPDATE C_INVOICE SET em_sfb_isnotbudgetable='''  || TO_CHAR('Y')
+		|| ''', ispaid=''' || TO_CHAR('Y')
+		|| ''' WHERE C_INVOICE_ID=''' || v_SqlInvoiceID || '''';
+                EXECUTE IMMEDIATE v_SqlUpdateInvoice;
+                                
+        END IF;
+END SQB_PARTNER_UPDATE_BUDGET
+]]></body>
+    </function>
+  </database>

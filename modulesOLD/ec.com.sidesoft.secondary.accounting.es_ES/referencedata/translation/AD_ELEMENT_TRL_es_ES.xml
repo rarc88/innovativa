@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="0107AF0B23DA40B0AC171B5E45F4358A" trl="N">
+    <value column="Name" isTrl="Y" original="Main Account">Cuenta Principal</value>
+    <value column="PrintName" isTrl="Y" original="Main Account">Cuenta Principal</value>
+    <value column="Description" isTrl="Y" original="Main Account">Cuenta Principal</value>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="Y" original="Main Account">Cuenta Principal</value>
+    <value column="PO_PrintName" isTrl="Y" original="Main Account">Cuenta Principal</value>
+  </row>
+</compiereTrl>

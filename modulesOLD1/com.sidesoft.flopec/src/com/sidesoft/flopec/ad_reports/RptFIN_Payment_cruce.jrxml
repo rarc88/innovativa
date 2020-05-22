@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptFIN_Payment_pago.jrxml" pageWidth="595" pageHeight="842" columnWidth="571" leftMargin="12" rightMargin="12" topMargin="20" bottomMargin="0" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR__" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Openbravo-3.0MP27\\src\\org\\openbravo\\erpReports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREP_RptFIN_PaymentLines" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Sidesoft\\Desktop\\fin_paymen\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BASE_DESIGN" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["src"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREP_RptFIN_Payment_Pago_Ret" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<parameter name="SUBREP_RptFIN_Payment_Pago_SubAnt" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+p.documentno as "document_payment",
+(
+Case
+WHEN p.isreceipt = 'Y'  then 'COMPROBANTE DE INGRESOS'
+WHEN p.isreceipt = 'N'  then 'COMPROBANTE DE PAGO'
+END) AS TITLE,
+(
+Case
+WHEN p.isreceipt = 'Y'  then 'RECIBIDO DE:'
+WHEN p.isreceipt = 'N'  then 'PAGUESE A:'
+END) AS TITLE_P,
+p.isreceipt AS  TYPECE,
+bp.ad_org_id as legalentity,
+bp.name as Client,
+--cl.address1 as Address,
+p.documentno as PAYMENTNO,
+bp.name AS BUSINESSPARTNER,
+p.paymentdate as PAYMENT_DATE,
+(UPPER(ssfl_convert_numbertoletters( p.amount))) as TOTAL,
+ COALESCE(TO_NUMBER(p.amount),0) as TOTALNUMBER,
+pm.name as PAYMENT_METHOD,
+cur.iso_code as CURRENCY,
+p.description,
+cur.iso_code as Badge,
+p.isreceipt as ISRECEIPT,
+org.ad_org_id as legalentity,
+org.name as LE_NAME,
+ad_orginfo.taxid as LE_TAXID,
+c_location_description(ad_orginfo.c_location_id) as LE_LOCATION,
+'es_EC' as ad_language,
+p.ad_org_id as "organizationid",
+bank.name as Bank_Name,
+     bank.accountno as Bank_Account,
+     acct.amtacctdr as dr,
+     acct.amtacctcr as cr,
+     case when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='D' and ce.name ='PROVEEDORES' then ce.value || ' - ' ||  bp.name
+     when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='D' and ce.name <> 'PROVEEDORES' then ce.value || ' - ' || ce.name
+     when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='H' then (ce.value|| ' - ' || bank.name)
+     end as accountp,
+     case when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='H' and ce.name ='PROVEEDORES' then ce.value || ' - ' || bp.name
+     when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='H' and ce.name <> 'PROVEEDORES' then ce.value || ' - ' || ce.name
+     when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='D' then ce.value || ' - ' || bank.name
+     end as account_p1,
+     ad.name as user_name,
+(
+Case
+WHEN p.isreceipt = 'Y'  then 'COBRO'
+WHEN p.isreceipt = 'N'  then 'PAGO'
+END) AS titulo_pagocobro,
+org.description as entidad,
+p.referenceno as referenceno,
+bt.name as bancotransfer_cobro,
+ba.displayedaccount as cuenta_pago,
+p.fin_payment_id
+FROM fin_payment p
+	left join c_bpartner bp on (p.c_bpartner_id=bp.c_bpartner_id)
+	--left join c_bpartner_location cbpl on cbpl.c_bpartner_id = bp.c_bpartner_id
+	--left join c_location cl on cl.c_location_id = cbpl.c_location_id
+	join c_currency cur on (p.c_currency_id=cur.c_currency_id)
+  left join fact_acct acct on acct.record_id = p.fin_payment_id
+  left join c_elementvalue ce on ce.c_elementvalue_id = acct.account_id
+  left join fin_financial_account bank on bank.fin_financial_account_id = p.fin_financial_account_id
+  left join ad_user ad on ad.ad_user_id = p.createdby
+  left join ssfi_banktransfer bt on p.em_ssfi_banktransfer_id = bt.ssfi_banktransfer_id
+  left join c_bp_bankaccount ba on p.EM_Sswh_Bp_Bankaccount_ID = ba.c_bp_bankaccount_id
+	left outer join fin_paymentmethod pm on (p.fin_paymentmethod_id=pm.fin_paymentmethod_id), ad_org org, ad_orginfo
+WHERE p.fin_payment_id=  $P{DOCUMENT_ID} and
+      org.ad_org_id = ad_orginfo.ad_org_id
+      and org.ad_org_id = (select o.ad_org_id
+                           from ad_org o join ad_orgtype t on (o.ad_orgtype_id=t.ad_orgtype_id)
+                           where ad_isorgincluded(p.ad_org_id, o.ad_org_id, p.ad_client_id)<>-1
+                                 and (t.islegalentity='Y' OR t.isacctlegalentity='Y'))
+--and  p.amount<>0]]>
+	</queryString>
+	<field name="document_payment" class="java.lang.String"/>
+	<field name="TITLE" class="java.lang.String"/>
+	<field name="TITLE_P" class="java.lang.String"/>
+	<field name="TYPECE" class="java.lang.String"/>
+	<field name="LEGALENTITY" class="java.lang.String"/>
+	<field name="CLIENT" class="java.lang.String"/>
+	<field name="PAYMENTNO" class="java.lang.String"/>
+	<field name="BUSINESSPARTNER" class="java.lang.String"/>
+	<field name="PAYMENT_DATE" class="java.sql.Timestamp"/>
+	<field name="TOTAL" class="java.lang.String"/>
+	<field name="TOTALNUMBER" class="java.math.BigDecimal"/>
+	<field name="PAYMENT_METHOD" class="java.lang.String"/>
+	<field name="CURRENCY" class="java.lang.String"/>
+	<field name="DESCRIPTION" class="java.lang.String"/>
+	<field name="ISRECEIPT" class="java.lang.String"/>
+	<field name="BADGE" class="java.lang.String"/>
+	<field name="LE_NAME" class="java.lang.String"/>
+	<field name="LE_TAXID" class="java.lang.String"/>
+	<field name="LE_LOCATION" class="java.lang.String"/>
+	<field name="AD_LANGUAGE" class="java.lang.String"/>
+	<field name="organizationid" class="java.lang.String"/>
+	<field name="BANK_NAME" class="java.lang.String"/>
+	<field name="BANK_ACCOUNT" class="java.lang.String"/>
+	<field name="DR" class="java.math.BigDecimal"/>
+	<field name="CR" class="java.math.BigDecimal"/>
+	<field name="ACCOUNTP" class="java.lang.String"/>
+	<field name="ACCOUNT_P1" class="java.lang.String"/>
+	<field name="USER_NAME" class="java.lang.String"/>
+	<field name="titulo_pagocobro" class="java.lang.String"/>
+	<field name="entidad" class="java.lang.String"/>
+	<field name="referenceno" class="java.lang.String"/>
+	<field name="bancotransfer_cobro" class="java.lang.String"/>
+	<field name="cuenta_pago" class="java.lang.String"/>
+	<field name="fin_payment_id" class="java.lang.String"/>
+	<variable name="GRANTOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{DR}]]></variableExpression>
+	</variable>
+	<variable name="SumTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{CR}]]></variableExpression>
+	</variable>
+	<variable name="RUTA_SUB" class="java.lang.String">
+		<variableExpression><![CDATA[$P{BASE_DESIGN} + "/com/sidesoft/flopec/ad_reports/RptFIN_Payment_cruce_Ret.jasper"]]></variableExpression>
+	</variable>
+	<variable name="RUTA_SUB_1" class="java.lang.String">
+		<variableExpression><![CDATA[$P{BASE_DESIGN} + "/com/sidesoft/flopec/ad_reports/RptFIN_Payment_cruce_SubAnt.jasper"]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="252" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="71" width="571" height="176"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="458" y="151" width="97" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="458" y="131" width="97" height="20"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="460" y="132" width="82" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{PAYMENT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="108" y="152" width="298" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CLIENT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="128" y="214" width="414" height="31"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="483" y="152" width="69" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOTALNUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="152" width="23" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CURRENCY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="4" y="87" width="545" height="22"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TITLE}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Right" vAlign="Top" isUsingCache="true">
+				<reportElement key="image-1" x="0" y="0" width="163" height="71"/>
+				<imageExpression class="java.awt.Image"><![CDATA[org.openbravo.erpCommon.utility.Utility.showImageLogo("yourcompanylegal", $F{organizationid})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="405" y="132" width="51" height="20">
+					<printWhenExpression><![CDATA[$F{AD_LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="152" width="51" height="20">
+					<printWhenExpression><![CDATA[$F{AD_LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="213" width="124" height="20">
+					<printWhenExpression><![CDATA[$F{AD_LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POR CONCEPTO DE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="152" width="105" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TITLE_P}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="379" y="44" width="59" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[ENTIDAD :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="251" width="570" height="1"/>
+			</line>
+			<rectangle>
+				<reportElement x="458" y="113" width="97" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="460" y="112" width="95" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{document_payment}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="405" y="112" width="51" height="20"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{titulo_pagocobro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="193" width="149" height="20">
+					<printWhenExpression><![CDATA[$F{AD_LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUENTA BENEFICIARIO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="438" y="44" width="116" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{entidad}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="154" y="193" width="224" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cuenta_pago}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="356" y="0" width="98" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{DR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="454" y="0" width="88" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="103" y="0" width="100" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ACCOUNTP}]]></textFieldExpression>
+			</textField>
+			<line direction="BottomUp">
+				<reportElement x="0" y="0" width="1" height="12"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="570" y="0" width="1" height="12"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="370" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="41" y="3" width="286" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BANK_NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="354" y="3" width="100" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{GRANTOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="454" y="3" width="88" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SumTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="17" width="70" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CTA.CTE NO.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="349" width="571" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="83" y="17" width="172" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BANK_ACCOUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="348"/>
+			</line>
+			<line>
+				<reportElement x="354" y="3" width="188" height="1"/>
+			</line>
+			<line>
+				<reportElement x="570" y="1" width="1" height="349"/>
+			</line>
+			<rectangle>
+				<reportElement x="4" y="43" width="546" height="52"/>
+			</rectangle>
+			<line>
+				<reportElement x="4" y="67" width="545" height="1"/>
+			</line>
+			<line>
+				<reportElement x="179" y="43" width="1" height="52"/>
+			</line>
+			<line>
+				<reportElement x="363" y="43" width="1" height="52"/>
+			</line>
+			<staticText>
+				<reportElement x="41" y="72" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="72" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="48" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solicitud de Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="48" width="152" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aprobado por Tesoreria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="398" y="48" width="130" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entregado al BCE]]></text>
+			</staticText>
+			<subreport isUsingCache="true">
+				<reportElement x="0" y="123" width="571" height="39"/>
+				<subreportParameter name="DOCUMENT_ID">
+					<subreportParameterExpression><![CDATA[$P{DOCUMENT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$V{RUTA_SUB}]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement x="1" y="205" width="571" height="39"/>
+				<subreportParameter name="DOCUMENT_ID">
+					<subreportParameterExpression><![CDATA[$P{DOCUMENT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$V{RUTA_SUB_1}]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="8" y="103" width="172" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comprobante de Retencion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="304" width="114" height="20">
+					<printWhenExpression><![CDATA[$F{AD_LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ELABORADO POR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="324" width="114" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{USER_NAME}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="303" width="114" height="1"/>
+			</line>
+			<line>
+				<reportElement x="115" y="304" width="1" height="44"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

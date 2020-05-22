@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="553C341BC4CB49BBAEAC4520B827F6E4" trl="Y">
+    <value column="Text" isTrl="Y" original="Reason">Motivo</value>
+  </row>
+</compiereTrl>

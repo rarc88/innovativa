@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFB_ADDLINE_BUDGET">
+    <function name="SFB_ADDLINE_BUDGET" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+Cur_Parameter RECORD;
+Cur_Partner RECORD;
+Cur_Dias RECORD;
+
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+  
+  v_ResultStr VARCHAR2(2000) := '';  
+
+  v_Period_ID VARCHAR2(32); 
+  v_n_insertions NUMBER;
+  v_Message VARCHAR2(2000):='';
+  V_fecha_inicio  DATE;---fecha inicio anio
+  V_C_bpartner_ID VARCHAR2(32); 
+  v_Record_ID  VARCHAR2(32);
+  V_sfb_budget_ID VARCHAR2(32);
+  V_sfb_budget_version_ID VARCHAR2(32);
+  V_YEAR_ID VARCHAR2(32);
+  V_TYPE_OF_BUDGET VARCHAR2(60);
+  V_COSTCENTER_ID VARCHAR2(32);
+  V_SFB_BUDGET_ITEM_ID VARCHAR2(32);
+  V_USER1_ID VARCHAR2(32);
+  V_SFB_BUDGET_AREA_ID VARCHAR2(32);
+  V_STATUS VARCHAR2(60);
+  V_PROCESS CHARACTER(1); --OBTG:VARCHAR2--
+  V_LINE NUMBER;
+  V_ISTBN CHARACTER(1); --OBTG:VARCHAR2--
+BEGIN
+  --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+    v_n_insertions := 0;  
+
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID,
+        i.AD_User_ID,
+        i.AD_Client_ID,
+        i.AD_Org_ID 
+                          
+      FROM AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+      )
+    LOOP
+    
+      v_Record_ID := Cur_Parameter.Record_ID;      
+      v_Client_ID := Cur_Parameter.AD_Client_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;     
+      
+    END LOOP; -- End Get Parameter
+
+     --OBTENGO EL AÑO Y TIPO DE PRESUPUESTO 
+    SELECT C_YEAR_ID,TYPE_OF_BUDGET,C_COSTCENTER_ID,SFB_BUDGET_ITEM_ID,USER1_ID,SFB_BUDGET_AREA_ID,STATUS,PROCESS,AD_CLIENT_ID,ISTBN, AD_ORG_ID INTO V_YEAR_ID,V_TYPE_OF_BUDGET,V_COSTCENTER_ID,V_SFB_BUDGET_ITEM_ID,V_USER1_ID,V_SFB_BUDGET_AREA_ID,V_STATUS,V_PROCESS,v_Client_ID,V_ISTBN, v_Org_ID
+    FROM sfb_budget_addline WHERE sfb_budget_addline_ID = v_Record_ID;
+
+    IF V_STATUS<>'CO' AND V_PROCESS='N' THEN 
+    --OBTENGO PRESUPUESTO BASE AL AÑO Y TIPO DE PRESUPUESTO
+    SELECT sfb_budget_ID INTO V_sfb_budget_ID FROM sfb_budget WHERE TYPE_OF_BUDGET=V_TYPE_OF_BUDGET AND C_YEAR_ID = V_YEAR_ID;
+
+    --OBTENGO VERSION APROVADA DEL PRESUPUESTO 
+    SELECT sfb_budget_version_ID INTO V_sfb_budget_version_ID FROM sfb_budget_version WHERE sfb_budget_ID=V_sfb_budget_ID AND VERSION_STATUS='AP' ;
+
+    --VALIDO SI NO EXISTE UN  PRESUPUESTO APROBADO 
+    IF V_sfb_budget_version_ID IS NULL THEN 
+      RAISE_APPLICATION_ERROR(-20000,'@ERROR=NO EXISTE UN PRESUPUESTO APROBADO PARA ESE PERIODO Y TIPO DE PRESUPUESTO');
+    END IF;
+
+    --OBTENGO EL NUMERO DE LINEAS 	
+    SELECT COALESCE(TO_NUMBER(MAX(LINE)),0)+10 INTO V_LINE FROM sfb_budget_line WHERE sfb_budget_version_ID=V_sfb_budget_version_ID;
+
+ 
+    INSERT INTO sfb_budget_line(
+            sfb_budget_line_id, ad_client_id, ad_org_id, isactive, created,createdby, updated, updatedby, 
+            sfb_budget_version_id, c_costcenter_id, 
+            line, sfb_budget_item_id, processed, jan_budgeted_value,jan_committed_value, jan_available_balance, jan_actual_value, 
+            feb_budgeted_value, feb_committed_value, feb_available_balance, feb_actual_value, mar_budgeted_value, mar_committed_value, mar_available_balance, 
+            mar_actual_value, apr_budgeted_value, apr_committed_value, apr_available_balance, apr_actual_value, may_budgeted_value, may_committed_value, may_available_balance, 
+            may_actual_value, jun_budgeted_value, jun_committed_value, jun_available_balance, jun_actual_value, jul_budgeted_value, jul_committed_value, jul_available_balance, 
+            jul_actual_value, aug_budgeted_value, aug_committed_value, aug_available_balance, aug_actual_value, sep_budgeted_value, sep_committed_value, sep_available_balance, 
+            sep_actual_value, oct_budgeted_value, oct_committed_value, oct_available_balance, oct_actual_value, nov_budgeted_value, nov_committed_value, nov_available_balance, 
+            nov_actual_value, dec_budgeted_value, dec_committed_value, dec_available_balance, dec_actual_value, budgeted_value, committed_value, available_balance, 
+            actual_value, jan_executed_value, feb_executed_value, mar_executed_value, apr_executed_value, may_executed_value, jun_executed_value, jul_executed_value, 
+            aug_executed_value, sep_executed_value, oct_executed_value, nov_executed_value, dec_executed_value, executed_value, user1_id, isexchange, sfb_budget_area_id, 
+            adjusted_value, jan_adjusted_value, feb_adjusted_value, mar_adjusted_value, apr_adjusted_value, may_adjusted_value, jun_adjusted_value, jul_adjusted_value, 
+            aug_adjusted_value, sep_adjusted_value, oct_adjusted_value, nov_adjusted_value, dec_adjusted_value, insertprocess,sfb_budget_addline_ID, istbn)
+    VALUES (get_uuid(), v_Client_ID, v_Org_ID, 'Y', now(),v_User_ID, now(), v_User_ID, 
+            V_sfb_budget_version_ID, V_COSTCENTER_ID, 
+            V_LINE, V_SFB_BUDGET_ITEM_ID, 'N', 0, 
+            0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, V_USER1_ID, 'N', V_SFB_BUDGET_AREA_ID, 0, 0, 0, 0, 
+            0, 0, 0, 0,  0, 0, 0, 0, 0, 'Y', v_Record_ID, V_ISTBN);
+            
+	--ACTUALIZO ESTADO DEL REGISTRO A PROCESADO
+	UPDATE sfb_budget_addline SET STATUS='CO',PROCESS='Y' WHERE sfb_budget_addline_ID = v_Record_ID;
+    ELSE 
+	RAISE_APPLICATION_ERROR(-20000,'@ERROR=ESTE REGISTRO YA ESTA PROCESADO@');
+    END IF;
+    v_Message := '@RowsInserted@';
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+    RETURN;
+    
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+    RETURN;
+END SFB_ADDLINE_BUDGET
+]]></body>
+    </function>
+  </database>

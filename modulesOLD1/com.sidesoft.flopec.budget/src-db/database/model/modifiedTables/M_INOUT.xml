@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE M_INOUT">
+    <table name="M_INOUT" primaryKey="M_INOUT_KEY">
+      <column name="EM_SFB_BUDGET_AREA_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SFB_BUDGET_AREA" name="EM_SFB_INVOICE_BUDGET_AREA">
+        <reference local="EM_SFB_BUDGET_AREA_ID" foreign="SFB_BUDGET_AREA_ID"/>
+      </foreign-key>
+    </table>
+  </database>

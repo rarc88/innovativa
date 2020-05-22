@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MENU" version="">
+  <row id="000E38F6FBF14DFD9506CDC5AE3C2540" trl="Y">
+    <value column="Name" isTrl="Y" original="Authorization Process">Autorización pedidos de compra</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="0C459E060F00431EA9AB81ED1AE9F6F9" trl="Y">
+    <value column="Name" isTrl="Y" original="Billing Process">Proceso Facturación</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="5CA10F2E47CB42BA9FDED2969E6DF32A" trl="Y">
+    <value column="Name" isTrl="Y" original="Invoice">Facturación</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="650445C6E2864717BC7015FB28267682" trl="Y">
+    <value column="Name" isTrl="Y" original="Invoice Authorization">Autorización Factura</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="6ED371C01B7041E9BAC5478D9AA68ADB" trl="Y">
+    <value column="Name" isTrl="Y" original="Authorization Process">Proceso Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="7E55E8BBACFE42A09BF1ABDD3B2E9AC6" trl="Y">
+    <value column="Name" isTrl="Y" original="Authorization Level">Nivel de Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="A060CA35E70B41E4A11D2A5860329B36" trl="Y">
+    <value column="Name" isTrl="Y" original="Order Process">Proceso Pedidos de compra</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="A516D4F20CFC45FFA6D19BF0530B2E5A" trl="Y">
+    <value column="Name" isTrl="Y" original="Purchase Order">Pedidos de Compra</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="AFC1B18D804E44BF993DA4862B13A7F2" trl="Y">
+    <value column="Name" isTrl="Y" original="Setup">Configuración</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="F6DF396ED8604A8BB89CDADF18AE88CE" trl="Y">
+    <value column="Name" isTrl="Y" original="Transactions">Transacciones</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="FED241B614E848CF948AE9F776A22DBF" trl="Y">
+    <value column="Name" isTrl="Y" original="Reason Rejection">Razón Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

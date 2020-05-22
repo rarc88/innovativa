@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_FIELDGROUP" version="">
+  <row id="01E45FA1D46342BC869082CA4512896B" trl="N">
+    <value column="Name" isTrl="Y" original="October Budget">Presupuesto Octubre</value>
+  </row>
+  <row id="0FD5DD02F23C4C71888C4E93FA20D54C" trl="N">
+    <value column="Name" isTrl="Y" original="April Budget">Presupuesto Abril</value>
+  </row>
+  <row id="1BFB9A2DE31044ED8D8DEAD8C43B92E7" trl="N">
+    <value column="Name" isTrl="Y" original="Budget">Presupuesto</value>
+  </row>
+  <row id="1D76560CAEC04BEAAAA97C2EEC165160" trl="N">
+    <value column="Name" isTrl="Y" original="Certificate">Certificado</value>
+  </row>
+  <row id="21E96AF30C9945E0A9AF6CC8C7E26DC4" trl="N">
+    <value column="Name" isTrl="Y" original="May Budget">Presupuesto Mayo</value>
+  </row>
+  <row id="26A0BF5B40B6462FB551F8C48501503C" trl="N">
+    <value column="Name" isTrl="Y" original="March Budget">Presupuesto Marzo</value>
+  </row>
+  <row id="40A28270D6C34724832600D07D3F52EA" trl="N">
+    <value column="Name" isTrl="Y" original="July Budget">Presupuesto Julio</value>
+  </row>
+  <row id="52FAAAF641464FF5AD9570E66BF4EF32" trl="N">
+    <value column="Name" isTrl="Y" original="February Budget">Presupuesto Febrero</value>
+  </row>
+  <row id="7605F859D44A454C909F2391D8CE84D8" trl="N">
+    <value column="Name" isTrl="Y" original="June Budget">Presupuesto Junio</value>
+  </row>
+  <row id="77576D9139F448CDA9369C3EFFC3582B" trl="N">
+    <value column="Name" isTrl="Y" original="November Budget">Presupuesto Noviembre</value>
+  </row>
+  <row id="91A642DAFAAA4199AA199E573E328430" trl="N">
+    <value column="Name" isTrl="Y" original="August Budget">Presupuesto Agosto</value>
+  </row>
+  <row id="A0339C1610644C87AC98A79DFBF4D000" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Currency">Moneda de Presupuesto</value>
+  </row>
+  <row id="D67AEC5D2DB34EA3A77D9491357CD9BF" trl="N">
+    <value column="Name" isTrl="Y" original="January Budget">Presupuesto Enero</value>
+  </row>
+  <row id="E36ADCA26F82453AAC4CE0CE21F9A214" trl="N">
+    <value column="Name" isTrl="Y" original="September Budget">Presupuesto Septiembre</value>
+  </row>
+  <row id="F77D1F11151E418AAE8B878CBE80CBF4" trl="N">
+    <value column="Name" isTrl="Y" original="December Budget">Presupuesto Diciembre</value>
+  </row>
+</compiereTrl>

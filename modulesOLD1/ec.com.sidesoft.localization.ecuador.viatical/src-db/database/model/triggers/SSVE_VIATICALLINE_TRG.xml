@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSVE_VIATICALLINE_TRG">
+    <trigger name="SSVE_VIATICALLINE_TRG" table="SSVE_VIATICALLINE" fires="before" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+
+/*************************************************************************
+* The contents of this file are subject to the Openbravo  Public  License
+* Version  1.0  (the  "License"),  being   the  Mozilla   Public  License
+* Version 1.1  with a permitted attribution clause; you may not  use this
+* file except in compliance with the License. You  may  obtain  a copy of
+* the License at http://www.openbravo.com/legal/license.html
+* Software distributed under the License  is  distributed  on  an "AS IS"
+* basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+* License for the specific  language  governing  rights  and  limitations
+* under the License.
+* The Original Code is Openbravo ERP.
+* The Initial Developer of the Original Code is Openbravo SL
+* All portions are Copyright (C) 2001-2006 Openbravo SL
+* All Rights Reserved.
+* Contributor(s):  Lic. Maykel González <mgonzalez@sidesoft.com.ec>
+************************************************************************/
+V_VIATICAL_ID VARCHAR2(32) := NULL;
+V_PROCESED SSVE_VIATICAL.PROCESSED%TYPE;
+        
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF INSERTING OR UPDATING THEN
+    V_VIATICAL_ID := :NEW.SSVE_VIATICAL_ID;
+  ELSIF DELETING THEN
+    V_VIATICAL_ID := :OLD.SSVE_VIATICAL_ID;
+  END IF;
+
+  BEGIN
+    SELECT  VA.PROCESSED
+    INTO  V_PROCESED
+    FROM  SSVE_VIATICAL VA
+    WHERE VA.SSVE_VIATICAL_ID = V_VIATICAL_ID;
+  EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+    V_PROCESED := NULL;
+  END;  
+
+    IF V_PROCESED = 'Y' THEN
+      RAISE_APPLICATION_ERROR(-20000, '@20501@');
+    END IF;
+
+END SSVE_VIATICALLINE_TRG
+]]></body>
+    </trigger>
+  </database>

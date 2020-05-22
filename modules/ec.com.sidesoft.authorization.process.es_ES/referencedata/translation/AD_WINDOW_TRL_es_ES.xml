@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="0EBAC134517442FA85D649995E052A76" trl="Y">
+    <value column="Name" isTrl="Y" original="Invoice Authorization">Autorización Factura</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="8BCA590BAC2B42F2A52326A46D60E34C" trl="Y">
+    <value column="Name" isTrl="Y" original="Authorization Level">Nivel de Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="94749ED9B7114A1B8DB6438F708B04EF" trl="Y">
+    <value column="Name" isTrl="Y" original="Order Process">Proceso Pedidos de compra</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="B8A56A22D6434C5A9313E13738420C15" trl="Y">
+    <value column="Name" isTrl="Y" original="Reason Rejection">Razón Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="BB5125C8A6EA485F8B9D3ACB3C637A6E" trl="Y">
+    <value column="Name" isTrl="Y" original="Authorization Process">Autorización pedidos de compra</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="CD54F0650F294CB992EF9F5C431C8A90" trl="Y">
+    <value column="Name" isTrl="Y" original="Billing Process">Proceso Facturación</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

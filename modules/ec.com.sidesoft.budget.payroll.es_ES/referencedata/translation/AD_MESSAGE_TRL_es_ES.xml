@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="01F16D2CDB7D44C2AD8F005E84881147" trl="N">
+    <value column="MsgText" isTrl="N" original="The Payroll is being used in a Certificate.">The Payroll is being used in a Certificate.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="5584F5E929AD4B41A0A6194CE9319FF7" trl="N">
+    <value column="MsgText" isTrl="Y" original="Human talent cordinator">Coordinador de talento humano</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="5EBD350AAD164C858462E1E4D05DFEDE" trl="N">
+    <value column="MsgText" isTrl="Y" original="Budgetary commitment">Compromiso presupuestario</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="A47D227AEE8A46E695C9212BEC39864F" trl="N">
+    <value column="MsgText" isTrl="Y" original="Missing Configure the &quot;Budget Item&quot;">Configure "Partida Presupuestaria"</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

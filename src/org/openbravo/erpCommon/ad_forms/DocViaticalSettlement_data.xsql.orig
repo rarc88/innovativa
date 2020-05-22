@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<SqlClass name="DocViaticalSettlementData" package="org.openbravo.erpCommon.ad_forms">
+  <SqlClassComment></SqlClassComment>
+  <SqlMethod name="selectRecord" type="preparedStatement" return="multiple">
+    <SqlMethodComment></SqlMethodComment>
+    <Sql>
+      <![CDATA[
+        SELECT VS.AD_CLIENT_ID, VS.AD_ORG_ID, VS.DOCUMENTNO, VS.VIATICALDATE AS DATEACCT, VS.C_CURRENCY_ID, VS.C_DOCTYPE_ID, VS.POSTED,
+        VS.TOTALAMT AS TOTAL_AMT, VS.C_COSTCENTER_ID, VS.USER1_ID, VCA.C_EXPENSEACCOUNT_ID, VCA.C_PAYABLEACCOUNT_ID
+        FROM SSVE_VIATICAL_SETTLEMENT VS
+        JOIN C_BPARTNER BP ON BP.C_BPARTNER_ID = VS.C_BPARTNER_ID
+        LEFT JOIN SSVE_VIATICAL_CONFIG_ACCT VCA ON BP.EM_SSPR_CATEGORY_ACCT_ID = VCA.SSPR_CATEGORY_ACCT_ID
+        WHERE VS.AD_CLIENT_ID=?
+        AND VS.SSVE_VIATICAL_SETTLEMENT_ID=?
+      ]]>
+     </Sql>
+     <Parameter name="client"/>
+     <Parameter name="id"/>
+   </SqlMethod>
+</SqlClass>

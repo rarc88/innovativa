@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="07F2D56DDA4E48C1B77663F4431AE7D5" trl="N">
+    <value column="Name" isTrl="Y" original="Finance account payable">Configuración de Cuentas por Pagar Finanzas ESIGEF</value>
+    <value column="Description" isTrl="Y" original="Finance account payable">Configuración de Cuentas por Pagar Finanzas ESIGEF</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="46362D365979425B88339B893B41B8A0" trl="N">
+    <value column="Name" isTrl="Y" original="Finance ESIGEF Credit Accounts Receivable">Finanzas ESIGEF Cuenta por Cobrar al Crédito</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9491B3C2079E4DD3ACB5A5EED1F6D467" trl="N">
+    <value column="Name" isTrl="Y" original="Finance ESIGEF Credit Account Payable">Finanzas ESIGEF Cuenta por Pagar al Crédito</value>
+    <value column="Description" isTrl="N" original="">Finanzas ESIGEF Cuenta por Pagar al Crédito</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9E2BE135BDCB46418EF665506CAB828D" trl="N">
+    <value column="Name" isTrl="Y" original="Finance ESIGEF Debit Accounts Receivable">Finanzas ESIGEF Cuenta por Cobrar al Debito</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="B0F4CB7EA7D24E8286A7B6D61829227D" trl="N">
+    <value column="Name" isTrl="Y" original="Finance ESIGEF Debit Account Payable">Finanzas ESIGEF Cuenta por Pagar al Débito</value>
+    <value column="Description" isTrl="N" original="">Finanzas ESIGEF Cuenta por Pagar al Débito</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="BC53EEE920584E499F416CDC423E2D06" trl="N">
+    <value column="Name" isTrl="Y" original="Finance account receivable">Configuración de Cuentas por Cobrar Finanzas ESIGEF</value>
+    <value column="Description" isTrl="Y" original="Finance account receivable">Configuración de Cuentas por Cobrar Finanzas ESIGEF</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

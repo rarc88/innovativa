@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="0AB7909AD7FA4BD8BA71F95515E7F794" trl="N">
+    <value column="Text" isTrl="N" original="Projects Total:">Projects Total:</value>
+  </row>
+  <row id="0CEB6EB011B345759DAE067E7ABCA884" trl="N">
+    <value column="Text" isTrl="N" original="Planned Project Duration:">Planned Project Duration:</value>
+  </row>
+  <row id="0F68D7E391CF476D8D62CBEC02346FA9" trl="N">
+    <value column="Text" isTrl="N" original="Margin %">Margin %</value>
+  </row>
+  <row id="134A2CBFA87B41F98D57CB6048EEE596" trl="N">
+    <value column="Text" isTrl="N" original="Planned End Date">Planned End Date</value>
+  </row>
+  <row id="1EE03F8B2A4F478D9547021FA947E38C" trl="N">
+    <value column="Text" isTrl="N" original="Project Progress Report">Project Progress Report</value>
+  </row>
+  <row id="1F17E3B889EF4A5DAC2C283D5B07E02E" trl="N">
+    <value column="Text" isTrl="N" original="Project Type">Project Type</value>
+  </row>
+  <row id="27FA1DB670EA46188CE3DF956FAE8124" trl="N">
+    <value column="Text" isTrl="N" original="Reinvoicing">Reinvoicing</value>
+  </row>
+  <row id="2DF0373ED58D48E8BAC7814F8418F480" trl="N">
+    <value column="Text" isTrl="N" original="Expense Report">Expense Report</value>
+  </row>
+  <row id="2F3174B213B548E3ABD6ECF71DCD2041" trl="N">
+    <value column="Text" isTrl="N" original="Generated on">Generated on</value>
+  </row>
+  <row id="3437BCFF261346AE983EEC3B9A38099A" trl="N">
+    <value column="Text" isTrl="N" original="Generated on">Generated on</value>
+  </row>
+  <row id="35600B4D10AB4D0491EFCC1E149364E5" trl="N">
+    <value column="Text" isTrl="N" original="Employees hours:">Employees hours:</value>
+  </row>
+  <row id="360AD8926CB142CE8C71CC085EFA1CD4" trl="N">
+    <value column="Text" isTrl="N" original="Project Copy From">Project Copy From</value>
+  </row>
+  <row id="3C7494C3AEE4479C965DFF0DC1B7AD39" trl="N">
+    <value column="Text" isTrl="N" original="Completion percentage:">Completion percentage:</value>
+  </row>
+  <row id="41CA64BA44D946958279BAF8D0737487" trl="N">
+    <value column="Text" isTrl="N" original="Expense Sheet">Expense Sheet</value>
+  </row>
+  <row id="46E8CD49700246FC9749B3A88D76D99F" trl="N">
+    <value column="Text" isTrl="N" original="Revenue">Revenue</value>
+  </row>
+  <row id="4D6FC0F18ED44C27B167D550105EE80E" trl="N">
+    <value column="Text" isTrl="N" original="Generated on">Generated on</value>
+  </row>
+  <row id="4DC5FB719400447FA9A0352FEA432E90" trl="N">
+    <value column="Text" isTrl="N" original="Employee:">Employee:</value>
+  </row>
+  <row id="515778760FAD420C8ACD7C54D01BC0CD" trl="N">
+    <value column="Text" isTrl="N" original="Complete and Process Sales Orders automatically">Complete and Process Sales Orders automatically</value>
+  </row>
+  <row id="53299A1416B442ADA146FADB15261079" trl="N">
+    <value column="Text" isTrl="N" original="Project Type">Project Type</value>
+  </row>
+  <row id="57C1EB01FBFA481CB2F5547EB4BC0959" trl="N">
+    <value column="Text" isTrl="N" original="Outsource">Outsource</value>
+  </row>
+  <row id="61D9822EFBD94FC8A27CD07561F8E50B" trl="N">
+    <value column="Text" isTrl="N" original="Set project type">Set project type</value>
+  </row>
+  <row id="64E9ABD281664037B05623261D6D2A55" trl="N">
+    <value column="Text" isTrl="N" original="Real End Date">Real End Date</value>
+  </row>
+  <row id="650493828E7D4D1EA9FB2D236D92B03A" trl="N">
+    <value column="Text" isTrl="N" original="Sales Representative">Sales Representative</value>
+  </row>
+  <row id="6FDF7EC4F04D4880B587F460D6B73F4E" trl="N">
+    <value column="Text" isTrl="N" original="Business Partner Total:">Business Partner Total:</value>
+  </row>
+  <row id="7123556203964129AFD8DF8675107C0F" trl="N">
+    <value column="Text" isTrl="N" original="Real End Date:">Real End Date:</value>
+  </row>
+  <row id="789042F4EBDF44788723D2B4F313E5EE" trl="N">
+    <value column="Text" isTrl="N" original="Days delayed">Days delayed</value>
+  </row>
+  <row id="7EB8D76729C04F15B8FE3D8889B1DBFE" trl="N">
+    <value column="Text" isTrl="N" original="Cumulative days delayed:">Cumulative days delayed:</value>
+  </row>
+  <row id="7FD9D97111B84E399E10088BDC86CEBC" trl="N">
+    <value column="Text" isTrl="N" original="Customer:">Customer:</value>
+  </row>
+  <row id="83D3C08B73544A0E93F856186B94B262" trl="N">
+    <value column="Text" isTrl="N" original="Processed">Processed</value>
+  </row>
+  <row id="8772AC6DDAE746A58A87BEF8D70D5927" trl="N">
+    <value column="Text" isTrl="N" original="Service Project Report">Service Project Report</value>
+  </row>
+  <row id="8B11F0519FBD4565A8545097D7BB79E8" trl="N">
+    <value column="Text" isTrl="N" original="Time Sheet">Time Sheet</value>
+  </row>
+  <row id="8CB59A2FA1564590BBDF4E54F757D416" trl="N">
+    <value column="Text" isTrl="N" original="Initiative type">Initiative type</value>
+  </row>
+  <row id="8D89C67A3A164BBBA3EDD6B7AE189C44" trl="N">
+    <value column="Text" isTrl="N" original="Total amount:">Total amount:</value>
+  </row>
+  <row id="8E57CB5566064A91B7522C974AC0A56F" trl="N">
+    <value column="Text" isTrl="N" original="Hours">Hours</value>
+  </row>
+  <row id="8F5FF6461FCA4C559C1C2803BC5508DA" trl="N">
+    <value column="Text" isTrl="N" original="Real">Real</value>
+  </row>
+  <row id="905A61C10BCB4706A2114CA32330F02B" trl="N">
+    <value column="Text" isTrl="N" original="Older Phases and Tasks first">Older Phases and Tasks first</value>
+  </row>
+  <row id="9172A80CA3DA418D80622D150280D07E" trl="N">
+    <value column="Text" isTrl="N" original="Work Type">Work Type</value>
+  </row>
+  <row id="91CC7321ACD34DAE9A6FA6891B4F0E84" trl="N">
+    <value column="Text" isTrl="N" original="Set Project Type">Set Project Type</value>
+  </row>
+  <row id="95B7C7F4358A410F9D0C1FE607C39BFB" trl="N">
+    <value column="Text" isTrl="N" original="Planned End Date:">Planned End Date:</value>
+  </row>
+  <row id="96E2CFAE987748D8B83333A2B1AAC50D" trl="N">
+    <value column="Text" isTrl="N" original="Planned End Date:">Planned End Date:</value>
+  </row>
+  <row id="9CE17912AE294108AA0B84D495D354DC" trl="N">
+    <value column="Text" isTrl="N" original="Planned">Planned</value>
+  </row>
+  <row id="9D8A9A905180432F998079CCBDA31FF0" trl="N">
+    <value column="Text" isTrl="N" original="Project Type:">Project Type:</value>
+  </row>
+  <row id="ACAAB4DDC19E4599A0FBA1013215C52E" trl="N">
+    <value column="Text" isTrl="N" original="Project:">Project:</value>
+  </row>
+  <row id="B3F35E5D18824A4BA438FC1C5DCCE788" trl="N">
+    <value column="Text" isTrl="N" original="Gross margin">Gross margin</value>
+  </row>
+  <row id="B81E92766FE74CD788F5537ED7C9BDE1" trl="N">
+    <value column="Text" isTrl="N" original="Time burned:">Time burned:</value>
+  </row>
+  <row id="B869FE67739B430B98EA8B11E259BA48" trl="N">
+    <value column="Text" isTrl="N" original="Project:">Project:</value>
+  </row>
+  <row id="BAF254830A914B12B1C2F341220E353C" trl="N">
+    <value column="Text" isTrl="N" original="Expense AP Invoice Process">Expense AP Invoice Process</value>
+  </row>
+  <row id="C35E98255FC64A9789979A530E0DFEA0" trl="N">
+    <value column="Text" isTrl="N" original="Generated on">Generated on</value>
+  </row>
+  <row id="D39AC20C4E754101BED575A6385AC248" trl="N">
+    <value column="Text" isTrl="N" original="Product hours:">Product hours:</value>
+  </row>
+  <row id="D682AD0E0EF8472F93D93B789DD3A7D0" trl="N">
+    <value column="Text" isTrl="N" original="Date Ordered">Date Ordered</value>
+  </row>
+  <row id="D762BB3AAE0146809D14EEC416286ABF" trl="N">
+    <value column="Text" isTrl="N" original="Employee hours:">Employee hours:</value>
+  </row>
+  <row id="DA53F89F9B46462C8338D410BD417966" trl="N">
+    <value column="Text" isTrl="N" original="Collected">Collected</value>
+  </row>
+  <row id="DA8696CC46764EE8805424EF46917216" trl="N">
+    <value column="Text" isTrl="N" original="Days delayed:">Days delayed:</value>
+  </row>
+  <row id="E00E3E830DC64650B30AEF5411BB5B14" trl="N">
+    <value column="Text" isTrl="N" original="Close project">Close project</value>
+  </row>
+  <row id="EC36CE2F89D747D28D59637DD8527F78" trl="N">
+    <value column="Text" isTrl="N" original="Days elapsed:">Days elapsed:</value>
+  </row>
+  <row id="F169B21FE9B74CCFB7CDE9D9D7939C6F" trl="N">
+    <value column="Text" isTrl="N" original="Reference Date">Reference Date</value>
+  </row>
+  <row id="F2C38182F86944D58BC90CCEC3504608" trl="N">
+    <value column="Text" isTrl="N" original="Expenses">Expenses</value>
+  </row>
+  <row id="F436B96992664F8EABEA972A0041B124" trl="N">
+    <value column="Text" isTrl="N" original="Expense Sales Order Process">Expense Sales Order Process</value>
+  </row>
+  <row id="F7B926221F6E41B4AB002B08AA40656E" trl="N">
+    <value column="Text" isTrl="N" original="Planned Duration">Planned Duration</value>
+  </row>
+  <row id="F7F6194E21224A4AA06942A0C8AF33C8" trl="N">
+    <value column="Text" isTrl="N" original="Include Suborganizations">Include Suborganizations</value>
+  </row>
+</compiereTrl>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_FIELD" version="">
+  <row id="12F076C674BC486A8C74E71C21589536" trl="N">
+    <value column="Name" isTrl="N" original="Paying To">Paying To</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="The Business Partner the payment is paid to.">The Business Partner the payment is paid to.</value>
+  </row>
+  <row id="25F26814004C431F9B77A6347C3EBB0D" trl="N">
+    <value column="Name" isTrl="N" original="Paying From">Paying From</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="Financial account where the payment amount is deposited.">Financial account where the payment amount is deposited.</value>
+  </row>
+</compiereTrl>

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_ORDREACTIVE_CERT_TRG">
+    <trigger name="SFB_ORDREACTIVE_CERT_TRG" table="C_ORDER" fires="before" insert="false" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+TYPE RECORD IS REF CURSOR;
+CUR_ORDERLINE RECORD;
+CUR_ORDER RECORD;
+CUR_INVOICE RECORD;
+V_DOCSTATUS            VARCHAR2(60);
+V_ORDERLINE_ID       VARCHAR2(32);
+v_CERTIFICATE_STATUS  VARCHAR2(60);
+v_budget_cert_line_id VARCHAR2(32);
+V_NEWSTATUS        VARCHAR2(32);
+V_OLDSTATUS        VARCHAR2(32);
+V_COUNT               INTEGER;
+V_DOCSTATUS_I	      VARCHAR2(60);
+V_DOCSTATUS_INV	      VARCHAR2(32);
+v_isnotbudgetable     CHAR(1);
+
+V_ISNB                CHAR(1);
+V_COUNTINVOICE        INTEGER;
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (UPDATING) THEN
+
+   --VALIDO QUE SEA ORDEN DE COMPRA
+   IF (:OLD.ISSOTRX='N') THEN 
+     IF(:OLD.Docstatus<>:NEW.Docstatus)THEN
+
+           V_NEWSTATUS:=:NEW.Docstatus ; 
+           V_OLDSTATUS:=:OLD.Docstatus ;
+           v_isnotbudgetable:=:NEW.em_sfb_isnotbudgetable ;
+
+           IF(v_isnotbudgetable=TO_CHAR('N'))THEN           
+
+           --VALIDO QUE EL ESTADO ACTUAL SEA COMPLETADO
+           IF(V_OLDSTATUS = TO_CHAR('CO') OR V_OLDSTATUS = TO_CHAR('IP'))THEN
+
+           --VALIDO NUEVO ESTADO DE LA ORDEN
+           IF(V_NEWSTATUS = TO_CHAR('DR'))THEN
+
+              --CURSOR DETALLE DE LA ORDEN
+              FOR CUR_ORDERLINE IN (
+		      Select *from c_orderline a 
+		      where a.c_order_id = :OLD.C_ORDER_ID
+	      )
+	      LOOP
+
+		  --VALIDA QUE TENGA ATADO UNA LINEA DE CERTIFICADO EN LA LINEA DEL PEDIDO
+      V_ISNB:=CUR_ORDERLINE.EM_SFB_ISNOTBUDGETABLE;
+      
+		  IF (COALESCE(CUR_ORDERLINE.em_sfb_budget_cert_line_id,NULL) IS NULL AND V_ISNB='N') THEN
+		    RAISE_APPLICATION_ERROR(-20000, '@ERROR=FALTA REGISTRAR LINEA DE CERTIFICADO EN LA LINEA DEL PEDIDO@') ;
+		 -- END IF;
+		  ELSIF (COALESCE(CUR_ORDERLINE.em_sfb_budget_cert_line_id,NULL) IS NOT NULL AND V_ISNB='N') THEN
+      
+     -- RAISE_APPLICATION_ERROR(-20000,'ERROR:= ' || TO_CHAR(CUR_ORDERLINE.em_sfb_budget_cert_line_id)) ;
+		  --OBTENGO DATOS DEL CERTIFICADO
+		  select CERTIFICATE_STATUS INTO v_CERTIFICATE_STATUS
+		  from sfb_budget_certificate a
+		  left join sfb_budget_cert_line b on a.sfb_budget_certificate_id = b.sfb_budget_certificate_id
+		  where b.sfb_budget_cert_line_id=CUR_ORDERLINE.em_sfb_budget_cert_line_id;
+
+		  --VALIDO SI EL  CERTIFICADO ESTA CERRADO
+                  IF (COALESCE(v_CERTIFICATE_STATUS,'ND') = TO_CHAR('CL')) THEN 
+
+		    RAISE_APPLICATION_ERROR(-20000, '@ERROR=NO PUEDE REACTIVAR UN PEDIDO QUE TIENE RELACIONADO UN CERTIFICADO CERRADO@') ;
+
+		  END IF;
+            --Obtengo el numero de lineas que  tiene atado el certificado en la
+            -- factura relacionada
+            
+            SELECT
+              (SELECT COUNT(*)
+	            FROM C_INVOICE I
+	            LEFT JOIN C_INVOICELINE IL ON I.C_INVOICE_ID = IL.C_INVOICE_ID
+	            where IL.EM_sfb_budget_cert_line_id =CUR_ORDERLINE.em_sfb_budget_cert_line_id) 
+              INTO V_COUNTINVOICE
+              FROM DUAL;
+              
+             IF  V_COUNTINVOICE > 0 THEN
+              
+	          --OBTENGO DATOS DE LA FACTURA RELACIONADA AL PEDIDO
+	          FOR CUR_INVOICE IN 
+	          (
+	            SELECT DOCSTATUS --INTO V_DOCSTATUS_INV
+	            FROM C_INVOICE I
+	            LEFT JOIN C_INVOICELINE IL ON I.C_INVOICE_ID = IL.C_INVOICE_ID
+	            where IL.EM_sfb_budget_cert_line_id=CUR_ORDERLINE.em_sfb_budget_cert_line_id
+	            and IL.c_orderline_id = Cur_Orderline.c_orderline_id
+	          )
+	          LOOP
+
+	            V_DOCSTATUS_INV:=CUR_INVOICE.DOCSTATUS;
+	      
+	            --VALIDO SI LA FACTURA ESTA COMPLETADA
+	            IF (COALESCE(V_DOCSTATUS_INV,'ND') = TO_CHAR('CO')) THEN 
+
+   		      RAISE_APPLICATION_ERROR(-20000, '@ERROR=NO PUEDE REACTIVAR UN PEDIDO QUE TIENE RELACIONADO UNA FACTURA EN ESTADO COMPLETADO@') ;
+
+   		    END IF;
+   		  END LOOP; 
+        
+        END IF;
+         END IF;
+	     END LOOP;
+	   END IF;
+     END IF; 
+    END IF;    
+   END IF; 
+  END IF; 
+ END IF;  
+
+  END SFB_ORDREACTIVE_CERT_TRG
+]]></body>
+    </trigger>
+  </database>

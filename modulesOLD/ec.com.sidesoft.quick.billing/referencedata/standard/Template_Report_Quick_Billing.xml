@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ob:Openbravo xmlns:ob="http://www.openbravo.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sescr_template_report id="3545EC569B344422A24E1FB7D23A836C" identifier="Cierre de Caja Configuración Rápida">
+    <active>true</active>
+    <nameReport>RptSqb_QuickBillingTicketClose.jrxml</nameReport>
+    <id>3545EC569B344422A24E1FB7D23A836C</id>
+    <templateDir>@basedesign@/ec/com/sidesoft/quick/billing/ad_Reports/</templateDir>
+    <title>Cierre de Caja Configuración Rápida</title>
+    <table xsi:nil="true"/>
+    <window id="3A4D34306AB743069FF5A867CF0A3BBF" entity-name="ADWindow" identifier="Facturación Rápida"/>
+  </sescr_template_report>
+  <sescr_template_report id="F589C6C4D8264D1C81646272303C12FE" identifier="Facturación Rápida">
+    <active>true</active>
+    <nameReport>RptSqb_QuickBillingTicket.jrxml</nameReport>
+    <id>F589C6C4D8264D1C81646272303C12FE</id>
+    <templateDir>@basedesign@/ec/com/sidesoft/quick/billing/ad_Reports/</templateDir>
+    <title>Facturación Rápida</title>
+    <table id="B7EDE90944074C1CAC5FEEB057A2A92A" entity-name="ADTable" identifier="sqb_quickbilling"/>
+    <window id="3A4D34306AB743069FF5A867CF0A3BBF" entity-name="ADWindow" identifier="Facturación Rápida"/>
+  </sescr_template_report>
+</ob:Openbravo>

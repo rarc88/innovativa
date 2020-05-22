@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MENU" version="">
+  <row id="C16870AF88C64EB2A0009C1A9B2DDED8" trl="Y">
+    <value column="Name" isTrl="Y" original="Purchase by Expense Type">Compras por Tipo de Gasto</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

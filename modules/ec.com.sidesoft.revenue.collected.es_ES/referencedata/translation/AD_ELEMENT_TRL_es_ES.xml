@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="0D1DAC9398F346EF8DFB5068E6E69C56" trl="Y">
+    <value column="Name" isTrl="Y" original="Ammount">Monto</value>
+    <value column="PrintName" isTrl="Y" original="Ammount">Monto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="1EE78200E43F49F78E8A16695EF20C6D" trl="Y">
+    <value column="Name" isTrl="Y" original="Related Revenue">Ingreso relacionado</value>
+    <value column="PrintName" isTrl="Y" original="Related Revenue">Ingreso relacionado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="744BC849A52140DEAF41CEBB06459624" trl="N">
+    <value column="Name" isTrl="N" original="Ssrfc_Balancecontrol_ID">Ssrfc_Balancecontrol_ID</value>
+    <value column="PrintName" isTrl="N" original="Ssrfc_Balancecontrol_ID">Ssrfc_Balancecontrol_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="BDFB004B8DFC416991668D7EA4F55AAD" trl="Y">
+    <value column="Name" isTrl="Y" original="Balance Control">Control de Saldo</value>
+    <value column="PrintName" isTrl="Y" original="Balance Control">Control de Saldo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

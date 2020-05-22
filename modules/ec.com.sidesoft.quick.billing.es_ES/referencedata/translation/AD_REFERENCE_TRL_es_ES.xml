@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="039181F8446646E2BF74A5AA97404B2D" trl="N">
+    <value column="Name" isTrl="N" original="Quick Billing Product">Quick Billing Product</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="120AC0319D8747899D4E3DB73EC174E4" trl="N">
+    <value column="Name" isTrl="N" original="Document Type Payment In QB">Document Type Payment In QB</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3F953862500744BAA889BCEDA866370F" trl="N">
+    <value column="Name" isTrl="N" original="Financial Account Table">Financial Account Table</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="43B8CDEA899D49C5B7459A3AA99F8D13" trl="N">
+    <value column="Name" isTrl="N" original="Quick Billing Partner">Quick Billing Partner</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="65BFC131982D46A08967FAB02AEF1310" trl="N">
+    <value column="Name" isTrl="N" original="Tax ID Type">Tax ID Type</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="88D97022932E42DF964FD81DB02445D6" trl="N">
+    <value column="Name" isTrl="N" original="User - QB">User - QB</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="F1242E763A27409FA6C02FAB2B25BC66" trl="N">
+    <value column="Name" isTrl="N" original="Sql Quick Billing">Sql Quick Billing</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

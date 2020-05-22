@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REF_LIST" version="">
+  <row id="1F1FC14CB6004239A19D6CF797BCA385" trl="N">
+    <value column="Name" isTrl="Y" original="Payroll Partial Payment">Pago Parcial de Nómina</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="3084EA9E281D47D5A232E76EC0AA820F" trl="Y">
+    <value column="Name" isTrl="Y" original="Confirmed Payment">Pago Confirmado</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="3E57229C00884494AA67F9903832370A" trl="Y">
+    <value column="Name" isTrl="Y" original="Format Bank Central">Formato Banco Central</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="7725E0E73F7240CEBAB64A7A74938E71" trl="N">
+    <value column="Name" isTrl="N" original="Excel">Excel</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="9C3C68CD97624D489594D303572511FD" trl="Y">
+    <value column="Name" isTrl="Y" original="Format Bank Pichincha">Formato Banco Pichincha</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="A0A130D8906D424BB60940551B02F83F" trl="Y">
+    <value column="Name" isTrl="Y" original="Draft">Borrador</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="C722F6E49E5146CB865A3A9B3C3AFFF6" trl="Y">
+    <value column="Name" isTrl="Y" original="Payment Approved">Pago Aprobado</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

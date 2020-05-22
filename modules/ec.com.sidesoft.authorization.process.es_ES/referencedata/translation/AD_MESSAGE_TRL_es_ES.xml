@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="E19E45AF589F43D0B408B27C978783A8" trl="Y">
+    <value column="MsgText" isTrl="Y" original="Successful cancellation process!!">Proceso de anulación exitoso!!</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="E2584EE931224DBDB569AD0DCBADEF3C" trl="Y">
+    <value column="MsgText" isTrl="Y" original="Successful document signing process!!">Documento firmado exitosamente!!</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="FF8D4499FADB4D51958530BFF1E92568" trl="Y">
+    <value column="MsgText" isTrl="Y" original="Successful authorization process!!">Proceso de autorización exitoso!!</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.34312"/>
+    <removeCheckChange tableName="C_COUNTRY" checkName="EM_SSWH_COUNTRY_REGCODE_CHK">
+      <check name="EM_SSWH_COUNTRY_REGCODE_CHK"><![CDATA[(LENGTH(TRIM(TRANSLATE((EM_SSWH_REGIMECODE), '0123456789', ' '))) = 0) AND (LENGTH((EM_SSWH_REGIMECODE)) < 4)]]></check>
+    </removeCheckChange>
+    <removeCheckChange tableName="C_DOCTYPE" checkName="EM_SSWH_DOCTYPE_CODE_CHK">
+      <check name="EM_SSWH_DOCTYPE_CODE_CHK"><![CDATA[LENGTH(TRIM(TRANSLATE((EM_SSWH_CODE), '0123456789', ' '))) = 0]]></check>
+    </removeCheckChange>
+    <removeCheckChange tableName="FIN_PAYMENTMETHOD" checkName="EM_SSWH_PAYMETH_CODE_CHK">
+      <check name="EM_SSWH_PAYMETH_CODE_CHK"><![CDATA[LENGTH(TRIM(TRANSLATE((EM_SSWH_CODE), '0123456789', ' '))) = 0]]></check>
+    </removeCheckChange>
+    <removeCheckChange tableName="GL_JOURNALLINE" checkName="EM_SFBIN_BUDGET_CHK">
+      <check name="EM_SFBIN_BUDGET_CHK"><![CDATA[(((EM_SFB_AFFECTBUDGET = 'N') AND (EM_SFBIN_AFFECTINCOMEBUDGET = 'N')) OR ((EM_SFB_AFFECTBUDGET = 'Y') AND (EM_SFBIN_AFFECTINCOMEBUDGET = 'N'))) OR ((EM_SFB_AFFECTBUDGET = 'N') AND (EM_SFBIN_AFFECTINCOMEBUDGET = 'Y'))]]></check>
+    </removeCheckChange>
+    <removeCheckChange tableName="M_PRODUCT" checkName="EM_SSWH_ISREFCUST_CHK">
+      <check name="EM_SSWH_ISREFCUST_CHK"><![CDATA[((EM_SSWH_ISREFUND_CUSTOMER = 'Y') AND (PERIODNUMBER_EXP > 0)) OR (ISDEFERREDEXPENSE = 'N')]]></check>
+    </removeCheckChange>
+    <removeCheckChange tableName="SFB_BUDGET_LINE" checkName="SFB_BUDGET_LINE_TBNEXCH_CHK">
+      <check name="SFB_BUDGET_LINE_TBNEXCH_CHK"><![CDATA[ISTBN='N' AND ISEXCHANGE='N' OR ISTBN='N' AND ISEXCHANGE='Y' OR ISTBN='Y' AND ISEXCHANGE='N']]></check>
+    </removeCheckChange>
+    <columnRequiredChange tableName="SSPR_CONTRACT" columnName="SSPR_CONTRACTTYPE_ID">
+      <required>false</required>
+    </columnRequiredChange>
+    <removeCheckChange tableName="SSVE_VIAT_CONFIG_ONDAYS_INT" checkName="SSVE_VIAT_CFG_OND_INT_DAYS_CHK">
+      <check name="SSVE_VIAT_CFG_OND_INT_DAYS_CHK"><![CDATA[(FROMDAY < TODAY) OR (INFINITY = 'Y')]]></check>
+    </removeCheckChange>
+    <removeCheckChange tableName="SSVE_VIATICAL_CONFIG_ONDAYS" checkName="SSVE_VIAT_CFG_ONDAYS_DAYS_CHK">
+      <check name="SSVE_VIAT_CFG_ONDAYS_DAYS_CHK"><![CDATA[(FROMDAY < TODAY) OR (INFINITY = 'Y')]]></check>
+    </removeCheckChange>
+    <removeCheckChange tableName="SSWH_TAXREGIME" checkName="SSWH_TAXREGIME_VALUE_CHK">
+      <check name="SSWH_TAXREGIME_VALUE_CHK"><![CDATA[(LENGTH(TRIM(TRANSLATE((VALUE), '0123456789', ' '))) = 0) AND (LENGTH((VALUE)) < 4)]]></check>
+    </removeCheckChange>
+    <columnRequiredChange tableName="SSPP_PAYMENTS" columnName="SSPP_PARTIALPAYINFOCONCEPT_ID">
+      <required>false</required>
+    </columnRequiredChange>
+    <columnDataChange tablename="OBUISEL_SELECTOR" columnname="WHERECLAUSE" pkRow="B8321631F57E463EB617289E936BAF3A">
+      <oldValue/>
+      <newValue><![CDATA[e.id IN  (select ct.id from Costcenter ct where ct.id IN 	(select dc.costcenter.id from sdbrl_c_costcenter_dim dc where dc.role.id = @#AD_Role_ID@ )  	AND NOT EXISTS 	(select cc.id from Costcenter cc where cc.id IN  		(select dc.costcenter.id from sdbrl_c_costcenter_dim dc where dc.user.id = @#AD_User_ID@) 	)  	or ct.id  	IN  	(select dc.costcenter.id from sdbrl_c_costcenter_dim dc where dc.user.id = @#AD_User_ID@) )]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="AD_VAL_RULE_ID" pkRow="9579">
+      <oldValue/>
+      <newValue><![CDATA[D21C495482624F9FA110E3437B11D254]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_TAB" columnname="WHERECLAUSE" pkRow="800206">
+      <oldValue/>
+      <newValue><![CDATA[C_BudgetLine.sfb_budget_area_id IN ( select sfb_budget_area_id from sfb_budget_user_area where ad_user_id = @#AD_User_ID@) 
+	and ((C_BudgetLine.c_costcenter_id in (select c_costcenter_id from sdbrl_c_costcenter_dim where ad_role_id = @#AD_Role_ID@) and not exists (select c_costcenter_id from sdbrl_c_costcenter_dim where ad_user_id=@#AD_User_ID@))
+	or (C_BudgetLine.c_costcenter_id in (select c_costcenter_id from sdbrl_c_costcenter_dim where ad_user_id=@#AD_User_ID@)))
+	and (C_BudgetLine.USER1_ID in (select user1_id from sdbrl_user1_dim where ad_role_id = @#AD_Role_ID@) AND NOT EXISTS (select user1_id from user1 where user1_id in (select user1_id from sdbrl_user1_dim where ad_user_id = @#AD_User_ID@)) 
+	or C_BudgetLine.user1_id in (select user1_id from sdbrl_user1_dim where ad_user_id = @#AD_User_ID@))]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_TAB" columnname="WHERECLAUSE" pkRow="B06E7BD4909F46FAA0AC1A14C99A0137">
+      <oldValue><![CDATA[sfb_budget_line.sfb_budget_area_id IN ( select sfb_budget_area_id from sfb_budget_user_area where ad_user_id = @#AD_User_ID@)]]></oldValue>
+      <newValue><![CDATA[sfb_budget_line.sfb_budget_area_id IN ( select sfb_budget_area_id from sfb_budget_user_area where ad_user_id = @#AD_User_ID@)  and sfb_budget_line.sfb_budget_area_id IN ( select sfb_budget_area_id from sfb_budget_user_area where ad_user_id = @#AD_User_ID@) 
+	and ((sfb_budget_line.c_costcenter_id in (select c_costcenter_id from sdbrl_c_costcenter_dim where ad_role_id = @#AD_Role_ID@) and not exists (select c_costcenter_id from sdbrl_c_costcenter_dim where ad_user_id=@#AD_User_ID@))
+	or (sfb_budget_line.c_costcenter_id in (select c_costcenter_id from sdbrl_c_costcenter_dim where ad_user_id=@#AD_User_ID@)))
+	and (sfb_budget_line.USER1_ID in (select user1_id from sdbrl_user1_dim where ad_role_id = @#AD_Role_ID@) AND NOT EXISTS (select user1_id from user1 where user1_id in (select user1_id from sdbrl_user1_dim where ad_user_id = @#AD_User_ID@)) 
+	or sfb_budget_line.user1_id in (select user1_id from sdbrl_user1_dim where ad_user_id = @#AD_User_ID@))]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_TAB" columnname="HQLWHERECLAUSE" pkRow="B06E7BD4909F46FAA0AC1A14C99A0137">
+      <oldValue><![CDATA[e.area IN (select area from sfb_budget_user_area as ua where ua.userContact.id = @#AD_User_ID@)]]></oldValue>
+      <newValue><![CDATA[e.area IN (select area from sfb_budget_user_area as ua where ua.userContact.id = @#AD_User_ID@) AND ((e.costCenter.id IN  (select ct.id from Costcenter ct where ct.id IN (select dc.costcenter.id from sdbrl_c_costcenter_dim dc where dc.role.id = @#AD_Role_ID@ )) AND NOT EXISTS (select cc.id from Costcenter cc where cc.id IN (select dc.costcenter.id from sdbrl_c_costcenter_dim dc where dc.user.id = @#AD_User_id@)))
+	or (e.costCenter.id IN (select dc.costcenter.id from sdbrl_c_costcenter_dim dc where dc.user.id = @#AD_User_id@)))
+and 
+((e.stDimension.id IN (select u.id from UserDimension1 u where u.id IN (select du.user1.id from sdbrl_user1_dim du where du.role.id = @#AD_Role_ID@)) AND NOT EXISTS 
+           (select us.id from UserDimension1 us where us.id IN (select du1.user1.id from sdbrl_user1_dim du1 where du1.user.id = @#AD_User_id@)))
+	or (e.stDimension.id IN (select us1.id from UserDimension1 us1 where us1.id IN (select du2.user1.id from sdbrl_user1_dim du2 where du2.user.id = @#AD_User_id@))))]]></newValue>
+    </columnDataChange>
+  </vector>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="0DA344A134B248CBACFBB1F9F874DEE2" trl="Y">
+    <value column="Name" isTrl="Y" original="Ws Contract ">Contrato Ws</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="177A9B35F7D64D27B458246C9C12044F" trl="Y">
+    <value column="Name" isTrl="Y" original="Fare B">Tarifa B</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1CBE09D0871945D0B18864F06EC44D86" trl="Y">
+    <value column="Name" isTrl="Y" original="Recap"> Resúmen</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="20FF759A3C7F4EE582D1B629F8CF1948" trl="Y">
+    <value column="Name" isTrl="Y" original="Port">Puerto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2F3B684B24E24C07A3E20082C4BE0C8C" trl="Y">
+    <value column="Name" isTrl="Y" original="WS Contract B">Contrato B Ws</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="370DCE4D0B3E408E8FB623D1B5DDAE20" trl="Y">
+    <value column="Name" isTrl="Y" original="Vessel Type">Tipo de buque</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3904F59312D345F4A681BF1B50110BC5" trl="N">
+    <value column="Name" isTrl="Y" original="Withholding Authorization Settings ">Configuración Autorización de Retenciones </value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="6A7140B3D5F4474E9BB8788E44F7594A" trl="Y">
+    <value column="Name" isTrl="Y" original="Fare A">Tarifa A</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="6C13C56A5AA44E0DA8FBF0AE819D9705" trl="Y">
+    <value column="Name" isTrl="Y" original="Print Type Port">Imprimir tipo de puerto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="AF426173BD87470F9A1C7A908B6F5A27" trl="Y">
+    <value column="Name" isTrl="Y" original="Load Type">Tipo de carga</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ *************************************************************************
+ * The contents of this file are subject to the Openbravo  Public  License
+ * Version  1.1  (the  "License"),  being   the  Mozilla   Public  License
+ * Version 1.1  with a permitted attribution clause; you may not  use this
+ * file except in compliance with the License. You  may  obtain  a copy of
+ * the License at http://www.openbravo.com/legal/license.html 
+ * Software distributed under the License  is  distributed  on  an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific  language  governing  rights  and  limitations
+ * under the License. 
+ * The Original Code is Openbravo ERP. 
+ * The Initial Developer of the Original Code is Openbravo SLU 
+ * All portions are Copyright (C) 2001-2010 Openbravo SLU 
+ * All Rights Reserved. 
+ * Contributor(s):  ______________________________________.
+ ************************************************************************
+-->
+
+<SqlClass name="RptPrinterViaticalAccountingData" package="ec.com.sidesoft.localization.ecuador.viatical.ad_reports">
+   <SqlClassComment></SqlClassComment>
+   <SqlMethod name="select" type="preparedStatement" return="multiple">
+      <SqlMethodComment></SqlMethodComment>
+      <Sql>
+      <![CDATA[
+			select
+			i.ad_org_id as organizationid,
+			'ASIENTO DE VIÁTICOS ' || i.documentno as documentno,
+			i.description as description,
+			to_char(i.viaticaldate) as date1,
+			bp.name as partner,
+			( SELECT name FROM c_bpartner_location 
+			WHERE c_bpartner_id = bp.c_bpartner_id 
+			AND created = (SELECT MAX(created) FROM c_bpartner_location 
+			WHERE c_bpartner_id = bp.c_bpartner_id)) as address,
+			bp.taxid as tax,
+			e.value as accountcod,
+			e.name as det,
+			a.amtacctdr as debit,
+			a.amtacctcr as credit,
+			i.documentno as reference,
+			( SELECT phone FROM c_bpartner_location 
+			WHERE c_bpartner_id = bp.c_bpartner_id 
+			AND created = (SELECT MAX(created) FROM c_bpartner_location 
+			WHERE c_bpartner_id = bp.c_bpartner_id)) as phone,
+			cc.name as costcenter
+			, upper(cd.name) || ' - ' || i.documentno as lbldocumentno
+			,au.name as usuario
+			,to_char(a.created, 'dd/MM/yyyy HH24:MI:SS') as creacion
+			,to_char(now(),'dd/MM/yyyy') as fecha_actual
+			,i.leavewithpay as referencia_fact
+			from SSVE_Viatical_Settlement i
+			left join fact_acct a on a.record_id = i.ssve_viatical_settlement_id
+			left join c_elementvalue e on e.c_elementvalue_id = a.account_id
+			left join c_bpartner bp on bp.c_bpartner_id = i.c_bpartner_id
+			left join c_costcenter cc on cc.c_costcenter_id = a.c_costcenter_id
+			left join c_doctype cd on cd.c_doctype_id = a.c_doctype_id
+			left join ad_user au on au.ad_user_id = a.createdby
+			where i.ssve_viatical_settlement_id =  ?
+        ]]>
+        </Sql>
+        <Parameter name="viatical"/>
+   </SqlMethod>
+   <SqlMethod name="set" type="constant" return="multiple">
+      <SqlMethodComment></SqlMethodComment>
+      <Sql></Sql>
+  </SqlMethod>
+</SqlClass>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSFL_RETURN_DESCRIPTION_ORDER">
+    <function name="SSFL_RETURN_DESCRIPTION_ORDER" type="VARCHAR">
+      <parameter name="order_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+Cur_Order RECORD;
+
+ v_count NUMBER; 		--OBTG:NUMBER-- 
+ v_armart VARCHAR(600):=''; 	--OBTG:VARCHAR2-- 
+ 
+BEGIN
+
+	v_armart:='';
+	v_count:=1;
+
+	FOR Cur_Order IN
+	(
+		SELECT COALESCE(TO_CHAR(MP.NAME),'ND') AS NAMEP FROM C_ORDERLINE ORDL 
+		LEFT JOIN M_PRODUCT MP ON MP.M_PRODUCT_ID = ORDL.M_PRODUCT_ID
+		WHERE ORDL.C_ORDER_ID = order_id
+	)
+	LOOP
+
+	IF v_count > 1 THEN
+
+		v_armart:= v_armart || ' - ';
+	
+	END IF;
+
+	v_armart:= v_armart || Cur_Order.NAMEP;
+        
+	v_count:= v_count +1;
+
+	END LOOP;
+	
+ RETURN  v_armart;
+END SSFL_RETURN_DESCRIPTION_ORDER
+]]></body>
+    </function>
+  </database>

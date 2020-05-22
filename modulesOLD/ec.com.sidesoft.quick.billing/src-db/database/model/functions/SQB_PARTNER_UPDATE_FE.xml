@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SQB_PARTNER_UPDATE_FE">
+    <function name="SQB_PARTNER_UPDATE_FE" type="NULL">
+      <parameter name="p_bpartner" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_quickbilling" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_SqlCompleteInvoice	CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+ v_SqlParamFE 		CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+ v_SqlValuesParamFE	CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+ v_SqlValuesParamFEID 	CHARACTER VARYING(32):='';  --OBTG:VARCHAR2--
+ v_SqlPlataform 	CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+ v_SqlPlatformFE	CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+ v_SqlPlatformFEID 	CHARACTER VARYING(32):='';  --OBTG:VARCHAR2-- 
+ v_Email		CHARACTER VARYING(220):='';  --OBTG:VARCHAR2-- 
+ v_SqlParametersFE 	CHARACTER VARYING(620):=''; --OBTG:VARCHAR2--
+
+ v_CountFE NUMBER; --OBTG:NUMBER--
+ 
+ v_CountFEPlataform NUMBER; --OBTG:NUMBER--
+ 
+  BEGIN
+
+	v_SqlParamFE:= 'SELECT COUNT(*) AS CONTAR FROM EEI_PLATFORM';
+	EXECUTE IMMEDIATE v_SqlParamFE INTO v_CountFE;
+
+	v_SqlPlataform:='SELECT COUNT(*) AS CONTAR2 FROM EEI_FORMAT';
+	EXECUTE IMMEDIATE v_SqlPlataform INTO v_CountFEPlataform;
+
+	IF (v_CountFE=1 AND v_CountFEPlataform=1) THEN
+
+		SELECT COALESCE((SELECT EMAIL FROM SQB_QUICKBILLING WHERE SQB_QUICKBILLING_ID= p_quickbilling
+		),'ND') 
+		INTO v_Email
+		FROM DUAL;
+		v_SqlValuesParamFE:= 'SELECT EEI_FORMAT_ID AS CONTAR2 FROM EEI_FORMAT';
+		EXECUTE IMMEDIATE v_SqlValuesParamFE INTO v_SqlValuesParamFEID;
+
+		v_SqlPlatformFE:= 'SELECT EEI_PLATFORM_ID FROM EEI_PLATFORM';
+		EXECUTE IMMEDIATE v_SqlPlatformFE INTO v_SqlPlatformFEID;
+
+		v_SqlParametersFE:='UPDATE C_BPARTNER SET EM_EEI_FORMAT_ID=' || '''' || v_SqlValuesParamFEID || '''' 
+		|| ',EM_EEI_PLATFORM_ID=' || '''' || v_SqlPlatformFEID || ''''
+		|| ',EM_EEI_DELIVERYMODE=' || '''' || 'CORREO ELECTRONICO' || ''''
+		|| ',EM_EEI_EMAIL=' || '''' || v_Email || ''''
+		|| ',EM_EEI_EEIOICE=' || '''' || 'Y' || ''''
+		|| ' WHERE C_BPARTNER_ID =' || '''' || p_bpartner || '''';
+
+                EXECUTE IMMEDIATE v_SqlParametersFE;
+
+        ELSE
+
+		SELECT COALESCE((SELECT EMAIL FROM SQB_QUICKBILLING WHERE SQB_QUICKBILLING_ID= p_quickbilling
+		),'ND') 
+		INTO v_Email
+		FROM DUAL;        
+
+		v_SqlParametersFE:='UPDATE C_BPARTNER SET '
+		|| 'EM_EEI_DELIVERYMODE=' || '''' || 'CORREO ELECTRONICO' || ''''
+		|| ',EM_EEI_EMAIL=' || '''' || v_Email || ''''
+		|| ',EM_EEI_EEIOICE=' || '''' || 'Y' || ''''
+		|| ' WHERE C_BPARTNER_ID =' || '''' || p_bpartner || '''';
+
+                EXECUTE IMMEDIATE v_SqlParametersFE;
+                                
+        END IF;
+        
+    RETURN;
+END SQB_PARTNER_UPDATE_FE
+]]></body>
+    </function>
+  </database>

@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+  <database name="TABLE SCPP_APPROVALPAYMENTLINE">
+    <table name="SCPP_APPROVALPAYMENTLINE" primaryKey="SCPP_APPROVALPAYMENTL_KEY">
+      <column name="SCPP_APPROVALPAYMENTLINE_ID" primaryKey="true" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="AD_CLIENT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="AD_ORG_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="ISACTIVE" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[Y]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="CREATED" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default><![CDATA[SYSDATE]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="CREATEDBY" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="UPDATED" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default><![CDATA[SYSDATE]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="UPDATEDBY" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="SCPP_APPROVALPAYMENT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="C_BPARTNER_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="SSHR_DEPARTMENT_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="C_COSTCENTER_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="USER1_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="USER2_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="SSPR_CATEGORY_ACCT_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="PAYROLLAMOUNT" primaryKey="false" required="true" type="DECIMAL" size="12,4" autoIncrement="false">
+        <default><![CDATA[0]]></default>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="AD_CLIENT" name="SCPP_APPROVALPAYMENTL_AD_CLI">
+        <reference local="AD_CLIENT_ID" foreign="AD_CLIENT_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="AD_ORG" name="SCPP_APPROVALPAYMENTL_AD_ORG">
+        <reference local="AD_ORG_ID" foreign="AD_ORG_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SCPP_APPROVALPAYMENT" name="SCPP_APPROVALPAYMENTL_APROVAL">
+        <reference local="SCPP_APPROVALPAYMENT_ID" foreign="SCPP_APPROVALPAYMENT_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSHR_DEPARTMENT" name="SCPP_APPROVALPAYMENTL_C_PERIOD">
+        <reference local="SSHR_DEPARTMENT_ID" foreign="SSHR_DEPARTMENT_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSPR_CATEGORY_ACCT" name="SCPP_APPROVALPAYMENTL_CATEGOR">
+        <reference local="SSPR_CATEGORY_ACCT_ID" foreign="SSPR_CATEGORY_ACCT_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="C_COSTCENTER" name="SCPP_APPROVALPAYMENTL_COSTCENT">
+        <reference local="C_COSTCENTER_ID" foreign="C_COSTCENTER_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="C_BPARTNER" name="SCPP_APPROVALPAYMENTL_PARTNER">
+        <reference local="C_BPARTNER_ID" foreign="C_BPARTNER_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="USER1" name="SCPP_APPROVALPAYMENTL_USER1">
+        <reference local="USER1_ID" foreign="USER1_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="USER2" name="SCPP_APPROVALPAYMENTL_USER2">
+        <reference local="USER2_ID" foreign="USER2_ID"/>
+      </foreign-key>
+      <check name="SCPP_APPROVALPAYMENTL_ISACT_CK"><![CDATA[ISACTIVE IN ('Y', 'N')]]></check>
+    </table>
+  </database>

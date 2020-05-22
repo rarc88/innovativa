@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REPORT>
+<template id="class" file="ActionButtonDB1BA1D2767047919379CEDD87AA1351.html"></template>
+
+<PARAMETER id="paramLanguage" name="language" default=""></PARAMETER>
+<PARAMETER id="paramCSS" name="css" attribute="href" replace="Default"></PARAMETER>
+<PARAMETER id="paramCSS_print" name="css" attribute="href" replace="Default"></PARAMETER>
+<PARAMETER id="key" name="key" default="" attribute="value"></PARAMETER>
+<PARAMETER id="form" name="form" default="" attribute="action"></PARAMETER>
+<PARAMETER id="processing" name="processing" default="" attribute="value"></PARAMETER>
+<PARAMETER id="window" name="window" default="" attribute="value"></PARAMETER>
+<PARAMETER id="paramCheck" name="check" default="Y"></PARAMETER>
+<PARAMETER id="paramDirectory" name="directory" default=""></PARAMETER>
+<PARAMETER id="processId" name="processId" default="PROCESS"></PARAMETER>
+<PARAMETER id="trlFormType" name="trlFormType" default="PROCESS"></PARAMETER>
+<PARAMETER id="processName" name="processName" replace="#processName#" default=""></PARAMETER>
+<PARAMETER id="processDescription" name="processDescription" replace="#processDescription#" default=""></PARAMETER>
+<PARAMETER id="processHelp" name="processHelp" replace="#processHelp#" default=""></PARAMETER>
+
+
+<PARAMETER id="buttonOK" name="ok" attribute="onmouseover" replace="xx" default=""></PARAMETER>
+<PARAMETER id="buttonOK" name="ok" attribute="onfocus" replace="xx" default=""></PARAMETER>
+<PARAMETER id="imgButtonOK" name="ok" attribute="alt" replace="xx" default=""></PARAMETER>
+<PARAMETER id="imgButtonOK" name="ok" attribute="title" replace="xx" default=""></PARAMETER>
+<PARAMETER id="tdButtonOK" name="ok"></PARAMETER>
+
+<PARAMETER id="buttonCancel" name="cancel" attribute="onmouseover" replace="xx" default=""></PARAMETER>
+<PARAMETER id="buttonCancel" name="cancel" attribute="onfocus" replace="xx" default=""></PARAMETER>
+<PARAMETER id="imgButtonCancel" name="cancel" attribute="alt" replace="xx" default=""></PARAMETER>
+<PARAMETER id="imgButtonCancel" name="cancel" attribute="title" replace="xx" default=""></PARAMETER>
+<PARAMETER id="tdButtonCancel" name="cancel"></PARAMETER>
+
+
+<PARAMETER id="messageBoxID" name="messageType" attribute="class" replace="yy" default="HIDDEN"></PARAMETER>
+<PARAMETER id="messageBoxIDTitle" name="messageTitle" default=""></PARAMETER>
+<PARAMETER id="messageBoxIDMessage" name="messageMessage" default=""></PARAMETER>
+
+
+
+<PARAMETER id="C_Bpartner_ID" name="C_Bpartner_ID" attribute="value"/>
+<SUBREPORT id="reportC_Bpartner_ID" name="reportC_Bpartner_ID" report="org/openbravo/erpCommon/reference/List">
+  <ARGUMENT name="parameterListSelected" withId="C_Bpartner_ID"/>
+</SUBREPORT>
+
+  
+  <PARAMETER id="Month_Filter" name="Month_Filter" attribute="value"></PARAMETER>
+  <PARAMETER id="Month_Filter" name="Month_Filter_Format" attribute="displayformat"></PARAMETER>
+  <PARAMETER id="Month_Filter" name="Month_Filter_Format" attribute="saveformat"></PARAMETER>
+
+
+<PARAMETER id="Status_Filter" name="Status_Filter" attribute="value"/>
+<SUBREPORT id="reportStatus_Filter" name="reportStatus_Filter" report="org/openbravo/erpCommon/reference/List">
+  <ARGUMENT name="parameterListSelected" withId="Status_Filter"/>
+</SUBREPORT>
+<PARAMETER id="outputType" name="outputType" attribute="value"/>
+<SUBREPORT id="reportoutputType" name="reportoutputType" report="org/openbravo/erpCommon/reference/List">
+  <ARGUMENT name="parameterListSelected" withId="outputType"/>
+</SUBREPORT>
+
+
+<DISCARD id="discard"></DISCARD>
+
+<LABEL id="lbl::C_Bpartner_ID" name="lbl::C_Bpartner_ID" replace="#C_Bpartner_ID#">C_Bpartner_IDlbl</LABEL>
+<LABEL id="lbl::Month_Filter" name="lbl::Month_Filter" replace="#Month_Filter#">Month_Filterlbl</LABEL>
+<LABEL id="lbl::Status_Filter" name="lbl::Status_Filter" replace="#Status_Filter#">Status_Filterlbl</LABEL>
+<LABEL id="lbl::outputType" name="lbl::outputType" replace="#outputType#">outputTypelbl</LABEL>
+
+</REPORT>

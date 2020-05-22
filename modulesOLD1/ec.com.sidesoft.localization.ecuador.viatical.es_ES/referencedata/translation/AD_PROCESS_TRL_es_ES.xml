@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="0719B2413BF04EFE9C2402A830AC5FC8" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Analisis Report">Reporte de análisis de viáticos</value>
+    <value column="Description" isTrl="Y" original="Viatical Analisis Report">Reporte de análisis de viáticos</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="341433C577A748DB834D013A0759001F" trl="N">
+    <value column="Name" isTrl="N" original="Print Viatical Application">Print Viatical Application</value>
+    <value column="Description" isTrl="N" original="Print Viatical Application">Print Viatical Application</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3D0E0850D910455494A1B4A9ACD5CF07" trl="Y">
+    <value column="Name" isTrl="Y" original="Viatical Accounting Printing Process">Proceso De Impresión Contabilidad Viáticos</value>
+    <value column="Description" isTrl="N" original="">Proceso De Impresión Contabilidad Viáticos</value>
+  <value column="Help" isTrl="N" original=""/>  
+  <row id="689FF3B213C4442DA9B6A97C55E9A9F1" trl="N">
+    <value column="Name" isTrl="N" original="Get Viatical Lines">Get Viatical Lines</value>
+    <value column="Description" isTrl="N" original="Get Viatical Lines">Get Viatical Lines</value>
+    <value column="Help" isTrl="N" original="Get Viatical Lines">Get Viatical Lines</value>
+  </row>
+  <row id="7C86BE53A1F14B32BD1290CF85776D12" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Settlement Settle">Viatical Settlement Settle</value>
+    <value column="Description" isTrl="N" original="Viatical Settlement Settle">Viatical Settlement Settle</value>
+    <value column="Help" isTrl="N" original="Settle/Unsettle the Viatical Settlement document">Settle/Unsettle the Viatical Settlement document</value>
+  </row>
+  <row id="7F10743AD9AD482BBCA4B9BFBCC1CE16" trl="N">
+    <value column="Name" isTrl="N" original="Print Viatical Settlement">Print Viatical Settlement</value>
+    <value column="Description" isTrl="N" original="Print Viatical Settlement">Print Viatical Settlement</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A39CE7408400461E86C06D1FE6BF4BA4" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Settlement Process">Viatical Settlement Process</value>
+    <value column="Description" isTrl="N" original="Viatical Settlement Process">Viatical Settlement Process</value>
+    <value column="Help" isTrl="N" original="Process/Unprocess the Viatical Settlement document">Process/Unprocess the Viatical Settlement document</value>
+  </row>
+  <row id="AE372089B52C4E72B2906FE1ED9AC01A" trl="N">
+    <value column="Name" isTrl="N" original="Print Generic - Viatical Account">Print Generic - Viatical Account</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="DC74691C2D5246C492DE58D007DB062B" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Application Process">Viatical Application Process</value>
+    <value column="Description" isTrl="N" original="Viatical Application Process">Viatical Application Process</value>
+    <value column="Help" isTrl="N" original="Process/Unprocess the Viatical Application">Process/Unprocess the Viatical Application</value>
+  </row>
+  <row id="DFAADA670A39474496E7559755480708" trl="N">
+    <value column="Name" isTrl="N" original="Get Viatical Settlement Lines">Get Viatical Settlement Lines</value>
+    <value column="Description" isTrl="N" original="Get Viatical Settlement Lines">Get Viatical Settlement Lines</value>
+    <value column="Help" isTrl="N" original="Get Viatical Settlement Lines">Get Viatical Settlement Lines</value>
+  </row>
+</compiereTrl>

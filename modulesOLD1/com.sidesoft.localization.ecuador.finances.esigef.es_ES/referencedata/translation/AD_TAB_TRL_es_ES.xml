@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="183C99EF906944EFAF1F40ECF16E24BB" trl="N">
+    <value column="Name" isTrl="Y" original="Finance account receivable">Configuración de Cuentas por Cobrar Finanzas ESIGEF</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1EA03B42D98C466BBDA1320CA704AD4A" trl="N">
+    <value column="Name" isTrl="Y" original="Finance ESIGEF Debit Accounts Receivable">Finanzas ESIGEF Cuenta por Cobrar al Debito</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="22339F8C965A4B83AF72A4535B4CA820" trl="N">
+    <value column="Name" isTrl="Y" original="Finance ESIGEF Debit Account Payable">Finanzas ESIGEF Cuenta por Pagar al Débito</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3BAFB657AB8844F89E7E7E2123CD87E8" trl="N">
+    <value column="Name" isTrl="Y" original="Finance ESIGEF Credit Account Payable">Finanzas ESIGEF Cuenta por Pagar al Crédito</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Finanzas ESIGEF Cuenta por Pagar al Crédito</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="52E3E3D3F73E44D5AB497C39AF788881" trl="N">
+    <value column="Name" isTrl="Y" original="Finance ESIGEF Credit Accounts Receivable">Finanzas ESIGEF Cuenta por Cobrar al Crédito</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9831030511A74CA8A80313557C2B3B69" trl="N">
+    <value column="Name" isTrl="Y" original="Finance account payable">Configuración de Cuentas por Pagar Finanzas ESIGEF</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Configuración de Cuentas por Pagar Finanzas ESIGEF</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

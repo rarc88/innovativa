@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="2998ACDCA6A649B5A39372022878287C" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget">Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="29B84FBE318843F09593F1F2B719605E" trl="N">
+    <value column="Name" isTrl="Y" original="Budgetary certificates">Cédulas presupuestarias</value>
+    <value column="Description" isTrl="Y" original="Detailed report of budgetary certificates">Reporte detallado de cédulas presupuestarias</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3C5F8CE04C274D03A56D0E40D3B79BA0" trl="N">
+    <value column="Name" isTrl="Y" original="Create Line Budget">Crear Línea Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4D0F21402A1F43959C8200A99B0C540D" trl="N">
+    <value column="Name" isTrl="N" original="Payroll Certificate">Certificado de Rol de Pagos</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5BE1F75DD7234788AEA37D254B6769F7" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Payment Out">Pago Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="G/L item payments do not related to orders/invoices can be managed in this window.">G/L item payments do not related to orders/invoices can be managed in this window.</value>
+  </row>
+  <row id="745762A33B3C4519B123E986F9E2C93A" trl="N">
+    <value column="Name" isTrl="Y" original="Enabled Document Type">Tipo de Documento Habilitado.</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7C69D2B838584386B8A7EECFAD320D92" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Configuration">Configuración de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="89F20895C9D84757A90BF3DA43F58D4D" trl="N">
+    <value column="Name" isTrl="Y" original="TBN Changes">Cambios TBN</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="94BA47CB410240C6930FF2B05435295C" trl="N">
+    <value column="Name" isTrl="N" original="Assets Certificate">Certificado de Activos</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9C96158BB7B448A2A29549E70499F6F9" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Area">Area de Presupuesto</value>
+    <value column="Description" isTrl="Y" original="Budget Area is used to define control access by area.">El área de presupuesto es usada para definir el contro de acceso por área.</value>
+    <value column="Help" isTrl="N" original="Budget Area is used to define control access by area.">Budget Area is used to define control access by area.</value>
+  </row>
+  <row id="9E0F6FB9B47A4C82945F08E672A97D9A" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Item">Partida presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="C4B98801DE0B4E23AC1B4B29E816617F" trl="N">
+    <value column="Name" isTrl="Y" original="Deferred Invoices">Facturas diferidas</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="D649C02936244ED2BDC062547D579E39" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Log">Registro de cambios de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="EDA5B6043FE04CCC901B3A7C045D7F44" trl="Y">
+    <value column="Name" isTrl="Y" original="Certificate">Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="FB737786AB4B45CE87EE0196222E6DA1" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Certificate Detail">Detalle de Presupuesto</value>
+    <value column="Description" isTrl="Y" original="Budget Certificate Detail">Detalle de Presupuesto</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

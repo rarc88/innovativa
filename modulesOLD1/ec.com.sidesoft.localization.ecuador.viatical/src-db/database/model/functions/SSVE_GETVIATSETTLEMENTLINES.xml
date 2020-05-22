@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSVE_GETVIATSETTLEMENTLINES">
+    <function name="SSVE_GETVIATSETTLEMENTLINES" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+Cur_Parameter RECORD;
+Cur_OnDays RECORD;
+--Cur_Tax RECORD;
+
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+  
+  v_ResultStr VARCHAR2(2000) := '';  
+
+  v_n_insertions NUMBER;
+  v_Message VARCHAR2(2000):='';
+  V_C_BPartner_ID VARCHAR2(32); 
+  V_C_Country_ID VARCHAR2(32); 
+  V_Org_Country_ID VARCHAR2(32); 
+  V_NationalViatical NUMBER:= 0;
+  V_Employee_Country_ID VARCHAR2(32); 
+  V_C_City_ID VARCHAR2(32); 
+  V_Employee_City_ID VARCHAR2(32); 
+  V_Position_ID VARCHAR2(32); 
+  V_ViaticalType VARCHAR2(60); 
+  V_DepartureDate DATE;
+  V_ArrivalDate DATE;
+  V_ArrivalTime DATE;
+  V_LimitTime DATE;
+  V_IsBased CHAR(1);
+  V_ViaticalRate NUMBER:=1;
+  V_SubsistenceRate NUMBER:=1;
+  V_IsBasedRate NUMBER:=1;
+  V_CountryRate NUMBER:=1;
+  V_ViaticalValue NUMBER;
+  V_TableAmt NUMBER;
+  V_UnBasedViaticalValue NUMBER;
+  V_ViaticalDays NUMBER:=0;
+  V_ViaticalEfectiveDays NUMBER:=0;
+  V_ViaticalDaysPrevious NUMBER:=0;
+  V_ViaticalDaysIndex NUMBER:=0;
+  V_LineAmt NUMBER;
+  V_Line NUMBER(10,0):=0;
+  V_Description  VARCHAR2(2000);
+  V_strCountryIndex VARCHAR2(100):=''; 
+  V_strPercent VARCHAR2(100):=''; 
+  V_Percent NUMBER:=1;
+  V_UnbasedPercent NUMBER:=1;
+
+  V_Record_Id  Varchar2(32);
+
+BEGIN
+  --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+    v_n_insertions := 0;  
+
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID,
+        i.AD_User_ID,
+        i.AD_Client_ID
+      FROM AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+      )
+    LOOP
+    
+      v_Record_ID := Cur_Parameter.Record_ID;      
+      v_Client_ID := Cur_Parameter.AD_Client_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;     
+      
+    END LOOP; -- End Get Parameter
+
+    -- Get Viatical Data
+    select  v.c_bpartner_id, 
+            v.c_country_id,
+            l.c_country_id,
+            c.c_country_id, 
+            v.c_city_id, 
+            v.employee_city_id, 
+            v.viaticaltype,
+            v.departuredate, 
+            v.arrivaldate, 
+            v.arrivaltime,
+            v.isbased,
+            v.description,
+            v.sspr_position_id,
+            v.ad_org_id
+    into  V_C_BPartner_ID,
+          V_C_Country_ID,
+          V_Org_Country_ID,
+          V_Employee_Country_ID,
+          V_C_City_ID,
+          V_Employee_City_ID,
+          V_ViaticalType,
+          V_DepartureDate,
+          V_ArrivalDate,
+          V_ArrivalTime,
+          V_IsBased,
+          V_Description,
+          V_Position_ID,
+          v_Org_ID
+    from ssve_viatical_settlement v 
+    join c_city c on c.c_city_id = v.employee_city_id
+    left join ad_orginfo orgi on orgi.ad_org_id = v.ad_org_id
+    left join c_location l on orgi.c_location_id = l.c_location_id
+    where v.ssve_viatical_settlement_id = v_Record_ID;
+    
+    -- Check if there is viatical data.
+    if V_ViaticalType is not null then
+
+      -- Check cities
+      if V_C_City_ID = V_Employee_City_ID then
+        RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoViaticalAllowed@');
+      end if;
+      
+      -- Done -- ToDo: Get Subsistence rate
+      begin
+        select  vc.subsistence_percent
+        into  V_SubsistenceRate
+        from  ssve_viatical_config vc
+        where vc.ad_client_id = v_Client_ID;
+      EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+        V_SubsistenceRate := NULL;
+      END;  
+      
+        if V_SubsistenceRate is null then
+          RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoConfigData@');
+        end if;
+        V_SubsistenceRate := V_SubsistenceRate / 100.00;
+      
+      -- Get Viatical rate
+      if V_ViaticalType = 'S' then
+          V_ViaticalRate := V_SubsistenceRate;
+      end if;
+      
+      -- Done -- ToDo: Get IsBased rate
+      if V_ViaticalType = 'V' and V_IsBased = 'Y' then
+        begin
+          select  vc.isbased_percent
+          into  V_IsBasedRate
+          from  ssve_viatical_config vc
+          where vc.ad_client_id = v_Client_ID;
+        EXCEPTION
+          WHEN NO_DATA_FOUND THEN
+          V_IsBasedRate := NULL;
+        END;  
+
+        if V_IsBasedRate is null then
+          RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoConfigData@');
+        end if;
+        V_IsBasedRate := V_IsBasedRate / 100.00;
+      end if;
+          
+      -- Define viatical value and rate according to the viatical type and viatical scope (National | International)
+      if V_C_Country_ID = V_Org_Country_ID then
+        V_NationalViatical := 1;
+        begin
+          select  vv.viaticalvalue
+          into  V_ViaticalValue
+          from  ssve_viatical_value vv
+          join  ssve_city_zone cz on vv.ssve_zone_id = cz.ssve_zone_id
+          join  ssve_position_level pl on pl.ssve_level_id = vv.ssve_level_id
+          where cz.c_city_id = V_C_City_ID
+          and   pl.sspr_position_id = V_Position_ID;
+        EXCEPTION
+          WHEN NO_DATA_FOUND THEN
+          V_ViaticalValue := NULL;
+        END;
+        
+        if V_ViaticalValue is null then
+          RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoViaticalValueData@');
+        end if;
+        
+        V_TableAmt := V_ViaticalValue;
+        
+        V_UnBasedViaticalValue := V_ViaticalValue * V_ViaticalRate;
+        V_ViaticalValue := V_ViaticalValue * V_ViaticalRate * V_IsBasedRate;
+      else 
+        -- Done -- ToDo: Get Country Rate
+  --      V_CountryRate := 1.23;
+        begin
+          select  cr.countryrate
+          into  V_CountryRate
+          from  ssve_country_rate cr
+          where cr.c_country_id = V_C_Country_ID;
+        EXCEPTION
+          WHEN NO_DATA_FOUND THEN
+          V_CountryRate := NULL;
+        END;
+          
+        if V_CountryRate is null then
+          RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoCountryRateData@');
+        end if;
+        
+        V_strCountryIndex := 'C: ' || V_CountryRate;
+        -- Done -- ToDo: Get Viatical Value according to employee level
+  --      V_ViaticalValue := 221.00;
+        begin
+          select  vv.viaticalvalue
+          into  V_ViaticalValue
+          from  ssve_viatical_value vv
+          join  ssve_position_level pl on pl.ssve_level_id = vv.ssve_level_id
+          where vv.ssve_zone_id is null
+          and   pl.sspr_position_id = V_Position_ID;
+        EXCEPTION
+          WHEN NO_DATA_FOUND THEN
+          V_ViaticalValue := NULL;
+        END;
+          
+        if V_ViaticalValue is null then
+          RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoViaticalValueData@');
+        end if;
+        
+        V_TableAmt := V_ViaticalValue;
+
+        V_UnBasedViaticalValue := V_ViaticalValue * V_ViaticalRate * V_CountryRate;
+        V_ViaticalValue := V_ViaticalValue * V_ViaticalRate * V_CountryRate * V_IsBasedRate;
+      end if;
+
+      V_Percent := V_ViaticalRate * V_IsBasedRate;
+      V_UnbasedPercent := V_ViaticalRate;
+  --    V_Rate := V_CountryRate;
+      V_strCountryIndex := 'C: ' || V_CountryRate;
+     
+      -- Calculate number of days
+      V_ViaticalDays := TRUNC(TO_NUMBER(TO_DATE(V_ArrivalDate) - TO_DATE(V_DepartureDate)));
+      if V_ViaticalType = 'S' then
+        V_ViaticalDays := V_ViaticalDays + 1;
+      end if;
+          
+      -- Viatical on days
+      FOR Cur_OnDays IN
+      (
+        select  vcod.fromday, vcod.today, vcod.infinity, vcod.viatical_percent, vcod.viatical_percent / 100 as viatical_index
+        from  ssve_viatical_config_ondays vcod
+        where  vcod.fromday <= V_ViaticalDays and V_NationalViatical = 1
+        union all
+        select  vcod.fromday, vcod.today, vcod.infinity, vcod.viatical_percent, vcod.viatical_percent / 100 as viatical_index
+        from  ssve_viat_config_ondays_int vcod
+        where  vcod.fromday <= V_ViaticalDays and V_NationalViatical = 0
+        order by fromday
+      )
+      LOOP
+      
+        
+        if Cur_OnDays.infinity = 'N' and V_ViaticalDays > Cur_OnDays.today - V_ViaticalDaysPrevious then
+          V_ViaticalEfectiveDays := Cur_OnDays.today - V_ViaticalDaysPrevious;
+        else
+          V_ViaticalEfectiveDays := V_ViaticalDays;
+        end if;
+        
+        V_ViaticalDaysIndex := Cur_OnDays.viatical_index;
+        V_LineAmt := V_ViaticalValue * V_ViaticalDaysIndex * V_ViaticalEfectiveDays;
+        
+        V_Line := V_Line + 10;
+        
+        V_strPercent := ' - P: ' || (V_Percent * V_ViaticalDaysIndex * 100) || '%';
+
+        insert into ssve_viatsettlementline 
+        (
+          ssve_viatsettlementline_id, ad_client_id, ad_org_id, isactive, 
+          created, createdby, updated, updatedby, 
+          description, ssve_viatical_settlement_id, line, linenetamt, 
+          numberofdays, amtperday, viaticaltype, tableamt,
+          modifiers
+        )
+        Values
+        (
+          get_uuid(), v_Client_ID, v_Org_ID, 'Y', 
+          now(), v_User_ID, now(), v_User_ID, 
+          Substr(V_Description,0,255), v_Record_ID, V_Line, V_LineAmt,
+          V_ViaticalEfectiveDays, V_ViaticalValue * V_ViaticalDaysIndex, V_ViaticalType, V_TableAmt,
+          Substr(V_strCountryIndex || V_strPercent,0,20)
+        );
+        
+        V_ViaticalDays := V_ViaticalDays - Cur_OnDays.today + V_ViaticalDaysPrevious;
+        V_ViaticalDaysPrevious := Cur_OnDays.today;
+        
+      END LOOP; -- End Viatical on days
+      
+      if V_ViaticalType = 'V' then
+        -- Define if there is a last date subsistence
+        -- Done -- ToDo: Get limit time
+        begin
+          select  vc.limittime
+          into  V_LimitTime
+          from  ssve_viatical_config vc
+          where vc.ad_client_id = v_Client_ID;
+        EXCEPTION
+          WHEN NO_DATA_FOUND THEN
+          V_LimitTime := NULL;
+        END;
+
+        if V_LimitTime is null then
+          RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoConfigData@');
+        end if;
+        
+        IF EXTRACT(HOUR FROM TO_TIMESTAMP(V_LIMITTIME)) < EXTRACT(HOUR FROM TO_TIMESTAMP(V_ARRIVALTIME)) 
+        OR EXTRACT(HOUR FROM TO_TIMESTAMP(V_LIMITTIME)) = EXTRACT(HOUR FROM TO_TIMESTAMP(V_ARRIVALTIME)) 
+        AND EXTRACT(MINUTE FROM TO_TIMESTAMP(V_LIMITTIME)) < EXTRACT(MINUTE FROM TO_TIMESTAMP(V_ARRIVALTIME))
+        OR EXTRACT(HOUR FROM TO_TIMESTAMP(V_LIMITTIME)) = EXTRACT(HOUR FROM TO_TIMESTAMP(V_ARRIVALTIME)) 
+        AND EXTRACT(MINUTE FROM TO_TIMESTAMP(V_LIMITTIME)) = EXTRACT(MINUTE FROM TO_TIMESTAMP(V_ARRIVALTIME)) 
+        AND EXTRACT(SECOND FROM TO_TIMESTAMP(V_LIMITTIME)) <= EXTRACT(SECOND FROM TO_TIMESTAMP(V_ARRIVALTIME)) 
+        then
+          V_LineAmt := V_UnBasedViaticalValue * V_ViaticalDaysIndex * V_SubsistenceRate;
+          V_Line := V_Line + 10;
+
+          V_strPercent := ' - P: ' || (V_UnbasedPercent * V_ViaticalDaysIndex * 100) || '%';
+
+          insert into ssve_viatsettlementline 
+          (
+            ssve_viatsettlementline_id, ad_client_id, ad_org_id, isactive, 
+            created, createdby, updated, updatedby, 
+            description, ssve_viatical_settlement_id, line, linenetamt, 
+            numberofdays, amtperday, viaticaltype, tableamt,
+            modifiers
+          )
+          Values
+          (
+            get_uuid(), v_Client_ID, v_Org_ID, 'Y', 
+            now(), v_User_ID, now(), v_User_ID, 
+            Substr(V_Description,0,255), v_Record_ID, V_Line, V_LineAmt,
+            1, V_LineAmt, 'S', V_TableAmt,
+            Substr(V_strPercent,0,20)
+          );
+        end if;
+      end if;
+    end if;
+    
+    v_Message := '@RowsInserted@';
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+    RETURN;
+    
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+    RETURN;
+END SSVE_GETVIATSETTLEMENTLINES
+]]></body>
+    </function>
+  </database>

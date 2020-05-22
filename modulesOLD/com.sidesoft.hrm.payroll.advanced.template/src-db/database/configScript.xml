@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.21792"/>
+    <columnDataChange tablename="AD_MENU" columnname="AD_PROCESS_ID" pkRow="ECC6111EB4084113B52944099CC37AF9">
+      <oldValue><![CDATA[BCCB498B375F4189B48F4844C41DEADE]]></oldValue>
+      <newValue><![CDATA[EEB8513100B345819D34953F90D9D1DA]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="FIELDLENGTH" pkRow="67D38DA7AF114D988594CF443033073A">
+      <oldValue><![CDATA[12]]></oldValue>
+      <newValue><![CDATA[60]]></newValue>
+    </columnDataChange>    
+  </vector>

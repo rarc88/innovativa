@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE SSPR_PAYROLL_TICKET">
+    <table name="SSPR_PAYROLL_TICKET" primaryKey="SSPR_PAYROLL_TICKET_KEY">
+      <column name="EM_SCPP_STATUS_PAYMENT" primaryKey="false" required="true" type="VARCHAR" size="60" autoIncrement="false">
+        <default><![CDATA[DR]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SCPP_APPROVALPAYMENTLINE_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SCPP_APPROVALPAYMENTLINE" name="EM_SCPP_APPROVALPAYMENTLINE_FK">
+        <reference local="EM_SCPP_APPROVALPAYMENTLINE_ID" foreign="SCPP_APPROVALPAYMENTLINE_ID"/>
+      </foreign-key>
+    </table>
+  </database>

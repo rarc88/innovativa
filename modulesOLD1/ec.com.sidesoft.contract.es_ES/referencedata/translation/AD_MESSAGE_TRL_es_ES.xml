@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="C4778FB67C0149649BAA419A35C82E48" trl="N">
+    <value column="MsgText" isTrl="Y" original="The fase may not exceed 100% of advance.">La fase no podrá superar el 100% de avance.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="1FD306F58527469AA629DC1798C6CC14" trl="N">
+    <value column="MsgText" isTrl="Y" original="Balance value has exceeded the value of the advance">Valor del balance ha excedido al valor del anticipo</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="1174A1991F3F42B68FDF6111E8EDBF2E" trl="N">
+    <value column="MsgText" isTrl="Y" original="Value of the outstanding amount has exceeded the value of the contract">Valor del monto pendiente ha excedido el valor del contrato</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

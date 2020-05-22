@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="0BD53F0314994A5BAEF2369639A15C8C" trl="N">
+    <value column="Name" isTrl="N" original="No Certificate Line">No Certificate Line</value>
+    <value column="PrintName" isTrl="N" original="No Certificate Line">No Certificate Line</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0F7CC29EF3F7A401E050007F01015E44" trl="Y">
+    <value column="Name" isTrl="Y" original="Load Payroll">Cargar Nomina</value>
+    <value column="PrintName" isTrl="Y" original="Load Payroll">Cargar Nomina</value>
+    <value column="Description" isTrl="Y" original="A confirmation that the associated documents or requests are loaded.">Una confirmación de que los documentos o solicitudes asociados están cargados.</value>
+    <value column="Help" isTrl="Y" original="The LoadPayroll checkbox indicates that a document has been loaded.">La casilla de verificación Cargar nómina indica que se ha cargado un documento.</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="102C2CE23C35479F84FAC40652CBAB44" trl="N">
+    <value column="Name" isTrl="Y" original="Product">Producto</value>
+    <value column="PrintName" isTrl="N" original="Product">Product</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="11CB708795F44BFF95C7B50F3493EF5B" trl="N">
+    <value column="Name" isTrl="N" original="Accounting Category">Accounting Category</value>
+    <value column="PrintName" isTrl="N" original="Accounting Category">Accounting Category</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C0B2302FF9EB480CBC50C0EE310E0AFF" trl="Y">
+    <value column="Name" isTrl="Y" original="FInal Settlement">Liquidación Final</value>
+    <value column="PrintName" isTrl="Y" original="Final Settlement">Liquidación Final</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="FFA63AAF5D09400FAAB4D029D1AA0245" trl="Y">
+    <value column="Name" isTrl="Y" original="Is Liquidation">Liquidación</value>
+    <value column="PrintName" isTrl="Y" original="Is Liquidation">Liquidación</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

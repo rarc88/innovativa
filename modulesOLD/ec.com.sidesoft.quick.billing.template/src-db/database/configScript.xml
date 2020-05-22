@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.24112"/>
+    <columnDataChange tablename="AD_COLUMN" columnname="AD_CALLOUT_ID" pkRow="2901">
+      <oldValue/>
+      <newValue><![CDATA[2C8FF6936A374F74A7E2302D531AC6EC]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="AD_CALLOUT_ID" pkRow="2902">
+      <oldValue/>
+      <newValue><![CDATA[2C8FF6936A374F74A7E2302D531AC6EC]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="AD_CALLOUT_ID" pkRow="2909">
+      <oldValue/>
+      <newValue><![CDATA[2C8FF6936A374F74A7E2302D531AC6EC]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="AD_CALLOUT_ID" pkRow="4216">
+      <oldValue/>
+      <newValue><![CDATA[2C8FF6936A374F74A7E2302D531AC6EC]]></newValue>
+    </columnDataChange>
+  </vector>

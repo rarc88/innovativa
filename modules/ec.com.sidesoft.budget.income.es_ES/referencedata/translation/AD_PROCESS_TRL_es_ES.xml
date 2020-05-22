@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="28C9F6920FB346D49E26B4CA2FC0B7A0" trl="N">
+    <value column="Name" isTrl="Y" original="Background Income Budget Sales Invoices">Presupuesto Ingresos Background Facturas Ventas</value>
+    <value column="Description" isTrl="Y" original="Background process for budget sales invoices">Proceso background para presupuestar facturas de ventas</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="BA7360DFC1D14D8EB7D14B68BA7920C7" trl="N">
+    <value column="Name" isTrl="Y" original="Backgnd Income Budget Journal Lines">Presupuesto Ingresos Background Líneas de Asiento</value>
+    <value column="Description" isTrl="Y" original="Background process for budget journal lines">Proceso background para presupuestar líneas de asiento</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

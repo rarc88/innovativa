@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+  <database name="VIEW SSVE_VIATICAL_DETAILS_AUX2">
+    <view name="SSVE_VIATICAL_DETAILS_AUX2"><![CDATA[SELECT ssve_viatical_details_aux1.ssve_viatical_id, sum(ssve_viatical_details_aux1.totalamt_viatical) AS totalamt_viatical, ssve_viatical_details_aux1.sfb_budget_cert_line_id FROM ssve_viatical_details_aux1 GROUP BY ssve_viatical_details_aux1.ssve_viatical_id, ssve_viatical_details_aux1.sfb_budget_cert_line_id]]></view>
+  </database>

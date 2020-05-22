@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_BUDGET_TRG">
+    <trigger name="SFB_BUDGET_TRG" table="SFB_BUDGET" fires="after" insert="false" update="false" delete="true" foreach="row">
+      <body><![CDATA[
+ 
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF (DELETING AND :old.budget_status = 'AP') THEN
+
+    RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyApprovedBudget@');
+    
+  END IF;
+
+  END SFB_BUDGET_TRG
+]]></body>
+    </trigger>
+  </database>

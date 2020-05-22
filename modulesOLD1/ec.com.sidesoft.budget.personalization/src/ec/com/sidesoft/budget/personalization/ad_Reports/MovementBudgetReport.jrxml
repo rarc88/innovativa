@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MovementBudgetReport" pageWidth="1656" pageHeight="792" columnWidth="1616" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9458a06-2fc6-4743-8a3a-418f4cb5e1ba">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="1099"/>
+	<property name="ireport.y" value="0"/>
+	<import value="org.apache.commons.lang.StringUtils"/>
+	<parameter name="Movement_Type" class="java.lang.String"/>
+	<parameter name="sqlMovement_Type" class="java.lang.String">
+		<defaultValueExpression><![CDATA[StringUtils.equals($P{Movement_Type},"SBUPE_T") ? " ( bl.type in  ('M','S','A') )" : "( bl.type = '" + $P{Movement_Type} + "') "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Date_From" class="java.util.Date"/>
+	<parameter name="Date_To" class="java.util.Date"/>
+	<parameter name="Budget_Item" class="java.lang.String"/>
+	<parameter name="Area_Budget" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select ao.name as "organization",
+bl.resolutionno as "resolution_no",
+bl.reg_date as "registration_date",
+bi.name as "budget_from_item",
+bi2.name as "budget_to_item",
+case when bl.month_from = '0' then 'Enero'
+when bl.month_from = '1' then 'Febrero'
+when bl.month_from = '2' then 'Marzo'
+when bl.month_from = '3' then 'Abril'
+when bl.month_from = '4' then 'Mayo'
+when bl.month_from = '5' then 'Junio'
+when bl.month_from = '6' then 'Julio'
+when bl.month_from = '7' then 'Agosto'
+when bl.month_from = '8' then 'Septiembre'
+when bl.month_from = '9' then 'Octubre'
+when bl.month_from = '10' then 'Noviembre'
+when bl.month_from = '11' then 'Diciembre'
+end as "month_from",
+case when bl.month_to = '0' then 'Enero'
+when bl.month_to = '1' then 'Febrero'
+when bl.month_to = '2' then 'Marzo'
+when bl.month_to = '3' then 'Abril'
+when bl.month_to = '4' then 'Mayo'
+when bl.month_to = '5' then 'Junio'
+when bl.month_to = '6' then 'Julio'
+when bl.month_to = '7' then 'Agosto'
+when bl.month_to = '8' then 'Septiembre'
+when bl.month_to = '9' then 'Octubre'
+when bl.month_to = '10' then 'Noviembre'
+when bl.month_to = '11' then 'Diciembre'
+end as "month_to",
+cy.year as "year",
+ba.name as "area",
+cct.name as "costcenter",
+us.name as "business_line",
+bl.value as "amount",
+bl.description as "description",
+(case when bl.type_of_budget = 'O' then 'Operativo'
+     when bl.type_of_budget = 'E' then 'Extendido'
+     when bl.type_of_budget = 'I' then 'Invertir'
+end) as "type_of_budget",
+(case when bl.type = 'M' then 'Movimiento'
+      when bl.type = 'S' then 'Configurar'
+end) as "type"
+from  sfb_budget_log bl
+left join ad_org ao on ao.ad_org_id = bl.ad_org_id
+left join sfb_budget_item  bi on bi.sfb_budget_item_id = bl.budget_item_from_id
+left join sfb_budget_item bi2 on bi2.sfb_budget_item_id = bl.budget_item_to_id
+left join c_costcenter cct on cct.c_costcenter_id = bl.c_costcenter_id
+left join user1 us  on us.user1_id = bl.user1_id
+left join c_year cy on cy.c_year_id = bl.c_year_id
+left join sfb_budget_area ba on ba.sfb_budget_area_id  = bl.sfb_budget_area_id
+where  $P!{sqlMovement_Type} 
+and (bl.reg_date between $P{Date_From} and $P{Date_To})
+and (ba.sfb_budget_area_id = $P{Area_Budget} or $P{Area_Budget} is null)
+and (bi.sfb_budget_item_id = $P{Budget_Item} or $P{Budget_Item} is null)]]>
+	</queryString>
+	<field name="organization" class="java.lang.String"/>
+	<field name="resolution_no" class="java.lang.String"/>
+	<field name="registration_date" class="java.sql.Timestamp"/>
+	<field name="budget_from_item" class="java.lang.String"/>
+	<field name="budget_to_item" class="java.lang.String"/>
+	<field name="month_from" class="java.lang.String"/>
+	<field name="month_to" class="java.lang.String"/>
+	<field name="year" class="java.lang.String"/>
+	<field name="area" class="java.lang.String"/>
+	<field name="costcenter" class="java.lang.String"/>
+	<field name="business_line" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="type_of_budget" class="java.lang.String"/>
+	<field name="type" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="117" splitType="Stretch">
+			<textField>
+				<reportElement x="84" y="54" width="144" height="20" uuid="09452dad-991e-4f28-93cb-befaaf217fa9">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{year}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="86" width="73" height="31" uuid="c7418311-09a6-404b-8cea-08304d79266c"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[REG. FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="86" width="190" height="31" uuid="f1f9112d-902c-403b-9390-0c333cef9fd6"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[BUQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="86" width="144" height="31" uuid="d7f034bd-6a82-4d65-8f4d-43f0c71512a4"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[AREA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="86" width="190" height="31" uuid="47be9c33-c2bd-4702-bf03-3063096e7d5e"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[LINEA DE NEGOCIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="608" y="86" width="123" height="31" uuid="80140e27-4fbe-4ef5-8929-c3ebbe8bde39"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[NO. RESOLUCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="731" y="86" width="148" height="31" uuid="6bcf648c-a8eb-4384-925d-e3e4561a6f81"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[PARTIDA PRESUPUESTARIA
+DESDE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="879" y="86" width="148" height="31" uuid="9f119b15-20f3-4e78-8fdc-704dfd1393f7"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[PARTIDA PRESUPUESTARIA
+ HASTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1027" y="86" width="100" height="31" uuid="d919da64-7899-470a-b797-7a07c3764127"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[MES DESDE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1127" y="86" width="100" height="31" uuid="7bf2c962-195e-4b1e-b1a9-a6a95b4e8385"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[MES HASTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1227" y="86" width="100" height="31" uuid="c2e0def2-15a6-43ca-b78d-5bd6dea42e8b"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[VALOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1327" y="86" width="276" height="31" uuid="519a0749-405d-482c-935e-752a6dd71e13"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="54" width="73" height="20" uuid="e9d77a86-e8ae-468b-9c74-92edf7cf6ae7">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[EJERCICIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="0" width="1592" height="40" uuid="acedcb95-361a-4e81-b189-db272c784a5d">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE CAMBIOS DE PRESUPUESTO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="11" y="0" width="73" height="20" uuid="a6ad8daf-c94e-43eb-9970-90f21d9951c5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{registration_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="228" y="0" width="190" height="20" uuid="c7916e60-d17a-4e4a-ae4b-3dfade464e9d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costcenter}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="84" y="0" width="144" height="20" uuid="fc89d45f-add0-46be-b48b-41f0398f2faf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="418" y="0" width="190" height="20" uuid="617fc4ff-f4b8-4f0c-95d6-f09c09a6e3eb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{business_line}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="608" y="0" width="123" height="20" uuid="6c70b6a0-0541-440b-b5a9-b194f75cd303">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resolution_no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="731" y="0" width="148" height="20" uuid="902166fc-f16d-4b04-96e6-8c2defd947da"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{budget_from_item}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="879" y="0" width="148" height="20" uuid="e065cdb7-77d2-4f80-8eba-4006f959e2ae"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{budget_to_item}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1027" y="0" width="100" height="20" uuid="92b39806-78f3-46e1-a09f-7fe1426e4b10">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{month_from}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1127" y="0" width="100" height="20" uuid="80826d8a-d5b1-42bc-b426-4b4c24615f14">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{month_to}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="1227" y="0" width="100" height="20" uuid="0e7973b8-57d4-4b71-8643-dd3649a6ba23">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1327" y="0" width="276" height="20" uuid="901e33f6-4045-497d-8816-85d719a09dd7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

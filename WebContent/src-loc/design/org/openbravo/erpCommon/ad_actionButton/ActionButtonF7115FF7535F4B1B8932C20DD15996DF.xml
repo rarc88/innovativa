@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REPORT>
+<template id="class" file="ActionButtonF7115FF7535F4B1B8932C20DD15996DF.html"></template>
+
+<PARAMETER id="paramLanguage" name="language" default=""></PARAMETER>
+<PARAMETER id="paramCSS" name="css" attribute="href" replace="Default"></PARAMETER>
+<PARAMETER id="paramCSS_print" name="css" attribute="href" replace="Default"></PARAMETER>
+<PARAMETER id="key" name="key" default="" attribute="value"></PARAMETER>
+<PARAMETER id="form" name="form" default="" attribute="action"></PARAMETER>
+<PARAMETER id="processing" name="processing" default="" attribute="value"></PARAMETER>
+<PARAMETER id="window" name="window" default="" attribute="value"></PARAMETER>
+<PARAMETER id="paramCheck" name="check" default="Y"></PARAMETER>
+<PARAMETER id="paramDirectory" name="directory" default=""></PARAMETER>
+<PARAMETER id="processId" name="processId" default="PROCESS"></PARAMETER>
+<PARAMETER id="trlFormType" name="trlFormType" default="PROCESS"></PARAMETER>
+<PARAMETER id="processName" name="processName" replace="#processName#" default=""></PARAMETER>
+<PARAMETER id="processDescription" name="processDescription" replace="#processDescription#" default=""></PARAMETER>
+<PARAMETER id="processHelp" name="processHelp" replace="#processHelp#" default=""></PARAMETER>
+
+
+<PARAMETER id="buttonOK" name="ok" attribute="onmouseover" replace="xx" default=""></PARAMETER>
+<PARAMETER id="buttonOK" name="ok" attribute="onfocus" replace="xx" default=""></PARAMETER>
+<PARAMETER id="imgButtonOK" name="ok" attribute="alt" replace="xx" default=""></PARAMETER>
+<PARAMETER id="imgButtonOK" name="ok" attribute="title" replace="xx" default=""></PARAMETER>
+<PARAMETER id="tdButtonOK" name="ok"></PARAMETER>
+
+<PARAMETER id="buttonCancel" name="cancel" attribute="onmouseover" replace="xx" default=""></PARAMETER>
+<PARAMETER id="buttonCancel" name="cancel" attribute="onfocus" replace="xx" default=""></PARAMETER>
+<PARAMETER id="imgButtonCancel" name="cancel" attribute="alt" replace="xx" default=""></PARAMETER>
+<PARAMETER id="imgButtonCancel" name="cancel" attribute="title" replace="xx" default=""></PARAMETER>
+<PARAMETER id="tdButtonCancel" name="cancel"></PARAMETER>
+
+
+<PARAMETER id="messageBoxID" name="messageType" attribute="class" replace="yy" default="HIDDEN"></PARAMETER>
+<PARAMETER id="messageBoxIDTitle" name="messageTitle" default=""></PARAMETER>
+<PARAMETER id="messageBoxIDMessage" name="messageMessage" default=""></PARAMETER>
+
+
+
+<PARAMETER id="C_Bpartner_id" name="C_Bpartner_id" attribute="value"/>
+<SUBREPORT id="reportC_Bpartner_id" name="reportC_Bpartner_id" report="org/openbravo/erpCommon/reference/List">
+  <ARGUMENT name="parameterListSelected" withId="C_Bpartner_id"/>
+</SUBREPORT>
+<PARAMETER id="startPeriod" name="startPeriod" attribute="value"/>
+<SUBREPORT id="reportstartPeriod" name="reportstartPeriod" report="org/openbravo/erpCommon/reference/List">
+  <ARGUMENT name="parameterListSelected" withId="startPeriod"/>
+</SUBREPORT>
+<PARAMETER id="EndPeriod" name="EndPeriod" attribute="value"/>
+<SUBREPORT id="reportEndPeriod" name="reportEndPeriod" report="org/openbravo/erpCommon/reference/List">
+  <ARGUMENT name="parameterListSelected" withId="EndPeriod"/>
+</SUBREPORT>
+<PARAMETER id="AD_User_ID" name="AD_User_ID" attribute="value"/>
+<SUBREPORT id="reportAD_User_ID" name="reportAD_User_ID" report="org/openbravo/erpCommon/reference/List">
+  <ARGUMENT name="parameterListSelected" withId="AD_User_ID"/>
+</SUBREPORT>
+<PARAMETER id="OutputType" name="OutputType" attribute="value"/>
+<SUBREPORT id="reportOutputType" name="reportOutputType" report="org/openbravo/erpCommon/reference/List">
+  <ARGUMENT name="parameterListSelected" withId="OutputType"/>
+</SUBREPORT>
+
+
+<DISCARD id="discard"></DISCARD>
+
+<LABEL id="lbl::C_Bpartner_id" name="lbl::C_Bpartner_id" replace="#C_Bpartner_id#">C_Bpartner_idlbl</LABEL>
+<LABEL id="lbl::startPeriod" name="lbl::startPeriod" replace="#startPeriod#">startPeriodlbl</LABEL>
+<LABEL id="lbl::EndPeriod" name="lbl::EndPeriod" replace="#EndPeriod#">EndPeriodlbl</LABEL>
+<LABEL id="lbl::AD_User_ID" name="lbl::AD_User_ID" replace="#AD_User_ID#">AD_User_IDlbl</LABEL>
+<LABEL id="lbl::OutputType" name="lbl::OutputType" replace="#OutputType#">OutputTypelbl</LABEL>
+
+</REPORT>

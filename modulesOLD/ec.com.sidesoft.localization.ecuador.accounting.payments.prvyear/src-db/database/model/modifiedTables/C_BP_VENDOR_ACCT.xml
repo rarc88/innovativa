@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE C_BP_VENDOR_ACCT">
+    <table name="C_BP_VENDOR_ACCT" primaryKey="C_BP_VENDOR_ACCT_KEY">
+      <column name="EM_SSPY_ACCTPAY_PRVYEAR_ACCT" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSPY_PREPAYMT_PRVYEAR_ACCT" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="C_VALIDCOMBINATION" name="EM_SSPY_ACCTPAY_PRVYEAR">
+        <reference local="EM_SSPY_ACCTPAY_PRVYEAR_ACCT" foreign="C_VALIDCOMBINATION_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="C_VALIDCOMBINATION" name="EM_SSPY_PREPAYMT_PRVYEAR">
+        <reference local="EM_SSPY_PREPAYMT_PRVYEAR_ACCT" foreign="C_VALIDCOMBINATION_ID"/>
+      </foreign-key>
+    </table>
+  </database>

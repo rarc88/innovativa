@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REF_LIST" version="">
+  <row id="2A173FC4773C4CA8A9DA0DFAE9AB10BA" trl="N">
+    <value column="Name" isTrl="Y" original="IC">CI</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="686D40AF5842405F894BE12529E731AE" trl="N">
+    <value column="Name" isTrl="Y" original="Passport">Pasaporte</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="84FE7A82DD46421EB6CF3BE9FB001072" trl="N">
+    <value column="Name" isTrl="Y" original="Configuration Quick Billing">Configuración Factuación Rápida</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="B2883C328F704B7F9996558B23767689" trl="N">
+    <value column="Name" isTrl="N" original="RUC">RUC</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="C2F75EAF04744A7F899D4A594E789E63" trl="N">
+    <value column="Name" isTrl="Y" original="Quick Billing">Facturación Rápida</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="CC858065EE7F418BBD1FC5C21BF72FEE" trl="Y">
+    <value column="Name" isTrl="Y" original="Quick Billing Print Receipt">Imprimir Recibo Facturación Rápida</value>
+    <value column="Description" isTrl="Y" original="Quick Billing Print Receipt">Imprimir Recibo Facturación Rápida</value>
+  </row>
+  <row id="ED6F67C58B7746E6B76A0C70D330442A" trl="Y">
+    <value column="Name" isTrl="Y" original="Quick Billing Tax Line Readonly">Solo lectura Impuesto en lineas Facturación Rápida</value>
+    <value column="Description" isTrl="N" original="">Solo lectura Impuesto en lineas Facturación Rápida</value>
+  </row>
+</compiereTrl>

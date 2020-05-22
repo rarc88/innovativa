@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+<!--2C756DE4E365456399206B4844236B7E--><AD_VAL_RULE>
+<!--2C756DE4E365456399206B4844236B7E-->  <AD_VAL_RULE_ID><![CDATA[2C756DE4E365456399206B4844236B7E]]></AD_VAL_RULE_ID>
+<!--2C756DE4E365456399206B4844236B7E-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--2C756DE4E365456399206B4844236B7E-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--2C756DE4E365456399206B4844236B7E-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--2C756DE4E365456399206B4844236B7E-->  <NAME><![CDATA[ssrfc_budgetline_validation]]></NAME>
+<!--2C756DE4E365456399206B4844236B7E-->  <TYPE><![CDATA[S]]></TYPE>
+<!--2C756DE4E365456399206B4844236B7E-->  <CODE><![CDATA[sfb_budget_line_id in (select sfb_budget_line_id from sfb_budget_line bl inner join sfb_budget_version bv on bl.sfb_budget_version_id = bv.sfb_budget_version_id inner join sfb_budget b on b.sfb_budget_id = bv.sfb_budget_id where budget_status = 'AP' and b.type_of_budget = 'SSRFC_BC' and bl.Actual_Value > 0)]]></CODE>
+<!--2C756DE4E365456399206B4844236B7E-->  <AD_MODULE_ID><![CDATA[77EC489F26524ADEAFA309ED75EFCB6A]]></AD_MODULE_ID>
+<!--2C756DE4E365456399206B4844236B7E--></AD_VAL_RULE>
+
+</data>

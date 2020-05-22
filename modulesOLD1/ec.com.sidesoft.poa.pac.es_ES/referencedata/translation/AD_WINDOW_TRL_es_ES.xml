@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="8D3FF8DA89D44C438A2FBC45E30E4EE6" trl="N">
+    <value column="Name" isTrl="Y" original="Operative Annual Plan">Plan Operativo Anual</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="B40C2417E0E84FF49715C50C8674CB40" trl="N">
+    <value column="Name" isTrl="Y" original="Purchase Annual Plan">Plan Anual de Compras</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

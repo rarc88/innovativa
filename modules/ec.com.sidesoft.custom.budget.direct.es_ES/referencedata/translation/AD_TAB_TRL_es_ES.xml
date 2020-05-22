@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="8F3EF6F1A5E94D79A991A7ADA20F20B7" trl="N">
+    <value column="Name" isTrl="Y" original="Direct Budget">Ejecución Presupuestaria</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A356E91FB2E34AB19A8AA5040E0DFE84" trl="N">
+    <value column="Name" isTrl="Y" original="Direct Budget">Ejecución Presupuestaria</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

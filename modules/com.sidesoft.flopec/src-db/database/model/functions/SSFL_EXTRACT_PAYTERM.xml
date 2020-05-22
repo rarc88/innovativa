@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSFL_EXTRACT_PAYTERM">
+    <function name="SSFL_EXTRACT_PAYTERM" type="TIMESTAMP">
+      <parameter name="fecha_facturacion" type="TIMESTAMP" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="tiempo_dias" type="NUMERIC" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[--**********************VARIABLES PARA PROCESAMIENTO DE FECHAS*******************************************  
+  v_dia_facturacion  NUMBER(5):=0; --OBTG:NUMBER--		--Captura el dia de faturacion que se le pasa como parametro a la funcion
+  v_mes_facturacion  NUMBER(5):=0; --OBTG:NUMBER--		--Captura el mes de faturacion que se le pasa como parametro a la funcion
+  v_anio_facturacion  NUMBER(5):=0; --OBTG:NUMBER--		--Captura el año de faturacion que se le pasa como parametro a la funcion
+  v_dias_del_mes_ant  NUMBER(5):=0; --OBTG:NUMBER--			--
+  v_dias_del_mes_sig  NUMBER(5):=0; --OBTG:NUMBER--			--
+  fecha_pago DATE;
+  v_cast varchar(10):=' '; --OBTG:VARCHAR2--  
+  v_dias_conv varchar(10):=' '; --OBTG:VARCHAR2--
+  v_mes_conv varchar(10):=' '; --OBTG:VARCHAR2--
+  
+BEGIN
+    -- 1.-  OBTENGO EL MES Y DE SER EL CASO EL AÑO ANTERIOR DEL CUAL VAMOS A SACAR LOS INCIDENTES...
+	--select extract(day from fecha_facturacion), extract(month from fecha_facturacion), extract(year from fecha_facturacion) into v_dia_facturacion,v_mes_facturacion,v_anio_facturacion FROM DUAL;		--EXTRAIGO DIA MES Y AÑO  DE LA FECHA DE FACTURACION PARA OBTENER LOS INCIDENTES DEL MES PASADO	
+	v_cast := to_char(fecha_facturacion,'dd');
+	v_dia_facturacion := to_number(v_cast);
+	--RAISE NOTICE '%','RESULT v_dia_facturacion = '  ||to_char(v_dia_facturacion);
+	v_cast := to_char(fecha_facturacion,'MM');
+	v_mes_facturacion := to_number(v_cast);
+	--RAISE NOTICE '%','RESULT v_mes_facturacion = '  ||to_char(v_mes_facturacion);
+	v_cast := to_char(fecha_facturacion,'yyyy');
+	v_anio_facturacion := to_number(v_cast);
+	--RAISE NOTICE '%','RESULT v_anio_facturacion = '  ||to_char(v_anio_facturacion);
+
+	v_dias_del_mes_ant:= ssfl_caldays(v_mes_facturacion,v_anio_facturacion);
+	--RAISE NOTICE '%','RESULT v_dias_del_mes_ant = '  ||to_char(v_dias_del_mes_ant);
+
+	IF((v_dia_facturacion+tiempo_dias)>v_dias_del_mes_ant) THEN
+		IF((v_mes_facturacion+1)>12) THEN
+			v_anio_facturacion:=v_anio_facturacion+1;
+			--RAISE NOTICE '%', 'v_anio_facturacion1 : ' || v_anio_facturacion;
+			v_mes_facturacion:=1;
+			--RAISE NOTICE '%', 'v_mes_facturacion1 : ' || v_mes_facturacion;
+		ELSE
+			v_mes_facturacion:=v_mes_facturacion+1;
+			--RAISE NOTICE '%', 'v_mes_facturacion2 : ' || v_mes_facturacion;
+
+		END IF ;
+		--v_dias_del_mes_sig:= ssfl_caldays(v_mes_facturacion, v_anio_facturacion);
+		v_dia_facturacion:=tiempo_dias-(v_dias_del_mes_ant-v_dia_facturacion);	
+		--RAISE NOTICE '%', 'DIA DE FACTURACION ES 1: ' || v_dia_facturacion;
+						
+	ELSE
+		v_dia_facturacion:=v_dia_facturacion+tiempo_dias;	
+		--RAISE NOTICE '%', 'DIA DE FACTURACION ES 2: ' || v_dia_facturacion;
+	END IF;
+	
+	v_dias_conv:= (case  when v_dia_facturacion <=9 then '0' || to_char(v_dia_facturacion) else to_char(v_dia_facturacion) end); 
+	v_mes_conv:= (case  when v_mes_facturacion <=9 then '0' || to_char(v_mes_facturacion) else to_char(v_mes_facturacion) end); 
+
+	  IF to_number(v_dias_conv) > 0  AND to_number(v_dias_conv) <= 31 AND TO_NUMBER(v_mes_conv)<>2 THEN
+		--v_cast := (v_anio_facturacion || '-' || v_mes_conv || '-' || ); 
+		v_cast := (v_dias_conv || '-' || v_mes_conv || '-' || v_anio_facturacion); 
+	  	fecha_pago := (v_cast) ;
+	  ELSE
+      
+	      IF to_number(v_dias_conv) = 0 or v_dias_del_mes_ant = 0 THEN
+		
+		fecha_pago:=fecha_facturacion;
+		
+	      ELSE
+	      
+		fecha_pago := ssfl_return_date(v_anio_facturacion,to_number(v_mes_conv),to_number(v_dias_conv));
+		
+	      END IF;
+	      
+	  END IF;
+
+	 RETURN fecha_pago;
+END SSFL_EXTRACT_PAYTERM
+]]></body>
+    </function>
+  </database>

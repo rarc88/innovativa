@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ *************************************************************************
+ * The contents of this file are subject to the Openbravo  Public  License
+ * Version  1.1  (the  "License"),  being   the  Mozilla   Public  License
+ * Version 1.1  with a permitted attribution clause; you may not  use this
+ * file except in compliance with the License. You  may  obtain  a copy of
+ * the License at http://www.openbravo.com/legal/license.html 
+ * Software distributed under the License  is  distributed  on  an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific  language  governing  rights  and  limitations
+ * under the License. 
+ * The Original Code is Openbravo ERP. 
+ * The Initial Developer of the Original Code is Openbravo SLU 
+ * All portions are Copyright (C) 2001-2010 Openbravo SLU 
+ * All Rights Reserved. 
+ * Contributor(s):  ______________________________________.
+ ************************************************************************
+-->
+
+
+
+
+
+<SqlClass name="ViaticalSettlementData" package="ec.com.sidesoft.localization.ecuador.viatical.ReportViaticalSettlement">
+   <SqlClassComment></SqlClassComment>
+   <SqlMethod name="select" type="preparedStatement" return="multiple">
+      <SqlMethodComment></SqlMethodComment>
+      <Sql>
+      <![CDATA[
+            select  vs.ad_org_id,
+                    vs.documentno,
+                    vs.leavewithpay,
+                    vs.commissionpeople,
+                    vs.commissionresult,
+                    vs.totaltransportationamt,
+                    vs.additionalfunds,
+                    vs.totalamt - vs.totaltransportationamt - coalesce(vs.additionalfunds, 0) as totalviatexp,
+                    coalesce(fpva.amount, 0) as advancedpayment,
+                    coalesce(fpvs.amount, coalesce(vs.totalamt, 0) - coalesce(fpva.amount, 0)) as diff,
+                    case
+                      when fpvs.isreceipt = 'Y' then 'RECIBIR'
+                      when fpvs.isreceipt = 'N' then 'DEVOLVER'
+                      when coalesce(vs.totalamt, 0) - coalesce(fpva.amount, 0) > 0 then 'RECIBIR'
+                      when coalesce(vs.totalamt, 0) - coalesce(fpva.amount, 0) < 0 then 'DEVOLVER'
+                      else 'CUADRADO'
+                    end as operation,
+                    to_char(vs.viaticaldate, 'dd/MM/yyyy') as viatical_date,
+                    bp.name as empoyee_name,
+                    pos.name as position_name,
+                    coun.name as country_name,
+                    reg.name as region_name,
+                    cit.name as city_name,
+                    dep.name as department_name,
+                    (case vs.viaticaltype when 'V' then 'X' else '' end) as viatical,
+                    (case vs.viaticaltype when 'S' then 'X' else '' end) as subsistence,
+                    (case coalesce(vs.mobilizationamt,0) when 0 then '' else 'X' end) as mobilization,
+                    to_char(vs.departuredate, 'dd/MM/yyyy') as viatical_departure_date,
+                    to_char(vs.departuretime, 'HH24:MI') as viatical_departure_time,
+                    to_char(vs.arrivaldate, 'dd/MM/yyyy') as viatical_arrival_date,
+                    to_char(vs.arrivaltime, 'HH24:MI') as viatical_arrival_time,
+                    to_char(vs.mobildeparturedate, 'dd/MM/yyyy') as mobilization_departure_date,
+                    to_char(vs.mobildeparturetime, 'HH24:MI') as mobilization_departure_time,
+                    to_char(vs.mobilarrivaldate, 'dd/MM/yyyy') as mobilization_arrival_date,
+                    to_char(vs.mobilarrivaltime, 'HH24:MI') as mobilization_arrival_time,
+                    vs.description,
+                    vs.natidentdoc,
+                    coalesce(fpva.amount, va.totalamt) as payment_amount,
+                    vs.totalamt,
+                    bt.name as bank_name,
+                    ba.accountno,
+                    coalesce(reflibatrl.name, refliba.name) as bankaccounttype_name,
+                    coalesce(reflitratrl.name, reflitra.name) as transportation_type,
+                    tra.name as trasportation_name,
+                    tra.route,
+                    to_char(tra.departuredate, 'dd/MM/yyyy') as transportation_departure_date,
+                    to_char(tra.departuretime, 'HH24:MI') as transportation_departure_time,
+                    to_char(tra.arrivaldate, 'dd/MM/yyyy') as transportation_arrival_date,
+                    to_char(tra.arrivaltime, 'HH24:MI') as transportation_arrival_time
+            from  ssve_viatical_settlement vs
+            join  c_bpartner bp on bp.c_bpartner_id = vs.c_bpartner_id
+            left join sshr_department dep on dep.sshr_department_id = bp.em_sshr_department_id
+            join  sspr_position pos on vs.sspr_position_id = pos.sspr_position_id
+            left join c_country coun on coun.c_country_id = vs.c_country_id
+            left join c_region reg on reg.c_region_id = vs.c_region_id
+            left join c_city cit on cit.c_city_id = vs.c_city_id
+            left join (
+              ssve_viatsettl_transp tra
+              join ad_ref_list reflitra on reflitra.ad_reference_id = 'AE0B328126634E42BA2FB434B66552F4' and tra.transportationtype = reflitra.value
+              left join ad_ref_list_trl reflitratrl on reflitra.ad_ref_list_id = reflitratrl.ad_ref_list_id and reflitratrl.ad_language = 'es_ES'
+            )on tra.ssve_viatical_settlement_id = vs.ssve_viatical_settlement_id
+            left join ssfi_banktransfer bt on bt.ssfi_banktransfer_id = vs.ssfi_banktransfer_id
+            left join (
+              c_bp_bankaccount ba
+              left join ad_ref_list refliba on refliba.ad_reference_id = '216' and ba.bankaccounttype = refliba.value
+              left join ad_ref_list_trl reflibatrl on refliba.ad_ref_list_id = reflibatrl.ad_ref_list_id and reflibatrl.ad_language = 'es_ES'
+            )on ba.c_bpartner_id = bp.c_bpartner_id and ba.em_sswh_paymentautomatic = 'Y'
+            left join fin_payment fpvs on fpvs.em_ssve_viat_settlement_id = vs.ssve_viatical_settlement_id
+            join ssve_viatical va on va.ssve_viatical_id = vs.ssve_viatical_id
+            left join fin_payment fpva on fpva.em_ssve_viatical_id = vs.ssve_viatical_id
+            where vs.ssve_viatical_settlement_id = ?
+        ]]>
+        </Sql>
+        <Parameter name="ssve_viatical_id"/>
+   </SqlMethod>
+   <SqlMethod name="set" type="constant" return="multiple">
+      <SqlMethodComment></SqlMethodComment>
+      <Sql></Sql>
+  </SqlMethod>
+</SqlClass>

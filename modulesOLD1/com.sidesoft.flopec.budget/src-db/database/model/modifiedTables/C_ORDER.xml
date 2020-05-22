@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE C_ORDER">
+    <table name="C_ORDER" primaryKey="C_ORDER_KEY">
+      <column name="EM_SFB_HASHCODE" primaryKey="false" required="false" type="VARCHAR" size="60" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SFB_ISNOTBUDGETABLE" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault><![CDATA['N']]></onCreateDefault>
+      </column>
+      <column name="EM_SFB_BUDGET_AREA_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SFB_ISBUDGETED" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault><![CDATA['N']]></onCreateDefault>
+      </column>
+      <foreign-key foreignTable="SFB_BUDGET_AREA" name="EM_SFB_ORDER_BUDGET_AREA">
+        <reference local="EM_SFB_BUDGET_AREA_ID" foreign="SFB_BUDGET_AREA_ID"/>
+      </foreign-key>
+      <check name="EM_SFB_ORDER_BUDGETABLE_CHK"><![CDATA[EM_SFB_ISNOTBUDGETABLE IN ('Y', 'N')]]></check>
+      <check name="EM_SFB_ORDER_BUDGETED_CHK"><![CDATA[EM_SFB_ISBUDGETED IN ('Y', 'N')]]></check>
+    </table>
+  </database>

@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SCPP_APPROVE_PAYMENT">
+    <function name="SCPP_APPROVE_PAYMENT" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+  Cur_Parameter RECORD;  
+  Cur_Employee RECORD;
+  Cur_Concept RECORD;
+  Cur_Validar0 RECORD;
+  CUR_PROCESSPAYROOLL RECORD;
+
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+  
+  v_ResultStr VARCHAR2(2000) := '';
+  v_ApprovalPayment_ID VARCHAR2(32);
+  v_Payroll_ID VARCHAR2(32);
+  v_TypeofIncome VARCHAR2(60);
+  
+  
+  v_n_insertions NUMBER;
+  v_Message VARCHAR2(2000):='';
+
+  --valornull_exception  Exception;
+  v_amount NUMBER;
+  V_AMOUNT_CONCEP NUMBER;
+  
+  v_value NUMBER;
+  v_isliquidation CHARACTER(1);       --OBTG:VARCHAR2--
+  v_c_partner_id_payroll VARCHAR2(32);
+
+  v_count NUMBER;
+  v_countline NUMBER;
+  
+BEGIN
+  --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+    v_n_insertions := 0;
+    
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID,
+        i.AD_User_ID, 
+        i.AD_Client_ID,
+        i.AD_Org_ID                    
+      FROM AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+      )
+    LOOP
+      v_ApprovalPayment_ID := Cur_Parameter.Record_ID;      
+    END LOOP; -- Get Parameter  
+    
+    select count(*) into v_countline
+	  from scpp_approvalpaymentline 
+	  where scpp_approvalpayment_id = v_ApprovalPayment_ID;
+
+     --*** PROCESO CARGAR LINEAS 
+    IF(v_countline > 0)THEN 
+    FOR Cur_Employee IN
+	(
+	 select SSPR_Payroll_Ticket_id,b.scpp_approvalpaymentline_id,a.sspr_payroll_id,b.c_bpartner_id
+	 from scpp_approvalpayment a
+	 left join scpp_approvalpaymentline b on a.scpp_approvalpayment_id = b.scpp_approvalpayment_id
+	 left join SSPR_Payroll_Ticket c on b.scpp_approvalpaymentline_id = c.em_scpp_approvalpaymentline_id
+	 where a.scpp_approvalpayment_id = v_ApprovalPayment_ID
+	)
+    LOOP
+               
+        --VALIDO QUE NO ESTE RELACIONADO EL EMPLEADO EN OTRO PAGO ANTES DE APROVAR
+
+  select count(*) into v_count
+	from scpp_approvalpayment a
+	left join scpp_approvalpaymentline b on a.scpp_approvalpayment_id = b.scpp_approvalpayment_id
+	WHERE b.c_bpartner_id = Cur_Employee.c_bpartner_id AND a.sspr_payroll_id = Cur_Employee.sspr_payroll_id
+	and (a.status = 'PA' or a.status = 'CP');
+
+	IF (to_number(v_count)>to_number(0)) THEN 
+		RAISE_APPLICATION_ERROR(-20000, '@ERROR=Existen Empleados con Pago en otro Documento. Vuelva a Generar Proceso Incluir Todos los Empleados.@');
+	END IF;
+	
+        --ACTUALIZO REFERENCIA DEL PAGO EN LAS LINEAS DE LA NOMINA
+       
+        
+
+	 v_n_insertions:=v_n_insertions+1;
+    END LOOP;
+    
+     FOR Cur_Employee IN
+	   (
+	   select SSPR_Payroll_Ticket_id
+     from scpp_approvalpayment a
+     left join scpp_approvalpaymentline b on a.scpp_approvalpayment_id = b.scpp_approvalpayment_id
+     left join SSPR_Payroll_Ticket c on b.scpp_approvalpaymentline_id = c.em_scpp_approvalpaymentline_id
+     where a.scpp_approvalpayment_id = v_ApprovalPayment_ID
+	  )
+    LOOP
+     Update SSPR_Payroll_Ticket SET em_scpp_status_payment = 'PA'
+     WHERE SSPR_Payroll_Ticket_id = Cur_Employee.SSPR_Payroll_Ticket_id;
+    END LOOP;
+    
+     Update scpp_approvalpayment set status = 'PA',dateapproval = now() where scpp_approvalpayment_id = v_ApprovalPayment_ID;
+
+    v_Message := '@RowsInserted@: ' || v_n_insertions || '.';
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+    RETURN;
+    ELSE
+    RAISE_APPLICATION_ERROR(-20000, 'No existen líneas de pagos');
+    END IF;
+    
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+    RETURN;
+END SCPP_APPROVE_PAYMENT
+]]></body>
+    </function>
+  </database>

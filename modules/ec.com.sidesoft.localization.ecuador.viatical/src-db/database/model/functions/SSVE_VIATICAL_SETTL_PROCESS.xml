@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSVE_VIATICAL_SETTL_PROCESS">
+    <function name="SSVE_VIATICAL_SETTL_PROCESS" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+Cur_Parameter RECORD;
+Cur_InvoiceLine RECORD;
+
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+  
+  v_ResultStr VARCHAR2(2000) := '';  
+  V_Result NUMBER:=1; -- Success
+
+  V_RECORD_ID  VARCHAR2(32);
+  v_Mobilization_City_ID  VARCHAR2(32);
+  v_Message VARCHAR2(2000):='';
+  V_Amt NUMBER:=0;
+  V_TotalAmt NUMBER:=0;
+  V_ViaticalAmt NUMBER:=0;
+  V_TransportationAmt NUMBER:=0;
+  V_Fin_Payment_Schedule_Id Varchar2(32); 
+  V_C_City_ID Varchar2(32); 
+  V_Employee_City_ID Varchar2(32); 
+  V_Processed Varchar2(60);
+  V_Processing Varchar2(60);
+  V_Settle CHAR(1);
+  V_OUTSTANDINGAMT NUMBER:=0;
+  V_MobilizationFeedingDays NUMBER:=0;
+  V_MobilizationTransportDays NUMBER:=0;
+  V_MobilizationDepartureDate DATE;
+  V_MobilizationDepartureTime DATE;
+  V_MobilizationArrivalDate DATE;
+  V_MobilizationArrivalTime DATE;
+  V_MobilizationValue NUMBER:=0;
+  V_FeedingValue NUMBER:=0;
+  V_TransportCalculationType Varchar2(60);
+  V_MobilizationDepartTimeLimit DATE;
+  V_MobilizationArrivalTimeLimit DATE;
+  V_Count NUMBER;
+  v_DocAction SSVE_VIATICAL.DocAction%TYPE;
+  
+  v_ViaticalOnPayment Varchar2(32); 
+
+BEGIN
+  --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID,
+        i.AD_User_ID,
+        i.AD_Client_ID,
+        i.AD_Org_ID 
+                          
+      FROM AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+      )
+    LOOP
+    
+      v_Record_ID := Cur_Parameter.Record_ID;      
+      v_Client_ID := Cur_Parameter.AD_Client_ID;
+      v_Org_ID := Cur_Parameter.AD_Org_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;     
+      
+    END LOOP; -- End Get Parameter
+
+    -- Get viatical processed status
+    Select v.Processed, v.Processing, v.Settle Into V_Processed, V_Processing, V_Settle From ssve_viatical_settlement v Where v.ssve_viatical_settlement_id = V_Record_Id;
+    
+    If V_Processing = 'Y' Then
+      v_Message := '@Processing@';
+      AD_UPDATE_PINSTANCE(Pinstance_Id, Null, 'N', 0, v_Message);
+      return;
+    End If;
+    
+    If V_Settle = 'Y' Then
+      v_Message := '@SSVE_Settled@';
+      AD_UPDATE_PINSTANCE(Pinstance_Id, Null, 'N', 0, v_Message);
+      return;
+    End If;
+    
+    -- Set processing 'Y'
+    Update ssve_viatical_settlement v Set Processing = 'Y' Where v.ssve_viatical_settlement_id = V_Record_Id;
+    
+    If V_Processed = 'Y' Then -- Unprocess
+              
+      -- Check if has payment
+      begin
+        select fp.em_ssve_viat_settlement_id 
+        into v_ViaticalOnPayment
+        from fin_payment fp 
+        where fp.em_ssve_viat_settlement_id = V_RECORD_ID;
+      EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+        v_ViaticalOnPayment := NULL;
+      END;  
+
+      if v_ViaticalOnPayment is not null then
+        RAISE_APPLICATION_ERROR(-20000, '@SSVE_UnprocessNotAllowed@');
+      end if;
+          
+      -- Unprocess the viatical application
+      update ssve_viatical_settlement v 
+      set processed = 'N', Docstatus = 'DR', Docaction = 'RE',
+          totalviaticalamt = 0, totaltransportationamt = 0, totalamt = 0,
+          mobilizationamt = 0, feedingamt = 0
+      where v.ssve_viatical_settlement_id = V_RECORD_ID;
+
+      v_DocAction := 'RE';
+      V_Message := '@Unprocessed@';
+      
+    Elsif V_Processed = 'N' Then -- Process
+    
+      -- Get Viatical Data
+      select  v.c_city_id, 
+              v.employee_city_id
+      into  V_C_City_ID,
+            V_Employee_City_ID
+      from ssve_viatical_settlement v 
+      where v.ssve_viatical_settlement_id = v_Record_ID;
+      
+      -- Check cities
+      if V_C_City_ID is null or V_C_City_ID <> V_Employee_City_ID then
+
+        -- Get the viatical ammount
+        select  sum( vl.linenetamt )
+        into  V_ViaticalAmt
+        from  ssve_viatsettlementline vl
+        where vl.ssve_viatical_settlement_id = V_RECORD_ID;
+        
+        -- Get the transportation ammount
+        select sum( vt.linenetamt )
+        into  V_TransportationAmt
+        from  ssve_viatsettl_transp vt
+        where vt.ssve_viatical_settlement_id = V_RECORD_ID
+              and vt.isrefundable = 'Y';
+      
+      end if;
+      
+      -- Get the viatical application data
+      select  v.mobilization_city_id,
+              v.mobildeparturedate,
+              v.mobildeparturetime,
+              v.mobilarrivaldate,
+              v.mobilarrivaltime,
+              mcv.mobilizationvalue
+      into  v_Mobilization_City_ID,
+            V_MobilizationDepartureDate,
+            V_MobilizationDepartureTime,
+            V_MobilizationArrivalDate,
+            V_MobilizationArrivalTime,
+            V_MobilizationValue
+      from  ssve_viatical_settlement v
+      left join  ssve_mobil_city_value mcv on v.mobilization_city_id = mcv.c_city_id and v.ad_client_id = mcv.ad_client_id
+      where v.ssve_viatical_settlement_id = V_RECORD_ID;
+      
+      if v_Mobilization_City_ID is not null and V_MobilizationArrivalDate is not null and V_MobilizationDepartureDate is not null then
+
+        if V_MobilizationValue is null then
+          RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoMobilValueForCity@');
+        end if;
+  
+        -- Get viatical configuration
+        select  vc.transportcalculationtype,
+                vc.departuretimelimit,
+                vc.arrivaltimelimit,
+                vc.feedingvalue
+        into  V_TransportCalculationType,
+              V_MobilizationDepartTimeLimit,
+              V_MobilizationArrivalTimeLimit,
+              V_FeedingValue
+        from  ssve_viatical_config vc
+        where vc.ad_client_id = v_Client_ID;
+      
+        -- Get the number of days of mobilization
+        V_MobilizationFeedingDays := TRUNC(TO_NUMBER(TO_DATE(V_MobilizationArrivalDate) - TO_DATE(V_MobilizationDepartureDate)));
+        if V_TransportCalculationType = 'DAY' then 
+          V_MobilizationTransportDays := V_MobilizationFeedingDays + 1;
+        elsif V_TransportCalculationType = 'TRA' then
+          V_MobilizationTransportDays := 2;
+        else
+          RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoConfigData@');
+        end if;
+        V_MobilizationFeedingDays := V_MobilizationFeedingDays - 1;
+  
+        if V_TransportCalculationType is null or V_MobilizationDepartTimeLimit is null or V_MobilizationArrivalTimeLimit is null then
+          RAISE_APPLICATION_ERROR(-20000, '@SSVE_NoConfigData@');
+        end if;
+        
+        -- Define V_MobilizationFeedingDays according to the time limits
+        -- Departure time limit
+        IF EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTTIMELIMIT)) > EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTURETIME)) 
+        OR EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTTIMELIMIT)) = EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTURETIME)) 
+        AND EXTRACT(MINUTE FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTTIMELIMIT)) > EXTRACT(MINUTE FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTURETIME))
+        OR EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTTIMELIMIT)) = EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTURETIME)) 
+        AND EXTRACT(MINUTE FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTTIMELIMIT)) = EXTRACT(MINUTE FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTURETIME)) 
+        AND EXTRACT(SECOND FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTTIMELIMIT)) >= EXTRACT(SECOND FROM TO_TIMESTAMP(V_MOBILIZATIONDEPARTURETIME))
+        THEN
+          V_MobilizationFeedingDays := V_MobilizationFeedingDays + 1;
+        END IF;
+        -- Arrival time limit
+        IF EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIMELIMIT)) < EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIME)) 
+        OR EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIMELIMIT)) = EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIME)) 
+        AND EXTRACT(MINUTE FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIMELIMIT)) < EXTRACT(MINUTE FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIME))
+        OR EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIMELIMIT)) = EXTRACT(HOUR FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIME)) 
+        AND EXTRACT(MINUTE FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIMELIMIT)) = EXTRACT(MINUTE FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIME)) 
+        AND EXTRACT(SECOND FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIMELIMIT)) <= EXTRACT(SECOND FROM TO_TIMESTAMP(V_MOBILIZATIONARRIVALTIME)) 
+        THEN
+          V_MobilizationFeedingDays := V_MobilizationFeedingDays + 1;
+        END IF;
+      end if;
+  
+      V_TotalAmt := coalesce( V_ViaticalAmt, 0 ) + coalesce( V_TransportationAmt, 0 ) + coalesce( V_MobilizationTransportDays, 0 ) * coalesce( V_MobilizationValue, 0 )
+                  + coalesce( V_MobilizationFeedingDays, 0 ) * coalesce( V_FeedingValue, 0 );
+     -- Process the viatical application
+      update ssve_viatical_settlement v 
+      set processed = 'Y', Docstatus = 'CO', Docaction = '--', 
+          totalviaticalamt = coalesce( V_ViaticalAmt, 0 ), totaltransportationamt = coalesce( V_TransportationAmt, 0 ), totalamt = V_TotalAmt,
+          mobilizationamt = coalesce( V_MobilizationTransportDays, 0 ) * coalesce( V_MobilizationValue, 0 ), feedingamt = coalesce( V_MobilizationFeedingDays, 0 ) * coalesce( V_FeedingValue, 0 )
+      where v.ssve_viatical_settlement_Id = V_RECORD_ID;
+  
+      v_DocAction := 'CO';
+      V_Message := '@ProcessOK@';
+          
+    End If;
+    
+    SELECT count(*) INTO v_count
+    FROM DUAL
+    where exists (select 1 from ad_ep_procedures where ad_extension_points_id = '4A79F16843ED4E2AA76EA0342AA6D240');
+    IF (v_count=1) THEN
+      DECLARE
+        v_ep_instance VARCHAR2(32);
+        v_extension_point_id VARCHAR2(32) := '4A79F16843ED4E2AA76EA0342AA6D240';
+      BEGIN
+        v_ep_instance := get_uuid();
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'Record_ID',
+          v_record_id, NULL, NULL, NULL, NULL, NULL, NULL);
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'DocAction',
+          v_DocAction, NULL, NULL, NULL, NULL, NULL, NULL);
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'User',
+          v_User_ID, NULL, NULL, NULL, NULL, NULL, NULL);
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'Message',
+          NULL, NULL, NULL, NULL, NULL, NULL, v_Message);
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'Result',
+          Null, Null, V_Result, Null, Null, Null, Null);
+        AD_EXTENSION_POINT_HANDLER(v_ep_instance, v_extension_point_id);
+
+        DELETE FROM ad_ep_instance_para
+        WHERE ad_ep_instance_id = v_ep_instance;
+      END;
+    END IF;
+    
+    -- Set processing 'N'
+    Update ssve_viatical_settlement v Set Processing = 'N' Where v.ssve_viatical_settlement_Id = V_Record_Id;
+    COMMIT;
+    
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+    RETURN;
+  
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    ROLLBACK;
+    -- Set processing 'N'
+    Update ssve_viatical_settlement v Set Processing = 'N' Where v.ssve_viatical_settlement_Id = V_Record_Id;
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+    RETURN;
+END SSVE_VIATICAL_SETTL_PROCESS
+]]></body>
+    </function>
+  </database>

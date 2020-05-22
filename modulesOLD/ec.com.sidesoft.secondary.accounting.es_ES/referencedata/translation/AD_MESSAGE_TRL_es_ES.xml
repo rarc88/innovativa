@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="BBFA166F5BC54A08902D76AA5BFF4A22" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to update the dependent account .It already have associated transactions.">No es posible actualizar la cuenta dependiente. Ya contiene transacciones asociadas.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="F36DC0DF12A24585A32E404794C41BF2" trl="N">
+    <value column="MsgText" isTrl="Y" original="No secondary account has been defined for seat accounts ">No se ha definido cuenta secundaria para las cuentas del asiento</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

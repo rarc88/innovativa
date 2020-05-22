@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_BUDGET_VERSION_TRG1">
+    <trigger name="SFB_BUDGET_VERSION_TRG1" table="SFB_BUDGET_VERSION" fires="before" insert="true" update="false" delete="true" foreach="row">
+      <body><![CDATA[
+v_budget_status     VARCHAR2(60);
+v_version_status    VARCHAR2(60);
+v_budget_id VARCHAR2(32);
+ 
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF (INSERTING) THEN
+
+    v_budget_id := :new.sfb_budget_id;
+    v_version_status := :new.version_status;
+
+  ELSIF(DELETING) THEN
+
+    v_budget_id := :old.sfb_budget_id;
+    v_version_status := :old.version_status;
+
+  ELSE
+
+    v_budget_id := null;
+
+  END IF;
+
+    
+  SELECT budget_status INTO v_budget_status
+  FROM SFB_BUDGET
+  WHERE sfb_budget_id = v_budget_id;
+
+  IF(v_budget_status = 'AP') THEN
+
+    RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyApprovedBudget@');
+
+  ELSIF(v_version_status = 'CP') THEN
+
+    --If not approving version
+    IF(NOT (UPDATING AND :new.version_status = 'AP')) THEN 
+
+      RAISE_APPLICATION_ERROR(-20000, '@SFB_CopiedVersion@');
+
+    END IF;
+      
+  END IF;
+    
+  END SFB_BUDGET_VERSION_TRG1
+]]></body>
+    </trigger>
+  </database>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MENU" version="">
+  <row id="1D61E81B61DD44D2B302DA4469A3EC6A" trl="N">
+    <value column="Name" isTrl="Y" original="National Viatical Value">Valor de viático nacional</value>
+    <value column="Description" isTrl="Y" original="National Viatical Value">Valor de viático nacional</value>
+  </row>
+  <row id="2103819298114757B4F5D9BF32D220BC" trl="N">
+    <value column="Name" isTrl="Y" original="Setup">Configuración</value>
+    <value column="Description" isTrl="Y" original="Setup">Abre una carpeta en la que puede definir toda la información necesaria para este módulo.</value>
+  </row>
+  <row id="659890CA6D834FC8BE0359DF1E71CCDB" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical">Viáticos</value>
+    <value column="Description" isTrl="Y" original="Viatical">Viáticos</value>
+  </row>
+  <row id="70151A5637724D7BAB4A7D1BEBC41C94" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Configuration">Configuración de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Configuration">Configuración de viático</value>
+  </row>
+  <row id="8EEB41A7108D4C3AA7C1527005291D80" trl="N">
+    <value column="Name" isTrl="Y" original="Transaction">Transacciones</value>
+    <value column="Description" isTrl="Y" original="Transaction">Abre una carpeta en la que puede crear, editar y añadir los datos necesarios para completar una transacción determinada.</value>
+  </row>
+  <row id="A83508A779E7469780A414AFFE370B73" trl="N">
+    <value column="Name" isTrl="Y" original="Zone">Zona</value>
+    <value column="Description" isTrl="Y" original="Zone">Zona</value>
+  </row>
+  <row id="B5C3F4C6C5FF4A3A8968E778BB6E2F04" trl="N">
+    <value column="Name" isTrl="Y" original="International Viatical Value">Valor de viático internacional</value>
+    <value column="Description" isTrl="Y" original="International Viatical Value">Valor de viático internacional</value>
+  </row>
+  <row id="D8F7ACFD2140477EA830186DCD0376B6" trl="N">
+    <value column="Name" isTrl="Y" original="Analysis Tools">Herramientas de análisis</value>
+    <value column="Description" isTrl="Y" original="Open a folder where you can find reports and tools to analyze data.">Abre una carpeta en la que puede encontrar los informes y herramientas necesarios para analizar los datos.</value>
+  </row>
+  <row id="D9C736EC133C4712BD4C27D8B144883A" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Application">Solicitud de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Application">Solicitud de viático</value>
+  </row>
+  <row id="DA2526E4A5BA479993E5F1A4D6DE2F43" trl="N">
+    <value column="Name" isTrl="Y" original="Country Rate">Índice por país</value>
+    <value column="Description" isTrl="Y" original="Country Rate">Índice por país</value>
+  </row>
+  <row id="DE7EEF06C61D43D786BE98571C3DDFB8" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+  </row>
+  <row id="E1A0AAA14B2F414598EE15BEE32A6586" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Analisis Report">Reporte de análisis de viáticos</value>
+    <value column="Description" isTrl="Y" original="Viatical Analisis Report">Reporte de análisis de viáticos</value>
+  </row>
+  <row id="E2372F227C4C4CF5BBCCCD40B6075C62" trl="N">
+    <value column="Name" isTrl="Y" original="Level">Nivel</value>
+    <value column="Description" isTrl="Y" original="Level">Nivel</value>
+  </row>
+</compiereTrl>

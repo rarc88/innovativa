@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptC_Invoice_Fact_Serv_MartComision_Recap" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="0" rightMargin="20" topMargin="5" bottomMargin="5">
+	<property name="ireport.zoom" value="1.1000000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="VOYAGE_ID" class="java.lang.String"/>
+	<parameter name="DESCRIPTION_INVOICE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Openbravo-3.0MP27\\modules\\com.sidesoft.flopec\\src\\com\\sidesoft\\flopec\\ad_reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREP_RptC_Invoice_Fact_Serv_Mart_RecapLine" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<parameter name="BILLING_FROM" class="java.lang.String"/>
+	<parameter name="BILLING_TO" class="java.lang.String"/>
+	<parameter name="LANGUAGE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TYPE_RECAP" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DESCRIPTION" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+VOYAGE.EM_SSFL_C_COSTCENTER_ID,
+CCT.NAME AS COST_CENTER,
+VOYAGE.EM_SSFL_NAME AS IDENTIFIER,
+
+CCT.NAME || ' ' ||
+to_char(CASE
+('(' || (CASE 	WHEN $P{TYPE_RECAP} = '1' THEN RECAP1.NAME
+				WHEN $P{TYPE_RECAP} = '2' THEN RECAP2.NAME
+				WHEN $P{TYPE_RECAP} = '3' THEN RECAP3.NAME
+		END) || ')')
+		WHEN '()' THEN ''
+		ELSE ('(' || (CASE 	WHEN $P{TYPE_RECAP} = '1' THEN RECAP1.NAME
+						WHEN $P{TYPE_RECAP} = '2' THEN RECAP2.NAME
+						WHEN $P{TYPE_RECAP} = '3' THEN RECAP3.NAME
+					END) || ')')
+END) AS HEADER_COSTCENTER,
+to_char(CASE 	WHEN $P{TYPE_RECAP} = '1' THEN RECAP1.NAME
+	WHEN $P{TYPE_RECAP} = '2' THEN RECAP2.NAME
+	WHEN $P{TYPE_RECAP} = '3' THEN RECAP3.NAME
+END) AS NAME_RECAP,
+to_char(CASE 	WHEN $P{TYPE_RECAP} = '1' THEN RECAP1.VALUE
+	WHEN $P{TYPE_RECAP} = '2' THEN RECAP2.VALUE
+	WHEN $P{TYPE_RECAP} = '3' THEN RECAP3.VALUE
+END) AS VALUE_RECAP,
+to_char(CASE 	WHEN $P{TYPE_RECAP} = '1' THEN RECAP1.DESCRIPTION_REM
+	WHEN $P{TYPE_RECAP} = '2' THEN RECAP2.DESCRIPTION_REM
+	WHEN $P{TYPE_RECAP} = '3' THEN RECAP3.DESCRIPTION_REM
+END) AS DESCRIPION_RECAP,
+ssfl_return_name_month((CASE 	WHEN $P{TYPE_RECAP} = '1' THEN RECAP1.CONTRACTDATE
+	WHEN $P{TYPE_RECAP} = '2' THEN RECAP2.CONTRACTDATE
+	WHEN $P{TYPE_RECAP} = '3' THEN RECAP3.CONTRACTDATE
+END),$P{LANGUAGE})||
+to_char((CASE 	WHEN $P{TYPE_RECAP} = '1' THEN RECAP1.CONTRACTDATE
+	WHEN $P{TYPE_RECAP} = '2' THEN RECAP2.CONTRACTDATE
+	WHEN $P{TYPE_RECAP} = '3' THEN RECAP3.CONTRACTDATE
+END),'dd, yyyy') AS CONTRACTDATE_RECAP,
+PORT.NAME AS PORT_NAME,
+TYPE_PORT.NAME AS TYPE_PORT_NAME,
+COALESCE(to_number(CASE TYPE_PORT.NAME
+	WHEN 'SAILED' THEN 1
+	WHEN 'ETA' THEN 2
+END),0) AS ORDER_TYPE_PORT,
+TYPE_PORT.USE AS TYPE_PORT_USE,
+LINE_VOYAGE.STARTDATE AS START_DATE_VOYAGE,
+LINE_VOYAGE.ENDDATE AS END_DATE_VOYAGE,
+VOYAGE.USER2_ID AS VOYAGELINE,
+VOYAGE.EM_SSFL_CUSTOMER_VOYAGE_NO,
+VOYAGE.DESCRIPTION AS "description"
+FROM USER2 VOYAGE
+LEFT JOIN  C_COSTCENTER CCT ON CCT.C_COSTCENTER_ID = VOYAGE.EM_SSFL_C_COSTCENTER_ID
+LEFT JOIN SSFL_RECAP RECAP1 ON VOYAGE.EM_SSFL_VALUERECAP1 = RECAP1.SSFL_RECAP_ID
+LEFT JOIN SSFL_RECAP RECAP2 ON VOYAGE.EM_SSFL_VALUERECAP2 = RECAP2.SSFL_RECAP_ID
+LEFT JOIN SSFL_RECAP RECAP3 ON VOYAGE.EM_SSFL_VALUERECAP3 = RECAP3.SSFL_RECAP_ID
+LEFT JOIN SSFL_USER2LINE LINE_VOYAGE ON VOYAGE.USER2_ID = LINE_VOYAGE.USER2_ID
+LEFT JOIN SSFL_PORT PORT ON LINE_VOYAGE.SSFL_PORT_ID = PORT.SSFL_PORT_ID
+LEFT JOIN SSFL_TYPE_PORT TYPE_PORT ON (LINE_VOYAGE.PORT_TYPE_ID = TYPE_PORT.SSFL_TYPE_PORT_ID )
+
+WHERE
+VOYAGE.USER2_ID  = $P{VOYAGE_ID}
+ORDER BY ORDER_TYPE_PORT ASC,START_DATE_VOYAGE ASC]]>
+	</queryString>
+	<field name="em_ssfl_c_costcenter_id" class="java.lang.String"/>
+	<field name="cost_center" class="java.lang.String"/>
+	<field name="identifier" class="java.lang.String"/>
+	<field name="header_costcenter" class="java.lang.String"/>
+	<field name="name_recap" class="java.lang.String"/>
+	<field name="value_recap" class="java.lang.String"/>
+	<field name="descripion_recap" class="java.lang.String"/>
+	<field name="contractdate_recap" class="java.lang.String"/>
+	<field name="port_name" class="java.lang.String"/>
+	<field name="type_port_name" class="java.lang.String"/>
+	<field name="order_type_port" class="java.math.BigDecimal"/>
+	<field name="type_port_use" class="java.lang.String"/>
+	<field name="start_date_voyage" class="java.sql.Timestamp"/>
+	<field name="end_date_voyage" class="java.sql.Timestamp"/>
+	<field name="voyageline" class="java.lang.String"/>
+	<field name="em_ssfl_customer_voyage_no" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="56" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="28" y="27" width="70" height="13">
+					<printWhenExpression><![CDATA[$P{LANGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CP DATED:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="28" y="0" width="249" height="13"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{header_costcenter}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="62" y="13" width="28" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[($F{identifier} != null && !$F{identifier}.equals(""))]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VOY]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="90" y="13" width="137" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{identifier}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="99" y="27" width="163" height="13"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{contractdate_recap}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="62" y="40" width="28" height="13">
+					<printWhenExpression><![CDATA[($F{em_ssfl_customer_voyage_no} != null && !$F{em_ssfl_customer_voyage_no}.equals(""))]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VOY]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="90" y="40" width="137" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{em_ssfl_customer_voyage_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="28" y="27" width="71" height="13">
+					<printWhenExpression><![CDATA[$P{LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA CT:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="44" splitType="Stretch">
+			<printWhenExpression><![CDATA[($P{DESCRIPTION_INVOICE}!=null && !$P{DESCRIPTION_INVOICE}.equals(""))]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="1" y="0" width="287" height="42" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESCRIPTION_INVOICE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="2" y="0" width="51" height="11" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{type_port_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="53" y="0" width="184" height="11" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{port_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="238" y="0" width="100" height="11" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{start_date_voyage}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="33" splitType="Stretch">
+			<printWhenExpression><![CDATA[($P{BILLING_FROM} != null && !$P{BILLING_FROM}.equals("")) && ($P{BILLING_TO} != null && !$P{BILLING_TO}.equals(""))]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" isPrintRepeatedValues="false" x="72" y="17" width="243" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{BILLING_TO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" isPrintRepeatedValues="false" x="72" y="1" width="243" height="16" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{BILLING_FROM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" isPrintRepeatedValues="false" x="1" y="1" width="48" height="16" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true">
+					<printWhenExpression><![CDATA[$P{LANGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FROM:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" isPrintRepeatedValues="false" x="1" y="17" width="25" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true">
+					<printWhenExpression><![CDATA[$P{LANGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" isPrintRepeatedValues="false" x="2" y="17" width="64" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true">
+					<printWhenExpression><![CDATA[$P{LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HASTA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" isPrintRepeatedValues="false" x="2" y="1" width="64" height="16" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true">
+					<printWhenExpression><![CDATA[$P{LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESDE:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="59" splitType="Stretch">
+			<printWhenExpression><![CDATA[($P{DESCRIPTION}!=null && !$P{DESCRIPTION}.equals(""))]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" isPrintRepeatedValues="false" x="0" y="0" width="288" height="58" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESCRIPTION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

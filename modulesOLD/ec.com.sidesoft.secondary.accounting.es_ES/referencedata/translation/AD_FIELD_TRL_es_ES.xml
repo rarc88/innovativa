@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_FIELD" version="">
+  <row id="153399F320D94943873378D4631A53A3" trl="N">
+    <value column="Name" isTrl="Y" original="Project">Proyecto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="211550D432EA4CA393C61DDD5786FA75" trl="N">
+    <value column="Name" isTrl="N" original="Multi-general Ledger">Multi-general Ledger</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="25315A11182D4B03B2186E2F49A6E827" trl="N">
+    <value column="Name" isTrl="Y" original="Organization">Organización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="286596476E164D1F9CCC98EBFB7BBCD9" trl="N">
+    <value column="Name" isTrl="Y" original="2nd Dimension">Viaje / Contrato</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="329F28423CAD412089B3B9D1DFF81697" trl="N">
+    <value column="Name" isTrl="Y" original="Print">Imprimir</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="35AA616164F544EBA5297B77A46775FB" trl="N">
+    <value column="Name" isTrl="Y" original="Cost Center">Buque / Área</value>
+    <value column="Description" isTrl="N" original="">Buque / Área</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3D25B28051754AD5A2519550F733AEBF" trl="N">
+    <value column="Name" isTrl="Y" original="1st Dimension">Línea de negocio</value>
+    <value column="Description" isTrl="N" original="">Línea de negocio</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="479D5287A08B4174B16FA3E40419E09E" trl="N">
+    <value column="Name" isTrl="Y" original="Currency">Moneda</value>
+    <value column="Description" isTrl="N" original="">Moneda</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4840EE40C7C245C593920B416A27D359" trl="N">
+    <value column="Name" isTrl="Y" original="Asset">Activos</value>
+    <value column="Description" isTrl="N" original="">Activos</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4948765BF6244E9E8045F8053A33D0B7" trl="N">
+    <value column="Name" isTrl="Y" original="Business Partner">Tercero</value>
+    <value column="Description" isTrl="N" original="">Tercero</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5E54A3DBB6AC485CBBA4B50E84D2B9E8" trl="N">
+    <value column="Name" isTrl="Y" original="Organization">Organización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="622A8AC66AC147E99D218012A82D9667" trl="N">
+    <value column="Name" isTrl="Y" original="Main account">Cuenta Principal</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="752B28A3C6D64DB49F6D2E13C0A766B1" trl="N">
+    <value column="Name" isTrl="Y" original="Posted">Contabilizado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7A9992D2DF6C48A8993BF17C664348ED" trl="N">
+    <value column="Name" isTrl="Y" original="Document Date">Fecha del documento</value>
+    <value column="Description" isTrl="N" original="">Fecha del documento</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7BF0D2934B8E4ED892B3E6E063980A82" trl="N">
+    <value column="Name" isTrl="Y" original="Sales Campaign">Campaña</value>
+    <value column="Description" isTrl="N" original="">Campaña</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="98172191E0094A69A6EB30E97A99E43D" trl="N">
+    <value column="Name" isTrl="Y" original="Dependent Account">Cuenta Dependiente</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9B2BDFB913CE4FEE9FE1DE4474756860" trl="N">
+    <value column="Name" isTrl="Y" original="Period">Periodo</value>
+    <value column="Description" isTrl="N" original="">Periodo</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="AB7B40C40104464DB933F2E4B9948D40" trl="N">
+    <value column="Name" isTrl="Y" original="Document No.">Nº documento</value>
+    <value column="Description" isTrl="N" original="">Nº documento</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="BC02D08705074377BFFDA884509277AA" trl="N">
+    <value column="Name" isTrl="Y" original="Rate">Índice</value>
+    <value column="Description" isTrl="N" original="">Índice</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="CAC87A3E50134D75BEB8CE161FF846C6" trl="N">
+    <value column="Name" isTrl="Y" original="Product">Producto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="D7247816E202428786C86464D854314B" trl="N">
+    <value column="Name" isTrl="Y" original="Dependent Tree">Árbol Dependiente</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="D828FC2DF5CE447E89DC951001C84B03" trl="N">
+    <value column="Name" isTrl="N" original="GL Items">GL Items</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E33DD047E9E244658A92BCF89B299DBB" trl="N">
+    <value column="Name" isTrl="Y" original="Secondary Account Tree">Árbol de cuentas secundario</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E41A82C681D147B3A515CA0093D565CB" trl="N">
+    <value column="Name" isTrl="Y" original="General Ledger">Esquema contable</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E8F62905A9404E5891707F38D1FC3C09" trl="N">
+    <value column="Name" isTrl="Y" original="Description">Descripción</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="ED862111BCC64447BEE1ECEB342E8EAE" trl="N">
+    <value column="Name" isTrl="Y" original="Opening">Apertura</value>
+    <value column="Description" isTrl="N" original="">Apertura</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="FBDE083FC9D94BC484CE6EED88F9A287" trl="N">
+    <value column="Name" isTrl="Y" original="Line No.">Línea</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

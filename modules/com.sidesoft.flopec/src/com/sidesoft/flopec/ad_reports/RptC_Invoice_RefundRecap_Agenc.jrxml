@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptC_Invoice_RefundRecap" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="VOYAGE_ID" class="java.lang.String"/>
+	<parameter name="LANGUAGE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+CCENTER.NAME AS NAME_COSTCENTER,
+RECAP.NAME AS NAME_RECAP,
+CCENTER.NAME  || COALESCE(TO_CHAR(' (' || RECAP.NAME || ')'),'') AS HEADER_RECAP,
+TO_CHAR(SSFL_RETURN_NAME_MONTH(RECAP.CONTRACTDATE,$P{LANGUAGE})) || TO_CHAR(RECAP.CONTRACTDATE,'dd, yyyy') AS CONTRACT_DATE_RECAP,
+RECAP.description_ag AS DESCRIPTION_RECAP
+FROM SSFL_INVOICE_VOYAGE VOYAGE
+LEFT JOIN C_COSTCENTER CCENTER ON CCENTER.C_COSTCENTER_ID = VOYAGE.C_COSTCENTER_ID
+LEFT JOIN SSFL_RECAP RECAP ON RECAP.SSFL_RECAP_ID = VOYAGE.RECAP_ID
+LEFT JOIN C_BPARTNER BROKER ON BROKER.C_BPARTNER_ID = VOYAGE.BROKERVALUE
+WHERE RECAP.SSFL_RECAP_ID = $P{VOYAGE_ID}]]>
+	</queryString>
+	<field name="name_costcenter" class="java.lang.String"/>
+	<field name="name_recap" class="java.lang.String"/>
+	<field name="header_recap" class="java.lang.String"/>
+	<field name="contract_date_recap" class="java.lang.String"/>
+	<field name="description_recap" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="165" y="15" width="74" height="13">
+					<printWhenExpression><![CDATA[$P{LANGUAGE}.equals("es_EC") && ($F{header_recap}!= null && !$F{header_recap}.equals(""))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA CT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="14" width="74" height="13">
+					<printWhenExpression><![CDATA[$P{LANGUAGE}.equals("en_US")  && ($F{header_recap}!= null && !$F{header_recap}.equals(""))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CP DATED:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="527" height="15">
+					<printWhenExpression><![CDATA[($F{header_recap} != null && !$F{header_recap}.equals(""))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{header_recap}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="14" width="156" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{contract_date_recap}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

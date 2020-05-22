@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SCPP_APPROVALPAYMENTLIN_DELETE">
+    <trigger name="SCPP_APPROVALPAYMENTLIN_DELETE" table="SCPP_APPROVALPAYMENTLINE" fires="before" insert="false" update="false" delete="true" foreach="row">
+      <body><![CDATA[
+V_STATUS  VARCHAR2(60);
+ 
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  
+
+  IF (DELETING ) THEN
+
+	SELECT STATUS INTO V_STATUS FROM scpp_approvalpayment WHERE scpp_approvalpayment_ID = :old.scpp_approvalpayment_ID;
+
+	IF (V_STATUS = 'PA' OR V_STATUS = 'CP') THEN
+		RAISE_APPLICATION_ERROR(-20000, '@ERROR=No se puede borrar registro, el Pago esta Aprobado o Confirmado@');
+	END IF;
+
+	IF (V_STATUS = 'DR' ) THEN
+		--ACTUALIZO REFERENCIA DEL PAGO EN LAS LINEAS DE LA NOMINA
+		Update SSPR_Payroll_Ticket SET em_scpp_approvalpaymentline_id = null WHERE em_scpp_approvalpaymentline_id = :OLD.scpp_approvalpaymentline_id;
+	END IF;
+    
+  END IF;
+
+  END SCPP_APPROVALPAYMENTLIN_DELETE
+]]></body>
+    </trigger>
+  </database>

@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFB_REACTIVATEBUDGETLINE">
+    <function name="SFB_REACTIVATEBUDGETLINE" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+Cur_Parameter RECORD;
+Cur_Partner RECORD;
+Cur_Dias RECORD;
+
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+  
+  v_ResultStr VARCHAR2(2000) := '';  
+
+  v_Period_ID VARCHAR2(32); 
+  v_n_insertions NUMBER;
+  v_Message VARCHAR2(2000):='';
+  V_fecha_inicio  DATE;---fecha inicio anio
+  V_C_bpartner_ID VARCHAR2(32); 
+  v_Record_ID  VARCHAR2(32);
+  V_sfb_budget_ID VARCHAR2(32);
+  V_sfb_budget_version_ID VARCHAR2(32);
+  V_YEAR_ID VARCHAR2(32);
+  V_TYPE_OF_BUDGET VARCHAR2(60);
+  V_COSTCENTER_ID VARCHAR2(32);
+  V_SFB_BUDGET_ITEM_ID VARCHAR2(32);
+  V_USER1_ID VARCHAR2(32);
+  V_SFB_BUDGET_AREA_ID VARCHAR2(32);
+  V_STATUS VARCHAR2(60);
+  V_PROCESS CHARACTER(1); --OBTG:VARCHAR2--
+  V_LINE NUMBER;
+  V_CommittedValue NUMBER;
+  V_AdjustedValue NUMBER; 
+  V_BudgetedValue NUMBER;
+BEGIN
+  --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+    v_n_insertions := 0;  
+
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID,
+        i.AD_User_ID,
+        i.AD_Client_ID,
+        i.AD_Org_ID 
+                          
+      FROM AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+      )
+    LOOP
+    
+      v_Record_ID := Cur_Parameter.Record_ID;      
+      v_Client_ID := Cur_Parameter.AD_Client_ID;
+      v_Org_ID := Cur_Parameter.AD_Org_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;     
+      
+    END LOOP; -- End Get Parameter
+
+     --OBTENGO EL AÑO Y TIPO DE PRESUPUESTO 
+    SELECT C_YEAR_ID,TYPE_OF_BUDGET,C_COSTCENTER_ID,SFB_BUDGET_ITEM_ID,USER1_ID,SFB_BUDGET_AREA_ID,STATUS,PROCESS,AD_CLIENT_ID INTO V_YEAR_ID,V_TYPE_OF_BUDGET,V_COSTCENTER_ID,V_SFB_BUDGET_ITEM_ID,V_USER1_ID,V_SFB_BUDGET_AREA_ID,V_STATUS,V_PROCESS,v_Client_ID
+    FROM sfb_budget_addline WHERE sfb_budget_addline_ID = v_Record_ID;
+
+    IF V_STATUS='CO' AND V_PROCESS='Y' THEN 
+
+    SELECT COALESCE(COMMITTED_VALUE,0) AS COMMITTED_VALUE, COALESCE(ADJUSTED_VALUE,0) AS ADJUSTED_VALUE, COALESCE(EXECUTED_VALUE,0) AS BUDGETED_VALUE 
+INTO V_CommittedValue, V_AdjustedValue, V_BudgetedValue
+FROM	sfb_budget_line
+    WHERE sfb_budget_addline_ID  = v_Record_ID;
+
+	    IF (V_CommittedValue=0 AND V_AdjustedValue=0 AND V_BudgetedValue=0) THEN
+			
+		--Eliminando línea del presupuesto
+		UPDATE sfb_budget_addline SET STATUS='DR',PROCESS='N' WHERE sfb_budget_addline_ID = v_Record_ID;
+		
+		DELETE FROM sfb_budget_line WHERE sfb_budget_addline_ID  = v_Record_ID;
+
+	    ELSE
+	    
+		RAISE_APPLICATION_ERROR(-20000,'@sfb_budgetusederror@');
+	    END IF;
+    ELSE 
+	RAISE_APPLICATION_ERROR(-20000,'@ERROR=ESTE REGISTRO YA ESTA PROCESADO@');
+    END IF;
+    v_Message := '@Deleted@';
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+    COMMIT;
+    RETURN;
+    
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    ROLLBACK;
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+    RETURN;
+END SFB_REACTIVATEBUDGETLINE
+]]></body>
+    </function>
+  </database>

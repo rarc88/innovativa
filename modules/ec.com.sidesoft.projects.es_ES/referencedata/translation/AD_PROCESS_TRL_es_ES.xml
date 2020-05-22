@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="1609DF05B67247D98CDF9B5981E0B823" trl="N">
+    <value column="Name" isTrl="Y" original="Service Project Report">Informe Proyectos de servicio</value>
+    <value column="Description" isTrl="Y" original="Service Project Report">Informe Proyectos de servicio</value>
+    <value column="Help" isTrl="Y" original="Service Project Report">Informe Proyectos de servicio</value>
+  </row>
+  <row id="1F0ED569BDC9428EBBAAF28015D985B5" trl="N">
+    <value column="Name" isTrl="Y" original="Set Project Type">Establecer el tipo de proyecto</value>
+    <value column="Description" isTrl="Y" original="Set Project Type and for Service Projects copy Phases and Tasks of Project Type into Project">Establecer el tipo de proyecto</value>
+    <value column="Help" isTrl="Y" original="Set Project Type and for Service Projects copy Phases and Tasks of Project Type into Project">Establecer el tipo de proyecto</value>
+  </row>
+  <row id="35FB9F613FB84411B189FD9A2ECEA4F4" trl="N">
+    <value column="Name" isTrl="Y" original="Create Sales Orders from Expenses">Crear pedidos de venta según gastos</value>
+    <value column="Description" isTrl="Y" original="Create Sales Orders for Customers from Expense Reports">Crear pedidos de venta para clientes según informes de gastos</value>
+    <value column="Help" isTrl="Y" original="Create Sales Orders for Customers from Expense Reports">Crear pedidos de venta para clientes según informes de gastos</value>
+  </row>
+  <row id="3D88A4DD000C4BC9ADBFBBF06E6175D7" trl="N">
+    <value column="Name" isTrl="Y" original="Proposal Report">Consulta de presupuestos</value>
+    <value column="Description" isTrl="Y" original="Report proposal query">Consulta de presupuestos</value>
+    <value column="Help" isTrl="Y" original="Report proposal query">Consulta de presupuestos</value>
+  </row>
+  <row id="4C3E1E0699C149E09977A8F497AE1167" trl="N">
+    <value column="Name" isTrl="Y" original="Project Profitability">Rentabilidad de Proyectos</value>
+    <value column="Description" isTrl="Y" original="Project Profitability">Rentabilidad de Proyectos</value>
+    <value column="Help" isTrl="Y" original="Project Profitability JR">Informe de rentabilidad de proyectos JR</value>
+  </row>
+  <row id="502E664E1CFC436ABC20908E939B176F" trl="N">
+    <value column="Name" isTrl="Y" original="Project Lines not Issued">Proyecto líneas no incluidas</value>
+    <value column="Description" isTrl="Y" original="Lists Project Lines of a Work Order or Asset Project, which are not issued to the Project">Listado de las líneas de un pedido de trabajo o activos del proyecto no incluidos en el proyecto</value>
+    <value column="Help" isTrl="Y" original="Lists Project Lines of a Work Order or Asset Project, which are not issued to the Project">Listado de las líneas de un pedido de trabajo o activos del proyecto no incluidos en el proyecto</value>
+  </row>
+  <row id="56B61B315F6245FB85E2D09DFA92CC46" trl="N">
+    <value column="Name" isTrl="Y" original="Copy Details">Copiar Detalles</value>
+    <value column="Description" isTrl="Y" original="Copy Lines/Phases/Tasks from another existing project">Copiar Detalles</value>
+    <value column="Help" isTrl="Y" original="Copy Lines/Phases/Tasks from another existing project">Copiar Detalles</value>
+  </row>
+  <row id="5EB847F8084B46798F36C50D76FC02EF" trl="N">
+    <value column="Name" isTrl="Y" original="Project Detail Accounting Report">Contabilidad detalles proyecto</value>
+    <value column="Description" isTrl="Y" original="Project Detail Accounting Report">Contabilidad detalles proyecto</value>
+    <value column="Help" isTrl="Y" original="Project Detail Accounting Report">Contabilidad detalles proyecto</value>
+  </row>
+  <row id="74A0DDCBA57D40738D6080C23BC6815B" trl="N">
+    <value column="Name" isTrl="Y" original="Generate PO from Project">Generar PC de un proyecto</value>
+    <value column="Description" isTrl="Y" original="Generate PO from Project Line(s)">Generar PC de las líneas de un proyecto</value>
+    <value column="Help" isTrl="N" original="|">|</value>
+  </row>
+  <row id="8549AD3E29424DDD854A47B5A4B24FCD" trl="N">
+    <value column="Name" isTrl="N" original="Close Project">Close Project</value>
+    <value column="Description" isTrl="N" original="Close Project">Close Project</value>
+    <value column="Help" isTrl="N" original="Close Project">Close Project</value>
+  </row>
+  <row id="A8EC02CD746C49B2AABE6ED6D973C9E9" trl="N">
+    <value column="Name" isTrl="Y" original="Project Progress">Progreso de Proyectos</value>
+    <value column="Description" isTrl="Y" original="Report that shows the progress of the projects.">Informe que muestra el progreso de los proyectos.</value>
+    <value column="Help" isTrl="Y" original="The Project Progress report permits to track the progress of projects with useful indicators such as the time burned or the completion percentage.">El informe del Progreso de Proyectos permite seguir el progreso de los proyectos a través de indicadores útiles como el tiempo consumido o el porcentaje completado.</value>
+  </row>
+  <row id="B09CA5327C4C425AA9C224ADD519932F" trl="N">
+    <value column="Name" isTrl="Y" original="Project Status Summary">Resumen del estado del proyecto</value>
+    <value column="Description" isTrl="Y" original="Project Status of Project Cycle">Estado del proyecto en el ciclo del proyecto</value>
+    <value column="Help" isTrl="Y" original="Project Status of Project Cycle">Estado del proyecto en el ciclo del proyecto</value>
+  </row>
+  <row id="B64FAB17F1424D298506961DFED0809F" trl="N">
+    <value column="Name" isTrl="N" original="Project POs not Issued">Project POs not Issued</value>
+    <value column="Description" isTrl="N" original="Lists Project Lines with generated Purchase Orders of a Work Order or Asset Project, which are not issued to the Project">Lists Project Lines with generated Purchase Orders of a Work Order or Asset Project, which are not issued to the Project</value>
+    <value column="Help" isTrl="N" original="Lists Project Lines with generated Purchase Orders of a Work Order or Asset Project, which are not issued to the Project">Lists Project Lines with generated Purchase Orders of a Work Order or Asset Project, which are not issued to the Project</value>
+  </row>
+  <row id="D88FC8FF1FC7449C8A147A3A0BC65DC3" trl="N">
+    <value column="Name" isTrl="Y" original="Create AP Expense Invoices">Crear facturas de gastos AP </value>
+    <value column="Description" isTrl="Y" original="Create AP Invoices from Expenses to be paid to employees">Crear AP facturas de gastos para pagar a los empleados </value>
+    <value column="Help" isTrl="Y" original="Create AP Invoices from Expenses to be paid to employees">Crear AP facturas de gastos para pagar a los empleados </value>
+  </row>
+  <row id="D9143D25C30C427E8EAD04B53E307909" trl="N">
+    <value column="Name" isTrl="Y" original="Expense Report">Informe de gastos</value>
+    <value column="Description" isTrl="Y" original="Report expense">Informe de gastos</value>
+    <value column="Help" isTrl="Y" original="Report expense">Informe de gastos</value>
+  </row>
+  <row id="DD79F4AB93A64505908495E97BC7413F" trl="N">
+    <value column="Name" isTrl="Y" original="Project Cycle Report">Ciclo del proyecto</value>
+    <value column="Description" isTrl="Y" original="Report Projects based on Project Cycle">Informes del proyecto basados en el ciclo del mismo</value>
+    <value column="Help" isTrl="Y" original="The Project Cycle reports on common project phases of a Cycle Step/Phase. All Report information is weighted by the relative weight of the Cycle Step and converted to the currency of the Project Cycle (e.g. for Sales Funnel Reporting).&lt;p&gt;|The Projects mus">The Project Cycle reports on common project phases of a Cycle Step/Phase. All Report information is weighted by the relative weight of the Cycle Step and converted to the currency of the Project Cycle (e.g. for Sales Funnel Reporting).&lt;p&gt;||The Projects must have a Project Type, Phase and Currency defined. The Phase must be assigned to a Cycle Step.</value>
+  </row>
+  <row id="F666D842BF6C419FA927365261354B4E" trl="N">
+    <value column="Name" isTrl="Y" original="Issue to Project">Suministro para el proyecto</value>
+    <value column="Description" isTrl="Y" original="Issue Material to Project from Receipt or manual Inventory Location">Suministro de material para el proyecto desde una recepción o desde inventario</value>
+    <value column="Help" isTrl="Y" original="Select a Project and either|&lt;BR&gt;- Material Receipt|&lt;BR&gt;- Expense Report|&lt;br&lt;- Inventory Location and Project Line not issued yet|&lt;BR&gt;- Inventory Location, Product and Quantity|The default Movement Date is today's date.">Seleccionar un proyecto|&lt;br&gt;- Recepción de material|&lt;br&gt;- Informe de gasto|&lt;br&gt;- Ubicación del inventario y línea de proyecto no entregada|&lt;br&gt;- Ubicación de inventario, producto y cantidad|La fecha por defecto del movimiento es la de hoy.</value>
+  </row>
+</compiereTrl>

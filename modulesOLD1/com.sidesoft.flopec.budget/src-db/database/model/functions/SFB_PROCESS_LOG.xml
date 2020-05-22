@@ -1,0 +1,318 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFB_PROCESS_LOG">
+    <function name="SFB_PROCESS_LOG" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+  Cur_Parameter RECORD;
+  Cur_Lines RECORD;
+
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+  v_Record_Id  Varchar2(32);
+  
+  v_ResultStr VARCHAR2(2000) := '';  
+
+  v_n_insertions NUMBER;
+  v_Message VARCHAR2(2000):='';
+  
+  v_Processed SFB_BUDGET_LOG.Process%TYPE;
+  v_Processing SFB_BUDGET_LOG.Processing%TYPE;
+  v_LogOrg_ID VARCHAR2(32);
+  v_Type SFB_BUDGET_LOG.Type%TYPE;
+  v_TypeOfBudget SFB_BUDGET_LOG.Type_Of_Budget%TYPE;
+  v_Year_ID VARCHAR2(32);
+  v_CostCenterFrom_ID VARCHAR2(32);
+  v_CostCenterTo_ID VARCHAR2(32);
+  v_User1From_ID VARCHAR2(32);
+  v_User1To_ID VARCHAR2(32);
+  v_BudgetAreaFrom_ID VARCHAR2(32);
+  v_BudgetAreaTo_ID VARCHAR2(32);
+  v_BudgetItemFrom_ID VARCHAR2(32);
+  v_BudgetItemTo_ID VARCHAR2(32);
+
+  v_BudgetLineFrom_ID VARCHAR2(32) := NULL;
+  v_BudgetLineTo_ID VARCHAR2(32) := NULL;
+  v_IsMovement BOOLEAN := FALSE;
+  v_TotalOldAjustedValue NUMBER:= 0;
+  v_TotalNewAjustedValue NUMBER:= 0;
+  v_TotalFromValue NUMBER:= 0;
+  v_TotalToValue NUMBER:= 0;
+  v_AvailableBalance NUMBER:= 0;
+
+BEGIN
+  --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+    v_n_insertions := 0;  
+
+    FOR Cur_Parameter IN
+    (
+      SELECT  i.Record_ID,
+              i.AD_User_ID,
+              i.AD_Client_ID,
+              i.AD_Org_ID
+      FROM  AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+    )
+    LOOP
+    
+      v_Record_ID := Cur_Parameter.Record_ID;      
+      v_Client_ID := Cur_Parameter.AD_Client_ID;
+      v_Org_ID := Cur_Parameter.AD_Org_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;     
+      
+    END LOOP; -- End Get Parameter
+
+
+    -- Get log processed status
+    SELECT blg.process, blg.processing INTO v_Processed, v_Processing FROM sfb_budget_log blg WHERE blg.sfb_budget_log_id = V_Record_Id;
+    
+    IF v_Processing = 'Y' THEN
+      v_Message := '@Processing@';
+      AD_UPDATE_PINSTANCE(Pinstance_Id, NULL, 'N', 0, v_Message);
+      RETURN;
+    END IF;
+    
+    -- Set processing 'Y'
+    UPDATE sfb_budget_log blg SET processing = 'Y' WHERE blg.sfb_budget_log_id = V_Record_Id;
+        
+    IF v_Processed = 'Y' THEN
+
+      FOR Cur_Lines IN
+      (
+        SELECT  blln.sfb_budget_line_id,
+                blln.direction,
+                blg.type,
+                blln.jan_adjusted_value,
+                blln.feb_adjusted_value,
+                blln.mar_adjusted_value,
+                blln.apr_adjusted_value,
+                blln.may_adjusted_value,
+                blln.jun_adjusted_value,
+                blln.jul_adjusted_value,
+                blln.aug_adjusted_value,
+                blln.sep_adjusted_value,
+                blln.oct_adjusted_value,
+                blln.nov_adjusted_value,
+                blln.dec_adjusted_value,
+                blln.jan_newadjusted_value,
+                blln.feb_newadjusted_value,
+                blln.mar_newadjusted_value,
+                blln.apr_newadjusted_value,
+                blln.may_newadjusted_value,
+                blln.jun_newadjusted_value,
+                blln.jul_newadjusted_value,
+                blln.aug_newadjusted_value,
+                blln.sep_newadjusted_value,
+                blln.oct_newadjusted_value,
+                blln.nov_newadjusted_value,
+                blln.dec_newadjusted_value
+        FROM  sfb_budget_log_line blln
+        JOIN  sfb_budget_log blg ON blg.sfb_budget_log_id = blln.sfb_budget_log_id
+        WHERE blln.sfb_budget_log_id = v_Record_ID      
+      )
+      LOOP
+        
+        --Get New Ajusted Value
+        v_TotalNewAjustedValue := Cur_Lines.jan_newadjusted_value + Cur_Lines.feb_newadjusted_value + Cur_Lines.mar_newadjusted_value + Cur_Lines.apr_newadjusted_value +
+                                  Cur_Lines.may_newadjusted_value + Cur_Lines.jun_newadjusted_value + Cur_Lines.jul_newadjusted_value + Cur_Lines.aug_newadjusted_value +
+                                  Cur_Lines.sep_newadjusted_value + Cur_Lines.oct_newadjusted_value + Cur_Lines.nov_newadjusted_value + Cur_Lines.dec_newadjusted_value;
+
+        --Get Old Ajusted Value
+        v_TotalOldAjustedValue := Cur_Lines.jan_adjusted_value + Cur_Lines.feb_adjusted_value + Cur_Lines.mar_adjusted_value + Cur_Lines.apr_adjusted_value +
+                                  Cur_Lines.may_adjusted_value + Cur_Lines.jun_adjusted_value + Cur_Lines.jul_adjusted_value + Cur_Lines.aug_adjusted_value +
+                                  Cur_Lines.sep_adjusted_value + Cur_Lines.oct_adjusted_value + Cur_Lines.nov_adjusted_value + Cur_Lines.dec_adjusted_value;
+
+        IF Cur_Lines.type = 'S' OR (Cur_Lines.type = 'M' OR Cur_Lines.type = 'A' AND Cur_Lines.direction = 'T') THEN
+        
+          --Get budget line data
+          SELECT  bln.available_balance
+          INTO  v_AvailableBalance
+          FROM  sfb_budget_line bln
+          WHERE bln.sfb_budget_line_id = Cur_Lines.sfb_budget_line_id;
+          
+          --Check is there is enougth available balance
+          IF v_AvailableBalance < (v_TotalNewAjustedValue - v_TotalOldAjustedValue) THEN
+            RAISE_APPLICATION_ERROR(-20000, '@SFB_WrongTotalValue@');
+          END IF;
+          
+        END IF;
+
+        --Update values
+        UPDATE  sfb_budget_line bln 
+        SET jan_adjusted_value = Cur_Lines.jan_adjusted_value,
+            feb_adjusted_value = Cur_Lines.feb_adjusted_value,
+            mar_adjusted_value = Cur_Lines.mar_adjusted_value,
+            apr_adjusted_value = Cur_Lines.apr_adjusted_value,
+            may_adjusted_value = Cur_Lines.may_adjusted_value,
+            jun_adjusted_value = Cur_Lines.jun_adjusted_value,
+            jul_adjusted_value = Cur_Lines.jul_adjusted_value,
+            aug_adjusted_value = Cur_Lines.aug_adjusted_value,
+            sep_adjusted_value = Cur_Lines.sep_adjusted_value,
+            oct_adjusted_value = Cur_Lines.oct_adjusted_value,
+            nov_adjusted_value = Cur_Lines.nov_adjusted_value,
+            dec_adjusted_value = Cur_Lines.dec_adjusted_value
+        WHERE bln.sfb_budget_line_id = Cur_Lines.sfb_budget_line_id;
+        
+      END LOOP;
+
+      --Set log value to 0
+      UPDATE  sfb_budget_log blg
+      SET  value = 0
+      WHERE blg.sfb_budget_log_id = v_Record_ID;
+      
+      --Set unprocessed
+      UPDATE sfb_budget_log blg SET process = 'N' WHERE blg.sfb_budget_log_id = v_Record_ID;
+      v_Message := '@Unprocessed@';
+
+    ELSIF v_Processed = 'N' THEN
+
+      FOR Cur_Lines IN
+      (
+        SELECT  blln.sfb_budget_line_id,
+                blln.direction,
+                blg.type,
+                blln.jan_adjusted_value,
+                blln.feb_adjusted_value,
+                blln.mar_adjusted_value,
+                blln.apr_adjusted_value,
+                blln.may_adjusted_value,
+                blln.jun_adjusted_value,
+                blln.jul_adjusted_value,
+                blln.aug_adjusted_value,
+                blln.sep_adjusted_value,
+                blln.oct_adjusted_value,
+                blln.nov_adjusted_value,
+                blln.dec_adjusted_value,
+                blln.jan_newadjusted_value,
+                blln.feb_newadjusted_value,
+                blln.mar_newadjusted_value,
+                blln.apr_newadjusted_value,
+                blln.may_newadjusted_value,
+                blln.jun_newadjusted_value,
+                blln.jul_newadjusted_value,
+                blln.aug_newadjusted_value,
+                blln.sep_newadjusted_value,
+                blln.oct_newadjusted_value,
+                blln.nov_newadjusted_value,
+                blln.dec_newadjusted_value
+        FROM  sfb_budget_log_line blln
+        JOIN  sfb_budget_log blg ON blg.sfb_budget_log_id = blln.sfb_budget_log_id
+        WHERE blln.sfb_budget_log_id = v_Record_ID      
+      )
+      LOOP
+        
+        --Get New Ajusted Value
+        v_TotalNewAjustedValue := Cur_Lines.jan_newadjusted_value + Cur_Lines.feb_newadjusted_value + Cur_Lines.mar_newadjusted_value + Cur_Lines.apr_newadjusted_value +
+                                  Cur_Lines.may_newadjusted_value + Cur_Lines.jun_newadjusted_value + Cur_Lines.jul_newadjusted_value + Cur_Lines.aug_newadjusted_value +
+                                  Cur_Lines.sep_newadjusted_value + Cur_Lines.oct_newadjusted_value + Cur_Lines.nov_newadjusted_value + Cur_Lines.dec_newadjusted_value;
+
+        --Get Old Ajusted Value
+        v_TotalOldAjustedValue := Cur_Lines.jan_adjusted_value + Cur_Lines.feb_adjusted_value + Cur_Lines.mar_adjusted_value + Cur_Lines.apr_adjusted_value +
+                                  Cur_Lines.may_adjusted_value + Cur_Lines.jun_adjusted_value + Cur_Lines.jul_adjusted_value + Cur_Lines.aug_adjusted_value +
+                                  Cur_Lines.sep_adjusted_value + Cur_Lines.oct_adjusted_value + Cur_Lines.nov_adjusted_value + Cur_Lines.dec_adjusted_value;
+
+        IF Cur_Lines.type = 'M' OR Cur_Lines.type = 'A' THEN
+
+          --Set the flag for future validations
+          v_IsMovement := TRUE;
+
+          --Check data consistency
+          IF Cur_Lines.direction = 'F' THEN
+            v_TotalFromValue := v_TotalNewAjustedValue - v_TotalOldAjustedValue;
+            IF v_TotalFromValue >= 0 THEN
+              RAISE_APPLICATION_ERROR(-20000, '@SFB_WrongFromValue@');
+            END IF;
+          ELSIF Cur_Lines.direction = 'T' THEN
+            v_TotalToValue := v_TotalNewAjustedValue - v_TotalOldAjustedValue;
+            IF v_TotalToValue <= 0 THEN
+              RAISE_APPLICATION_ERROR(-20000, '@SFB_WrongToValue@');
+            END IF;
+          END IF;
+
+        END IF;
+
+        IF Cur_Lines.type = 'S' OR (Cur_Lines.type = 'M' OR Cur_Lines.type = 'A' AND Cur_Lines.direction = 'F') THEN
+        
+          --Get budget line data
+          SELECT  bln.available_balance
+          INTO  v_AvailableBalance
+          FROM  sfb_budget_line bln
+          WHERE bln.sfb_budget_line_id = Cur_Lines.sfb_budget_line_id;
+          
+          --Check is there is enougth available balance
+          IF v_AvailableBalance < (v_TotalOldAjustedValue - v_TotalNewAjustedValue) THEN
+            RAISE_APPLICATION_ERROR(-20000, '@SFB_WrongTotalValue@');
+          END IF;
+          
+        END IF;
+          
+        --Update values
+        UPDATE  sfb_budget_line bln 
+        SET jan_adjusted_value = Cur_Lines.jan_newadjusted_value,
+            feb_adjusted_value = Cur_Lines.feb_newadjusted_value,
+            mar_adjusted_value = Cur_Lines.mar_newadjusted_value,
+            apr_adjusted_value = Cur_Lines.apr_newadjusted_value,
+            may_adjusted_value = Cur_Lines.may_newadjusted_value,
+            jun_adjusted_value = Cur_Lines.jun_newadjusted_value,
+            jul_adjusted_value = Cur_Lines.jul_newadjusted_value,
+            aug_adjusted_value = Cur_Lines.aug_newadjusted_value,
+            sep_adjusted_value = Cur_Lines.sep_newadjusted_value,
+            oct_adjusted_value = Cur_Lines.oct_newadjusted_value,
+            nov_adjusted_value = Cur_Lines.nov_newadjusted_value,
+            dec_adjusted_value = Cur_Lines.dec_newadjusted_value
+        WHERE bln.sfb_budget_line_id = Cur_Lines.sfb_budget_line_id;
+        
+        --Set log value
+        UPDATE  sfb_budget_log blg
+        SET  value = blg.value + v_TotalNewAjustedValue - v_TotalOldAjustedValue
+        WHERE blg.sfb_budget_log_id = v_Record_ID;
+
+      END LOOP;
+
+      IF v_IsMovement THEN
+        --Check from vs to value
+        IF (v_TotalToValue + v_TotalFromValue) > 0 THEN
+          RAISE_APPLICATION_ERROR(-20000, '@SFB_WrongMovementValuePositive@');
+        ELSIF (v_TotalToValue + v_TotalFromValue) < 0 THEN
+          RAISE_APPLICATION_ERROR(-20000, '@SFB_WrongMovementValueNegative@');
+        END IF;
+      END IF;
+      
+      --Set processed
+      UPDATE sfb_budget_log blg SET process = 'Y' WHERE blg.sfb_budget_log_id = v_Record_ID;
+      v_Message := '@Processed@';
+
+    END IF;
+
+    --Set processing = 'N'
+    UPDATE sfb_budget_log blg SET processing = 'N' WHERE blg.sfb_budget_log_id = V_Record_Id;
+    
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+
+    COMMIT;
+    RETURN;
+    
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    ROLLBACK;
+    UPDATE sfb_budget_log blg SET processing = 'N' WHERE blg.sfb_budget_log_id = V_Record_Id;
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+    RETURN;
+END SFB_PROCESS_LOG
+]]></body>
+    </function>
+  </database>

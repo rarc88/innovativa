@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MENU" version="">
+  <row id="C4F01CABC9C249F59BED371A8353119E" trl="N">
+    <value column="Name" isTrl="Y" original="Budgetary reforms">Reformas presupuestarias</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

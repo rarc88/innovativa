@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ *************************************************************************
+ * The contents of this file are subject to the Openbravo  Public  License
+ * Version  1.1  (the  "License"),  being   the  Mozilla   Public  License
+ * Version 1.1  with a permitted attribution clause; you may not  use this
+ * file except in compliance with the License. You  may  obtain  a copy of
+ * the License at http://www.openbravo.com/legal/license.html
+ * Software distributed under the License  is  distributed  on  an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific  language  governing  rights  and  limitations
+ * under the License.
+ * The Original Code is Openbravo ERP.
+ * The Initial Developer of the Original Code is Openbravo SLU
+ * All portions are Copyright (C) 2001-2006 Openbravo SLU
+ * All Rights Reserved.
+ * Contributor(s): 
+ ************************************************************************
+-->
+
+
+
+
+
+<SqlClass name="SsppDownloadPaymentFileData" package="ec.com.sidesoft.custom.payments.partialpayment.ad_process">
+   <SqlClassComment></SqlClassComment>
+
+  <SqlMethod name="select" type="preparedStatement" return="multiple">
+    <SqlMethodComment></SqlMethodComment>
+    <Sql>
+      <![CDATA[
+      select  
+      cedula_ruc_pasaporte,
+      referencia,
+      tercero,
+      institucion_financiera,
+      cuenta_beneficiario,
+      tipo_cuenta,
+      sum(valor) as valor,
+      concepto,
+      detalle  
+      from 
+	(select   
+  coalesce(cbpb.em_sswh_taxidno,'-')::varchar as cedula_ruc_pasaporte
+,coalesce((case cbpb.EM_Sswh_Taxidtype 
+when 'D' then 1  
+when 'P' then 3 
+when 'R' then 2 
+else 0 
+ end),0) as referencia
+, substr(cbp.name,1,29)::varchar as tercero
+, to_number(coalesce(sb.value,'0')) as institucion_financiera
+, to_number(coalesce(cbpb.accountno,'0')) as cuenta_beneficiario
+, to_number(coalesce(( case cbpb.bankaccounttype 
+    when 'C' then '1' 
+    when 'S' then '2' 
+    else '0' 
+    end ),'0')) as tipo_cuenta
+, coalesce(round(sum(spl.amount),2),0) as valor
+, to_number(coalesce(sspp_returnbudgetbypartner(cbp.taxid,sp.sspp_payments_id,'1',spl.fin_payment_id),'0')) as concepto
+, coalesce(sspp_returnbudgetbypartner(cbp.taxid,sp.sspp_payments_id,'2',spl.fin_payment_id),'-') as detalle, sp.ad_client_id
+, sp.ad_org_id
+, sp.created
+, sp.createdby
+, sp.updated
+, sp.updatedby
+, sp.isactive
+, sp.sspp_payments_id as sspp_transferpayment_v_id   
+  from sspp_payments sp          
+  left join sspp_paymentsline spl on sp.sspp_payments_id = spl.sspp_payments_id  
+  left join c_bpartner cbp on cbp.c_bpartner_id = spl.c_bpartner_id   
+  left join fin_payment fp on fp.fin_payment_id = spl.fin_payment_id  
+  left join c_bp_bankaccount cbpb on cbpb.c_bp_bankaccount_id = fp.EM_Sswh_Bp_Bankaccount_ID  
+  left join ssfi_banktransfer sb on sb.ssfi_banktransfer_id = cbpb.em_ssfi_banktransfer_id    
+  where sp.sspp_payments_id = ?  
+ group by cbpb.em_sswh_taxidno,sb.value, cbpb.EM_Sswh_Taxidtype,cbp.name,cbpb.accountno,cbpb.bankaccounttype   
+, sp.ad_client_id
+, sp.ad_org_id
+, sp.created
+, sp.createdby
+, sp.updated
+, sp.updatedby
+, sp.isactive
+, sp.sspp_payments_id  
+,cbp.taxid,spl.fin_payment_id  
+ order by cbpb.em_sswh_taxidno,sb.value 
+ ) a 
+ group by  
+      cedula_ruc_pasaporte,
+      referencia,
+      tercero,
+      institucion_financiera,
+      cuenta_beneficiario,
+      tipo_cuenta,
+      concepto,
+      detalle
+      ]]>
+    </Sql>
+    <Parameter name="ssppp_payment_id"/>
+  </SqlMethod>
+
+</SqlClass>
+
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="D7F62C750202483A8C23FF2179D1169F" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty Form">Forma de Garantías</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E14A01D2D3574B0EB79969940F6A35CE" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty Status">Estado de la Garantía</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="240FE3FCD7904F84B731EDB285FEC5DC" trl="N">
+    <value column="Name" isTrl="Y" original="Contracts">Contratos</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="262EEDF05E2C453997C0BBDC8CB6DC3A" trl="N">
+    <value column="Name" isTrl="Y" original="Insurance Warranties">Seguro de Garantías</value>
+    <value column="Description" isTrl="Y" original="Insurance Warranties">Seguro de Garantías</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7F11033895964AC68DBE58B615D5A072" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty Type">Tipo de Garantía</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="8071559322D347FB85D7588C4AB79A32" trl="N">
+    <value column="Name" isTrl="Y" original="Contract Type">Tipo de Contrato</value>
+    <value column="Description" isTrl="Y" original="Contract Type">Tipo de Contrato</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="825B859BE00344CBB05D354DB437205B" trl="N">
+    <value column="Name" isTrl="Y" original="Payment Form">Forma de Pago</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="85BA0DF337E14378AE93F58F52DC7C0C" trl="N">
+    <value column="Name" isTrl="Y" original="Contract Term">Términos del Contrato</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFBTR_BUD_REFORMS_TO_TRG">
+    <trigger name="SFBTR_BUD_REFORMS_TO_TRG" table="SFBTR_TRANSFER_TO" fires="before" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+ v_year VARCHAR2(10);
+ v_value NUMBER;
+ v_status VARCHAR2(10);
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF (INSERTING OR UPDATING) THEN
+	IF(:NEW.sfb_budget_item_id is null OR :NEW.sfb_budget_line_id is null)THEN
+		RAISE_APPLICATION_ERROR(-20000, '@Sfbtr_BudgetLineError@');
+	END IF;
+--Validación de Valor a Ajustar
+	IF(:NEW.value_increase=0)THEN
+	      RAISE_APPLICATION_ERROR(-20000, '@Sfbtr_AdjustValue0@');
+	ELSIF(:NEW.value_increase<0)THEN
+		RAISE_APPLICATION_ERROR(-20000, '@Sfbtr_ValueDiscountedNotAccepted@');
+	END IF;
+ 
+  ELSIF (DELETING) THEN
+	SELECT status INTO v_status FROM sfbtr_budgetary_reforms  WHERE sfbtr_budgetary_reforms_id = :OLD.sfbtr_budgetary_reforms_id;
+	IF (v_status = 'RE' OR v_status = 'AP')THEN
+		RAISE_APPLICATION_ERROR(-20000, '@Sfbtr_AlreadyProcessedBudgetReforms@');
+	END IF;
+  END IF;
+    
+  END SFBTR_BUD_REFORMS_TO_TRG
+]]></body>
+    </trigger>
+  </database>

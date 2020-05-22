@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
+<!-- 2019-07-23T00:47:22 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptC_BudgetCertification" pageWidth="1070" pageHeight="792" orientation="Landscape" columnWidth="1010" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="084d5e60-2742-4cc1-80c2-bc1885d69170">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="134"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.white.page.background" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.columns" value="true"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="java.math.BigDecimal"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<import value="org.apache.commons.lang.StringUtils"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String"/>
+	<parameter name="datestart" class="java.util.Date"/>
+	<parameter name="dateend" class="java.util.Date"/>
+	<parameter name="budgetitemid" class="java.lang.String"/>
+	<parameter name="numbreaccount" class="java.lang.String"/>
+	<parameter name="BASE_DESIGN" class="java.lang.String"/>
+	<parameter name="accountId" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="sqlbudgetitemide" class="java.lang.String">
+		<defaultValueExpression><![CDATA[StringUtils.equals($P{budgetitemid},"") ||  StringUtils.equals($P{budgetitemid}, null)  ? "" : " and bi.sfb_budget_item_id = '"+$P{budgetitemid}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="c_year_id" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select bl.sfb_budget_line_id as fid, ba.value as farea, bi.value as fppresupcode,
+bi.name as fppresupname, cc.value as fbarea, us.value as flinenegocio, bl.Executed_Value as fexecutedvalue, bl.adjusted_value as fadjusted_value, cy.year,
+bc.documentno as fbcdocumentno, cl.SFB_Budget_Cert_Line_id as fbudgetcertlineid
+from sfb_budget_line bl inner join SFB_Budget_Area ba on bl.SFB_Budget_Area_ID = ba.SFB_Budget_Area_id 
+inner join SFB_Budget_Item bi on bl.SFB_Budget_Item_ID = bi.SFB_Budget_Item_ID
+inner join C_Costcenter cc on cc.C_Costcenter_ID = bl.C_Costcenter_ID
+inner join User1 us on us.User1_ID = bl.User1_ID
+inner join sfb_budget_version bv on bv.sfb_budget_version_id = bl.sfb_budget_version_id
+inner join sfb_budget bu on bu.sfb_budget_id = bv.sfb_budget_id
+inner join c_year cy on cy.c_year_id = bu.c_year_id
+inner join sfb_budget_line_detail_v bd on bd.sfb_budget_line_id = bl.sfb_budget_line_id
+inner join SFB_Budget_Cert_Line cl on cl.SFB_Budget_Cert_Line_ID = bd.SFB_Budget_Cert_Line_ID
+inner join SFB_Budget_Certificate bc on bc.SFB_Budget_Certificate_ID = cl.SFB_Budget_Certificate_ID
+ where   bu.c_year_id = $P{c_year_id}   and  1 = 1  $P!{sqlbudgetitemide}]]>
+	</queryString>
+	<field name="farea" class="java.lang.String"/>
+	<field name="fppresupcode" class="java.lang.String"/>
+	<field name="fppresupname" class="java.lang.String"/>
+	<field name="fbarea" class="java.lang.String"/>
+	<field name="flinenegocio" class="java.lang.String"/>
+	<field name="fexecutedvalue" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fid" class="java.lang.String"/>
+	<field name="fadjusted_value" class="java.math.BigDecimal"/>
+	<field name="year" class="java.lang.String"/>
+	<field name="fbcdocumentno" class="java.lang.String"/>
+	<field name="fbudgetcertlineid" class="java.lang.String"/>
+	<variable name="Variable_1" class="java.lang.String"/>
+	<variable name="V_RUTA" class="java.lang.String">
+		<variableExpression><![CDATA[$P{BASE_DESIGN} + "/ec/com/sidesoft/budget/personalization/ad_Reports/Certificate_sub.jasper"]]></variableExpression>
+	</variable>
+	<variable name="v_total" class="java.lang.Integer">
+		<initialValueExpression><![CDATA[2]]></initialValueExpression>
+	</variable>
+	<group name="Certfline">
+		<groupExpression><![CDATA[$F{fid}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement key="staticText-2" x="235" y="-10" width="128" height="60" isPrintWhenDetailOverflows="true" uuid="033a5938-941e-4802-a086-31351ae611d1">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Ejecución del]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="54" width="120" height="25" uuid="1b1d0f16-ae49-4fc4-9146-d36992afeee2">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ejercicio:  "]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="930" y="80" width="100" height="30" uuid="74fa0883-6697-482b-aefb-e7f68536858a">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="  MMMMM dd, yyyy">
+				<reportElement x="930" y="54" width="100" height="25" uuid="2fb32563-72cf-4c65-b3ec-122150a2b5fe">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="54" width="115" height="25" uuid="7b9d031d-84e8-48de-b18f-ab01df039c35">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{year}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-2" x="363" y="-10" width="121" height="60" isPrintWhenDetailOverflows="true" uuid="6be054eb-a772-4bc2-b595-12497ffab0e3">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Presupuesto con]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" x="484" y="-10" width="112" height="60" isPrintWhenDetailOverflows="true" uuid="773fc90a-465c-4e79-ab91-1cb0f4cd7bf2">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[  contabilidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="54" width="128" height="25" uuid="dd32741e-cfed-467b-b84a-0a62a5291e92">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Por]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="54" width="121" height="25" uuid="c9feba51-18b1-49a8-93f1-6ad37156b515">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  tipo  de   transac]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="54" width="112" height="25" uuid="c4202a62-7475-436c-a4a8-cee8962bf421">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ción]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="820" y="10" width="109" height="18" uuid="6036376b-950f-4452-9645-e5896cb35d46">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="930" y="10" width="100" height="18" uuid="75f238ee-b5bd-42a9-b8a9-a476c055c87d">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="1030" height="10" isRemoveLineWhenBlank="true" uuid="5cfabbbe-4142-4f25-9796-b9d04a4af7ab"/>
+				<subreportParameter name="budget_cert_line_id">
+					<subreportParameterExpression><![CDATA[$F{fid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="validcombination">
+					<subreportParameterExpression><![CDATA[$P{accountId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="farea">
+					<subreportParameterExpression><![CDATA[$F{farea}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fppresupcode">
+					<subreportParameterExpression><![CDATA[$F{fppresupcode}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fppresupname">
+					<subreportParameterExpression><![CDATA[$F{fppresupname}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fbarea">
+					<subreportParameterExpression><![CDATA[$F{fbarea}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="flinenegocio">
+					<subreportParameterExpression><![CDATA[$F{flinenegocio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fadjusted_value">
+					<subreportParameterExpression><![CDATA[$F{fadjusted_value}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fexecutedvalue">
+					<subreportParameterExpression><![CDATA[$F{fexecutedvalue}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="datestar">
+					<subreportParameterExpression><![CDATA[$P{datestart}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dateend">
+					<subreportParameterExpression><![CDATA[$P{dateend}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fbcdocumentno">
+					<subreportParameterExpression><![CDATA[$F{fbcdocumentno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fbudgetcertlineid">
+					<subreportParameterExpression><![CDATA[$F{fbudgetcertlineid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="v_count" toVariable="v_total"/>
+				<subreportExpression><![CDATA[$V{V_RUTA}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="6" splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band splitType="Stretch"/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

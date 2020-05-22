@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="1434581AD7A9467BB312D30A116202EB" trl="N">
+    <value column="Text" isTrl="N" original="PERIODO: DEL">PERIODO: DEL</value>
+  </row>
+  <row id="16FDF84860D144B5A264B2610DC60491" trl="N">
+    <value column="Text" isTrl="N" original="Código:">Código:</value>
+  </row>
+  <row id="17F3938DD72343FEB7327B51FE59AA9C" trl="N">
+    <value column="Text" isTrl="N" original="Detalle Acumulado Decimo 3ro Resumido por Centro de Costo">Detalle Acumulado Decimo 3ro Resumido por Centro de Costo</value>
+  </row>
+  <row id="18E95DD557BA4EB7A4B41D109D9BC6CB" trl="N">
+    <value column="Text" isTrl="N" original="ROL DE INGRESOS Y EGRESOS">ROL DE INGRESOS Y EGRESOS</value>
+  </row>
+  <row id="2BBCDEF1A0514C158E9A2B3D0724855E" trl="N">
+    <value column="Text" isTrl="N" original="PRODUCTO">PRODUCTO</value>
+  </row>
+  <row id="2FCCF05DB5624336BADC31CB24BC4E46" trl="N">
+    <value column="Text" isTrl="N" original="RECIBI CONFORME">RECIBI CONFORME</value>
+  </row>
+  <row id="37350D9309024A89BCF22A621D1BEDD4" trl="N">
+    <value column="Text" isTrl="N" original="Nombres:">Nombres:</value>
+  </row>
+  <row id="42A4C6DFF02D4C269A5598D099108793" trl="N">
+    <value column="Text" isTrl="N" original="LIQUIDO A RECIBIR">LIQUIDO A RECIBIR</value>
+  </row>
+  <row id="43590235D215408C946EBD1F0DB5FB3A" trl="N">
+    <value column="Text" isTrl="N" original="1 DIMENSION">1 DIMENSION</value>
+  </row>
+  <row id="4AD881423754437EB98966E87B1EF0CA" trl="N">
+    <value column="Text" isTrl="N" original="DIAS TRABAJADOS">DIAS TRABAJADOS</value>
+  </row>
+  <row id="4FD607DCE353466B9878E4241D135600" trl="N">
+    <value column="Text" isTrl="N" original="TOTAL CONCEPTOS">TOTAL CONCEPTOS</value>
+  </row>
+  <row id="55F56B828DEC43EFA6AEB762D30183EF" trl="N">
+    <value column="Text" isTrl="N" original="NOMBRES Y APELLIDOS">NOMBRES Y APELLIDOS</value>
+  </row>
+  <row id="5D7E381C827146DC83EAF5427A8D1A1B" trl="N">
+    <value column="Text" isTrl="N" original="Régimen Laboral:">Régimen Laboral:</value>
+  </row>
+  <row id="5DAC4729F7F443E98EE3862ED81D6500" trl="N">
+    <value column="Text" isTrl="N" original="CEDULA">CEDULA</value>
+  </row>
+  <row id="752EF202929449BF9CD17430F7885D00" trl="N">
+    <value column="Text" isTrl="N" original="DÉCIMO TERCERA REMUNERACIÓN">DÉCIMO TERCERA REMUNERACIÓN</value>
+  </row>
+  <row id="7CA0EC5D26F646228469EEAABDB809BC" trl="N">
+    <value column="Text" isTrl="N" original="CI">CI</value>
+  </row>
+  <row id="8C90E023DFA043DFA7BBD4124FDC0F99" trl="N">
+    <value column="Text" isTrl="N" original="CEDULA">CEDULA</value>
+  </row>
+  <row id="98514CF9BAA742F493291730ECDB23A6" trl="N">
+    <value column="Text" isTrl="N" original="CENTRO DE COSTOS">CENTRO DE COSTOS</value>
+  </row>
+  <row id="98819901A3A64A3DBF094FC5D95B4D6E" trl="N">
+    <value column="Text" isTrl="N" original="SUELDO NOMINAL">SUELDO NOMINAL</value>
+  </row>
+  <row id="9DE190DB18DC4FF7889561EEF65D91D3" trl="N">
+    <value column="Text" isTrl="N" original="ELABORADO POR">ELABORADO POR</value>
+  </row>
+  <row id="A04C3059241047719F5936C15A061360" trl="N">
+    <value column="Text" isTrl="N" original="# DIAS TRABAJADOS"># DIAS TRABAJADOS</value>
+  </row>
+  <row id="A7D0DCAD4E9A44ED919AF7F3990A55A4" trl="N">
+    <value column="Text" isTrl="N" original="ROL DE INGRESOS Y EGRESOS">ROL DE INGRESOS Y EGRESOS</value>
+  </row>
+  <row id="B453258A0791412B9EC2CFFC276A61FE" trl="N">
+    <value column="Text" isTrl="N" original="Número de rol:">Número de rol:</value>
+  </row>
+  <row id="B5F60541FEC1476DABDB9ECFD5014233" trl="N">
+    <value column="Text" isTrl="N" original="Cargo:">Cargo:</value>
+  </row>
+  <row id="BE475CDB2C8C40D2AA80992BDD19B759" trl="N">
+    <value column="Text" isTrl="N" original="Centro de Costo:">Centro de Costo:</value>
+  </row>
+  <row id="C701F7B596B648998888E8479A44CF00" trl="N">
+    <value column="Text" isTrl="N" original="LIQUIDO A RECIBIR">LIQUIDO A RECIBIR</value>
+  </row>
+  <row id="D8DBA110E31A4A7384E6359653F544D1" trl="N">
+    <value column="Text" isTrl="N" original="AL">AL</value>
+  </row>
+  <row id="DA31631EBDF3461380CBFA4423F1C71E" trl="N">
+    <value column="Text" isTrl="N" original="TOTAL DÉCIMOS">TOTAL DÉCIMOS</value>
+  </row>
+  <row id="F1D98907D0F0467ABB8CAFED13E086A0" trl="N">
+    <value column="Text" isTrl="N" original="TERCERO">TERCERO</value>
+  </row>
+  <row id="F24E0B60E3664CFC8FF790768706785F" trl="N">
+    <value column="Text" isTrl="N" original="CENTRO DE COSTOS">CENTRO DE COSTOS</value>
+  </row>
+</compiereTrl>

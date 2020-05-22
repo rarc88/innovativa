@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE C_INVOICELINE">
+    <table name="C_INVOICELINE" primaryKey="C_INVOICELINE_KEY">
+      <column name="EM_SFBIN_BUDGET_AREA_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SFB_BUDGET_AREA" name="EM_SFBIN_INVOICELINE_BGTAREA">
+        <reference local="EM_SFBIN_BUDGET_AREA_ID" foreign="SFB_BUDGET_AREA_ID"/>
+      </foreign-key>
+    </table>
+  </database>

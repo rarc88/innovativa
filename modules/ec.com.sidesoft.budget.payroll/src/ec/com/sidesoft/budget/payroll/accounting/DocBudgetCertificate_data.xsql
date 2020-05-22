@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<SqlClass name="DocBudgetCertificateData" package="ec.com.sidesoft.budget.payroll.accounting">
+  <SqlClassComment></SqlClassComment>
+  <SqlMethod name="selectRecord" type="preparedStatement" return="multiple">
+    <SqlMethodComment></SqlMethodComment>
+    <Sql>
+      <![CDATA[
+        SELECT AD_CLIENT_ID, AD_ORG_ID, DOCUMENTNO, DATE_ISSUE AS DATEDOC, C_CURRENCY_ID, C_DOCTYPE_ID, POSTED,
+        CERTIFIED_VALUE, EM_SSBP_PAYROLLTYPE
+        FROM SFB_BUDGET_CERTIFICATE
+        WHERE AD_Client_ID=?
+        AND SFB_BUDGET_CERTIFICATE_ID=?
+      ]]>
+     </Sql>
+     <Parameter name="client"/>
+     <Parameter name="id"/>
+   </SqlMethod>
+</SqlClass>

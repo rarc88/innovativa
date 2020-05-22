@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="556828C7C0AE4818B723F784F31A0B98" trl="N">
+    <value column="Name" isTrl="N" original="Sfbtr_ActionButton">Sfbtr_ActionButton</value>
+    <value column="Description" isTrl="N" original="Procesed document">Procesed document</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7855C074FCD34DCB87E255C1D8CC0ADC" trl="N">
+    <value column="Name" isTrl="Y" original="Sfbtr_Status">Sfbtr_Estado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

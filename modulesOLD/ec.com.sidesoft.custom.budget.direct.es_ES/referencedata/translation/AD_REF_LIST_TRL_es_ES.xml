@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REF_LIST" version="">
+  <row id="765C846A1F0948099CFF19F0BBFBBCA0" trl="N">
+    <value column="Name" isTrl="Y" original="Direct Budget">Ejecución Presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

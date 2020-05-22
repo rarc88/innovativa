@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptC_AdvanceEconomic" pageWidth="1152" pageHeight="972" orientation="Landscape" columnWidth="1112" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Document_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.documentno,a.name,b.name as contratista,a.amount,c.name as plazo, d.name as administrador,
+case when paymentform='F' then 'Factura' when paymentform = 'A' then 'Anticipo'  end as formapago,e.datepayment,g.documentno as anticipo, e.amountpayment,
+e.dateinvoiced , h.documentno as factura, e.totallines, e.vat, e.grandtotal, e.amountaccrued, e.amountpaid,e.balance
+from ssct_contract a
+left join c_bpartner b on a.c_bpartner_id = b.c_bpartner_id
+left join ssct_contractterm c on a.ssct_contractterm_id = c.ssct_contractterm_id
+left join c_bpartner d on a.c_bpartner_administrator_id = d.c_bpartner_id
+left join ssct_payment e on a.ssct_contract_id = e.ssct_contract_id
+left join fin_payment g on e.fin_payment_id = g.fin_payment_id
+left join c_invoice h on e.c_invoice_id = h.c_invoice_id
+where a.documentno = $P{Document_ID}
+order by a.documentno,e.line]]>
+	</queryString>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="contratista" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="plazo" class="java.lang.String"/>
+	<field name="administrador" class="java.lang.String"/>
+	<field name="formapago" class="java.lang.String"/>
+	<field name="datepayment" class="java.sql.Timestamp"/>
+	<field name="anticipo" class="java.lang.String"/>
+	<field name="amountpayment" class="java.math.BigDecimal"/>
+	<field name="dateinvoiced" class="java.sql.Timestamp"/>
+	<field name="factura" class="java.lang.String"/>
+	<field name="totallines" class="java.math.BigDecimal"/>
+	<field name="vat" class="java.math.BigDecimal"/>
+	<field name="grandtotal" class="java.math.BigDecimal"/>
+	<field name="amountaccrued" class="java.math.BigDecimal"/>
+	<field name="amountpaid" class="java.math.BigDecimal"/>
+	<field name="balance" class="java.math.BigDecimal"/>
+	<group name="Document_G">
+		<groupExpression><![CDATA[$F{documentno}]]></groupExpression>
+		<groupHeader>
+			<band height="127">
+				<textField isBlankWhenNull="true">
+					<reportElement x="73" y="10" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{documentno}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="62" y="30" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{contratista}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="50" width="37" height="20"/>
+					<textElement/>
+					<text><![CDATA[Monto:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="194" y="50" width="39" height="20"/>
+					<textElement/>
+					<text><![CDATA[Plazo:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="302" y="10" width="270" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="70" width="141" height="20"/>
+					<textElement/>
+					<text><![CDATA[Administrador del Contrato:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="233" y="50" width="252" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{plazo}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="142" y="70" width="343" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{administrador}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="38" y="50" width="156" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{amount}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="30" width="61" height="20"/>
+					<textElement/>
+					<text><![CDATA[Contratista:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="486" y="103" width="69" height="20"/>
+					<textElement/>
+					<text><![CDATA[Valor sin IVA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="103" width="93" height="20"/>
+					<textElement/>
+					<text><![CDATA[Forma Pago]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="155" y="103" width="87" height="20"/>
+					<textElement/>
+					<text><![CDATA[Documento Pago]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="94" y="103" width="61" height="20"/>
+					<textElement/>
+					<text><![CDATA[Fecha Pago]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="193" y="10" width="109" height="20"/>
+					<textElement/>
+					<text><![CDATA[Nombre de Contrato:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="10" width="72" height="20"/>
+					<textElement/>
+					<text><![CDATA[No. Contrato:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="555" y="103" width="69" height="20"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[IVA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="624" y="103" width="69" height="20"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Valor Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="693" y="103" width="88" height="20"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Valor Devengado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="781" y="103" width="88" height="20"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Valor Pagado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="869" y="103" width="88" height="20"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Saldo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="385" y="103" width="101" height="20"/>
+					<textElement/>
+					<text><![CDATA[Documento Pago]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="311" y="103" width="74" height="20"/>
+					<textElement/>
+					<text><![CDATA[Fecha Factura]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="242" y="103" width="69" height="20"/>
+					<textElement/>
+					<text><![CDATA[Valor Pago]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="221" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Avance Economico]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="4" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="94" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{formapago}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="94" y="0" width="61" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{datepayment}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="155" y="0" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{anticipo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="242" y="0" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{amountpayment}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="311" y="0" width="74" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dateinvoiced}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="386" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{factura}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="486" y="0" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totallines}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="555" y="0" width="69" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{vat}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="624" y="0" width="69" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{grandtotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="693" y="0" width="88" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{amountaccrued}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="781" y="0" width="88" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{amountpaid}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="869" y="0" width="88" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{balance}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

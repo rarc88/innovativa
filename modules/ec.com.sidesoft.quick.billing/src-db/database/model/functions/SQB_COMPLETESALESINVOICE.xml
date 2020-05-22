@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SQB_COMPLETESALESINVOICE">
+    <function name="SQB_COMPLETESALESINVOICE" type="NULL">
+      <parameter name="p_invoice" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_SqlCompleteInvoiceID  VARCHAR2(32);
+ v_SqlCompleteInvoice VARCHAR2(120);
+BEGIN
+ 	v_SqlCompleteInvoiceID:='''' || p_invoice || '''' ;
+        v_SqlCompleteInvoice:= 'SELECT  c_invoice_post(null,''' || v_SqlCompleteInvoiceID || ''') FROM DUAL';
+        EXECUTE IMMEDIATE v_SqlCompleteInvoice;
+END SQB_COMPLETESALESINVOICE
+]]></body>
+    </function>
+  </database>

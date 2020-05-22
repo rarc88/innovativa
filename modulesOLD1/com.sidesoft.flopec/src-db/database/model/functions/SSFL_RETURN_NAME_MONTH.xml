@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSFL_RETURN_NAME_MONTH">
+    <function name="SSFL_RETURN_NAME_MONTH" type="VARCHAR">
+      <parameter name="date_invoice" type="TIMESTAMP" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="languaget" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[V_LANGUAGE VARCHAR2(5);		--OBTG:VARCHAR2--
+V_DATE DATE;			
+V_NUMMOTH NUMBER;			--OBTG:NUMBER--
+V_MOTNHL VARCHAR2(15);		--OBTG:VARCHAR2--
+
+
+BEGIN
+
+V_NUMMOTH:= TO_NUMBER(TO_CHAR(DATE_INVOICE,'MM'));
+
+  IF LANGUAGET = 'en_US' THEN
+
+	SELECT (CASE  V_NUMMOTH
+		WHEN 1 THEN 'January ' 
+		WHEN 2 THEN 'February ' 
+		WHEN 3 THEN 'March '
+		WHEN 4 THEN 'April ' 
+		WHEN 5 THEN 'May ' 
+		WHEN 6 THEN 'June ' 
+		WHEN 7 THEN 'July '
+		WHEN 8 THEN 'August ' 
+		WHEN 9 THEN 'September ' 
+		WHEN 10 THEN 'October ' 
+		WHEN 11 THEN 'November ' 
+		WHEN 12 THEN 'December '
+	END) INTO V_MOTNHL FROM DUAL;
+	
+	
+  ELSE
+	IF LANGUAGET='es_EC' THEN
+	
+		SELECT (CASE  V_NUMMOTH
+		WHEN 1 THEN 'Enero ' 
+		WHEN 2 THEN 'Febrero ' 
+		WHEN 3 THEN 'Marzo '
+		WHEN 4 THEN 'Abril ' 
+		WHEN 5 THEN 'Mayo '  
+		WHEN 6 THEN 'Junio ' 
+		WHEN 7 THEN 'Julio '
+		WHEN 8 THEN 'Agosto ' 
+		WHEN 9 THEN 'Septiembre ' 
+		WHEN 10 THEN 'Octubre ' 
+		WHEN 11 THEN 'Noviembre ' 
+		WHEN 12 THEN 'Diciembre '
+	END) INTO V_MOTNHL FROM DUAL;
+	
+	END IF;
+  END IF;
+  
+  RETURN V_MOTNHL;
+END SSFL_RETURN_NAME_MONTH
+]]></body>
+    </function>
+  </database>

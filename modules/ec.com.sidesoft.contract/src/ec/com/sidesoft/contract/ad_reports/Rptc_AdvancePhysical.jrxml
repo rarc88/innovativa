@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rptc_AdvancePhysical" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Document_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.documentno,a.name,b.name as contratista,a.amount,c.name as plazo, d.name as administrador,
+e.activity,e.datestart,e.dateend,e.advance,e.observations
+from ssct_contract a
+left join c_bpartner b on a.c_bpartner_id = b.c_bpartner_id
+left join ssct_contractterm c on a.ssct_contractterm_id = c.ssct_contractterm_id
+left join c_bpartner d on a.c_bpartner_administrator_id = d.c_bpartner_id
+left join ssct_advance e on a.ssct_contract_id = e.ssct_contract_id
+where a.documentno = $P{Document_ID}
+order by a.documentno, e.datestart]]>
+	</queryString>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="contratista" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="plazo" class="java.lang.String"/>
+	<field name="administrador" class="java.lang.String"/>
+	<field name="activity" class="java.lang.String"/>
+	<field name="datestart" class="java.sql.Timestamp"/>
+	<field name="dateend" class="java.sql.Timestamp"/>
+	<field name="advance" class="java.math.BigDecimal"/>
+	<field name="observations" class="java.lang.String"/>
+	<group name="DocumentnoG">
+		<groupExpression><![CDATA[$F{documentno}]]></groupExpression>
+		<groupHeader>
+			<band height="113">
+				<staticText>
+					<reportElement x="0" y="0" width="72" height="20"/>
+					<textElement/>
+					<text><![CDATA[No. Contrato:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="193" y="0" width="109" height="20"/>
+					<textElement/>
+					<text><![CDATA[Nombre de Contrato:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="20" width="61" height="20"/>
+					<textElement/>
+					<text><![CDATA[Contratista:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="40" width="37" height="20"/>
+					<textElement/>
+					<text><![CDATA[Monto:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="193" y="40" width="39" height="20"/>
+					<textElement/>
+					<text><![CDATA[Plazo:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="60" width="141" height="20"/>
+					<textElement/>
+					<text><![CDATA[Administrador del Contrato:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="93" width="196" height="20"/>
+					<textElement/>
+					<text><![CDATA[Actividad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="196" y="93" width="61" height="20"/>
+					<textElement/>
+					<text><![CDATA[Fecha Inicio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="257" y="93" width="61" height="20"/>
+					<textElement/>
+					<text><![CDATA[Fecha Fin]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="318" y="93" width="69" height="20"/>
+					<textElement/>
+					<text><![CDATA[%Avance]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="387" y="93" width="185" height="20"/>
+					<textElement/>
+					<text><![CDATA[Observaciones]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="72" y="0" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{documentno}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="302" y="0" width="270" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="61" y="20" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{contratista}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="37" y="40" width="156" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{amount}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="232" y="40" width="252" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{plazo}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="141" y="60" width="343" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{administrador}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="8"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="7" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="221" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Avance Fisico]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="8" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="196" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{activity}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="196" y="0" width="61" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{datestart}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="257" y="0" width="61" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dateend}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="318" y="0" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{advance}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="387" y="0" width="185" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{observations}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="9" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="14" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SQB_QUICKBILLINGLINE_TRG">
+    <trigger name="SQB_QUICKBILLINGLINE_TRG" table="SQB_QUICKBILLINGLINE" fires="after" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+  v_OrgID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_ClientID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_UpdatedBy CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_ConfigQuickBillingID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_ProductID  CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_QuickBillingID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_NewQuickBillingLineID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_PriceListID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+
+  v_TaxCalculate NUMBER; --OBTG:NUMBER--
+  v_PriceStandar NUMBER;	--OBTG:NUMBER--
+  v_PriceList NUMBER; --OBTG:NUMBER--
+  v_VAT NUMBER; --OBTG:NUMBER--
+  v_SubTotal NUMBER; --OBTG:NUMBER--
+  v_NewSubtotal  NUMBER; --OBTG:NUMBER--
+  v_NewVAT  NUMBER; --OBTG:NUMBER--
+
+  v_docstatus CHARACTER VARYING(10); --OBTG:VARCHAR2--      
+  
+BEGIN
+    
+    IF AD_isTriggerEnabled()='N' THEN RETURN;
+    END IF;
+
+  IF INSERTING THEN
+
+      v_QuickBillingID:=:new.sqb_quickbilling_id;
+      v_NewSubtotal:= COALESCE(:new.subtotal_qb,0);
+      v_NewVAT:= COALESCE(:new.vat,0);
+
+      SELECT docstatus INTO v_docstatus FROM SQB_QUICKBILLING WHERE SQB_QUICKBILLING_ID = v_QuickBillingID;
+
+      IF(v_docstatus = 'CO') THEN
+            RAISE_APPLICATION_ERROR(-20000,'@No se pueden crear lineas cuando la factura esta completada.@');
+      END IF;  
+
+
+      SELECT SUM(SUBTOTAL_QB) AS SUBTOTAL, SUM(VAT) AS VAT
+      INTO v_subTotal, v_VAT
+      FROM SQB_QUICKBILLINGLINE
+      WHERE SQB_QUICKBILLING_ID = v_QuickBillingID;
+
+       UPDATE SQB_QUICKBILLING 
+       SET SUBTOTAL_QB = COALESCE(v_subTotal,0)
+      ,VAT = COALESCE(v_VAT,0) 
+      ,TOTAL = COALESCE(v_subTotal,0) + COALESCE(v_VAT,0) 
+       WHERE SQB_QUICKBILLING_ID = v_QuickBillingID;
+
+       
+   END IF;
+
+  IF UPDATING THEN
+
+
+
+      v_QuickBillingID:=:new.sqb_quickbilling_id;
+
+
+      SELECT SUM(SUBTOTAL_QB) AS SUBTOTAL, SUM(VAT) AS VAT
+      INTO v_subTotal, v_VAT
+      FROM SQB_QUICKBILLINGLINE
+      WHERE SQB_QUICKBILLING_ID = v_QuickBillingID;
+
+
+      UPDATE SQB_QUICKBILLING SET SUBTOTAL_QB = COALESCE(v_subTotal,0)
+      ,VAT = COALESCE(v_VAT,0) 
+      ,TOTAL = COALESCE(v_subTotal,0) + COALESCE(v_VAT,0)
+       WHERE SQB_QUICKBILLING_ID = v_QuickBillingID;
+
+ 
+   END IF;
+
+
+  IF DELETING THEN
+
+      v_QuickBillingID:=:old.sqb_quickbilling_id;
+      SELECT docstatus INTO v_docstatus FROM SQB_QUICKBILLING WHERE SQB_QUICKBILLING_ID = v_QuickBillingID;
+
+      IF(v_docstatus = 'CO') THEN
+            RAISE_APPLICATION_ERROR(-20000,'@No se pueden eliminar lineas cuando la factura esta completada.@');
+      END IF;  
+      
+      v_QuickBillingID:=:old.sqb_quickbilling_id;
+
+      SELECT SUM(SUBTOTAL_QB) AS SUBTOTAL, SUM(VAT) AS VAT
+      INTO v_subTotal, v_VAT
+      FROM SQB_QUICKBILLINGLINE
+      WHERE SQB_QUICKBILLING_ID = v_QuickBillingID;
+
+      UPDATE SQB_QUICKBILLING SET SUBTOTAL_QB = COALESCE(v_subTotal,0)
+      ,VAT = COALESCE(v_VAT,0)
+      ,TOTAL = COALESCE(v_subTotal,0) + COALESCE(v_VAT,0)
+       WHERE SQB_QUICKBILLING_ID = v_QuickBillingID;
+
+  END IF; 
+ 
+END SQB_QUICKBILLINGLINE_TRG
+]]></body>
+    </trigger>
+  </database>

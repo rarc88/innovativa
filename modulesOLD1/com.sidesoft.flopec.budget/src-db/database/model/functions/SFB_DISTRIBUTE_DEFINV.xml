@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFB_DISTRIBUTE_DEFINV">
+    <function name="SFB_DISTRIBUTE_DEFINV" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[/*************************************************************************
+* The contents of this file are subject to the Openbravo  Public  License
+* Version  1.1  (the  "License"),  being   the  Mozilla   Public  License
+* Version 1.1  with a permitted attribution clause; you may not  use this
+* file except in compliance with the License. You  may  obtain  a copy of
+* the License at http://www.openbravo.com/legal/license.html
+* Software distributed under the License  is  distributed  on  an "AS IS"
+* basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+* License for the specific  language  governing  rights  and  limitations
+* under the License.
+* The Original Code is Openbravo ERP.
+* The Initial Developer of the Original Code is Openbravo SLU
+* All portions are Copyright (C) 2001-2006 Openbravo SLU
+* All Rights Reserved.
+* Contributor(s):  ______________________________________.
+************************************************************************/
+  -- Logistice
+  v_ResultStr VARCHAR2(2000):='';
+  v_Message VARCHAR2(2000):='';
+  v_Record_ID VARCHAR2(32);
+  -- Parameter
+  TYPE RECORD IS REF CURSOR;
+  Cur_Parameter RECORD;
+  Cur_Distribute RECORD;
+  --
+  v_C_Year_ID   VARCHAR2(32);
+  v_Distribute_All CHAR(1);
+  --
+  v_Year VARCHAR2(10);
+  v_Updated NUMBER:=0;
+  rowcount NUMBER;
+BEGIN
+  --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr:='PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+  BEGIN --BODY
+    -- Get Parameters
+    v_ResultStr:='ReadingParameters';
+    FOR Cur_Parameter IN (
+      SELECT i.Record_ID, p.ParameterName, p.P_String, p.P_Number, p.P_Date
+      FROM AD_PInstance i
+      LEFT JOIN AD_PInstance_Para p
+        ON i.AD_PInstance_ID=p.AD_PInstance_ID
+      WHERE i.AD_PInstance_ID=PInstance_ID
+      ORDER BY p.SeqNo
+    ) LOOP
+    
+      v_Record_ID:=Cur_Parameter.Record_ID;
+      IF(Cur_Parameter.ParameterName='C_Year_ID') THEN
+        v_C_Year_ID := Cur_Parameter.P_String;
+        DBMS_OUTPUT.PUT_LINE( ' C_Year_ID=' || v_C_Year_ID) ;
+      ELSIF(Cur_Parameter.ParameterName='Distribute_All') THEN
+        v_Distribute_All := Cur_Parameter.P_String;
+        DBMS_OUTPUT.PUT_LINE( ' Distribute_All=' || v_Distribute_All);
+      ELSE
+        DBMS_OUTPUT.PUT_LINE('*** Unknown Parameter=' || Cur_Parameter.ParameterName);
+      END IF;
+      
+    END LOOP; -- Get Parameter
+    
+    DBMS_OUTPUT.PUT_LINE('  Record_ID=' || v_Record_ID) ;
+    
+    SELECT y.year
+    INTO v_Year
+    FROM c_year y
+    WHERE y.c_year_id = v_C_Year_ID;
+    
+    FOR Cur_Distribute IN (
+      SELECT  di.sfb_deferred_invoice_id, di.ad_client_id, di.ad_org_id, di.c_invoice_id,
+              di.c_costcenter_id, di.sfb_budget_item_id, di.user1_id, di.sfb_budget_area_id,
+              di.type_of_budget, di.jan_executed_value, di.feb_executed_value, di.mar_executed_value,
+              di.apr_executed_value, di.may_executed_value, di.jun_executed_value, di.jul_executed_value,
+              di.aug_executed_value, di.sep_executed_value, di.oct_executed_value, di.nov_executed_value,
+              di.dec_executed_value + (
+                CASE v_Distribute_All 
+                  WHEN 'Y' THEN (
+                    SELECT sum( disum.jan_executed_value + disum.feb_executed_value + disum.mar_executed_value + disum.apr_executed_value +
+                                disum.may_executed_value + disum.jun_executed_value + disum.jul_executed_value + disum.aug_executed_value +
+                                disum.sep_executed_value + disum.oct_executed_value + disum.nov_executed_value + disum.dec_executed_value )
+                    FROM sfb_deferred_invoice disum
+                    WHERE disum.c_invoice_id = di.c_invoice_id
+                      AND disum.year > v_Year
+                      AND disum.applied = 'N'
+                  ) ELSE 0
+                END
+              ) AS dec_executed_value
+      FROM sfb_deferred_invoice di
+      WHERE di.year = v_Year
+       AND di.applied = 'N'
+    ) LOOP
+      -- Update existing budgets
+      UPDATE sfb_budget_line bln
+      SET jan_executed_value = bln.jan_executed_value + Cur_Distribute.jan_executed_value,
+          feb_executed_value = bln.feb_executed_value + Cur_Distribute.feb_executed_value,
+          mar_executed_value = bln.mar_executed_value + Cur_Distribute.mar_executed_value,
+          apr_executed_value = bln.apr_executed_value + Cur_Distribute.apr_executed_value,
+          may_executed_value = bln.may_executed_value + Cur_Distribute.may_executed_value,
+          jun_executed_value = bln.jun_executed_value + Cur_Distribute.jun_executed_value,
+          jul_executed_value = bln.jul_executed_value + Cur_Distribute.jul_executed_value,
+          aug_executed_value = bln.aug_executed_value + Cur_Distribute.aug_executed_value,
+          sep_executed_value = bln.sep_executed_value + Cur_Distribute.sep_executed_value, 
+          oct_executed_value = bln.oct_executed_value + Cur_Distribute.oct_executed_value,
+          nov_executed_value = bln.nov_executed_value + Cur_Distribute.nov_executed_value,
+          dec_executed_value = bln.dec_executed_value + Cur_Distribute.dec_executed_value
+      WHERE bln.sfb_budget_line_id = (
+        SELECT blnu.sfb_budget_line_id
+        FROM sfb_budget_line blnu
+        JOIN sfb_budget_version bv ON blnu.sfb_budget_version_id = bv.sfb_budget_version_id
+        JOIN sfb_budget b ON bv.sfb_budget_id = b.sfb_budget_id
+        JOIN c_year y ON b.c_year_id = y.c_year_id
+        WHERE bv.version_status = 'AP'
+          AND b.type_of_budget = Cur_Distribute.type_of_budget
+          AND y.year = v_Year
+          AND blnu.c_costcenter_id = Cur_Distribute.c_costcenter_id
+          AND blnu.sfb_budget_item_id = Cur_Distribute.sfb_budget_item_id
+          AND blnu.user1_id = Cur_Distribute.user1_id
+          AND blnu.sfb_budget_area_id = Cur_Distribute.sfb_budget_area_id
+      );
+       rowcount:=SQL%ROWCOUNT;
+      v_Updated := v_Updated + rowcount;
+      
+      -- Update distributed invoices
+      UPDATE sfb_deferred_invoice di
+      SET applied = 'Y'
+      WHERE di.sfb_deferred_invoice_id = Cur_Distribute.sfb_deferred_invoice_id;
+       rowcount:=SQL%ROWCOUNT;
+      v_Updated := v_Updated + rowcount;
+      IF v_Distribute_All = 'Y' THEN
+        UPDATE sfb_deferred_invoice di
+        SET applied = 'Y'
+        WHERE di.c_invoice_id = Cur_Distribute.c_invoice_id
+        AND di.year > v_Year;
+         rowcount:=SQL%ROWCOUNT;
+        v_Updated := v_Updated + rowcount;
+      END IF;
+      
+    END LOOP;
+    v_Message:='@Updated@=' || v_Updated;
+    --<<FINISH_PROCESS>>
+    --  Update AD_PInstance
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+    RETURN;
+  END; --BODY
+EXCEPTION
+WHEN OTHERS THEN
+  v_ResultStr:= '@ERROR=' || SQLERRM;
+  DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+  RETURN;
+END SFB_DISTRIBUTE_DEFINV
+]]></body>
+    </function>
+  </database>

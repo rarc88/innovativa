@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="148F1B720DBF46C288642D518205B626" trl="N">
+    <value column="Name" isTrl="Y" original="Include All Partners">Incluir Todos los Terceros</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="19A9BFF89D6348009A5164B61B3DA49C" trl="N">
+    <value column="Name" isTrl="Y" original="Approve Payment">Aprobar Pago</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="94A66E08FAF94387A49077DDDCD6E64C" trl="N">
+    <value column="Name" isTrl="Y" original="Confirm Payment">Confirmar Pago</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A1A4F42146B44313A85BAC9499EC15CE" trl="N">
+    <value column="Name" isTrl="Y" original="Generate File TXT-Partial Payment Payrol">Generar Archivo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="F499384EDA2E4DF0A26274A89DA6C77E" trl="N">
+    <value column="Name" isTrl="Y" original="Reactive Payment">Reactivar Pago</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

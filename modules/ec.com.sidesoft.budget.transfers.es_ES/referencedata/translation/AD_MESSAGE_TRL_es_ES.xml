@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="2490DED581B3477AB2E862C144A8F8C9" trl="N">
+    <value column="MsgText" isTrl="Y" original="The value must not be negative.">El valor a no debe ser negativo.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="26A53F38B96640C1B5DAA76A1C111DE7" trl="N">
+    <value column="MsgText" isTrl="Y" original="There is not enough value available in the budget line to deduct line ">No se dispone de suficiente valor disponible en la partida presupuestaria para descontar linea</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="34463BD0EA2048E08234DAE56B28D464" trl="N">
+    <value column="MsgText" isTrl="Y" original="The value to be adjusted cannot be 0.">El valor a ajustar no puede ser 0.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="A932F0096C2B420093C3869BDACB4AC4" trl="N">
+    <value column="MsgText" isTrl="Y" original="There is not enough value available in the budget line to deduct.">No se dispone de suficiente valor disponible en la partida presupuestaria para descontar.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="AA9312EA92834A44AF339A0B1A3F8E42" trl="N">
+    <value column="MsgText" isTrl="Y" original="Budget line not acceptable.">Línea de presupuesto no aceptable.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="C04E4C79872C42F0AF985C9E87CE813C" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to modify a record of processed budget reforms.">No es posible modificar un registro de reformas presupuestarias procesado.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="CC1367C7078A4DF4824AF81ADAE2F42E" trl="N">
+    <value column="MsgText" isTrl="Y" original="A value higher than the available value cannot be discounted.">No se puede descontar un valor superior al disponible.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="FA5F4B692EAF4AF9A246E7C26D4F3050" trl="N">
+    <value column="MsgText" isTrl="Y" original="Registration date does not correspond to the selected year.">La fecha de registro no corresponde al año seleccionado.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

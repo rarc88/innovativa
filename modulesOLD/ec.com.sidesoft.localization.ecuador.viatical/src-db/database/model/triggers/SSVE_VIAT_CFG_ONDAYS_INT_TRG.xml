@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSVE_VIAT_CFG_ONDAYS_INT_TRG">
+    <trigger name="SSVE_VIAT_CFG_ONDAYS_INT_TRG" table="SSVE_VIAT_CONFIG_ONDAYS_INT" fires="before" insert="true" update="false" delete="false" foreach="row">
+      <body><![CDATA[
+
+/*************************************************************************
+* The contents of this file are subject to the Openbravo  Public  License
+* Version  1.0  (the  "License"),  being   the  Mozilla   Public  License
+* Version 1.1  with a permitted attribution clause; you may not  use this
+* file except in compliance with the License. You  may  obtain  a copy of
+* the License at http://www.openbravo.com/legal/license.html
+* Software distributed under the License  is  distributed  on  an "AS IS"
+* basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+* License for the specific  language  governing  rights  and  limitations
+* under the License.
+* The Original Code is Openbravo ERP.
+* The Initial Developer of the Original Code is Openbravo SL
+* All portions are Copyright (C) 2001-2006 Openbravo SL
+* All Rights Reserved.
+* Contributor(s):  ______________________________________.
+************************************************************************/
+V_VIAT_CONFIG_ONDAYS_INT_ID VARCHAR2(32) := NULL;
+V_TODAY NUMBER(10,0) := NULL;
+        
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  
+  IF INSERTING THEN
+    
+    SELECT MAX(VCOD.TODAY) + 1  
+    INTO V_TODAY
+    FROM SSVE_VIAT_CONFIG_ONDAYS_INT VCOD;
+    
+    BEGIN
+      SELECT VCOD.SSVE_VIAT_CONFIG_ONDAYS_INT_ID 
+      INTO V_VIAT_CONFIG_ONDAYS_INT_ID
+      FROM SSVE_VIAT_CONFIG_ONDAYS_INT VCOD 
+      WHERE VCOD.INFINITY = 'Y';
+    EXCEPTION
+      WHEN NO_DATA_FOUND THEN
+      V_VIAT_CONFIG_ONDAYS_INT_ID := NULL;
+    END;  
+      
+    IF (V_VIAT_CONFIG_ONDAYS_INT_ID) IS NOT NULL OR COALESCE( V_TODAY, 1 ) <> :NEW.FROMDAY 
+    THEN
+        RAISE_APPLICATION_ERROR(-20000, '@SSVE_WrongDaysInterval@');
+    END IF;
+    
+  END IF;
+
+END SSVE_VIAT_CFG_ONDAYS_INT_TRG
+]]></body>
+    </trigger>
+  </database>

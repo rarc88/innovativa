@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_JOURNAL_TRG">
+    <trigger name="SFB_JOURNAL_TRG" table="GL_JOURNAL" fires="before" insert="false" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+    /*************************************************************************
+    * The contents of this file are subject to the Compiere Public
+    * License 1.1 ("License"); You may not use this file except in
+    * compliance with the License. You may obtain a copy of the License in
+    * the legal folder of your Openbravo installation.
+    * Software distributed under the License is distributed on an
+    * "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+    * implied. See the License for the specific language governing rights
+    * and limitations under the License.
+    * The Original Code is  Compiere  ERP &  Business Solution
+    * The Initial Developer of the Original Code is Jorg Janke and ComPiere, Inc.
+    * Portions created by Jorg Janke are Copyright (C) 1999-2001 Jorg Janke,
+    * parts created by ComPiere are Copyright (C) ComPiere, Inc.;
+    * All Rights Reserved.
+    * Contributor(s): Openbravo SLU
+    * Contributions are Copyright (C) 2001-2008 Openbravo, S.L.U.
+    *
+    * Specifically, this derivative work is based upon the following Compiere
+    * file and version.
+    *************************************************************************
+    *  Journal
+    * - Update Journal Batch Totals if exists (insert is always 0)
+    */
+
+      V_JOURNAL_ID VARCHAR(32);
+      V_OLSSTATUS VARCHAR(32);
+      V_NEWSTATUS VARCHAR(32);
+      V_DATEDOC DATE;
+      V_CURRENCY_ID VARCHAR(32);
+      V_DOCTYPE_ID VARCHAR(32);
+      V_CLIENT_ID VARCHAR(32);
+      V_ORG_ID VARCHAR(32);
+      V_USER VARCHAR(32);
+      V_BUGEDTABLE VARCHAR(1);
+        
+BEGIN
+    
+    IF AD_isTriggerEnabled()='N' THEN RETURN;
+    END IF;
+
+
+    -- Subtract Old Amount
+    IF(UPDATING) THEN
+      IF (:old.docstatus <> :new.docstatus) THEN
+	V_JOURNAL_ID := :NEW.GL_JOURNAL_ID;
+	V_OLSSTATUS := :OLD.DOCSTATUS;
+	V_NEWSTATUS := :NEW.DOCSTATUS;
+	V_DATEDOC := :NEW.DATEDOC;
+	V_CURRENCY_ID := :NEW.C_CURRENCY_ID;
+	V_DOCTYPE_ID := :NEW.C_DOCTYPE_ID;
+	V_CLIENT_ID := :NEW.AD_CLIENT_ID;
+	V_ORG_ID := :NEW.AD_ORG_ID;
+	V_USER := :NEW.CREATEDBY;
+	V_BUGEDTABLE := :NEW.EM_SFB_AFFECTBUDGET;
+      
+	SFB_JOURNAL_BUDGET(V_JOURNAL_ID,V_OLSSTATUS, V_NEWSTATUS, V_DATEDOC, V_CURRENCY_ID, V_DOCTYPE_ID, V_CLIENT_ID, V_ORG_ID,V_USER, V_BUGEDTABLE); 
+      END IF;
+   END IF;
+   
+   IF(DELETING) THEN      
+      IF(:old.docstatus = 'CO' or :old.docstatus = 'CL') THEN
+	RAISE_APPLICATION_ERROR(-20000, '@ERROR=TRANSACCION ESTA COMPLETADA@');
+      END IF;
+
+   END IF;
+ 
+   
+END SFB_JOURNAL_TRG
+]]></body>
+    </trigger>
+  </database>

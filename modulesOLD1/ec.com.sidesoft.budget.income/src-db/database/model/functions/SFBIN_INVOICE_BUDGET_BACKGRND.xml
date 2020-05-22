@@ -1,0 +1,379 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFBIN_INVOICE_BUDGET_BACKGRND">
+    <function name="SFBIN_INVOICE_BUDGET_BACKGRND" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[p_message             VARCHAR2(2000);     
+  v_docaction           VARCHAR2(60);       
+  v_user_id             VARCHAR2(32);       
+  v_client_id           VARCHAR2(32);       
+  v_org_id              VARCHAR2(32);       
+  v_result              NUMBER;
+
+  v_ResultStr           VARCHAR2(2000):=''; 
+  v_sql                 VARCHAR2(4000):=''; 
+  v_converted           NUMBER;
+  v_budgeted            CHAR(1);
+  v_nc_or_re            NUMBER:= 1;
+  v_new_exec_value      NUMBER:= 1;
+  v_totaldays           NUMBER:= 0;
+  v_defferperday        NUMBER:= 0;
+  v_pivotmonth          NUMBER:= 0;
+  v_pivotyear           NUMBER:= 0;
+  v_pivotdate           DATE;
+  v_pivotexecuted       NUMBER:= 0;
+  v_pivotexecutedmonth  NUMBER:= 0;
+  v_deferred_invoice_id VARCHAR2(32);       
+  v_postyear            NUMBER;
+
+  TYPE RECORD IS REF CURSOR;
+  Cur_Parameter         RECORD;
+  cur_lines             RECORD;
+  cur_invoice_lines     RECORD;
+  cur_deferred_lines    RECORD;
+
+BEGIN
+
+  -- Get Parameters
+  v_ResultStr := 'ReadingParameters';
+
+  FOR Cur_Parameter IN
+  (
+    SELECT  i.AD_User_ID,
+            i.AD_Client_ID,
+            i.AD_Org_ID
+    FROM  AD_PInstance i      
+    WHERE i.AD_PInstance_ID = PInstance_ID      
+  )
+  LOOP
+  
+    v_Client_ID := Cur_Parameter.AD_Client_ID;
+    v_Org_ID := Cur_Parameter.AD_Org_ID;
+    v_User_ID := Cur_Parameter.AD_User_ID;     
+    
+  END LOOP; -- End Get Parameter
+
+  v_resultstr := 'Update budget (excecuted value).';
+
+  FOR cur_lines IN (
+    SELECT  i.ad_client_id, i.ad_org_id, i.c_doctypetarget_id, i.dateinvoiced,
+            i.c_currency_id, i.em_sfb_isnotbudgetable AS header_isnotbudgetable, il.c_invoiceline_id, 
+            (il.linenetamt * CASE WHEN dt.isreversal = 'Y' OR dt.isreturn = 'Y' OR dt.docbasetype = 'ARC' THEN -1 ELSE 1 END) AS linetotalamt,
+            il.em_sfb_budget_cert_line_id AS linecertificate, il.m_product_id, il.c_charge_id, il.account_id,
+            bln.c_costcenter_id, bln.user1_id, bln.sfb_budget_item_id, bln.sfb_budget_line_id,
+            b.c_currency_id as budget_currency_id, bln.sfb_budget_area_id, i.em_sfb_isdeferred, i.updatedby,
+            i.em_sfb_differ_within_year, i.em_ssfl_billing_period_from, i.em_ssfl_billing_period_to,
+            dt.isreversal, dt.isreturn, dt.docbasetype, i.c_invoice_id
+    FROM c_invoice i 
+    JOIN c_invoiceline il ON i.c_invoice_id = il.c_invoice_id
+    JOIN c_doctype dt on i.c_doctype_id = dt.c_doctype_id
+    LEFT JOIN (
+      m_product_acct pa
+      JOIN c_validcombination vc ON vc.c_validcombination_id = pa.p_revenue_acct
+    ) ON il.m_product_id = pa.m_product_id
+    LEFT JOIN (
+      sfb_budget b
+      JOIN c_year y on y.c_year_id = b.c_year_id
+      JOIN sfb_budget_version bv ON bv.sfb_budget_id = b.sfb_budget_id AND bv.version_status = 'AP'
+      JOIN sfb_budget_line bln ON bln.sfb_budget_version_id = bv.sfb_budget_version_id
+      JOIN sfb_budget_item_account bia ON bia.sfb_budget_item_id = bln.sfb_budget_item_id 
+    ) ON  bln.c_costcenter_id = COALESCE(il.c_costcenter_id, i.c_costcenter_id)
+      AND bln.user1_id = COALESCE(il.user1_id, i.user1_id)
+      AND bln.sfb_budget_area_id = COALESCE(il.em_sfbin_budget_area_id, i.em_sfb_budget_area_id)
+      AND bia.isactive = 'Y'
+      AND bia.account_id = vc.account_id
+      AND CAST(y.year AS NUMBER(10,0)) = CAST(EXTRACT(YEAR FROM i.dateinvoiced) AS NUMBER(10,0))        
+         LEFT JOIN sfb_budget_cert_line bcl ON il.em_sfb_budget_cert_line_id = bcl.sfb_budget_cert_line_id
+         LEFT JOIN sfb_budget_certificate bc ON bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id
+    WHERE il.em_sfb_isbudgeted = 'N'
+      AND i.issotrx = 'Y'
+      AND b.type_of_budget = 'N'
+      AND i.processed = 'Y'
+      AND i.docstatus='CO'
+    ORDER BY il.line
+  )
+  LOOP
+
+    IF (cur_lines.header_isnotbudgetable = 'N') THEN
+
+      IF (cur_lines.linetotalamt <> 0) THEN
+
+        IF cur_lines.sfb_budget_line_id IS NOT NULL THEN
+        
+          IF cur_lines.c_currency_id <> cur_lines.budget_currency_id THEN
+            v_converted := C_Currency_Round(C_Currency_Convert(cur_lines.linetotalamt, cur_lines.c_currency_id, cur_lines.budget_currency_id, cur_lines.dateinvoiced, null, cur_lines.ad_client_id, cur_lines.ad_org_id), cur_lines.budget_currency_id, null);
+          ELSE
+            v_converted := cur_lines.linetotalamt;
+          END IF;
+          IF (v_converted IS NOT NULL) THEN
+          
+            SELECT (bln.executed_value + v_converted)
+            INTO v_new_exec_value
+            FROM sfb_budget_line bln
+            WHERE bln.sfb_budget_line_id = cur_lines.sfb_budget_line_id;
+            
+            IF C_Currency_Round(v_new_exec_value, cur_lines.budget_currency_id, null) < 0 AND cur_lines.em_sfb_isdeferred = 'N'  THEN
+                        
+              --Get total days
+              v_pivotdate     := cur_lines.em_ssfl_billing_period_from;
+              WHILE (v_pivotdate <= cur_lines.em_ssfl_billing_period_to) LOOP
+                v_totaldays := v_totaldays + 1;
+                v_pivotdate := TO_DATE(v_pivotdate) + INTERVAL '1' DAY;
+              END LOOP;
+	      IF  v_totaldays=0 THEN
+                v_totaldays:=1;
+              END IF;
+              v_defferperday  := v_converted / v_totaldays;
+              v_pivotyear     := EXTRACT(YEAR FROM cur_lines.em_ssfl_billing_period_from);
+              v_pivotmonth    := EXTRACT(MONTH FROM cur_lines.em_ssfl_billing_period_from);
+              v_pivotdate     := cur_lines.em_ssfl_billing_period_from;
+              
+              --Execute current year budget
+              IF EXTRACT(YEAR FROM cur_lines.dateinvoiced) =  EXTRACT(YEAR FROM cur_lines.em_ssfl_billing_period_from) THEN
+              
+                v_deferred_invoice_id := get_uuid();
+                INSERT INTO sfb_deferred_invoice (sfb_deferred_invoice_id, ad_client_id, ad_org_id, isactive,
+                                                  created, createdby, updated, updatedby,
+                                                  c_costcenter_id, sfb_budget_item_id, user1_id, sfb_budget_area_id,
+                                                  applied, year, type_of_budget, c_invoice_id,
+                                                  jan_executed_value, feb_executed_value, mar_executed_value, apr_executed_value,
+                                                  may_executed_value, jun_executed_value, jul_executed_value, aug_executed_value,
+                                                  sep_executed_value, oct_executed_value, nov_executed_value, dec_executed_value
+                ) VALUES (
+                  v_deferred_invoice_id, cur_lines.ad_client_id, cur_lines.ad_org_id, 'Y',
+                  now(), cur_lines.updatedby, now(), cur_lines.updatedby,
+                  cur_lines.c_costcenter_id, cur_lines.sfb_budget_item_id, cur_lines.user1_id, cur_lines.sfb_budget_area_id,
+                  'Y', TO_CHAR(v_pivotyear), 'N', cur_lines.c_invoice_id,
+                  0, 0, 0, 0,
+                  0, 0, 0, 0,
+                  0, 0, 0, 0
+                );
+                  
+                --Without changing year
+                WHILE (EXTRACT(YEAR FROM v_pivotdate) = v_pivotyear AND v_pivotdate <= cur_lines.em_ssfl_billing_period_to AND v_pivotexecuted < v_converted) LOOP
+    
+                  WHILE (EXTRACT(MONTH FROM v_pivotdate) = v_pivotmonth AND v_pivotdate <= cur_lines.em_ssfl_billing_period_to AND v_pivotexecuted < v_converted) LOOP
+                    v_pivotexecutedmonth := v_pivotexecutedmonth + v_defferperday;
+                    v_pivotexecuted := v_pivotexecuted + v_defferperday;
+                    v_pivotdate := TO_DATE(v_pivotdate) + INTERVAL '1' DAY;
+                  END LOOP;
+                  
+                  v_resultstr := 'Add amount to executed value';
+    
+                  v_sql := 'UPDATE SFB_DEFERRED_INVOICE SET ';
+    
+                  SELECT
+                  CASE v_pivotmonth
+                    WHEN 1  THEN v_sql || 'jan_executed_value = jan_executed_value + '
+                    WHEN 2  THEN v_sql || 'feb_executed_value = feb_executed_value + '
+                    WHEN 3  THEN v_sql || 'mar_executed_value = mar_executed_value + '
+                    WHEN 4  THEN v_sql || 'apr_executed_value = apr_executed_value + '
+                    WHEN 5  THEN v_sql || 'may_executed_value = may_executed_value + '
+                    WHEN 6  THEN v_sql || 'jun_executed_value = jun_executed_value + '
+                    WHEN 7  THEN v_sql || 'jul_executed_value = jul_executed_value + '
+                    WHEN 8  THEN v_sql || 'aug_executed_value = aug_executed_value + '
+                    WHEN 9  THEN v_sql || 'sep_executed_value = sep_executed_value + '
+                    WHEN 10 THEN v_sql || 'oct_executed_value = oct_executed_value + '
+                    WHEN 11 THEN v_sql || 'nov_executed_value = nov_executed_value + '
+                    WHEN 12 THEN v_sql || 'dec_executed_value = dec_executed_value + '
+                  END INTO v_sql
+                  FROM DUAL;
+    
+                  v_sql := v_sql || v_pivotexecutedmonth || ' WHERE SFB_DEFERRED_INVOICE_ID = ''' || v_deferred_invoice_id || '''';
+                  EXECUTE IMMEDIATE v_sql;
+    
+                  v_sql := 'UPDATE SFB_BUDGET_LINE SET ';
+    
+                  SELECT
+                  CASE v_pivotmonth
+                    WHEN 1  THEN v_sql || 'jan_executed_value = jan_executed_value + '
+                    WHEN 2  THEN v_sql || 'feb_executed_value = feb_executed_value + '
+                    WHEN 3  THEN v_sql || 'mar_executed_value = mar_executed_value + '
+                    WHEN 4  THEN v_sql || 'apr_executed_value = apr_executed_value + '
+                    WHEN 5  THEN v_sql || 'may_executed_value = may_executed_value + '
+                    WHEN 6  THEN v_sql || 'jun_executed_value = jun_executed_value + '
+                    WHEN 7  THEN v_sql || 'jul_executed_value = jul_executed_value + '
+                    WHEN 8  THEN v_sql || 'aug_executed_value = aug_executed_value + '
+                    WHEN 9  THEN v_sql || 'sep_executed_value = sep_executed_value + '
+                    WHEN 10 THEN v_sql || 'oct_executed_value = oct_executed_value + '
+                    WHEN 11 THEN v_sql || 'nov_executed_value = nov_executed_value + '
+                    WHEN 12 THEN v_sql || 'dec_executed_value = dec_executed_value + '
+                  END INTO v_sql
+                  FROM DUAL;
+    
+                  v_sql := v_sql || v_pivotexecutedmonth || ' WHERE SFB_BUDGET_LINE_ID = ''' || cur_lines.sfb_budget_line_id || '''';
+                  EXECUTE IMMEDIATE v_sql;
+                  
+                  v_pivotexecutedmonth  := 0;
+                  v_pivotmonth          := EXTRACT(MONTH FROM v_pivotdate);
+                    
+                END LOOP;
+                              
+                IF cur_lines.em_sfb_differ_within_year = 'Y' THEN
+                
+                  v_sql := 'UPDATE SFB_DEFERRED_INVOICE SET ';
+    
+                  SELECT v_sql || 'dec_executed_value = dec_executed_value + '
+                  INTO v_sql
+                  FROM DUAL;
+    
+                  v_sql := v_sql || (v_converted - v_pivotexecuted) || ' WHERE SFB_DEFERRED_INVOICE_ID = ''' || v_deferred_invoice_id || '''';
+                  EXECUTE IMMEDIATE v_sql;
+                  
+                  v_sql := 'UPDATE SFB_BUDGET_LINE SET ';
+    
+                  SELECT v_sql || 'dec_executed_value = dec_executed_value + '
+                  INTO v_sql
+                  FROM DUAL;
+    
+                  v_sql := v_sql || (v_converted - v_pivotexecuted) || ' WHERE SFB_BUDGET_LINE_ID = ''' || cur_lines.sfb_budget_line_id || '''';
+                  EXECUTE IMMEDIATE v_sql;
+                  
+                  v_pivotexecuted := v_converted;
+                  
+                END IF;
+                
+              END IF;
+              
+              WHILE (v_pivotdate <= cur_lines.em_ssfl_billing_period_to AND v_pivotexecuted < v_converted) LOOP
+              
+                v_pivotyear := EXTRACT(YEAR FROM v_pivotdate);
+                --Changing year
+                
+                IF (v_pivotdate <= cur_lines.em_ssfl_billing_period_to AND v_pivotexecuted < v_converted) THEN
+                  v_deferred_invoice_id := get_uuid();
+                  INSERT INTO sfb_deferred_invoice (sfb_deferred_invoice_id, ad_client_id, ad_org_id, isactive,
+                                                    created, createdby, updated, updatedby,
+                                                    c_costcenter_id, sfb_budget_item_id, user1_id, sfb_budget_area_id,
+                                                    applied, year, type_of_budget, c_invoice_id,
+                                                    jan_executed_value, feb_executed_value, mar_executed_value, apr_executed_value,
+                                                    may_executed_value, jun_executed_value, jul_executed_value, aug_executed_value,
+                                                    sep_executed_value, oct_executed_value, nov_executed_value, dec_executed_value
+                  ) VALUES (
+                    v_deferred_invoice_id, cur_lines.ad_client_id, cur_lines.ad_org_id, 'Y',
+                  now(), cur_lines.updatedby, now(), cur_lines.updatedby,
+                    cur_lines.c_costcenter_id, cur_lines.sfb_budget_item_id, cur_lines.user1_id, cur_lines.sfb_budget_area_id,
+                    'N', TO_CHAR(v_pivotyear), 'N', cur_lines.c_invoice_id,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0
+                  );
+                END IF;
+                
+                WHILE (EXTRACT(YEAR FROM v_pivotdate) = v_pivotyear AND v_pivotdate <= cur_lines.em_ssfl_billing_period_to AND v_pivotexecuted < v_converted) LOOP
+                
+                  WHILE (EXTRACT(MONTH FROM v_pivotdate) = v_pivotmonth AND v_pivotdate <= cur_lines.em_ssfl_billing_period_to AND v_pivotexecuted < v_converted) LOOP
+                  
+                    v_pivotexecutedmonth := v_pivotexecutedmonth + v_defferperday;
+                    v_pivotexecuted := v_pivotexecuted + v_defferperday;
+                    v_pivotdate := TO_DATE(v_pivotdate) + INTERVAL '1' DAY;
+                    
+                  END LOOP;
+    
+                  v_sql := 'UPDATE SFB_DEFERRED_INVOICE SET ';
+    
+                  SELECT
+                  CASE v_pivotmonth
+                    WHEN 1  THEN v_sql || 'jan_executed_value = jan_executed_value + '
+                    WHEN 2  THEN v_sql || 'feb_executed_value = feb_executed_value + '
+                    WHEN 3  THEN v_sql || 'mar_executed_value = mar_executed_value + '
+                    WHEN 4  THEN v_sql || 'apr_executed_value = apr_executed_value + '
+                    WHEN 5  THEN v_sql || 'may_executed_value = may_executed_value + '
+                    WHEN 6  THEN v_sql || 'jun_executed_value = jun_executed_value + '
+                    WHEN 7  THEN v_sql || 'jul_executed_value = jul_executed_value + '
+                    WHEN 8  THEN v_sql || 'aug_executed_value = aug_executed_value + '
+                    WHEN 9  THEN v_sql || 'sep_executed_value = sep_executed_value + '
+                    WHEN 10 THEN v_sql || 'oct_executed_value = oct_executed_value + '
+                    WHEN 11 THEN v_sql || 'nov_executed_value = nov_executed_value + '
+                    WHEN 12 THEN v_sql || 'dec_executed_value = dec_executed_value + '
+                  END INTO v_sql
+                  FROM DUAL;
+    
+                  v_sql := v_sql || v_pivotexecutedmonth || ' WHERE SFB_DEFERRED_INVOICE_ID = ''' || v_deferred_invoice_id || '''';
+                  EXECUTE IMMEDIATE v_sql;
+                  
+                  v_pivotexecutedmonth  := 0;
+                  v_pivotmonth          := EXTRACT(MONTH FROM v_pivotdate);
+                  
+                END LOOP;
+                
+                IF cur_lines.em_sfb_differ_within_year = 'Y' THEN
+                
+                  v_sql := 'UPDATE SFB_DEFERRED_INVOICE SET ';
+    
+                  SELECT v_sql || 'dec_executed_value = dec_executed_value + '
+                  INTO v_sql
+                  FROM DUAL;
+    
+                  v_sql := v_sql || (v_converted - v_pivotexecuted) || ' WHERE SFB_DEFERRED_INVOICE_ID = ''' || v_deferred_invoice_id || '''';
+                  EXECUTE IMMEDIATE v_sql;
+                  
+                  v_pivotexecuted := v_converted;
+                  
+                END IF;
+    
+              END LOOP;
+            
+            ELSE
+            
+              v_resultstr := 'Add amount to executed value';
+    
+              v_sql := 'UPDATE SFB_BUDGET_LINE SET ';
+    
+              SELECT
+              CASE EXTRACT(MONTH FROM TO_DATE(cur_lines.dateinvoiced))
+                WHEN 1  THEN v_sql || 'jan_executed_value = jan_executed_value + '
+                WHEN 2  THEN v_sql || 'feb_executed_value = feb_executed_value + '
+                WHEN 3  THEN v_sql || 'mar_executed_value = mar_executed_value + '
+                WHEN 4  THEN v_sql || 'apr_executed_value = apr_executed_value + '
+                WHEN 5  THEN v_sql || 'may_executed_value = may_executed_value + '
+                WHEN 6  THEN v_sql || 'jun_executed_value = jun_executed_value + '
+                WHEN 7  THEN v_sql || 'jul_executed_value = jul_executed_value + '
+                WHEN 8  THEN v_sql || 'aug_executed_value = aug_executed_value + '
+                WHEN 9  THEN v_sql || 'sep_executed_value = sep_executed_value + '
+                WHEN 10 THEN v_sql || 'oct_executed_value = oct_executed_value + '
+                WHEN 11 THEN v_sql || 'nov_executed_value = nov_executed_value + '
+                WHEN 12 THEN v_sql || 'dec_executed_value = dec_executed_value + '
+              END INTO v_sql
+              FROM DUAL;
+    
+              v_sql := v_sql || v_converted || ' WHERE SFB_BUDGET_LINE_ID = ''' || cur_lines.sfb_budget_line_id || '''';
+              EXECUTE IMMEDIATE v_sql;
+
+            END IF;
+
+            UPDATE c_invoiceline il SET em_sfb_isbudgeted = 'Y' WHERE il.c_invoiceline_id = cur_lines.c_invoiceline_id;
+          
+          END IF;
+        
+        END IF;
+
+      END IF;
+
+    END IF;
+
+  END LOOP;
+  
+ FOR cur_invoice_lines IN (
+    SELECT i.c_invoice_id
+    FROM c_invoice i
+    LEFT JOIN c_invoiceline il ON il.c_invoice_id = i.c_invoice_id AND il.em_sfb_isbudgeted = 'N'
+    WHERE i.em_sfb_isbudgeted = 'N'
+      AND i.processed = 'Y'
+      AND i.issotrx = 'Y'
+      AND il.c_invoiceline_id IS NULL
+    GROUP BY i.c_invoice_id
+  ) LOOP
+    UPDATE C_INVOICE SET em_sfb_isbudgeted = 'Y' WHERE c_invoice_id = cur_invoice_lines.c_invoice_id;
+  END LOOP;
+  COMMIT;
+    
+EXCEPTION
+WHEN OTHERS THEN
+  ROLLBACK;
+  RAISE;
+END SFBIN_INVOICE_BUDGET_BACKGRND
+]]></body>
+    </function>
+  </database>

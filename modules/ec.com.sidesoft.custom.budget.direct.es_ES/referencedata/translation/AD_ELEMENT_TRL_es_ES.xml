@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="4B15940112C246A389A984B0638418A5" trl="N">
+    <value column="Name" isTrl="Y" original="Is Budgeted">Está presupuestado</value>
+    <value column="PrintName" isTrl="Y" original="Is Budgeted">Está presupuestado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="5FF1673952274D91AD7A29E8C788E0CB" trl="N">
+    <value column="Name" isTrl="Y" original="Hash Code">Código Hash</value>
+    <value column="PrintName" isTrl="Y" original="Hash Code">Código Hash</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="889F27D551EF494EBAB8D48BDD1B4C0F" trl="N">
+    <value column="Name" isTrl="Y" original="Is Not Budgetable">No es presupuestable</value>
+    <value column="PrintName" isTrl="Y" original="Is Not Budgetable">No es presupuestable</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C6AE0F1E70104C2C9B3B6CDF9F819E90" trl="N">
+    <value column="Name" isTrl="Y" original="Direct Budget">Presupuesto Directo</value>
+    <value column="PrintName" isTrl="Y" original="Direct Budget">Presupuesto Directo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D0968A1CF2774D91A6814EAFD970098E" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Date">Fecha Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Budget Date">Fecha Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RequestLeaveVacation" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="327"/>
+	<property name="ireport.y" value="546"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AD_USER_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select b.name as tercero,to_char('CI:' || ' ' ||b.taxid) as taxid_tercero, d.name as gerencia,e.name as unidad, k.name as puesto,
+    to_char(a.AUTHORIZED_DATE,'dd-MM-yyyy') as AUTHORIZED_DATE,
+    to_char(a.nohours) as nohours,a.nodays,to_char(a.stardate,'dd-MM-yyyy') as stardate,to_char(a.enddate,'dd-MM-yyyy') as enddate,to_char(a.starthour,'hh:mm') as starthour,to_char(a.endhour,'hh:mm') as      endhour,f.name as reemplazo,to_char('CI:' || ' ' ||f.taxid) as taxid_remplazo,REVISION,WRITTENBY,APPROBEDBY,IDENTIFICACTION,SGI,VALIDED,ORIGINAL,COPY,
+    to_char(now(),'yyyy') as anioactual,to_char(to_number(to_char(now(),'yyyy'))-1) as aniopasado,
+    g.DESCRIPTION as actividadesdes,upper(o.name) as org,coalesce((select name from c_bpartner where c_bpartner_id =
+    (select c_bpartner_id from sspr_leave_conf_default where isdefault_approver='Y' and isactive = 'Y')),q.name) as autoriza,
+    coalesce((select to_char('CI:' || ' ' ||taxid) from c_bpartner where c_bpartner_id = (select c_bpartner_id
+    from sspr_leave_conf_default where isdefault_approver='Y' and isactive = 'Y')),to_char('CI:' || ' ' ||q.taxid)) as taxid_autoriza,a.description,r.name as tipo_permiso,
+    to_char(dl.startdate_period,'dd/MM/yyyy') as startdate_period,to_char(dl.enddate_period,'dd/MM/yyyy') as enddate_period,
+    a.ad_org_id as organizationid, to_char(now(),'dd/MM/yyyy HH24:MI:SS') as fecha_impresion ,
+    (select sum(Nodays) from sspr_vacations  vc where b.c_bpartner_id = vc.c_bpartner_id) as diasnormalespendientes ,
+(select sum(Noadditionaltotal) from sspr_vacations  vc where b.c_bpartner_id = vc.c_bpartner_id) as diasadicionalespendientes,
+ a.documentno as documentono,
+(select COALESCE(CB.NAME,AU.NAME) from AD_USER AU LEFT JOIN C_BPARTNER CB on CB.C_BPARTNER_ID = AU.C_BPARTNER_ID where AU.AD_USER_ID=$P{AD_USER_ID}) as usuario
+    from SSPR_LEAVE_EMP a left join c_bpartner b on a.c_bpartner_id = b.c_bpartner_id
+            left join SSPR_LEAVE_EMP_MANT c on a.SSPR_LEAVE_TYPE_ID = c.SSPR_LEAVE_TYPE_ID and c.isactive='Y'
+            left join C_COSTCENTER d on a.C_COSTCENTER_ID = d.C_COSTCENTER_ID
+            left join SSHR_DEPARTMENT e on a.EM_SSHR_DEPARTMENT_ID = e.SSHR_DEPARTMENT_ID
+            left join c_bpartner f on a.WHOREPLACE_ID = f.c_bpartner_id
+            left join SSPR_LEAVE_EMP_DETAILS g on a.SSPR_LEAVE_EMP_ID = g.SSPR_LEAVE_EMP_ID
+            left join SSPR_LEAVE_EMP_NOTES h on a.SSPR_LEAVE_TYPE_ID = h.SSPR_LEAVE_TYPE_ID and h.ISACTIVE ='Y'
+            left join sspr_contract i on b.c_bpartner_id = i.c_bpartner_id
+            left join sspr_contract_position j on i.sspr_contract_id = j.sspr_contract_id
+            left join sspr_position k on j.sspr_position_id = k.sspr_position_id
+            left join ad_org o on a.ad_org_id = o.ad_org_id
+            left join c_bpartner q on a.AUTHORIZER_ID = q.c_bpartner_id
+	  left join sspr_leave_type r on a.SSPR_LEAVE_TYPE_ID = r.SSPR_LEAVE_TYPE_ID
+	  left join (select sspr_leave_emp_id, max(startdate) as startdate_period,max(enddate) as enddate_period
+	  from sspr_leave_emp_vac group by sspr_leave_emp_id) dl on a.sspr_leave_emp_id = dl.sspr_leave_emp_id
+ where a.SSPR_LEAVE_EMP_id = $P{DOCUMENT_ID}]]>
+	</queryString>
+	<field name="tercero" class="java.lang.String"/>
+	<field name="taxid_tercero" class="java.lang.String"/>
+	<field name="gerencia" class="java.lang.String"/>
+	<field name="unidad" class="java.lang.String"/>
+	<field name="puesto" class="java.lang.String"/>
+	<field name="authorized_date" class="java.lang.String"/>
+	<field name="nohours" class="java.lang.String"/>
+	<field name="nodays" class="java.math.BigDecimal"/>
+	<field name="stardate" class="java.lang.String"/>
+	<field name="enddate" class="java.lang.String"/>
+	<field name="starthour" class="java.lang.String"/>
+	<field name="endhour" class="java.lang.String"/>
+	<field name="reemplazo" class="java.lang.String"/>
+	<field name="taxid_remplazo" class="java.lang.String"/>
+	<field name="revision" class="java.lang.String"/>
+	<field name="writtenby" class="java.lang.String"/>
+	<field name="approbedby" class="java.lang.String"/>
+	<field name="identificaction" class="java.lang.String"/>
+	<field name="sgi" class="java.lang.String"/>
+	<field name="valided" class="java.lang.String"/>
+	<field name="original" class="java.lang.String"/>
+	<field name="copy" class="java.lang.String"/>
+	<field name="anioactual" class="java.lang.String"/>
+	<field name="aniopasado" class="java.lang.String"/>
+	<field name="actividadesdes" class="java.lang.String"/>
+	<field name="org" class="java.lang.String"/>
+	<field name="autoriza" class="java.lang.String"/>
+	<field name="taxid_autoriza" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="tipo_permiso" class="java.lang.String"/>
+	<field name="startdate_period" class="java.lang.String"/>
+	<field name="enddate_period" class="java.lang.String"/>
+	<field name="organizationid" class="java.lang.String"/>
+	<field name="fecha_impresion" class="java.lang.String"/>
+	<field name="diasnormalespendientes" class="java.math.BigDecimal"/>
+	<field name="diasadicionalespendientes" class="java.math.BigDecimal"/>
+	<field name="documentono" class="java.lang.String"/>
+	<field name="usuario" class="java.lang.String"/>
+	<title>
+		<band height="151" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="33" width="542" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R1 PA-70 /F7 | Solicitud de Vacaciones y permiso cargo a Vacaciones ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="77" width="79" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Identificación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="60" width="286" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SGI-MANUAL DE PROCEDIMIENTOS ADMINISTRATIVOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="101" width="66" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Aprobado por: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="90" width="79" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cumple con SGI: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="89" width="66" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Escrito por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="77" width="66" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Revisión: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="104" width="79" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de vigencia:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="54" y="77" width="156" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{revision}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="61" y="89" width="149" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{writtenby}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="76" y="101" width="134" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{approbedby}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="421" y="77" width="133" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{identificaction}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="430" y="90" width="124" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sgi}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="433" y="104" width="121" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{valided}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="108" y="133" width="210" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLICITUD DE: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="126" y="48" width="286" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{org}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="108" y="121" width="286" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{org}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="246" y="133" width="206" height="11"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipo_permiso}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="421" y="3" width="127" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fecha_impresion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="339" y="3" width="81" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Fecha de impresión:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="126" height="56"/>
+				<imageExpression class="java.lang.String"><![CDATA[org.openbravo.erpCommon.utility.Utility.showImageLogo("yourcompanylegal", $F{organizationid})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="339" y="16" width="81" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="421" y="16" width="127" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="165" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="2" width="104" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[NOMBRES Y APELLIDOS : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="16" width="51" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[GERENCIA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="29" width="51" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[PUESTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="43" width="51" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="29" width="79" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[UNIDAD:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="84" width="545" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Por  la  presente  solicito  a  usted  se  digne  concederme  vacaciones  y/o  permiso por el periodo comprendido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="98" width="36" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[entre el]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="98" width="14" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[y]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="217" y="98" width="337" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[,  las  mismas  que  se efectuarán de acuerdo al siguiente cronograma:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="114" y="2" width="440" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tercero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="16" width="214" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{gerencia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="354" y="29" width="200" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{unidad}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="29" width="214" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{puesto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="43" width="100" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{authorized_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="44" y="98" width="72" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{startdate_period}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="138" y="98" width="78" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{enddate_period}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="57" width="161" height="13"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DÍAS NORMALES PENDIENTES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="367" y="116" width="173" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[FECHA FINAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="116" width="181" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[FECHA INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="271" y="57" width="159" height="13"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DÍAS ADICIONALES PENDIENTES:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="430" y="57" width="124" height="13"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{diasadicionalespendientes}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="171" y="57" width="100" height="14"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{diasnormalespendientes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="275" y="16" width="79" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nº DOCUMENTO:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="354" y="16" width="200" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documentono}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="-49" width="172" height="21"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[NO. DIAS SOLICITADOS/
+HORAS SOLICITADAS
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="184" y="-54" width="1" height="52"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="-23" width="174" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{nodays}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="9" y="-29" width="532" height="1"/>
+			</line>
+			<line>
+				<reportElement x="366" y="-54" width="1" height="52"/>
+			</line>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="369" y="-23" width="173" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{enddate}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="9" y="-54" width="532" height="52"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="186" y="-23" width="180" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{stardate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="211">
+			<rectangle>
+				<reportElement mode="Transparent" x="9" y="32" width="533" height="67"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="77" width="191" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{reemplazo}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="9" y="117" width="533" height="52"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="34" width="174" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[SOLICITANTE ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="34" width="182" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[REEMPLAZO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="34" width="173" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[VISTO BUENO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="122" width="172" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[CERTIFICA LA UNIDAD DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="122" width="180" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[AUTORIZADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="122" width="172" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[SE DISPONE REGISTRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="158" width="92" height="13"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[RECURSOS HUMANOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="158" width="173" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[GERENTE DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="158" width="47" height="13"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[GERENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="194" width="37" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[COPIA : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="46" y="194" width="100" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{copy}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="367" y="32" width="1" height="67"/>
+			</line>
+			<line>
+				<reportElement x="185" y="32" width="1" height="67"/>
+			</line>
+			<line>
+				<reportElement x="9" y="46" width="533" height="1"/>
+			</line>
+			<line>
+				<reportElement x="367" y="117" width="1" height="52"/>
+			</line>
+			<line>
+				<reportElement x="185" y="117" width="1" height="52"/>
+			</line>
+			<line>
+				<reportElement x="9" y="134" width="533" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="12" y="158" width="172" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[JEFE DE SERVICIO AL PERSONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="19" width="545" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Detalle de actividades especificas que deberá cumplir, durante la ausencia del titular (si es necesario añada filas). ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="144" y="3" width="410" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{reemplazo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="27" y="3" width="117" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SERVIDOR QUE REEMPLAZA: ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="77" width="167" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tercero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="12" y="88" width="165" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{taxid_tercero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="180" y="88" width="186" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{taxid_remplazo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="371" y="88" width="171" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{taxid_autoriza}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="371" y="77" width="171" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{autoriza}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="64" y="174" width="477" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="174" width="51" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Descripción:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

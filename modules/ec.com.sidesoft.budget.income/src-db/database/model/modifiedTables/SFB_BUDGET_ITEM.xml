@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE SFB_BUDGET_ITEM">
+    <table name="SFB_BUDGET_ITEM" primaryKey="SFB_BUDGET_ITEM_KEY">
+      <column name="EM_SFBIN_ISINCOME" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault/>
+      </column>
+      <check name="EM_SFBIN_ITEM_ISINCOME_CHK"><![CDATA[EM_SFBIN_ISINCOME IN ('Y', 'N')]]></check>
+    </table>
+  </database>

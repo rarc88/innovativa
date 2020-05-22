@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MENU" version="">
+  <row id="20D67BCA0E72437F9ACC5802C0252489" trl="N">
+    <value column="Name" isTrl="N" original="Setup">Setup</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="242296F770ED446785C6CC0B841ED5F0" trl="N">
+    <value column="Name" isTrl="N" original="Transactions">Transactions</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="B017ABECD4B04350B9377719076E1E19" trl="N">
+    <value column="Name" isTrl="Y" original="Operative Annual Plan(OAP)">Plan Operativo Anual(POA)</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="C3F11A27543F479C804488B6A982AD8E" trl="N">
+    <value column="Name" isTrl="Y" original="Purchase Annual Plan (PAP)">Plan Anual de Compras (PAC)</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="C9D46C7DEAD84C8ABE88AB65F71C82AC" trl="N">
+    <value column="Name" isTrl="N" original="Analytics Tools">Analytics Tools</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="EA45B8CEBD4A4FFF8A3E3A93FA1477B6" trl="N">
+    <value column="Name" isTrl="Y" original="Managment OAP and PAP">Gestión POA y PAC</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

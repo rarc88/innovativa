@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="23A45ADEB65B4B248200CA35E0863ACA" trl="N">
+    <value column="Name" isTrl="N" original="SSPP_STATUS">SSPP_STATUS</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="8A6729006ABD468989AEF7273DB52FDE" trl="N">
+    <value column="Name" isTrl="Y" original="SSPP_Doctype_Payment">Tipo de Documento de Pago</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

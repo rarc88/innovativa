@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ob:Openbravo xmlns:ob="http://www.openbravo.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ADSequence id="0AA17EC38E574E76B80A0ADA92CB6218" identifier="Sec. Factura Rápida">
+    <id>0AA17EC38E574E76B80A0ADA92CB6218</id>
+    <nextAssignedNumber>1000019</nextAssignedNumber>
+    <currentNextSystem>100</currentNextSystem>
+    <description xsi:nil="true"/>
+    <incrementBy>1</incrementBy>
+    <autoNumbering>true</autoNumbering>
+    <name>Sec. Factura Rápida</name>
+    <prefix xsi:nil="true"/>
+    <suffix xsi:nil="true"/>
+    <valueFormat xsi:nil="true"/>
+  </ADSequence>
+  <ADSequence id="12E3C32E35984DDAB13E92605907A9B0" identifier="Sec. Facturación Rápida">
+    <id>12E3C32E35984DDAB13E92605907A9B0</id>
+    <nextAssignedNumber>12</nextAssignedNumber>
+    <currentNextSystem>100</currentNextSystem>
+    <description>Sec. Facturación Rápida</description>
+    <incrementBy>1</incrementBy>
+    <autoNumbering>true</autoNumbering>
+    <name>Sec. Facturación Rápida</name>
+    <prefix>001-001-</prefix>
+    <suffix xsi:nil="true"/>
+    <valueFormat xsi:nil="true"/>
+  </ADSequence>
+  <DocumentType id="0866CD5B991F420DA79EE6310068A656" identifier="Facturación Rápida">
+    <id>0866CD5B991F420DA79EE6310068A656</id>
+    <gLCategory id="102C08DF5D4341D5B7FDF758632503D2" entity-name="FinancialMgmtGLCategory" identifier="AR Invoice"/>
+    <documentCategory>ARI</documentCategory>
+    <documentSequence id="12E3C32E35984DDAB13E92605907A9B0" entity-name="ADSequence" identifier="Sec. Facturación Rápida"/>
+    <sOSubType xsi:nil="true"/>
+    <comments xsi:nil="true"/>
+    <table id="318" entity-name="ADTable" identifier="C_Invoice"/>
+    <salesTransaction>true</salesTransaction>
+    <name>Facturación Rápida</name>
+    <filterByOrganization>false</filterByOrganization>
+    <printText>Facturación Rápida</printText>
+  </DocumentType>
+  <DocumentType id="C57085B67B9F4625BFFA19A1EF4D04CD" identifier="Factura Rápida">
+    <id>C57085B67B9F4625BFFA19A1EF4D04CD</id>
+    <gLCategory id="FC670B83E59C4E7CBD6B999D3F28B251" entity-name="FinancialMgmtGLCategory" identifier="Standard"/>
+    <documentCategory>SQB_QB</documentCategory>
+    <documentSequence id="0AA17EC38E574E76B80A0ADA92CB6218" entity-name="ADSequence" identifier="Sec. Factura Rápida"/>
+    <sOSubType xsi:nil="true"/>
+    <comments xsi:nil="true"/>
+    <table id="B7EDE90944074C1CAC5FEEB057A2A92A" entity-name="ADTable" identifier="sqb_quickbilling"/>
+    <salesTransaction>false</salesTransaction>
+    <name>Factura Rápida</name>
+    <filterByOrganization>false</filterByOrganization>
+    <printText>Factura Rápida</printText>
+  </DocumentType>
+</ob:Openbravo>

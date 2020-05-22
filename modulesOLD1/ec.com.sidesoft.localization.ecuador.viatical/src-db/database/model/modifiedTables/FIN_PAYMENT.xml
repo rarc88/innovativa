@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE FIN_PAYMENT">
+    <table name="FIN_PAYMENT" primaryKey="FIN_PAYMENT_KEY">
+      <column name="EM_SSVE_VIATICAL_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSVE_VIAT_SETTLEMENT_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSVE_VIATICALAMOUNT" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
+        <default><![CDATA[0]]></default>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SSVE_VIATICAL" name="EM_SSVE_PAYMENT_VIATICAL">
+        <reference local="EM_SSVE_VIATICAL_ID" foreign="SSVE_VIATICAL_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSVE_VIATICAL_SETTLEMENT" name="EM_SSVE_PAYMENT_VIATICAL_SETTL">
+        <reference local="EM_SSVE_VIAT_SETTLEMENT_ID" foreign="SSVE_VIATICAL_SETTLEMENT_ID"/>
+      </foreign-key>
+    </table>
+  </database>

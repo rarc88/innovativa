@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PurchaseOrder" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+col.line as "line_order",
+co.c_order_id,
+ao.ad_org_id as "organizationid",
+ao.name as "organization",
+co.documentno as "documentno",
+co.poreference as "poreference",
+co.dateordered as "date_order",
+cbp.name as "partner_name",
+cbp.taxid as "partner_taxid",
+cbp.value as "partner_value",
+co.description as "description",
+SSFL_CONVERT_NUMBERTOLETTERS(co.grandtotal) as "total_letters",
+co.datepromised as "datepromised",
+ccos.name as "costcenter_name",
+coalesce(to_char(cl.address1),to_char(cl.address2)) as "cl_address1",
+cbploc.phone as "cbploc_phone",
+cbploc.fax as "cbploc_fax",
+mp.name as "product",
+col.qtyordered as "qty_order",
+col.priceactual as "price",
+(col.qtyordered * col.priceactual) as "total",
+co.grandtotal as "grandtotal",
+tax.rate as "rate",
+'IVA ' || (to_char(tax.rate),'') || '%' as "indice",
+col.linenetamt * (tax.rate/100) as "porcentage",
+cbp.ad_language as "ad_language",
+au.name as "order"
+from   c_order co
+left join c_orderline col on col.c_order_id = co.c_order_id
+left join ad_org ao on ao.ad_org_id = co.ad_org_id
+left join c_bpartner cbp on cbp.c_bpartner_id = co.c_bpartner_id
+left join c_bpartner_location cbploc on cbploc.c_bpartner_location_id=co.c_bpartner_location_id
+left join c_location cl on cl.c_location_id=cbploc.c_location_id
+left join c_costcenter ccos on ccos.c_costcenter_id = co.c_costcenter_id
+left join m_product mp on mp.m_product_id = col.m_product_id
+left join c_tax tax on tax.c_tax_id = col.c_tax_id
+left join ad_user au on au.ad_user_id = co.createdby
+where
+ co.c_order_id = $P{DOCUMENT_ID}
+order by co.documentno,col.line asc]]>
+	</queryString>
+	<field name="line_order" class="java.math.BigDecimal"/>
+	<field name="c_order_id" class="java.lang.String"/>
+	<field name="organizationid" class="java.lang.String"/>
+	<field name="organization" class="java.lang.String"/>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="poreference" class="java.lang.String"/>
+	<field name="date_order" class="java.sql.Timestamp"/>
+	<field name="partner_name" class="java.lang.String"/>
+	<field name="partner_taxid" class="java.lang.String"/>
+	<field name="partner_value" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="total_letters" class="java.lang.String"/>
+	<field name="datepromised" class="java.sql.Timestamp"/>
+	<field name="costcenter_name" class="java.lang.String"/>
+	<field name="cl_address1" class="java.lang.String"/>
+	<field name="cbploc_phone" class="java.lang.String"/>
+	<field name="cbploc_fax" class="java.lang.String"/>
+	<field name="product" class="java.lang.String"/>
+	<field name="qty_order" class="java.math.BigDecimal"/>
+	<field name="price" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="grandtotal" class="java.math.BigDecimal"/>
+	<field name="rate" class="java.math.BigDecimal"/>
+	<field name="indice" class="java.lang.String"/>
+	<field name="porcentage" class="java.math.BigDecimal"/>
+	<field name="ad_language" class="java.lang.String"/>
+	<field name="order" class="java.lang.String"/>
+	<variable name="subtotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="gtotal" class="java.lang.Double">
+		<variableExpression><![CDATA[Double.valueOf($V{v_iva12}.toString()) + Double.valueOf($V{v_ivacero}.toString())+ Double.valueOf($V{subtotal}.toString())]]></variableExpression>
+	</variable>
+	<variable name="v_iva12" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[($F{rate}.equals(new java.math.BigDecimal(12)) ? (new Double($F{porcentage}.toString())):0)]]></variableExpression>
+	</variable>
+	<variable name="v_ivacero" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[($F{rate}.equals(new java.math.BigDecimal(0)) ? (new Double($F{porcentage}.toString())):0)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="9" width="373" height="30"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PETROLERA ECUATORIANA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="177" y="27" width="368" height="25">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PURCHASE ORDER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="177" y="27" width="368" height="25">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORDEN DE COMPRA]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Right" vAlign="Top" isUsingCache="true">
+				<reportElement key="image-1" x="2" y="2" width="173" height="123"/>
+				<imageExpression class="java.awt.Image"><![CDATA[]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="337" splitType="Stretch">
+			<staticText>
+				<reportElement x="133" y="311" width="153" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="311" width="80" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="311" width="73" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="11" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documentno}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/dd/yyyy" isBlankWhenNull="true">
+				<reportElement x="177" y="31" width="109" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{date_order}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/dd/yyyy" isBlankWhenNull="true">
+				<reportElement x="177" y="51" width="109" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{datepromised}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="242" width="366" height="56"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="12" width="107" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{costcenter_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="169" width="107" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cl_address1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="189" width="107" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cbploc_phone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="446" y="189" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cbploc_fax}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="45" y="311" width="87" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="177" y="129" width="109" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="149" width="107" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_taxid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="444" y="311" width="102" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="129" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TERCERO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="149" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C I :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="31" width="129" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA ORDEN :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="51" width="131" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA PROPUESTA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="242" width="113" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripcion :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="169" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCION :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="189" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELF :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="189" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FAX :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="11" width="130" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CENTRO DE COSTOS :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="12" width="113" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO NUM :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="71" width="366" height="34"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{poreference}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="46" y="71" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REFERENCIAS:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="120" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="133" y="311" width="153" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equalsIgnoreCase("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="311" width="80" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUANTITY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="311" width="73" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="242" width="113" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="226" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement x="2" y="309" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement x="2" y="331" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="47" y="11" width="130" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COST CENTER :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="32" width="129" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE OF ORDER : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="53" width="131" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROPOSED DATE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="73" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REFERENCES :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="12" width="113" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCUMENT NUM :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="128" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BUSINESS PARTNER :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="169" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTION :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="188" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PHONE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="148" width="133" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAXID :]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="133" y="0" width="153" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{product}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="289" y="0" width="80" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{qty_order}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="371" y="1" width="73" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="46" y="0" width="87" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{line_order}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="444" y="0" width="104" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="160" splitType="Stretch">
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="444" y="0" width="102" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{subtotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="444" y="60" width="104" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{gtotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="444" y="20" width="104" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{v_iva12}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="444" y="40" width="104" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{v_ivacero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="369" y="0" width="75" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUB TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="20" width="75" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA 12 %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="40" width="75" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA 0 %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="60" width="75" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="1" width="75" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL SUB]]></text>
+			</staticText>
+			<line>
+				<reportElement x="121" y="61" width="140" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="175" y="91" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{order}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="90" y="91" width="75" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORDER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="91" width="75" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORDEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="68" width="75" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRMA]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

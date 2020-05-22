@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSFL_RETURN_NAME_DATE">
+    <function name="SSFL_RETURN_NAME_DATE" type="VARCHAR">
+      <parameter name="date_date" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_contar_c NUMBER(5):=0; --OBTG:NUMBER--
+ v_rest_c NUMBER(5):=0; --OBTG:NUMBER--
+ v_sbs_c VARCHAR2(100):=''; --OBTG:VARCHAR2--
+ v_armart VARCHAR2(100):=''; --OBTG:VARCHAR2--
+BEGIN
+ v_contar_c := length(date_date);
+ v_sbs_c := substr(date_date,1,1);
+ v_armart := upper(v_sbs_c);
+ v_sbs_c := substr(date_date,2,v_contar_c);
+ v_armart := trim(v_armart || v_sbs_c) ;
+
+ RETURN  v_armart;
+END SSFL_RETURN_NAME_DATE
+]]></body>
+    </function>
+  </database>

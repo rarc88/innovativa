@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REF_LIST" version="">
+  <row id="07CE1DCC85E74B1F8BE505AEA88AAE0B" trl="N">
+    <value column="Name" isTrl="Y" original="Subsistence">Subsistencia</value>
+    <value column="Description" isTrl="Y" original="Subsistence">Subsistencia</value>
+  </row>
+  <row id="19DBA61953964941B7394FC8A6F5BE7A" trl="N">
+    <value column="Name" isTrl="Y" original="Terrestrial">Terrestre</value>
+    <value column="Description" isTrl="Y" original="Terrestrial">Terrestre</value>
+  </row>
+  <row id="37D8B42AD60D4BDAAE0ED4772EE4612D" trl="N">
+    <value column="Name" isTrl="Y" original="Maritime">Marítimo</value>
+    <value column="Description" isTrl="Y" original="Maritime">Marítimo</value>
+  </row>
+  <row id="5FB019FE80A4496CBBE2BEA116C34EA9" trl="N">
+    <value column="Name" isTrl="Y" original="Aerial">Aéreo</value>
+    <value column="Description" isTrl="Y" original="Aerial">Aéreo</value>
+  </row>
+  <row id="8F44991DFB4A485D9EE0FF6EA79676E8" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical">Viático</value>
+    <value column="Description" isTrl="Y" original="Viatical">Viático</value>
+  </row>
+  <row id="904E769828014A90ACBFA798F3B05DC9" trl="N">
+    <value column="Name" isTrl="N" original="Fluvial">Fluvial</value>
+    <value column="Description" isTrl="N" original="Fluvial">Fluvial</value>
+  </row>
+  <row id="A206C136F1364153B8DB5A7A0F3ED14A" trl="N">
+    <value column="Name" isTrl="Y" original="Per Trip">Por viaje</value>
+    <value column="Description" isTrl="Y" original="Per Trip">Por viaje</value>
+  </row>
+  <row id="A38C4443C395491AA414ABF872EB8A53" trl="N">
+    <value column="Name" isTrl="N" original="International">International</value>
+    <value column="Description" isTrl="N" original="International">International</value>
+  </row>
+  <row id="A8AA2DE82EF2451C84DA768D7084C223" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Settlement Unsettle">Viatical Settlement Unsettle</value>
+    <value column="Description" isTrl="N" original="Viatical Settlement Unsettle">Viatical Settlement Unsettle</value>
+  </row>
+  <row id="C2DF69BABD6B4053AE8FBE330EC31C7F" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Settlement">Viatical Settlement</value>
+    <value column="Description" isTrl="N" original="Viatical Settlement">Viatical Settlement</value>
+  </row>
+  <row id="DF29B95B4FD0423F8DCBB12F2C17A678" trl="N">
+    <value column="Name" isTrl="N" original="National">National</value>
+    <value column="Description" isTrl="N" original="National">National</value>
+  </row>
+  <row id="F21E28DD4F094D11A9B8A0D3B8606D46" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Application">Viatical Application</value>
+    <value column="Description" isTrl="N" original="Viatical Application">Viatical Application</value>
+  </row>
+  <row id="F62C60122EC84B098298B9723AB81B2D" trl="N">
+    <value column="Name" isTrl="Y" original="Per Day">Por día</value>
+    <value column="Description" isTrl="Y" original="Per Day">Por día</value>
+  </row>
+  <row id="FCED9D5BFC904313B30AAAAF066C12F8" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Settlement Settle">Viatical Settlement Settle</value>
+    <value column="Description" isTrl="N" original="Viatical Settlement Settle">Viatical Settlement Settle</value>
+  </row>
+</compiereTrl>

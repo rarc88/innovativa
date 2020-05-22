@@ -1,0 +1,20 @@
+--- org/openbravo/erpCommon/ad_forms/DocViaticalSettlement.java
++++ org/openbravo/erpCommon/ad_forms/DocViaticalSettlement.java
+@@ -42,7 +42,7 @@
+ 
+   public void loadObjectFieldProvider(ConnectionProvider conn, String stradClientId, String Id)
+       throws ServletException {
+-    setObjectFieldProvider(DocViaticalSettlementData.selectRecord(conn, stradClientId, Id));
++    setObjectFieldProvider(DocViaticalSettlementData.selectRecord(conn, Id, stradClientId));
+   }
+ 
+   /**
+@@ -82,7 +82,7 @@
+     try {
+ 
+       // Get header data
+-      headerData = DocViaticalSettlementData.selectRecord(conn, AD_Client_ID, Record_ID);
++      headerData = DocViaticalSettlementData.selectRecord(conn, Record_ID, AD_Client_ID);
+       if (headerData.length > 0) {
+         //
+         account = new Account(conn, headerData[0].cExpenseaccountId);

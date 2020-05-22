@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="189D13622BB04624A77077E5C2B43327" trl="N">
+    <value column="Name" isTrl="N" original="ElementValueSecondary">ElementValueSecondary</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="18C066A3DFCC4123B54415E640D844B0" trl="N">
+    <value column="Name" isTrl="Y" original="General Ledger Report Secondary">Libro Mayor Secondary</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="29EF7B1999374D22B7E5346404B931D0" trl="N">
+    <value column="Name" isTrl="Y" original="Account Match Report">Reporte Homologación de cuentas</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9ADF860D48FF43788F60A062258492A0" trl="N">
+    <value column="Name" isTrl="N" original="Add Payment From Journal Secondary">Add Payment From Journal Secondary</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="D86863F5025F45B2BFA183E313986E86" trl="N">
+    <value column="Name" isTrl="Y" original="Trial Balance Secondary">Balance sumas y saldos secundario</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="FC34E4B321B34551ABE59E6454A4E2F7" trl="N">
+    <value column="Name" isTrl="Y" original="Accounting Transaction Report Secondary">Reporte Contabilidad de Transacciones Secundario</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

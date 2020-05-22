@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.24089"/>
+    <columnDataChange tablename="AD_PROCESS" columnname="PROCEDURENAME" pkRow="112">
+      <oldValue><![CDATA[C_BP_Group_Acct_Copy]]></oldValue>
+      <newValue><![CDATA[em_sspy_c_bp_group_acct_copy]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_TABLE" columnname="ACCTCLASSNAME" pkRow="D1A97202E832470285C9B1EB026D54E2">
+      <oldValue><![CDATA[org.openbravo.erpCommon.ad_forms.DocFINPayment]]></oldValue>
+      <newValue><![CDATA[ec.com.sidesoft.localization.ecuador.accounting.payments.prvyear.accounting_template.DocFINPayment]]></newValue>
+    </columnDataChange>
+  </vector>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="AB378CB656F94DD2BDCC03B9A8A12311" trl="N">
+    <value column="Text" isTrl="N" original="Fecha Fin">Fecha Fin</value>
+  </row>
+  <row id="AF065A798EAC4CC684A48BAA8D6FB540" trl="N">
+    <value column="Text" isTrl="N" original="Valor Pago">Valor Pago</value>
+  </row>
+  <row id="B74CE8801E2E41A29E9024B5BC699AFA" trl="N">
+    <value column="Text" isTrl="N" original="Valor Devengado">Valor Devengado</value>
+  </row>
+  <row id="CA4D188A3CB644199504272EC133A37C" trl="N">
+    <value column="Text" isTrl="N" original="Contratista:">Contratista:</value>
+  </row>
+  <row id="D1556FEA32FA44449659F0052FC0155A" trl="N">
+    <value column="Text" isTrl="N" original="Administrador del Contrato:">Administrador del Contrato:</value>
+  </row>
+  <row id="D2ABE801060048359324652E79E6414A" trl="N">
+    <value column="Text" isTrl="N" original="Valor Total">Valor Total</value>
+  </row>
+  <row id="D91BDEE832FC4658A7639194CD6CE1D8" trl="N">
+    <value column="Text" isTrl="N" original="Plazo:">Plazo:</value>
+  </row>
+  <row id="E3394049E8574855BBEEA11F3F428ACC" trl="N">
+    <value column="Text" isTrl="N" original="Forma Pago">Forma Pago</value>
+  </row>
+  <row id="FB707559E1284D27A1C65E289A0A32BA" trl="N">
+    <value column="Text" isTrl="N" original="Nombre de Contrato:">Nombre de Contrato:</value>
+  </row>
+  <row id="F3D8C668F4DE49B2AF430705B6FFAE1D" trl="N">
+    <value column="Text" isTrl="N" original="%Avance">%Avance</value>
+  </row>
+  <row id="F83485F8A2CB42689196212E392F98B4" trl="N">
+    <value column="Text" isTrl="N" original="Fecha Pago">Fecha Pago</value>
+  </row>
+  <row id="03BB5BA8BD404DBD803B4F56E8A5C65C" trl="N">
+    <value column="Text" isTrl="N" original="No. Contrato">No. Contrato</value>
+  </row>
+  <row id="1DCBDA57BAC34BDB8CC476F77BA166F3" trl="N">
+    <value column="Text" isTrl="N" original="Documento Pago">Documento Pago</value>
+  </row>
+  <row id="1430A2E64AB94DC388ADECEDCEE03C0C" trl="N">
+    <value column="Text" isTrl="N" original="No. Contrato:">No. Contrato:</value>
+  </row>
+  <row id="197CA71068EA4F8D96ABCA6134BED944" trl="N">
+    <value column="Text" isTrl="N" original="Contratista">Contratista</value>
+  </row>
+  <row id="2CA3B40111AE4D03B1C29BDE3AAF9B1A" trl="N">
+    <value column="Text" isTrl="N" original="Valor sin IVA">Valor sin IVA</value>
+  </row>
+  <row id="22CC581F81584F6FB36074B9A99FA6CB" trl="N">
+    <value column="Text" isTrl="N" original="Plazo">Plazo</value>
+  </row>
+  <row id="29145F2CC7AB44589A0B2D459A55E394" trl="N">
+    <value column="Text" isTrl="N" original="Fecha Factura">Fecha Factura</value>
+  </row>
+  <row id="3AE4BB13D6874C7980E811D3B437C47C" trl="N">
+    <value column="Text" isTrl="N" original="Monto:">Monto:</value>
+  </row>
+  <row id="3B8F96DA3C5142229A8D03CA2F72B6EF" trl="N">
+    <value column="Text" isTrl="N" original="Observaciones">Observaciones</value>
+  </row>
+  <row id="3F328342B49941D5B3CE434AA50DDD7A" trl="N">
+    <value column="Text" isTrl="N" original="Monto">Monto</value>
+  </row>
+  <row id="31B178E367604A8383CE0AE8B15C5EC0" trl="N">
+    <value column="Text" isTrl="N" original="Plazo:">Plazo:</value>
+  </row>
+  <row id="328838E0DCF646A39394BBD552F0AD9C" trl="N">
+    <value column="Text" isTrl="N" original="Actividad">Actividad</value>
+  </row>
+  <row id="4F4427FCAA064644AF46906263B7A6AA" trl="N">
+    <value column="Text" isTrl="N" original="Nombre de Contrato:">Nombre de Contrato:</value>
+  </row>
+  <row id="467F1AF3BC85404AB62C76CB3EA89129" trl="N">
+    <value column="Text" isTrl="N" original="Forma de Garantia">Forma de Garantia</value>
+  </row>
+  <row id="5FA53C27B0C5424DA52D767793AB0DF9" trl="N">
+    <value column="Text" isTrl="N" original="Reporte de Avance Fisico">Reporte de Avance Fisico</value>
+  </row>
+  <row id="5212304A29414B0798C54B137554B5C8" trl="N">
+    <value column="Text" isTrl="N" original="Nombre de Contrato">Nombre de Contrato</value>
+  </row>
+  <row id="6B64D53444AD42BBBA18E84CA2D347DF" trl="N">
+    <value column="Text" isTrl="N" original="Valor Pagado">Valor Pagado</value>
+  </row>
+  <row id="61E1A508896044218322DDFFB28636A7" trl="N">
+    <value column="Text" isTrl="N" original="Fecha Vigencia">Fecha Vigencia</value>
+  </row>
+  <row id="70DB0BF1AB7B47C5A095B13FAB800CBC" trl="N">
+    <value column="Text" isTrl="N" original="Administrador del Contrato">Administrador del Contrato</value>
+  </row>
+  <row id="711CBCEDF90145628EAF57A0F7DA7814" trl="N">
+    <value column="Text" isTrl="N" original="No. Contrato:">No. Contrato:</value>
+  </row>
+  <row id="72862113018D4C0BB85578217F7F9050" trl="N">
+    <value column="Text" isTrl="N" original="Monto Asegurado">Monto Asegurado</value>
+  </row>
+  <row id="8BBCCB0953D64E3BA65A86AFC3D424D1" trl="N">
+    <value column="Text" isTrl="N" original="IVA">IVA</value>
+  </row>
+  <row id="8E896B58A1B44BD59DD9AA1417A558BF" trl="N">
+    <value column="Text" isTrl="N" original="Contratista:">Contratista:</value>
+  </row>
+  <row id="801187AD52E34967A07E701C076E9943" trl="N">
+    <value column="Text" isTrl="N" original="Tipo de Garantia">Tipo de Garantia</value>
+  </row>
+  <row id="84C9E0F651064E4EA1174ABD2B9F3ED2" trl="N">
+    <value column="Text" isTrl="N" original="Reporte de Avance Economico">Reporte de Avance Economico</value>
+  </row>
+  <row id="88113CF1422743468B291D4A090E6D2C" trl="N">
+    <value column="Text" isTrl="N" original="Saldo">Saldo</value>
+  </row>
+  <row id="9F5D7944CEDE4AFF9253BB7BA0A6E258" trl="N">
+    <value column="Text" isTrl="N" original="Fecha Inicio">Fecha Inicio</value>
+  </row>
+  <row id="91B92E2F6B43422382AB1B66407FB6E0" trl="N">
+    <value column="Text" isTrl="N" original="Administrador del Contrato:">Administrador del Contrato:</value>
+  </row>
+  <row id="952CECB4E1D447C782697BD5548A7701" trl="N">
+    <value column="Text" isTrl="N" original="Reporte de Garantias">Reporte de Garantias</value>
+  </row>
+  <row id="96957A85999D494EB625E8D66CCC9D6E" trl="N">
+    <value column="Text" isTrl="N" original="Monto:">Monto:</value>
+  </row>
+</compiereTrl>

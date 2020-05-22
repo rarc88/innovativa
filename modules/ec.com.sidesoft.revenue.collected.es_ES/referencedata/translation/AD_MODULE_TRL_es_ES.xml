@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MODULE" version="">
+  <row id="77EC489F26524ADEAFA309ED75EFCB6A" trl="N">
+    <value column="Description" isTrl="N" original="Sidesoft Revenue For Collected">Sidesoft Revenue For Collected</value>
+    <value column="Help" isTrl="N" original="Ingresos, Recuadar, Presupuestos, Afectación&#10;9858 - jh.Afectación presupuestaria de ingresos por recaudar&#10;Depende Repositorio Presupuestos">Ingresos, Recuadar, Presupuestos, Afectación
+9858 - jh.Afectación presupuestaria de ingresos por recaudar
+Depende Repositorio Presupuestos</value>
+    <value column="License" isTrl="N" original=""/>
+    <value column="Updateinfo" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

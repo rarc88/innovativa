@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFB_BUDGETAMUNTS2">
+    <function name="SFB_BUDGETAMUNTS2" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+Cur_OrderLine                       RECORD;
+Cur_Certificate                     RECORD;
+Cur_CertificateLine 	              RECORD;  
+Cur_payroll_provision               RECORD;
+Cur_benefit_dismissal_validate      RECORD;
+Cur_Parameter                       RECORD;
+
+V_ORDER_ID                          VARCHAR2(32);
+V_CERTIFICATE_ID                    VARCHAR2(32);
+V_CERTIFICATE2_ID                   VARCHAR2(32);
+v_Record_ID                         VARCHAR2(32);
+V_COMMITED_VALUE                    NUMBER;
+V_EXECUTED_VALUE                    NUMBER;
+V_CERTIFIED_VALUE                   NUMBER;
+BEGIN
+
+      FOR Cur_Parameter IN
+        (SELECT i.Record_ID, i.AD_User_ID, p.ParameterName, p.P_String,
+          p.P_Number, p.P_Date
+        FROM AD_PINSTANCE i
+        LEFT JOIN AD_PINSTANCE_PARA p
+          ON i.AD_PInstance_ID=p.AD_PInstance_ID
+        WHERE i.AD_PInstance_ID=pinstance_id
+        ORDER BY p.SeqNo
+        )
+      LOOP
+        v_Record_ID:=Cur_Parameter.Record_ID;
+
+      END LOOP;
+      
+V_ORDER_ID:= v_Record_ID;
+IF V_ORDER_ID IS NOT NULL THEN
+  FOR Cur_Orderline IN
+  (SELECT DISTINCT SBC.SFB_BUDGET_CERTIFICATE_ID
+   FROM C_INVOICELINE ORD
+   LEFT JOIN SFB_BUDGET_CERT_LINE SBCL ON SBCL.SFB_BUDGET_CERT_LINE_ID = ORD.EM_SFB_BUDGET_CERT_LINE_ID
+   LEFT JOIN SFB_BUDGET_CERTIFICATE SBC ON SBC.SFB_BUDGET_CERTIFICATE_ID = SBCL.SFB_BUDGET_CERTIFICATE_ID
+   WHERE C_INVOICE_ID = V_ORDER_ID)
+  LOOP
+    
+    V_CERTIFICATE_ID:= Cur_Orderline.SFB_BUDGET_CERTIFICATE_ID ;
+    V_COMMITED_VALUE:=0;
+    V_EXECUTED_VALUE:=0;
+    V_CERTIFIED_VALUE:=0;
+    
+    FOR Cur_CertificateLine IN
+    (SELECT COMMITTED_VALUE, EXECUTED_VALUE, CERTIFIED_VALUE,SFB_BUDGET_CERTIFICATE_ID
+    FROM SFB_BUDGET_CERT_LINE
+    WHERE SFB_BUDGET_CERTIFICATE_ID = V_CERTIFICATE_ID )
+    LOOP
+    
+      V_COMMITED_VALUE:=  V_COMMITED_VALUE + Cur_CertificateLine.COMMITTED_VALUE;
+      V_EXECUTED_VALUE:= V_EXECUTED_VALUE + Cur_CertificateLine.EXECUTED_VALUE;
+      V_CERTIFIED_VALUE:= V_CERTIFIED_VALUE + Cur_CertificateLine.CERTIFIED_VALUE;    
+      V_CERTIFICATE2_ID:= Cur_CertificateLine.SFB_BUDGET_CERTIFICATE_ID;
+      
+    END LOOP;
+    
+    
+    IF V_CERTIFICATE2_ID IS NOT NULL THEN
+    
+      UPDATE SFB_BUDGET_CERTIFICATE SET COMMITTED_VALUE = V_COMMITED_VALUE, EXECUTED_VALUE=V_EXECUTED_VALUE, CERTIFIED_VALUE=V_CERTIFIED_VALUE
+      WHERE SFB_BUDGET_CERTIFICATE_ID = V_CERTIFICATE2_ID;
+      
+    END IF;
+  
+  END LOOP;
+END IF;
+RETURN;
+
+END SFB_BUDGETAMUNTS2
+]]></body>
+    </function>
+  </database>

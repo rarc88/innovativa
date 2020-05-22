@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.34312"/>
+    <removeTriggerChange triggerName="SSFI_FACT_ACCT_TRG"/>
+    <columnRequiredChange tableName="SQB_CONFIG_QUICKBILLING" columnName="SSWH_TAXPAYER_ID">
+      <required>false</required>
+    </columnRequiredChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="ISMANDATORY" pkRow="4BD8E64ECC544BCB8B16B415F285B74D">
+      <oldValue><![CDATA[N]]></oldValue>
+      <newValue><![CDATA[Y]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="ISMANDATORY" pkRow="7891269C83E1655DE040007F010155CE">
+      <oldValue><![CDATA[N]]></oldValue>
+      <newValue><![CDATA[Y]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="ISMANDATORY" pkRow="9DF63ED9CD054020A4AA79A2C235B34A">
+      <oldValue><![CDATA[N]]></oldValue>
+      <newValue><![CDATA[Y]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="ISMANDATORY" pkRow="C83C1EB5414D4A528EDB166768B22C84">
+      <oldValue><![CDATA[N]]></oldValue>
+      <newValue><![CDATA[Y]]></newValue>
+    </columnDataChange>
+  </vector>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="AAFB7CE47AEC41BDAAF10073B005E37E" trl="N">
+    <value column="Text" isTrl="N" original="Nombre">Nombre</value>
+  </row>
+  <row id="AA666904195B4C29881FB975648EC915" trl="N">
+    <value column="Text" isTrl="N" original="Nombre">Nombre</value>
+  </row>
+  <row id="AC99ED177039498AADCCC0E45C35CAB1" trl="N">
+    <value column="Text" isTrl="Y" original="Budget Report">Reporte del Presupuesto</value>
+  </row>
+  <row id="AE98750C989941C8AFCA1B4BB88BEBC6" trl="N">
+    <value column="Text" isTrl="N" original="AREA">AREA</value>
+  </row>
+  <row id="A1D37AE7929A4254941ABA502F67DC97" trl="N">
+    <value column="Text" isTrl="N" original="Partida">Partida</value>
+  </row>
+  <row id="A524DE8DBA76432DA25659D551B1A7B0" trl="N">
+    <value column="Text" isTrl="N" original="Partida">Partida</value>
+  </row>
+  <row id="A6ADA7F67DBA4E3C99A15FBEE763CFCD" trl="N">
+    <value column="Text" isTrl="N" original="LINEA DE NEGOCIO">LINEA DE NEGOCIO</value>
+  </row>
+  <row id="A8827D56CB434EDF90E841C6647DF1E0" trl="N">
+    <value column="Text" isTrl="Y" original="si se dispone de fondos para cubrir los valores solicitados por concepto de:">Si se dispone de fondos para cubrir los valores solicitados por concepto de:</value>
+  </row>
+  <row id="BBCCB445921245A2BBEDA6BA923B3555" trl="N">
+    <value column="Text" isTrl="N" original="DOCUMENTO">DOCUMENTO</value>
+  </row>
+  <row id="BC8829DFA5D14A6BA3F60219464FB391" trl="N">
+    <value column="Text" isTrl="N" original="Divisa">Divisa</value>
+  </row>
+  <row id="BDEFF59EF1CD4517ADB890A81A663221" trl="N">
+    <value column="Text" isTrl="N" original="BUQUE">BUQUE</value>
+  </row>
+  <row id="BE7EFF390A6B40D1BDD923D195BF6779" trl="N">
+    <value column="Text" isTrl="Y" original="para la ejecución presupuestaria">Para la ejecución presupuestaria</value>
+  </row>
+  <row id="BF2FC73C0B1E447A9177366A4867A14D" trl="N">
+    <value column="Text" isTrl="N" original="DESCRIPCION">DESCRIPCION</value>
+  </row>
+  <row id="B1C7CCC0E67946B19F445816F8C841C5" trl="N">
+    <value column="Text" isTrl="N" original="MONEDA">MONEDA</value>
+  </row>
+  <row id="B73FA933F72B4215B2330B158C750763" trl="N">
+    <value column="Text" isTrl="N" original="VALOR">VALOR</value>
+  </row>
+  <row id="B9FF0154B16D410AA5AE3D82F8D5F760" trl="N">
+    <value column="Text" isTrl="N" original="CERTIFICACIÓN PRESUPUESTARIA">CERTIFICACIÓN PRESUPUESTARIA</value>
+  </row>
+  <row id="B923D0A7EAAD4C9485294D46F4E10DE4" trl="N">
+    <value column="Text" isTrl="N" original="REGISTRO DE CAMBIOS DE PRESUPUESTO">REGISTRO DE CAMBIOS DE PRESUPUESTO</value>
+  </row>
+  <row id="CAB1FB9D106D472E9D89C2A434F92D12" trl="N">
+    <value column="Text" isTrl="N" original="Executed">Ejecutado</value>
+  </row>
+  <row id="CC8092F6A8EA4F549AAD38C31E9F8CC4" trl="N">
+    <value column="Text" isTrl="N" original="VALOR">VALOR</value>
+  </row>
+  <row id="C19FF2B9FBDA4907A9E53F79F317BEAD" trl="N">
+    <value column="Text" isTrl="N" original="MES DESDE">MES DESDE</value>
+  </row>
+  <row id="C8926B3B0BC6461D8BA1C89436D075BB" trl="N">
+    <value column="Text" isTrl="N" original="Centro de Costo">Centro de Costo</value>
+  </row>
+  <row id="DA595C55A0D2412BADCA26140E2D1136" trl="N">
+    <value column="Text" isTrl="N" original="FECHA DE">FECHA DE</value>
+  </row>
+  <row id="DC1C60043DFE4E06A783DCD64997AFB4" trl="N">
+    <value column="Text" isTrl="N" original="Partida">Partida</value>
+  </row>
+  <row id="D185196D2EB24876808521D46C14DB58" trl="N">
+    <value column="Text" isTrl="Y" original="CERTIFICACION PRESUPUESTARIA">CERTIFICACIÓN PRESUPUESTARIA</value>
+  </row>
+  <row id="D8F2E6DF54ED4CCB84B274F95AB51B77" trl="N">
+    <value column="Text" isTrl="Y" original="en el año">En el año</value>
+  </row>
+  <row id="E13C4901AE264BE6A86BBF47DEFC571F" trl="N">
+    <value column="Text" isTrl="Y" original="se certifica que en el presupuesto de">Se certifica que en el presupuesto de</value>
+  </row>
+  <row id="E3249184FE4D46A39C5AD17FAB7B34B2" trl="N">
+    <value column="Text" isTrl="N" original="Esta orden no constituye una orden de egreso o autorización de pago, las unidades respectivas que participen en este trámite, serán responsables de cumplir los respectivos procesos de conformidad a las normativas vigentes y observando las normas de control.">Esta orden no constituye una orden de egreso o autorización de pago, las unidades respectivas que participen en este trámite, serán responsables de cumplir los respectivos procesos de conformidad a las normativas vigentes y observando las normas de control.</value>
+  </row>
+  <row id="E4B3F99ADA274F4AABEBD9C177433C26" trl="N">
+    <value column="Text" isTrl="Y" original="HASH CODE :">Código Hash :</value>
+  </row>
+  <row id="E452CC8422654148AC9A853B27992732" trl="N">
+    <value column="Text" isTrl="N" original="PARTIDA PRESUPUESTARIA HASTA">PARTIDA PRESUPUESTARIA HASTA</value>
+  </row>
+  <row id="E7A0F7602B284FBFA50C8E8E8A0CBFBE" trl="N">
+    <value column="Text" isTrl="Y" original="Cost Center">Centro de Costo</value>
+  </row>
+  <row id="E77EBF7142E046909FC11364496070C7" trl="N">
+    <value column="Text" isTrl="Y" original="se certifica que en el presupuesto de">Se certifica que en el presupuesto de</value>
+  </row>
+  <row id="FE4658C2BF934CFAAE40B02EBA3E9AF3" trl="N">
+    <value column="Text" isTrl="N" original="Autorizado por">Autorizado por</value>
+  </row>
+  <row id="F2D81A4ADBB546EDAA3053DFCA82C442" trl="N">
+    <value column="Text" isTrl="N" original="Concepto">Concepto</value>
+  </row>
+  <row id="F21B26D1AE0E4C0499445DA20E06DE1E" trl="N">
+    <value column="Text" isTrl="Y" original="para las siguientes partidas presupuestarias:">Para las siguientes partidas presupuestarias:</value>
+  </row>
+  <row id="0D32D391074C445F9F3294B01DC0A0C4" trl="N">
+    <value column="Text" isTrl="N" original="ORDEN DE COMPRA Y PROVEEDOR DE COMPRA">ORDEN DE COMPRA Y PROVEEDOR DE COMPRA</value>
+  </row>
+  <row id="0784D724663E454BBC057467C6137915" trl="N">
+    <value column="Text" isTrl="N" original="Valor">Valor</value>
+  </row>
+  <row id="1BD65BD9FFBF49D08A903508711EF5E3" trl="N">
+    <value column="Text" isTrl="Y" original="Budgeted">Presupuestado</value>
+  </row>
+  <row id="14FAA2DF8BB944F0BC3075ADAB13DB19" trl="N">
+    <value column="Text" isTrl="N" original="HASTA">HASTA</value>
+  </row>
+  <row id="2BFF5704B71B43ED8562D602F00293A2" trl="N">
+    <value column="Text" isTrl="N" original="Autorizado por">Autorizado por</value>
+  </row>
+  <row id="2C8768E85B874559835154BDC1B1A8C8" trl="N">
+    <value column="Text" isTrl="N" original="Emitido por">Emitido por</value>
+  </row>
+  <row id="2FECD64E0F294724BE447E084310596E" trl="N">
+    <value column="Text" isTrl="N" original="PARTIDA PRESUPUESTARIA DESDE">PARTIDA PRESUPUESTARIA DESDE</value>
+  </row>
+  <row id="2FE13D72A463490FAA59D8BE797D2790" trl="N">
+    <value column="Text" isTrl="N" original="EJERCICIO:">EJERCICIO:</value>
+  </row>
+  <row id="22A723E09F04435B87F6B59716F5A95B" trl="N">
+    <value column="Text" isTrl="N" original="Emitido por">Emitido por</value>
+  </row>
+  <row id="2270F0B36D0F4C439113B4C7445C0DC0" trl="N">
+    <value column="Text" isTrl="N" original="DESCRIPCION">DESCRIPCION</value>
+  </row>
+  <row id="2580BCF1A55E4DD48CC045A5D5E80CB6" trl="N">
+    <value column="Text" isTrl="N" original="HASH CODE">HASH CODE</value>
+  </row>
+  <row id="26C94EB9485F474D9DE90EC9BB117865" trl="N">
+    <value column="Text" isTrl="N" original="BUQUE">BUQUE</value>
+  </row>
+  <row id="3F4B16F86EF6469F8676C1CDE0152F52" trl="N">
+    <value column="Text" isTrl="N" original="Autorizado por">Autorizado por</value>
+  </row>
+  <row id="30C3276608774BA09BD48CB3C558BA3B" trl="N">
+    <value column="Text" isTrl="N" original="Esta orden no constituye una orden de egreso a autorizacion de pago, las unidades respectivas que participen en este tramite, seran responsables de cumplir los respectivos procesos de conformidad a las normativas vigentes y obsevando las normas de control.">Esta orden no constituye una orden de egreso a autorizacion de pago, las unidades respectivas que participen en este tramite, seran responsables de cumplir los respectivos procesos de conformidad a las normativas vigentes y obsevando las normas de control.</value>
+  </row>
+  <row id="4B9DD47973D24B248CCB483EF76EE9BA" trl="N">
+    <value column="Text" isTrl="N" original="Con fecha">Con fecha</value>
+  </row>
+  <row id="4C9C6ACA381742A391ECF32759139115" trl="N">
+    <value column="Text" isTrl="N" original="Centro de Costo">Centro de Costo</value>
+  </row>
+  <row id="40560BBA6A29494F89C9EB51A2886BD4" trl="N">
+    <value column="Text" isTrl="N" original="REG. FECHA">REG. FECHA</value>
+  </row>
+  <row id="41F69AB750BD4E209BF24F78FE10346D" trl="N">
+    <value column="Text" isTrl="N" original="AREA">AREA</value>
+  </row>
+  <row id="410AB9A72CA64193A0732E6B479A7BAA" trl="N">
+    <value column="Text" isTrl="N" original="si se dispone de fondos para cubrir los valores solicitados por concepto de:">si se dispone de fondos para cubrir los valores solicitados por concepto de:</value>
+  </row>
+  <row id="435953E9442540289B381AE214BAC1AE" trl="N">
+    <value column="Text" isTrl="N" original="Area">Area</value>
+  </row>
+  <row id="4399385A049E433FBC2011F1B1A66265" trl="N">
+    <value column="Text" isTrl="N" original="Saldo">Saldo</value>
+  </row>
+  <row id="4460EBF58DA14D4D941BFE3C06079139" trl="N">
+    <value column="Text" isTrl="N" original="Nombre">Nombre</value>
+  </row>
+  <row id="5D288064D7DB42F68404446C4F7E53EF" trl="N">
+    <value column="Text" isTrl="N" original="CERTIFICACION PRESUPUESTARIA">CERTIFICACION PRESUPUESTARIA</value>
+  </row>
+  <row id="5D59EBFFDA6D42FE98315ADFB9DBD224" trl="N">
+    <value column="Text" isTrl="N" original="HASH CODE :">HASH CODE :</value>
+  </row>
+  <row id="55CF9C49C8FB453DBEFAFDCC4EB6B640" trl="N">
+    <value column="Text" isTrl="N" original="Divisa">Divisa</value>
+  </row>
+  <row id="57CC81DCE544480192B10624B3F351D5" trl="N">
+    <value column="Text" isTrl="Y" original="para la ejecución presupuestaria">Para la ejecución presupuestaria</value>
+  </row>
+  <row id="583E142B366843AB94BF6C634F18865B" trl="N">
+    <value column="Text" isTrl="N" original="MES HASTA">MES HASTA</value>
+  </row>
+  <row id="59F0C5AFD7D94B11A171F50AC97FCCD0" trl="N">
+    <value column="Text" isTrl="N" original="Con fecha">Con fecha</value>
+  </row>
+  <row id="60F70CDAE6F54B509E9E239661D00D5D" trl="N">
+    <value column="Text" isTrl="N" original="LINEA DE NEGOCIO">LINEA DE NEGOCIO</value>
+  </row>
+  <row id="65915478924B4A2CB1F5EEE3AF142760" trl="N">
+    <value column="Text" isTrl="N" original="NO. RESOLUCION">NO. RESOLUCION</value>
+  </row>
+  <row id="68DA3D291C164A0D9249DB74D42B7E1D" trl="N">
+    <value column="Text" isTrl="N" original="Emitido por">Emitido por</value>
+  </row>
+  <row id="7BD7B95993E34DD28CDB1D0A6110C026" trl="N">
+    <value column="Text" isTrl="N" original="Commited">Commited</value>
+  </row>
+  <row id="7B3CA97054BA4879A5DCE17A557CACD5" trl="N">
+    <value column="Text" isTrl="N" original="Esta orden no constituye una orden de egreso o autorización de pago, las unidades respectivas que participen en este trámite, serán responsables de cumplir los respectivos procesos de conformidad a las normativas vigentes y observando las normas de control.">Esta orden no constituye una orden de egreso o autorización de pago, las unidades respectivas que participen en este trámite, serán responsables de cumplir los respectivos procesos de conformidad a las normativas vigentes y observando las normas de control.</value>
+  </row>
+  <row id="74C6840A8CFF4DF0B3A8EB698D55E1E6" trl="N">
+    <value column="Text" isTrl="Y" original="Budget Item">Partida Presupuestaria</value>
+  </row>
+  <row id="74DA64CCD215492E9239ED8585DA4EBE" trl="N">
+    <value column="Text" isTrl="N" original="PARTIDA">PARTIDA</value>
+  </row>
+  <row id="76280294AE744839ACAA46F0B8FDC647" trl="N">
+    <value column="Text" isTrl="Y" original="para las siguientes partidas presupuestarias:">Para las siguientes partidas presupuestarias:</value>
+  </row>
+  <row id="8B3C303E7BA64A27BF41F0C49E82EBE3" trl="N">
+    <value column="Text" isTrl="N" original="Valor">Valor</value>
+  </row>
+  <row id="8DF63FEEEEEA4CCFB91C7AD118627FD3" trl="N">
+    <value column="Text" isTrl="Y" original="en el año">En el año</value>
+  </row>
+  <row id="8FA70E81DD2B4CBCA301809BD7F1F9DC" trl="N">
+    <value column="Text" isTrl="N" original="ESTADO">ESTADO</value>
+  </row>
+  <row id="8F5F5E2250DC4593AB64BE162D84B9DF" trl="N">
+    <value column="Text" isTrl="N" original="Divisa">Divisa</value>
+  </row>
+  <row id="93AD1D4BFC94416991A01E811D01777B" trl="N">
+    <value column="Text" isTrl="N" original="FECHA">FECHA</value>
+  </row>
+  <row id="97A69ABD817C4408B006F31D094886B0" trl="N">
+    <value column="Text" isTrl="N" original="Valor">Valor</value>
+  </row>
+</compiereTrl>

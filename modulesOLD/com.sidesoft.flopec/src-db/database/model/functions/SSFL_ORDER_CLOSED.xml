@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSFL_ORDER_CLOSED">
+    <function name="SSFL_ORDER_CLOSED" type="NULL">
+      <parameter name="p_ep_instance" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[p_message         VARCHAR2(2000);    
+p_record_id       VARCHAR2(60);      
+p_docaction       VARCHAR2(60);      
+p_user            VARCHAR2(60);      
+p_result          NUMBER;
+
+v_ResultStr       VARCHAR2(2000):='';
+v_currency_id     VARCHAR2(32);      
+v_hashcode        VARCHAR2(32);      
+v_converted       NUMBER;
+v_amt NUMBER:= -1;      -- Revenue (-)
+v_count           INTEGER;
+v_count_doctype   INTEGER;
+v_budgeted        CHAR(1);
+v_baccount_lines  VARCHAR2(2000):='';
+v_nbaccount_lines VARCHAR2(2000):='';
+v_bamount_lines   VARCHAR2(2000):='';
+
+TYPE RECORD IS REF CURSOR;
+cur_params        RECORD;
+cur_lines         RECORD;
+
+BEGIN
+
+  FOR Cur_Params IN (
+    SELECT *
+    FROM ad_ep_instance_para
+    WHERE ad_ep_instance_id = p_ep_instance
+    ) LOOP
+    IF (cur_params.parametername LIKE 'DocAction') THEN
+      p_docaction := Cur_Params.p_string;
+    ELSIF (cur_params.parametername LIKE 'Record_ID') THEN
+      p_record_id := cur_params.p_string;
+    ELSIF (cur_params.parametername LIKE 'User') THEN
+      p_user := cur_params.p_string;
+    ELSIF (cur_params.parametername LIKE 'Message') THEN
+      p_message := cur_params.p_text;
+    ELSIF (cur_params.parametername LIKE 'Result') THEN
+      p_result := cur_params.p_number;
+    END IF;
+  END LOOP;
+
+  IF (p_docaction = 'CL' or p_docaction = 'VO') THEN
+
+        RAISE_APPLICATION_ERROR(-20000, '@ERROR=No se puede Anular o Cerrar esta transaccion@');
+    
+ END IF;
+
+EXCEPTION
+WHEN OTHERS THEN
+  DBMS_OUTPUT.PUT_LINE('ssfl_order_closed exception: '|| v_ResultStr);
+  RAISE;
+END SSFL_ORDER_CLOSED
+]]></body>
+    </function>
+  </database>

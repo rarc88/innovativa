@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFBTR_BUDGETARY_REFORMS_TRG">
+    <trigger name="SFBTR_BUDGETARY_REFORMS_TRG" table="SFBTR_BUDGETARY_REFORMS" fires="before" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+ v_year VARCHAR2(10);
+ v_value NUMBER;
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF (INSERTING OR UPDATING) THEN
+	SELECT year INTO v_year
+	FROM C_YEAR
+	WHERE c_year_id = :new.c_year_id;
+	
+	--Validación Para la fecha dentro del ejercició(AÑO)
+	IF (cast(v_year as double precision) <> extract(year from TO_DATE(:new.registration_date))) THEN
+		RAISE_APPLICATION_ERROR(-20000, '@Sfbtr_RegistrationDate@');
+	END IF;
+	--Validación de Valor a Ajustar
+	IF(:NEW.type='SFBTR_BCA')THEN
+		IF(:NEW.sfb_budget_item_id is null OR :NEW.sfb_budget_line_id is null)THEN
+			RAISE_APPLICATION_ERROR(-20000, '@Sfbtr_BudgetLineError@');
+		END IF;
+		IF(:NEW.value_to_adjust=0)THEN
+		      RAISE_APPLICATION_ERROR(-20000, '@Sfbtr_AdjustValue0@');
+		ELSIF(:NEW.value_to_adjust<0)THEN
+			v_value:= :NEW.value_to_adjust*(-1);
+			IF(v_value>:NEW.available_value)THEN
+				RAISE_APPLICATION_ERROR(-20000, '@Sfbtr_AdjustValueNotAccepted@');
+			END IF;
+		END IF;
+	END IF;
+ 
+  ELSIF (DELETING AND (:old.status = 'RE' OR :old.status = 'AP')) THEN
+	RAISE_APPLICATION_ERROR(-20000, '@Sfbtr_AlreadyProcessedBudgetReforms@');
+  END IF;
+    
+  END SFBTR_BUDGETARY_REFORMS_TRG
+]]></body>
+    </trigger>
+  </database>

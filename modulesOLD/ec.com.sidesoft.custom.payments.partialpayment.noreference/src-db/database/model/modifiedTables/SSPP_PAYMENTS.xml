@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE SSPP_PAYMENTS">
+    <table name="SSPP_PAYMENTS" primaryKey="SSPP_PAYMENTS_PK">
+      <column name="EM_SSPPR_REFERENCENO" primaryKey="false" required="false" type="VARCHAR" size="40" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+    </table>
+  </database>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptSECR_RequisitionMain" pageWidth="864" pageHeight="1008" columnWidth="864" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="114"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="REQUISITION_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR_" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Sidesoft\\Desktop\\fin_paymen\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/opt/OpenbravoERP-3.0/openbravo-erp/modules/com.sidesoft.flopec/src/com/sidesoft/flopec/ad_reports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREP_RptSECR_Requisition" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="BASE_DESIGN" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["src"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LANGUAGE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT M_REQUISITION_ID as "m_requisition_id",AD_ORG_ID AS "organization_id" FROM M_REQUISITION
+ WHERE M_REQUISITION_ID in $P!{REQUISITION_ID}
+and ( docstatus='CO' )]]>
+	</queryString>
+	<field name="m_requisition_id" class="java.lang.String"/>
+	<field name="organization_id" class="java.lang.String"/>
+	<variable name="RUTA_SUB" class="java.lang.String">
+		<variableExpression><![CDATA[$P{BASE_DESIGN} + "/ec/com/sidesoft/custom/requisition/ad_Reports/RptSECR_Requisition.jasper"]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="83" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue()==1]]></printWhenExpression>
+			<subreport>
+				<reportElement key="subreport-1" positionType="Float" isPrintRepeatedValues="false" x="0" y="54" width="572" height="29"/>
+				<subreportParameter name="REQUISITION_ID">
+					<subreportParameterExpression><![CDATA[$F{m_requisition_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LENGUAGE">
+					<subreportParameterExpression><![CDATA[$P{LANGUAGE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$V{RUTA_SUB}]]></subreportExpression>
+			</subreport>
+			<image isLazy="true">
+				<reportElement key="image-2" positionType="Float" x="58" y="0" width="198" height="54"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression class="java.awt.Image"><![CDATA[org.openbravo.erpCommon.utility.Utility.showImageLogo("yourcompanylegal", $F{organization_id})]]></imageExpression>
+			</image>
+		</band>
+		<band height="87">
+			<subreport>
+				<reportElement key="subreport-1" positionType="Float" isPrintRepeatedValues="false" x="0" y="56" width="572" height="29"/>
+				<subreportParameter name="REQUISITION_ID">
+					<subreportParameterExpression><![CDATA[$F{m_requisition_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LENGUAGE">
+					<subreportParameterExpression><![CDATA[$P{LANGUAGE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$V{RUTA_SUB}]]></subreportExpression>
+			</subreport>
+			<image isLazy="true">
+				<reportElement key="image-2" positionType="Float" x="58" y="2" width="198" height="54"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression class="java.awt.Image"><![CDATA[org.openbravo.erpCommon.utility.Utility.showImageLogo("yourcompanylegal", $F{organization_id})]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

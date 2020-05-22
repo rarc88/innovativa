@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MENU" version="">
+  <row id="A62B98DF19834DBF98BF6F6B5CFC0D8E" trl="N">
+    <value column="Name" isTrl="Y" original="Reporte Warranty">Reporte de Garantías</value>
+    <value column="Description" isTrl="Y" original="Reporte Warranty">Reporte de Garantías</value>
+  </row>
+  <row id="C4756B56B52D48E6978AA135210C0ECD" trl="N">
+    <value column="Name" isTrl="Y" original="Insurance Warranties">Seguro de Garantías</value>
+    <value column="Description" isTrl="Y" original="Insurance Warranties">Seguro de Garantías</value>
+  </row>
+  <row id="C8AF9BA4B4634688B9D4B7C44EC6F423" trl="N">
+    <value column="Name" isTrl="Y" original="Contracts Management">Gestión de Contratos</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="DF6D199E1F6B47EE8BED1A1B154D361C" trl="N">
+    <value column="Name" isTrl="Y" original="Contracts">Contratos</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="D29A9E0EBF20467AB7E40E380E704E99" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty Status">Estado de la Garantía</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="D778629742AC4728BACFCE5AD0401930" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty Form">Forma de Garantías</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="E07985CE690849FC9B743F2E227A470A" trl="N">
+    <value column="Name" isTrl="Y" original="Payment Form">Forma de Pago</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="FDAA683EBA4042239AFD3B0F2A9EB722" trl="N">
+    <value column="Name" isTrl="Y" original="Contract Term">Términos del Contrato</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="0E47E986945F4F79896F9755B5AAAF43" trl="N">
+    <value column="Name" isTrl="Y" original="Analisis Tools">Herramientas de Análisis</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="022CB70AA9DA48499EB89204A4165709" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty Type">Tipo de Garantía</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="41F60EA3351E4FC99775E85C7D873BAE" trl="N">
+    <value column="Name" isTrl="Y" original="Setup">Configuración</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="5D9C8576A5F442A89E69ACEB4989761C" trl="N">
+    <value column="Name" isTrl="Y" original="Report Advance Economic">Reporte Económico de Fases</value>
+    <value column="Description" isTrl="Y" original="Report Advance Economic">Reporte Económico de Fases</value>
+  </row>
+  <row id="50B57A338D1C4E66AA5EE154C2FFE02C" trl="Y">
+    <value column="Name" isTrl="Y" original="Contract Type">Tipo de Contrato</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="85BC83B08664490A9193832765D8D77C" trl="N">
+    <value column="Name" isTrl="Y" original="Report Advance Physical">Reporte Físico de Fases</value>
+    <value column="Description" isTrl="Y" original="Report Advance Physical">Reporte Físico de Fases</value>
+  </row>
+  <row id="9CC7CD04E00C46C0B29221FC93529EE9" trl="N">
+    <value column="Name" isTrl="Y" original="Transactions">Transacción</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

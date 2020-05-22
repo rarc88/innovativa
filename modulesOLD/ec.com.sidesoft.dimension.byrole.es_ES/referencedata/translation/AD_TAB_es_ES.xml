@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="es_ES" language="es_ES" table="AD_TAB" version="">
+  <row id="37FB467AC680497AB627BFC8D4A88EB1" trl="N">
+    <value column="Name" isTrl="N" original="Business Line Dimension">Dimensión Línea de negocio</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="77DA01A2A3DF4DA5A2E45901A5A0E204" trl="N">
+    <value column="Name" isTrl="N" original="Cost Center Dimension">Dimensión Centro de costo</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="BE232349D86A474A86DAD0BDA4AC20BC" trl="N">
+    <value column="Name" isTrl="N" original="Business Line Dimension">Dimensión Línea de negocio</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="F4229C825CB74F4BBCAEB3F05A587303" trl="N">
+    <value column="Name" isTrl="N" original="Cost Center Dimension">Dimensión Centro de costo</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

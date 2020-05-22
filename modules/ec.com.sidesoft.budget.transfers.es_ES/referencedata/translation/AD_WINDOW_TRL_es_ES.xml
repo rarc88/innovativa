@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="05C2A8D5AFAC4696B6F77348FB60BA4D" trl="N">
+    <value column="Name" isTrl="Y" original="Budgetary reforms">Reformas presupuestarias</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

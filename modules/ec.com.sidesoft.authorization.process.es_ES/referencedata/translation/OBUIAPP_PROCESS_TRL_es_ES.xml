@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="OBUIAPP_PROCESS" version="">
+  <row id="10C320D8830A49338E527CD9CADFFAB7" trl="N">
+    <value column="Name" isTrl="Y" original="Order Authorization">Autorizar Nivel</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="116A64DAA311400FABF5E7A38CD03780" trl="N">
+    <value column="Name" isTrl="N" original="Invoice Sign">Invoice Sign</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="247306E37E6A4C9DAD5381796AC27627" trl="N">
+    <value column="Name" isTrl="N" original="Invoice Authorization Level">Invoice Authorization Level</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5318ACE6AA7F471BB5D8BF841F6975F9" trl="N">
+    <value column="Name" isTrl="N" original="Reject Invoice Authorization">Reject Invoice Authorization</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="D9C5754D22784EC687EF131C785E0576" trl="N">
+    <value column="Name" isTrl="Y" original="Order Sign">Firmar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E51F068B810340BF9BADA55E32E7EB77" trl="N">
+    <value column="Name" isTrl="Y" original="Order Reject">Rechazar Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

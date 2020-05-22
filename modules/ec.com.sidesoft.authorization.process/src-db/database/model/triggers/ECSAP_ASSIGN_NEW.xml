@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER ECSAP_ASSIGN_NEW">
+    <trigger name="ECSAP_ASSIGN_NEW" table="C_DOCTYPE" fires="after" insert="false" update="true" delete="false" foreach="row">
+      <body><![CDATA[/*************************************************************************
+* The contents of this file are subject to the Openbravo  Public  License
+* Version  1.1  (the  "License"),  being   the  Mozilla   Public  License
+* Version 1.1  with a permitted attribution clause; you may not  use this
+* file except in compliance with the License. You  may  obtain  a copy of
+* the License at http://www.openbravo.com/legal/license.html
+* Software distributed under the License  is  distributed  on  an "AS IS"
+* basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+* License for the specific  language  governing  rights  and  limitations
+* under the License.
+* The Original Code is Openbravo ERP.
+* The Initial Developer of the Original Code is Openbravo SLU
+* All portions are Copyright (C) 2008-2009 Openbravo SLU
+* All Rights Reserved.
+* Contributor(s):  __________Santiago Recalde_______________.
+************************************************************************/
+BEGIN
+        --
+        -- make use of the special variable TG_OP to work out the operation.
+        --
+
+      UPDATE c_order SET em_ecsap_auth_level_id=(SELECT ecsap_authorization_level_id 
+      FROM ecsap_authorization_level WHERE code=0 )  
+      where em_ecsap_auth_level_id is null AND c_doctype_id=:OLD.c_doctype_id;
+
+      UPDATE c_invoice SET em_ecsap_auth_level_id=(SELECT ecsap_authorization_level_id 
+      FROM ecsap_authorization_level WHERE code=0 )
+      where em_ecsap_auth_level_id is null AND c_doctype_id=:OLD.c_doctype_id;
+      
+
+RETURN NULL;
+END ECSAP_ASSIGN_NEW
+]]></body>
+    </trigger>
+  </database>

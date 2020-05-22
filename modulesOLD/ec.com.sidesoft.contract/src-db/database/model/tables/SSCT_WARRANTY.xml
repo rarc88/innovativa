@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+  <database name="TABLE SSCT_WARRANTY">
+    <table name="SSCT_WARRANTY" primaryKey="SSCT_WARRANTY_KEY">
+      <column name="SSCT_WARRANTY_ID" primaryKey="true" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="AD_CLIENT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="AD_ORG_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="ISACTIVE" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[Y]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="CREATED" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default><![CDATA[SYSDATE]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="CREATEDBY" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="UPDATED" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default><![CDATA[SYSDATE]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="UPDATEDBY" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="SSCT_CONTRACT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="SSCT_WARRANTYFORM_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="SSCT_WARRANTYTYPES_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="VALIDITY_DATE_POLICY" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default><![CDATA[SYSDATE]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="AMOUNT_INSURED" primaryKey="false" required="true" type="DECIMAL" autoIncrement="false">
+        <default><![CDATA[0]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="RENOVATIONNO" primaryKey="false" required="false" type="VARCHAR" size="30" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="SSCT_WARRANTYSTATUS_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="WARRANTYCUSTODY" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="OBSERVATIONS" primaryKey="false" required="false" type="VARCHAR" size="255" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="PREVENTIONDAY" primaryKey="false" required="false" type="DECIMAL" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="LINE" primaryKey="false" required="true" type="DECIMAL" size="10,0" autoIncrement="false">
+        <default><![CDATA[10]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="SSCT_INSURANCE_WARRANTIES_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="AD_CLIENT" name="SSCT_WARRANTY_CLIENT_FK">
+        <reference local="AD_CLIENT_ID" foreign="AD_CLIENT_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSCT_CONTRACT" name="SSCT_WARRANTY_CONTRACT_FK">
+        <reference local="SSCT_CONTRACT_ID" foreign="SSCT_CONTRACT_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSCT_INSURANCE_WARRANTIES" name="SSCT_WARRANTY_IW_FK">
+        <reference local="SSCT_INSURANCE_WARRANTIES_ID" foreign="SSCT_INSURANCE_WARRANTIES_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="AD_ORG" name="SSCT_WARRANTY_ORG_FK">
+        <reference local="AD_ORG_ID" foreign="AD_ORG_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSCT_WARRANTYFORM" name="SSCT_WARRANTY_WARRANTYFORM_FK">
+        <reference local="SSCT_WARRANTYFORM_ID" foreign="SSCT_WARRANTYFORM_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSCT_WARRANTYTYPES" name="SSCT_WARRANTY_WARRANTYTYPES_FK">
+        <reference local="SSCT_WARRANTYTYPES_ID" foreign="SSCT_WARRANTYTYPES_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSCT_WARRANTYSTATUS" name="SSCT_WARRANTY_WSTATUS_FK">
+        <reference local="SSCT_WARRANTYSTATUS_ID" foreign="SSCT_WARRANTYSTATUS_ID"/>
+      </foreign-key>
+      <check name="SSCT_WARRANTY_ISACTIV_CHK"><![CDATA[ISACTIVE IN ('Y', 'N')]]></check>
+    </table>
+  </database>

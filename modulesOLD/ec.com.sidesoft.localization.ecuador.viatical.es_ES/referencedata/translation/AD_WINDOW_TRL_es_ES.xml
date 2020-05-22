@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="1F4FEDAA4CB94320B999BB136FEE6858" trl="N">
+    <value column="Name" isTrl="Y" original="National Viatical Value">Valor de viático nacional</value>
+    <value column="Description" isTrl="Y" original="National Viatical Value">Valor de viático nacional</value>
+    <value column="Help" isTrl="Y" original="National Viatical Value">Valor de viático nacional</value>
+  </row>
+  <row id="24D34996735542798501F613B1F3CBF7" trl="N">
+    <value column="Name" isTrl="Y" original="Level">Nivel</value>
+    <value column="Description" isTrl="Y" original="Level">Nivel</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2D37DE4373B14F68AFBA622C5C89D960" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Configuration">Configuración de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Configuration">Configuración de viático</value>
+    <value column="Help" isTrl="Y" original="Viatical Configuration">Configuración de viático</value>
+  </row>
+  <row id="41A171004C1749978EDC07AFEE06782D" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Application">Solicitud de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Application">Solicitud de viático</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5669F5D383B1484782DB5B82CE71A0D3" trl="N">
+    <value column="Name" isTrl="N" original="Budget Certificate Detail Viatical">Budget Certificate Detail Viatical</value>
+    <value column="Description" isTrl="N" original="Budget Certificate Detail Viatical">Budget Certificate Detail Viatical</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5DDCA5F8BC6E456791A480D97916527A" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7451ACEF708B4CBABC1586716EAD0E80" trl="N">
+    <value column="Name" isTrl="Y" original="International Viatical Value">Valor de viático internacional</value>
+    <value column="Description" isTrl="Y" original="International Viatical Value">Valor de viático internacional</value>
+    <value column="Help" isTrl="Y" original="International Viatical Value">Valor de viático internacional</value>
+  </row>
+  <row id="BACD203D934947EF808D5158B6440EAF" trl="N">
+    <value column="Name" isTrl="Y" original="Zone">Zona</value>
+    <value column="Description" isTrl="Y" original="Zone">Zona</value>
+    <value column="Help" isTrl="Y" original="Zone">Zona</value>
+  </row>
+  <row id="CCFDFDB52B4B46DA9D4CF93852241CF1" trl="N">
+    <value column="Name" isTrl="Y" original="Country Rate">Índice por país</value>
+    <value column="Description" isTrl="Y" original="Country Rate">Índice por país</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

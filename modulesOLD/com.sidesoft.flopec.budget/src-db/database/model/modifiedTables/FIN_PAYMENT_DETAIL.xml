@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE FIN_PAYMENT_DETAIL">
+    <table name="FIN_PAYMENT_DETAIL" primaryKey="FIN_PAYMENT_DETAIL_KEY">
+      <column name="EM_SFB_HASHCODE" primaryKey="false" required="false" type="VARCHAR" size="60" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SFB_BUDGET_CERT_LINE_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SFB_C_COSTCENTER_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SFB_USER1_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SFB_USER2_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="C_COSTCENTER" name="EM_SFB_PAYMENT_DETAIL_CCENTER">
+        <reference local="EM_SFB_C_COSTCENTER_ID" foreign="C_COSTCENTER_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SFB_BUDGET_CERT_LINE" name="EM_SFB_PAYMENT_DETAIL_CER_LINE">
+        <reference local="EM_SFB_BUDGET_CERT_LINE_ID" foreign="SFB_BUDGET_CERT_LINE_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="USER1" name="EM_SFB_PAYMENT_DETAIL_USER1">
+        <reference local="EM_SFB_USER1_ID" foreign="USER1_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="USER2" name="EM_SFB_PAYMENT_DETAIL_USER2">
+        <reference local="EM_SFB_USER2_ID" foreign="USER2_ID"/>
+      </foreign-key>
+    </table>
+  </database>

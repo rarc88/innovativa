@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_FIELDGROUP" version="">
+  <row id="980D3214643E4AB884D2A59FCC3780B7" trl="N">
+    <value column="Name" isTrl="Y" original="SWSIC_Taxes">Impuestos</value>
+  </row>
+  <row id="B9A4E83C8D3A4322BC0804E62D399B12" trl="N">
+    <value column="Name" isTrl="Y" original="SWSIC_BusinessPartner">Terceros</value>
+  </row>
+</compiereTrl>

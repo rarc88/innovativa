@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REF_LIST" version="">
+  <row id="FCEF7A628DE442B5AACBE4A78767442B" trl="N">
+    <value column="Name" isTrl="N" original="Payroll">Payroll</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

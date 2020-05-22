@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.34312"/>
+    <removeTriggerChange triggerName="SSPR_UPDATEENTRYDATE_TRG"/>
+    <columnDataChange tablename="AD_PROCESS" columnname="JRNAME" pkRow="1004400004">
+      <oldValue><![CDATA[@basedesign@/org/openbravo/erpReports/RptM_Requisition.jrxml]]></oldValue>
+      <newValue><![CDATA[@basedesign@/ec/com/sidesoft/custom/requisition/ad_Reports/RptSECR_RequisitionMain.jrxml]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="ISMANDATORY" pkRow="2905">
+      <oldValue><![CDATA[N]]></oldValue>
+      <newValue><![CDATA[Y]]></newValue>
+    </columnDataChange>
+  </vector>

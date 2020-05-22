@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSFW_ORDERDELETE_FLOW_TRG">
+    <trigger name="SSFW_ORDERDELETE_FLOW_TRG" table="C_ORDER" fires="before" insert="false" update="false" delete="true" foreach="row">
+      <body><![CDATA[
+BEGIN
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF(DELETING) THEN
+    
+      DELETE FROM ssfw_order_approval WHERE C_Order_ID=:OLD.C_Order_ID ; --OBTG:-20000--
+   
+  END IF;
+  
+END SSFW_ORDERDELETE_FLOW_TRG
+]]></body>
+    </trigger>
+  </database>

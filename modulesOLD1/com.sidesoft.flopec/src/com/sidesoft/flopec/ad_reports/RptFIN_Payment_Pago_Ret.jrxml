@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptFIN_Payment_Pago_Ret.jrxml" pageWidth="595" pageHeight="842" columnWidth="583" leftMargin="0" rightMargin="12" topMargin="20" bottomMargin="0" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR__" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Openbravo-3.0MP27\\src\\org\\openbravo\\erpReports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREP_RptFIN_Payment_Pago_Ret" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Sidesoft\\Desktop\\fin_paymen\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREP_RptFIN_Payment_Pago_SubAnt" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+p.documentno as "document_payment",
+p.isreceipt AS  TYPECE,
+bp.ad_org_id as legalentity,
+bp.name as Client,
+p.documentno as PAYMENTNO,
+bp.name AS BUSINESSPARTNER,
+p.paymentdate as PAYMENT_DATE,
+(UPPER(ssfl_convert_numbertoletters( p.amount))) as TOTAL,
+ COALESCE(TO_NUMBER(p.amount),0) as TOTALNUMBER,
+p.isreceipt as ISRECEIPT,
+--ret
+v.invoiceno as invoice,
+i.em_sswh_datewithhold as fecharet,
+bpr.taxid as taxid_ret,
+i.em_sswh_withholdingref,
+substr(i.em_sswh_withholdingref,1,3) as estab_ret,
+substr(i.em_sswh_withholdingref,5,3) as caja_ret,
+substr(i.em_sswh_withholdingref,9,length(i.em_sswh_withholdingref)) as sec_ret,
+i.em_sswh_authorization as autorization,
+i.totallines as monto,
+i.em_sswh_totalwithholdingincome as ret_fuente,
+i.em_sswh_totalwithholdingvat as ret_iva,
+i.grandtotal as total_ret,
+sum(iva12) as iva12
+FROM fin_payment p
+  left join FIN_Payment_Credit pc on p.fin_payment_id = pc.fin_payment_id
+  left join fin_payment pa on pc.fin_payment_id_used = pa.fin_payment_id
+  left join c_bpartner bpa on pa.c_bpartner_id=bpa.c_bpartner_id
+  left join c_doctype doc on pa.c_doctype_id = doc.c_doctype_id
+	left join c_bpartner bp on (p.c_bpartner_id=bp.c_bpartner_id)
+	left join c_bpartner_location cbpl on cbpl.c_bpartner_id = bp.c_bpartner_id
+	left join c_location cl on cl.c_location_id = cbpl.c_location_id
+	join c_currency cur on (p.c_currency_id=cur.c_currency_id)
+  left join ad_user ad on ad.ad_user_id = p.createdby
+  left join c_bp_bankaccount ba on p.EM_Sswh_Bp_Bankaccount_ID = ba.c_bp_bankaccount_id
+  --RETENCIONES
+  LEFT JOIN ssfi_fin_payment_detail_v v on p.fin_payment_id = v.fin_payment_id
+  left join c_invoice i on (v.invoiceno = i.documentno) and i.issotrx='N'
+  left join c_bpartner bpr on i.c_bpartner_id = bpr.c_bpartner_id
+  left join (select c_invoice_id, sum(basecero) as basecero,sum(base12) as base12,sum(iva) as iva12 from (select a.c_invoice_id,c.name,c.taxid,a.documentno,d.taxbaseamt,d.taxamt, e.rate,
+case when IsTaxDeductable='Y' and e.rate = 0 then d.taxbaseamt else 0 end basecero,
+case when IsTaxDeductable='Y' and e.rate <> 0 then d.taxbaseamt else 0 end base12,
+case when IsTaxDeductable='Y' and e.rate <> 0 then d.taxamt else 0 end iva,
+((case when IsTaxDeductable='Y' and e.rate = 0 then d.taxbaseamt else 0 end) +
+(case when IsTaxDeductable='Y' and e.rate <> 0 then d.taxbaseamt else 0 end) +
+case when IsTaxDeductable='Y' and e.rate <> 0 then d.taxamt else 0 end) grandtotal
+from c_invoice a
+left join c_invoiceline b on a.c_invoice_id = b.c_invoice_id
+left join c_bpartner c on a.c_bpartner_id = c.c_bpartner_id
+left join c_invoicelinetax d on b.c_invoiceline_id = d.c_invoiceline_id
+left join c_tax e on d.c_tax_id = e.c_tax_id
+) impuestos
+group by c_invoice_id) imp on imp.c_invoice_id = i.c_invoice_id
+	left outer join fin_paymentmethod pm on (p.fin_paymentmethod_id=pm.fin_paymentmethod_id), ad_org org, ad_orginfo
+WHERE p.fin_payment_id=$P{DOCUMENT_ID}
+      and
+      org.ad_org_id = ad_orginfo.ad_org_id
+      and org.ad_org_id = (select o.ad_org_id
+                           from ad_org o join ad_orgtype t on (o.ad_orgtype_id=t.ad_orgtype_id)
+                           where ad_isorgincluded(p.ad_org_id, o.ad_org_id, p.ad_client_id)<>-1
+                                 and (t.islegalentity='Y' OR t.isacctlegalentity='Y'))
+and  p.amount<>0
+group by p.documentno ,p.isreceipt,bp.ad_org_id,bp.name,p.documentno,bp.name,p.paymentdate,p.amount,
+v.invoiceno,i.em_sswh_datewithhold,bpr.taxid,i.em_sswh_withholdingref,i.em_sswh_withholdingref,i.em_sswh_withholdingref,i.em_sswh_authorization,
+i.totallines,i.em_sswh_totalwithholdingincome,i.em_sswh_totalwithholdingvat,i.grandtotal]]>
+	</queryString>
+	<field name="document_payment" class="java.lang.String"/>
+	<field name="typece" class="java.lang.String"/>
+	<field name="legalentity" class="java.lang.String"/>
+	<field name="client" class="java.lang.String"/>
+	<field name="paymentno" class="java.lang.String"/>
+	<field name="businesspartner" class="java.lang.String"/>
+	<field name="payment_date" class="java.sql.Timestamp"/>
+	<field name="total" class="java.lang.String"/>
+	<field name="totalnumber" class="java.math.BigDecimal"/>
+	<field name="isreceipt" class="java.lang.String"/>
+	<field name="invoice" class="java.lang.String"/>
+	<field name="fecharet" class="java.sql.Timestamp"/>
+	<field name="taxid_ret" class="java.lang.String"/>
+	<field name="em_sswh_withholdingref" class="java.lang.String"/>
+	<field name="estab_ret" class="java.lang.String"/>
+	<field name="caja_ret" class="java.lang.String"/>
+	<field name="sec_ret" class="java.lang.String"/>
+	<field name="autorization" class="java.lang.String"/>
+	<field name="monto" class="java.math.BigDecimal"/>
+	<field name="ret_fuente" class="java.math.BigDecimal"/>
+	<field name="ret_iva" class="java.math.BigDecimal"/>
+	<field name="total_ret" class="java.math.BigDecimal"/>
+	<field name="iva12" class="java.math.BigDecimal"/>
+	<variable name="GRANTOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="SumTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="3" width="571" height="31"/>
+			</rectangle>
+			<line>
+				<reportElement x="55" y="2" width="1" height="32"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="6" width="51" height="25"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="6" width="61" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC]]></text>
+			</staticText>
+			<line>
+				<reportElement x="119" y="2" width="1" height="32"/>
+			</line>
+			<staticText>
+				<reportElement x="122" y="7" width="41" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estab.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="7" width="48" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Caja]]></text>
+			</staticText>
+			<line>
+				<reportElement x="165" y="2" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="209" y="3" width="1" height="31"/>
+			</line>
+			<line>
+				<reportElement x="255" y="3" width="1" height="31"/>
+			</line>
+			<staticText>
+				<reportElement x="214" y="7" width="38" height="29"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Comp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="7" width="54" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Autoriza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="7" width="54" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="7" width="54" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Ret.Fte.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="7" width="51" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total IVA ret.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="7" width="54" height="26"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="314" y="3" width="1" height="31"/>
+			</line>
+			<line>
+				<reportElement x="368" y="3" width="1" height="31"/>
+			</line>
+			<line>
+				<reportElement x="422" y="2" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="476" y="3" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="524" y="2" width="1" height="32"/>
+			</line>
+			<staticText>
+				<reportElement x="524" y="8" width="46" height="25"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Liquido]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<line direction="BottomUp">
+				<reportElement x="0" y="0" width="1" height="12"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="570" y="0" width="1" height="12"/>
+			</line>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="1" y="0" width="55" height="12"/>
+				<textElement>
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{fecharet}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="56" y="0" width="63" height="12"/>
+				<textElement>
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{taxid_ret}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="0" width="43" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{estab_ret}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="166" y="0" width="43" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{caja_ret}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="212" y="0" width="43" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sec_ret}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="257" y="0" width="58" height="13"/>
+				<textElement>
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{autorization}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="370" y="0" width="52" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ret_fuente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="315" y="0" width="53" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{monto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="424" y="0" width="50" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ret_iva}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="524" y="0" width="46" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{total_ret}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="478" y="0" width="45" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{iva12}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="3" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="2" width="571" height="1"/>
+			</line>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<rectangle>
+				<reportElement x="1" y="3" width="571" height="31"/>
+			</rectangle>
+			<line>
+				<reportElement x="56" y="2" width="1" height="32"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="6" width="51" height="25"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="6" width="61" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC]]></text>
+			</staticText>
+			<line>
+				<reportElement x="120" y="2" width="1" height="32"/>
+			</line>
+			<staticText>
+				<reportElement x="123" y="7" width="41" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estab.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="7" width="48" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Caja]]></text>
+			</staticText>
+			<line>
+				<reportElement x="166" y="2" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="210" y="3" width="1" height="31"/>
+			</line>
+			<line>
+				<reportElement x="256" y="3" width="1" height="31"/>
+			</line>
+			<staticText>
+				<reportElement x="215" y="7" width="38" height="29"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Comp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="7" width="54" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Autoriza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="7" width="54" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="7" width="54" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Ret.Fte.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="7" width="51" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total IVA ret.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="7" width="54" height="26"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="315" y="3" width="1" height="31"/>
+			</line>
+			<line>
+				<reportElement x="369" y="3" width="1" height="31"/>
+			</line>
+			<line>
+				<reportElement x="423" y="2" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="477" y="3" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement x="525" y="2" width="1" height="32"/>
+			</line>
+			<staticText>
+				<reportElement x="525" y="8" width="46" height="25"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Liquido]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

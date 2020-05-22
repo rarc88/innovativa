@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+  <database name="VIEW SSVE_VIATICAL_DETAILS_AUX4">
+    <view name="SSVE_VIATICAL_DETAILS_AUX4"><![CDATA[SELECT ssve_viatical_details_aux3.ssve_viatical_id, ssve_viatical_details_aux3.ssve_viatical_settlement_id, sum(ssve_viatical_details_aux3.totalamt_sett) AS totalamt_sett, ssve_viatical_details_aux3.sfb_budget_cert_line_id FROM ssve_viatical_details_aux3 GROUP BY ssve_viatical_details_aux3.ssve_viatical_id, ssve_viatical_details_aux3.ssve_viatical_settlement_id, ssve_viatical_details_aux3.sfb_budget_cert_line_id]]></view>
+  </database>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_FIELDGROUP" version="">
+  <row id="117395E8C72D4F1C9499545B903D2381" trl="N">
+    <value column="Name" isTrl="Y" original="Billiing">Facturación</value>
+  </row>
+  <row id="332A4502C6CF4167A9BCD49C7F614A2B" trl="N">
+    <value column="Name" isTrl="Y" original="Bussines Partner">Tercero</value>
+  </row>
+  <row id="FA03B7AEC3BF42DD90BFCD7CE895DB44" trl="N">
+    <value column="Name" isTrl="Y" original="Invoice">Factura</value>
+  </row>
+</compiereTrl>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MENU" version="">
+  <row id="00958040F08B4AD7BAE388E5DB9CCEB8" trl="N">
+    <value column="Name" isTrl="Y" original="Receivable and Payable by Voyage">Cobros y Pagos por Viaje</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="10C07A59FBA94E5CBF5907F67BBFF619" trl="N">
+    <value column="Name" isTrl="Y" original="Withholding Authorization Settings ">Configuración Autorización de Retenciones </value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="13614CE26CBD4AF0A9A7ADAAB392E822" trl="Y">
+    <value column="Name" isTrl="Y" original="Fare A">Tarifa A</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="607A0EBEFFAB4ABB8EF74A343544B44A" trl="Y">
+    <value column="Name" isTrl="Y" original="Vessel Type">Tipo de buque</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="9E84419B312441CFB7865A6251BEC8FE" trl="Y">
+    <value column="Name" isTrl="Y" original="WS Contract B">Contrato B Ws</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="AFA15CADFC654B7BADB53180DD84F166" trl="Y">
+    <value column="Name" isTrl="Y" original="Ws Contract ">Contrato Ws</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="C049D9A02F4D4CBEAC7D0324C7AA9E4E" trl="N">
+    <value column="Name" isTrl="Y" original="Print Type Port">Imprimir tipo de puerto</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="E0F469355AA54482ACF17970A18D0DB1" trl="Y">
+    <value column="Name" isTrl="Y" original="Recap"> Resúmen</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="E6A357350C584B18AD95DB04D243BD80" trl="Y">
+    <value column="Name" isTrl="Y" original="Load Type">Tipo de carga</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="F273D08178304892A94D13D12AD30CD1" trl="Y">
+    <value column="Name" isTrl="Y" original="Port">Puerto</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="F4A73CB8261E4D8CAF400426CF91A123" trl="Y">
+    <value column="Name" isTrl="Y" original="Fare B">Tarifa B</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

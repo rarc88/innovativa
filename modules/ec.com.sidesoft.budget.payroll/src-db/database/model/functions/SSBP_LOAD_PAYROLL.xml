@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSBP_LOAD_PAYROLL">
+    <function name="SSBP_LOAD_PAYROLL" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+  Cur_Parameter RECORD;
+  Cur_Concept RECORD;
+  
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+  
+  v_ResultStr VARCHAR2(2000) := '';
+  v_Certificate_ID VARCHAR2(32);
+  v_Payroll_ID VARCHAR2(32);
+  v_Loaded VARCHAR2(60);
+  v_Budget_Item_ID VARCHAR2(32);
+  v_Sfb_Budget_Area_ID VARCHAR2(32);
+  v_Certified_Value NUMBER:=0.0;
+  v_Committed_Value NUMBER:=0.0;
+  
+  v_n_insertions NUMBER;
+  v_Message VARCHAR2(2000):='';
+  v_Line NUMBER:= 10;
+  v_Line2 NUMBER:= 10;
+
+  v_nomodule NUMBER;
+
+  v_em_ssbp_user1_ID VARCHAR2(32);
+  v_em_ssbp_c_costcenter_ID VARCHAR2(32);
+
+BEGIN
+
+ --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+    v_n_insertions := 0;
+    
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID, i.AD_User_ID        
+      FROM AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+      )
+    LOOP
+
+      v_Certificate_ID := Cur_Parameter.Record_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;
+      
+    END LOOP; -- Get Parameter
+    
+    SELECT AD_Client_ID, AD_Org_ID, EM_SSBP_SSPR_Payroll_ID, EM_SSBP_LoadPayroll
+    INTO v_Client_ID, v_Org_ID, v_Payroll_ID, v_Loaded
+    FROM SFB_Budget_Certificate
+    WHERE sfb_budget_certificate_id = v_Certificate_ID;
+    
+    IF (v_Loaded = 'N') THEN
+      FOR Cur_Concept IN
+        (SELECT sum(PTC.amount) AS certified_Value, PTC.SSPR_Concept_ID, CB.EM_SSPR_Costcenter_ID AS costcenter_ID, CB.EM_SSPR_User1_ID AS user1_ID, P.documentno,
+         CB.EM_SSPR_Category_Acct_ID AS category_Acct_ID, PT.SSPR_Payroll_Ticket_id
+         FROM SSPR_Payroll P
+         RIGHT JOIN SSPR_Payroll_Ticket PT ON PT.sspr_payroll_id = P.sspr_payroll_id
+         RIGHT JOIN SSPR_Payroll_Ticket_Concept PTC ON PT.sspr_payroll_ticket_id = PTC.sspr_payroll_ticket_id
+         LEFT JOIN C_BPARTNER CB ON PT.c_bpartner_id =  CB.c_bpartner_id
+         WHERE P.SSPR_Payroll_ID = v_Payroll_ID
+         GROUP BY PTC.sspr_concept_id, CB.EM_SSPR_Costcenter_ID, CB.EM_SSPR_User1_ID, CB.EM_SSPR_Category_Acct_ID, P.documentno, PT.SSPR_Payroll_Ticket_id
+         HAVING sum(PTC.amount) > 0
+        )
+      LOOP
+        BEGIN
+     
+          SELECT EM_SSBP_SFB_Budget_Item_ID, EM_Ssbp_Sfb_Budget_Area_ID, EM_Ssbp_User1_ID, EM_Ssbp_C_Costcenter_ID  INTO v_Budget_Item_ID, v_Sfb_Budget_Area_ID, v_em_ssbp_user1_ID, v_em_ssbp_c_costcenter_ID
+          FROM SSPR_CONCEPT_ACCT
+          WHERE SSPR_Category_Acct_ID = Cur_Concept.category_Acct_ID AND SSPR_Concept_ID = Cur_Concept.SSPR_Concept_ID;
+          
+        EXCEPTION WHEN NO_DATA_FOUND THEN
+
+          v_Budget_Item_ID := NULL; v_Sfb_Budget_Area_ID:=NULL; v_em_ssbp_user1_ID:=NULL; v_em_ssbp_c_costcenter_ID:=NULL;
+        
+        END;
+
+        IF(v_em_ssbp_user1_ID IS NULL AND Cur_Concept.user1_ID IS NOT NULL) THEN
+          v_em_ssbp_user1_ID:=Cur_Concept.user1_ID;
+        END IF;
+
+        IF(v_em_ssbp_c_costcenter_ID IS NULL AND Cur_Concept.costcenter_ID IS NOT NULL) THEN
+          v_em_ssbp_c_costcenter_ID:=Cur_Concept.costcenter_ID;
+        END IF;
+
+        IF (v_Budget_Item_ID IS NULL OR v_em_ssbp_c_costcenter_ID IS NULL OR v_em_ssbp_user1_ID IS NULL) THEN        
+          INSERT INTO SSBP_No_Budget_Cert_Line (
+            ssbp_no_budget_cert_line_id, ad_client_id, ad_org_id, isactive, created, createdby, updated, updatedby,
+            sfb_budget_certificate_id, sspr_concept_id, amount, line, 
+            c_costcenter_id, user1_id, sspr_category_acct_id)
+          VALUES (get_uuid(), v_Client_ID, v_Org_ID, 'Y', now(), v_User_ID, now(), v_User_ID,
+            v_Certificate_ID, Cur_Concept.sspr_concept_id, Cur_Concept.certified_Value, v_Line, 
+            v_em_ssbp_c_costcenter_ID, v_em_ssbp_user1_ID, Cur_Concept.category_Acct_ID);          
+          v_Line := v_Line + 10;          
+        ELSE
+        
+          SELECT COALESCE ( (
+              SELECT COUNT(*) AS contar 
+              FROM ad_module 
+              WHERE javapackage = 'ec.com.sidesoft.budget.payroll'),0) INTO v_nomodule
+          FROM dual;
+            
+          IF(v_Sfb_Budget_Area_ID IS NULL) THEN
+            IF(v_nomodule > 0) THEN
+              SELECT EM_Ssbp_Sfb_Budget_Area_ID INTO v_Sfb_Budget_Area_ID 
+              FROM SSPR_Payroll_Ticket 
+              WHERE SSPR_Payroll_Ticket_id = Cur_Concept.SSPR_Payroll_Ticket_id;
+            END IF;
+          END IF;
+             
+          INSERT INTO SFB_Budget_Cert_Line (
+            sfb_budget_cert_line_id, ad_client_id, ad_org_id, isactive, 
+            created, createdby, updated, updatedby, 
+            sfb_budget_item_id, c_costcenter_id, concept, committed_value, 
+            executed_value, description, sfb_budget_certificate_id, certified_value, 
+            line, budget_certified_value, budget_committed_value, budget_executed_value, 
+            actual_value, available_balance, budget_available_balance, budget_actual_value, 
+            user1_id, em_ssbp_sspr_concept_id, em_ssbp_sspr_category_acct_id, em_ssbp_sfb_budget_area_id)
+          VALUES (
+            get_uuid(), v_Client_ID, v_Org_ID, 'Y', 
+            now(), v_User_ID, now(), v_User_ID, 
+            v_Budget_Item_ID, v_em_ssbp_c_costcenter_ID, 'Nómina ' || Cur_Concept.documentno, Cur_Concept.certified_Value, 
+            0, NULL, v_Certificate_ID, Cur_Concept.certified_Value, 
+            v_Line2, 0, 0, 0, 
+            0, 0, 0, 0, 
+            v_em_ssbp_user1_ID, Cur_Concept.SSPR_Concept_ID, Cur_Concept.category_Acct_ID, v_Sfb_Budget_Area_ID);             
+          
+          v_Line2 := v_Line2 + 10;
+          v_n_insertions:= v_n_insertions + 1;
+          v_Certified_Value := v_Certified_Value + Cur_Concept.certified_Value;
+	      v_Committed_Value := v_Committed_Value + Cur_Concept.certified_Value;
+        END IF;
+      END LOOP;
+      
+      v_ResultStr:='UpdatingRecord';
+	          
+      UPDATE SFB_Budget_Certificate
+      SET EM_SSBP_LoadPayroll = 'Y',
+          Updated = now(),          
+          UpdatedBy = TO_CHAR(v_User_ID),
+          Certified_Value = v_Certified_Value,
+          Committed_Value = v_Committed_Value,
+          Processed = 'Y'
+      WHERE SFB_Budget_Certificate_ID = v_Certificate_ID;
+    
+    ELSE
+    
+      DELETE FROM SFB_BUDGET_CERT_LINE WHERE SFB_Budget_Certificate_ID = v_Certificate_ID;
+      DELETE FROM SSBP_No_Budget_Cert_Line WHERE  SFB_Budget_Certificate_ID = v_Certificate_ID;
+            
+      v_ResultStr:='UpdatingRecord';
+                  
+      UPDATE SFB_Budget_Certificate
+      SET EM_SSBP_LoadPayroll = 'N',
+          Updated = now(),          
+          UpdatedBy = TO_CHAR(v_User_ID),
+          Certified_Value = 0.0,
+          Committed_Value = 0.0,
+          Processed = 'N'
+      WHERE SFB_Budget_Certificate_ID = v_Certificate_ID;
+    
+    END IF;
+    
+    v_Message := '@RowsInserted@: ' || v_n_insertions || '.';
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message);
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message);
+    RETURN;
+    
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    ROLLBACK;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr);
+    RETURN;
+END SSBP_LOAD_PAYROLL
+]]></body>
+    </function>
+  </database>

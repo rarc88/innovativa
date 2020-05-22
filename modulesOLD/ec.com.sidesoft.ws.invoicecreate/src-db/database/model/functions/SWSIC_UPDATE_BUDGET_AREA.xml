@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SWSIC_UPDATE_BUDGET_AREA">
+    <function name="SWSIC_UPDATE_BUDGET_AREA" type="NULL">
+      <parameter name="p_invoice" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_config" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_SqlSelectConfig		VARCHAR2(1000):='';
+ v_SqlUpdateInvoice		VARCHAR2(1000):='';
+ v_area				VARCHAR2(32):='';
+ v_modulebudget		 NUMBER; --OBTG:NUMBER--
+ v_modulequickbilligbudget NUMBER; --OBTG:NUMBER--
+  
+  BEGIN
+
+	SELECT
+	COALESCE((SELECT COUNT(*) AS CONTAR FROM AD_MODULE WHERE JAVAPACKAGE='com.sidesoft.flopec.budget'),0) 
+	INTO v_modulebudget
+	FROM DUAL;
+
+	SELECT
+	COALESCE((SELECT COUNT(*) AS CONTAR FROM AD_MODULE WHERE JAVAPACKAGE='ec.com.sidesoft.ws.invoicecreate.budget'),0) 
+	INTO v_modulequickbilligbudget
+	FROM DUAL;	
+
+	IF (v_modulebudget = 1 AND v_modulequickbilligbudget = 1) THEN
+
+		v_SqlSelectConfig:= 'SELECT em_swsicb_budget_area_id FROM swsic_config WHERE swsic_config_id='''||p_config||'''';
+		EXECUTE IMMEDIATE v_SqlSelectConfig INTO v_area;
+		
+		v_SqlUpdateInvoice:='UPDATE C_INVOICE SET em_sfb_budget_area_id='''  || v_area || ''' WHERE C_INVOICE_ID=''' || p_invoice || '''';
+        EXECUTE IMMEDIATE v_SqlUpdateInvoice;
+                                
+    END IF;
+END SWSIC_UPDATE_BUDGET_AREA
+]]></body>
+    </function>
+  </database>

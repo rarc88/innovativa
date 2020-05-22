@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptSECR_Requisition" pageWidth="828" pageHeight="504" columnWidth="792" leftMargin="36" rightMargin="0" topMargin="7" bottomMargin="7">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.1000000000000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" vAlign="Middle" fontName="Bitstream Vera Sans" fontSize="8"/>
+	<style name="Report_Title" fontName="Bitstream Vera Sans" fontSize="18">
+		<box leftPadding="5"/>
+	</style>
+	<style name="Report_Subtitle" forecolor="#555555" fontName="Bitstream Vera Sans" fontSize="14">
+		<box leftPadding="5"/>
+	</style>
+	<style name="Report_Data_Label" fontName="Bitstream Vera Sans" fontSize="11" isBold="true"/>
+	<style name="Report_Data_Field" fontName="Bitstream Vera Sans" fontSize="11" isBold="false"/>
+	<style name="Total_Field" mode="Opaque" forecolor="#000000" backcolor="#CCCCCC" vAlign="Middle" fontName="Bitstream Vera Sans" fontSize="11" isBold="true">
+		<box leftPadding="5"/>
+	</style>
+	<style name="GroupHeader_DarkGray" mode="Opaque" forecolor="#FFFFFF" backcolor="#555555" vAlign="Middle" fontName="Bitstream Vera Sans" fontSize="12" isBold="true">
+		<box leftPadding="5"/>
+	</style>
+	<style name="Group_Data_Label" fontName="Bitstream Vera Sans" fontSize="11" isBold="true"/>
+	<style name="Group_Data_Field" fontName="Bitstream Vera Sans" fontSize="11"/>
+	<style name="Detail_Header" mode="Opaque" forecolor="#FFFFFF" backcolor="#5D5D5D" vAlign="Middle" fontName="Bitstream Vera Sans" fontSize="10" isBold="true">
+		<box leftPadding="5">
+			<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="Detail_Line" fontName="Bitstream Vera Sans" fontSize="8">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==1)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#CCCCCC"/>
+		</conditionalStyle>
+	</style>
+	<style name="Total_Gray" mode="Opaque" forecolor="#000000" backcolor="#CCCCCC"/>
+	<style name="Detail_Data_Label" mode="Opaque" backcolor="#CCCCCC" fontName="Bitstream Vera Sans" fontSize="10" isBold="true"/>
+	<style name="Detail_Data_Field" mode="Opaque" backcolor="#CCCCCC" fontName="Bitstream Vera Sans" fontSize="10"/>
+	<style name="Group_Footer" fontName="Bitstream Vera Sans" fontSize="11" isBold="true"/>
+	<style name="Report_Footer" isDefault="true" vAlign="Middle" fontName="Bitstream Vera Sans" fontSize="11"/>
+	<parameter name="BASE_WEB" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/usr/local/src/AppsOpenbravo/web"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REQUISITION_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1000002"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BASE_DESIGN" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="DATEPATTERN" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["dd-MM-yyyy"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LOCALE" class="java.util.Locale" isForPrompting="false"/>
+	<parameter name="LENGUAGE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+mr.documentno as "documento",
+to_char(mrl.needbydate,'dd/MM/yyyy') as "fecha",
+au.name as "usuario_emite",
+mr.description as "descripcion",
+cbp.name as "funcionario",
+mrl.description as "programa",
+mp.name as "combustible",
+mrl.qty as "galones",
+mrl.priceactual as "valor",
+mr.ad_org_id as "organizationid",
+mr.m_requisition_id as  "m_requisition_id"
+from m_requisition mr
+left join m_requisitionline mrl on mr.m_requisition_id = mrl.m_requisition_id
+left join ad_user au on au.ad_user_id = mr.ad_user_id
+left join c_bpartner cbp on cbp.c_bpartner_id = mrl.c_bpartner_id
+left join m_product mp on mp.m_product_id = mrl.m_product_id
+where mr.m_requisition_id = $P{REQUISITION_ID}]]>
+	</queryString>
+	<field name="documento" class="java.lang.String"/>
+	<field name="fecha" class="java.lang.String"/>
+	<field name="usuario_emite" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="funcionario" class="java.lang.String"/>
+	<field name="programa" class="java.lang.String"/>
+	<field name="combustible" class="java.lang.String"/>
+	<field name="galones" class="java.math.BigDecimal"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<field name="organizationid" class="java.lang.String"/>
+	<field name="m_requisition_id" class="java.lang.String"/>
+	<variable name="V_TOTALVALUE" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="47">
+			<staticText>
+				<reportElement key="staticText-29" style="Report_Title" x="0" y="0" width="791" height="46" forecolor="#666666">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="36" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Order Dispatch fuels]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-29" style="Report_Title" x="0" y="0" width="791" height="46" forecolor="#666666">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="36" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Orden de Despacho de Combustibles]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="357">
+			<textField>
+				<reportElement x="81" y="0" width="711" height="24"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="0" width="75" height="24">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="308" y="24" width="484" height="20"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{usuario_emite}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="174" y="24" width="134" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Broadcast User:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="81" y="44" width="711" height="20"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="44" width="75" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="24" width="75" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="71" width="114" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Functionary:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="98" width="114" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Program:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="6" y="122" width="114" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fuel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="400" y="123" width="100" height="19">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gallons:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="600" y="123" width="100" height="19">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Value:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="120" y="71" width="672" height="20"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{funcionario}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="81" y="24" width="93" height="20"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="120" y="98" width="672" height="20"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{programa}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="120" y="122" width="280" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{combustible}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="500" y="123" width="100" height="19"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{galones}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="700" y="123" width="92" height="19"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="142" width="792" height="75"/>
+			</rectangle>
+			<rectangle>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="217" width="791" height="89"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="46" y="189" width="195" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Received According]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="296" y="189" width="195" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Deliver According]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="548" y="189" width="195" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Authorized]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-29" style="Report_Title" positionType="Float" x="0" y="217" width="792" height="30" forecolor="#666666">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="5">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Load Fuel Certification]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="27" y="262" width="100" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="127" y="282" width="138" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="377" y="282" width="135" height="1"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="277" y="262" width="100" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Observations]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="548" y="281" width="195" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Certify]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="1" height="301"/>
+			</line>
+			<line>
+				<reportElement x="791" y="0" width="1" height="306"/>
+			</line>
+			<staticText>
+				<reportElement x="6" y="44" width="75" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="0" width="75" height="24">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="174" y="24" width="134" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario Emite:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="24" width="75" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="6" y="122" width="114" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Combustible:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="600" y="123" width="100" height="19">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="71" width="114" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Funcionario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="400" y="123" width="100" height="19">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Galones:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="98" width="114" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Programa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="548" y="189" width="195" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Autorizado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="46" y="189" width="195" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Recibí Conforme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="296" y="189" width="195" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Entregue Conforme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="548" y="282" width="195" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Certifico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="277" y="263" width="100" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Observación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="27" y="263" width="100" height="20">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-29" style="Report_Title" positionType="Float" x="-1" y="217" width="792" height="30" forecolor="#666666">
+					<printWhenExpression><![CDATA[$P{LENGUAGE}.equals("es_ES")]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="5">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Certificación de Carga Combustible]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band/>
+	</detail>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+</jasperReport>

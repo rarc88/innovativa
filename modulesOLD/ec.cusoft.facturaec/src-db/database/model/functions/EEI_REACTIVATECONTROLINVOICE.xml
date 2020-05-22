@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION EEI_REACTIVATECONTROLINVOICE">
+    <function name="EEI_REACTIVATECONTROLINVOICE" type="NULL">
+      <parameter name="p_ep_instance" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[p_record_id         VARCHAR2(60);      
+p_docaction         VARCHAR2(60);      
+
+v_status         VARCHAR2(60);       	
+
+TYPE RECORD IS REF CURSOR;
+cur_params          RECORD;
+
+BEGIN
+
+  FOR Cur_Params IN (
+    SELECT *
+    FROM ad_ep_instance_para
+    WHERE ad_ep_instance_id = p_ep_instance
+    ) LOOP
+    IF (cur_params.parametername LIKE 'DocAction') THEN
+      p_docaction := Cur_Params.p_string;
+    ELSIF (cur_params.parametername LIKE 'Record_ID') THEN
+      p_record_id := cur_params.p_string;
+    END IF;
+  END LOOP;
+
+	SELECT em_eei_status INTO v_status FROM c_invoice where c_invoice_id = p_record_id;
+
+	IF (v_status='AU' AND p_docaction='RE') THEN
+		RAISE_APPLICATION_ERROR(-20000, '@Eei_ReactivateNotValid@');
+	END IF;
+END EEI_REACTIVATECONTROLINVOICE
+]]></body>
+    </function>
+  </database>

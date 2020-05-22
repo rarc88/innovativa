@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<data>
+<!--037761A9F2844EB9A7BF3147F4B073C3--><AD_VAL_RULE>
+<!--037761A9F2844EB9A7BF3147F4B073C3-->  <AD_VAL_RULE_ID><![CDATA[037761A9F2844EB9A7BF3147F4B073C3]]></AD_VAL_RULE_ID>
+<!--037761A9F2844EB9A7BF3147F4B073C3-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--037761A9F2844EB9A7BF3147F4B073C3-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--037761A9F2844EB9A7BF3147F4B073C3-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--037761A9F2844EB9A7BF3147F4B073C3-->  <NAME><![CDATA[Budget Area Not Duplicated]]></NAME>
+<!--037761A9F2844EB9A7BF3147F4B073C3-->  <TYPE><![CDATA[S]]></TYPE>
+<!--037761A9F2844EB9A7BF3147F4B073C3-->  <CODE><![CDATA[sfb_budget_area_id not in (select sfb_budget_area_id from sfb_budget_user_area where ad_user_id = @AD_User_ID@ and sfb_budget_area_id is not null and (sfb_budget_area_id <> @Sfb_Budget_Area_ID@ or @Sfb_Budget_Area_ID@ IS NULL))]]></CODE>
+<!--037761A9F2844EB9A7BF3147F4B073C3-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--037761A9F2844EB9A7BF3147F4B073C3--></AD_VAL_RULE>
+
+<!--0B81D7BFE40D44AA962105C771C5B4D2--><AD_VAL_RULE>
+<!--0B81D7BFE40D44AA962105C771C5B4D2-->  <AD_VAL_RULE_ID><![CDATA[0B81D7BFE40D44AA962105C771C5B4D2]]></AD_VAL_RULE_ID>
+<!--0B81D7BFE40D44AA962105C771C5B4D2-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--0B81D7BFE40D44AA962105C771C5B4D2-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--0B81D7BFE40D44AA962105C771C5B4D2-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--0B81D7BFE40D44AA962105C771C5B4D2-->  <NAME><![CDATA[Document Type Amortization]]></NAME>
+<!--0B81D7BFE40D44AA962105C771C5B4D2-->  <TYPE><![CDATA[S]]></TYPE>
+<!--0B81D7BFE40D44AA962105C771C5B4D2-->  <CODE><![CDATA[C_DocType.DocBaseType = 'SFB_AM' AND (AD_ISORGINCLUDED(@AD_Org_ID@,C_DocType.AD_Org_ID, @#AD_Client_ID@) <> '-1' OR COALESCE(@AD_Org_ID@,'-1')='-1')]]></CODE>
+<!--0B81D7BFE40D44AA962105C771C5B4D2-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--0B81D7BFE40D44AA962105C771C5B4D2--></AD_VAL_RULE>
+
+<!--303E91F23D47417EABB2656E244A6FFF--><AD_VAL_RULE>
+<!--303E91F23D47417EABB2656E244A6FFF-->  <AD_VAL_RULE_ID><![CDATA[303E91F23D47417EABB2656E244A6FFF]]></AD_VAL_RULE_ID>
+<!--303E91F23D47417EABB2656E244A6FFF-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--303E91F23D47417EABB2656E244A6FFF-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--303E91F23D47417EABB2656E244A6FFF-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--303E91F23D47417EABB2656E244A6FFF-->  <NAME><![CDATA[Invoice Line Certificate Line]]></NAME>
+<!--303E91F23D47417EABB2656E244A6FFF-->  <TYPE><![CDATA[S]]></TYPE>
+<!--303E91F23D47417EABB2656E244A6FFF-->  <CODE><![CDATA[sfb_budget_cert_line_id in (case when (select isreversal from c_doctype where c_doctype_id in (select c_doctypetarget_id from c_invoice where c_invoice_id = @C_Invoice_ID@)) = 'Y' AND (select docbasetype from c_doctype where c_doctype_id in (select c_doctypetarget_id from c_invoice where c_invoice_id = @C_Invoice_ID@)) = 'APC' then (select sfb_budget_cert_line_id from sfb_budget_cert_line bcl left join sfb_budget_certificate bc on bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id left join c_year cy on bc.c_year_id = cy.c_year_id where bc.ad_client_id = @AD_Client_ID@ and bc.ad_org_id = @AD_Org_ID@ and bc.hash_code = coalesce(@EM_Sfb_Hashcode@, (select em_sfb_hashcode from c_invoice where c_invoice_id = @C_Invoice_ID@)) and bc.process = 'Y' and bcl.c_costcenter_id = coalesce(@C_Costcenter_ID@, (select c_costcenter_id from c_invoice where c_invoice_id = @C_Invoice_ID@)) and bcl.user1_id = coalesce(@User1_ID@, (select user1_id from c_invoice where c_invoice_id = @C_Invoice_ID@)) and cast(cy.year as double precision) = extract(year from to_date(@DateInvoiced@)) and bc.c_currency_id = @C_Currency_ID@ ) else (select sfb_budget_cert_line_id from sfb_budget_cert_line bcl left join sfb_budget_certificate bc on bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id left join c_year cy on bc.c_year_id = cy.c_year_id where bc.ad_client_id = @AD_Client_ID@ and bc.ad_org_id = @AD_Org_ID@ and bc.hash_code = coalesce(@EM_Sfb_Hashcode@, (select em_sfb_hashcode from c_invoice where c_invoice_id = @C_Invoice_ID@)) and bc.process = 'Y' and bcl.c_costcenter_id = coalesce(@C_Costcenter_ID@, (select c_costcenter_id from c_invoice where c_invoice_id = @C_Invoice_ID@))  and bcl.user1_id = coalesce(@User1_ID@, (select user1_id from c_invoice where c_invoice_id = @C_Invoice_ID@)) and bcl.actual_value > 0 and cast(cy.year as double precision) = extract(year from to_date(@DateInvoiced@))  and bc.c_currency_id = @C_Currency_ID@ )  end)]]></CODE>
+<!--303E91F23D47417EABB2656E244A6FFF-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--303E91F23D47417EABB2656E244A6FFF--></AD_VAL_RULE>
+
+<!--473D405A8B97490783684FC0B839115C--><AD_VAL_RULE>
+<!--473D405A8B97490783684FC0B839115C-->  <AD_VAL_RULE_ID><![CDATA[473D405A8B97490783684FC0B839115C]]></AD_VAL_RULE_ID>
+<!--473D405A8B97490783684FC0B839115C-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--473D405A8B97490783684FC0B839115C-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--473D405A8B97490783684FC0B839115C-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--473D405A8B97490783684FC0B839115C-->  <NAME><![CDATA[Area Budget]]></NAME>
+<!--473D405A8B97490783684FC0B839115C-->  <TYPE><![CDATA[S]]></TYPE>
+<!--473D405A8B97490783684FC0B839115C-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--473D405A8B97490783684FC0B839115C--></AD_VAL_RULE>
+
+<!--5A0C11209A49437B97453C9BDFC77A77--><AD_VAL_RULE>
+<!--5A0C11209A49437B97453C9BDFC77A77-->  <AD_VAL_RULE_ID><![CDATA[5A0C11209A49437B97453C9BDFC77A77]]></AD_VAL_RULE_ID>
+<!--5A0C11209A49437B97453C9BDFC77A77-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--5A0C11209A49437B97453C9BDFC77A77-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--5A0C11209A49437B97453C9BDFC77A77-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--5A0C11209A49437B97453C9BDFC77A77-->  <NAME><![CDATA[Budget Item by Area]]></NAME>
+<!--5A0C11209A49437B97453C9BDFC77A77-->  <TYPE><![CDATA[S]]></TYPE>
+<!--5A0C11209A49437B97453C9BDFC77A77-->  <CODE><![CDATA[sfb_budget_item_id in (select sfb_budget_item_id from sfb_budget_area_item where sfb_budget_area_id = @SFB_Budget_Area_ID@)]]></CODE>
+<!--5A0C11209A49437B97453C9BDFC77A77-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--5A0C11209A49437B97453C9BDFC77A77--></AD_VAL_RULE>
+
+<!--6EB7A1B4876C482BAC8CD995A8B016A1--><AD_VAL_RULE>
+<!--6EB7A1B4876C482BAC8CD995A8B016A1-->  <AD_VAL_RULE_ID><![CDATA[6EB7A1B4876C482BAC8CD995A8B016A1]]></AD_VAL_RULE_ID>
+<!--6EB7A1B4876C482BAC8CD995A8B016A1-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--6EB7A1B4876C482BAC8CD995A8B016A1-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--6EB7A1B4876C482BAC8CD995A8B016A1-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--6EB7A1B4876C482BAC8CD995A8B016A1-->  <NAME><![CDATA[Budget Document Types]]></NAME>
+<!--6EB7A1B4876C482BAC8CD995A8B016A1-->  <TYPE><![CDATA[S]]></TYPE>
+<!--6EB7A1B4876C482BAC8CD995A8B016A1-->  <CODE><![CDATA[C_DocType.DocBaseType IN ('API','APC','POO','APP','GLJ') AND C_DocType.IsSOTrx='N' AND (AD_ISORGINCLUDED(@#AD_Org_ID@,C_DocType.AD_Org_ID, @#AD_Client_ID@) <> '-1' OR COALESCE(@#AD_Org_ID@,'-1')='-1')]]></CODE>
+<!--6EB7A1B4876C482BAC8CD995A8B016A1-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--6EB7A1B4876C482BAC8CD995A8B016A1--></AD_VAL_RULE>
+
+<!--84BA408F779643E2B853877842F01DBC--><AD_VAL_RULE>
+<!--84BA408F779643E2B853877842F01DBC-->  <AD_VAL_RULE_ID><![CDATA[84BA408F779643E2B853877842F01DBC]]></AD_VAL_RULE_ID>
+<!--84BA408F779643E2B853877842F01DBC-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--84BA408F779643E2B853877842F01DBC-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--84BA408F779643E2B853877842F01DBC-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--84BA408F779643E2B853877842F01DBC-->  <NAME><![CDATA[Journal Budget]]></NAME>
+<!--84BA408F779643E2B853877842F01DBC-->  <TYPE><![CDATA[S]]></TYPE>
+<!--84BA408F779643E2B853877842F01DBC-->  <CODE><![CDATA[sfb_budget_cert_line_id in (select sfb_budget_cert_line_id from sfb_budget_cert_line bcl left join sfb_budget_certificate bc on bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id left join c_year cy on bc.c_year_id = cy.c_year_id where  bc.hash_code = @EM_Sfb_Hashcode@ and bc.process = 'Y' and bcl.c_costcenter_id = @C_Costcenter_ID@  and cast(cy.year as double precision) = extract(year from to_date(@Dateacct@)) and bcl.actual_value > 0)]]></CODE>
+<!--84BA408F779643E2B853877842F01DBC-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--84BA408F779643E2B853877842F01DBC--></AD_VAL_RULE>
+
+<!--89831ED4EDCB448D801B8E67B06022AE--><AD_VAL_RULE>
+<!--89831ED4EDCB448D801B8E67B06022AE-->  <AD_VAL_RULE_ID><![CDATA[89831ED4EDCB448D801B8E67B06022AE]]></AD_VAL_RULE_ID>
+<!--89831ED4EDCB448D801B8E67B06022AE-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--89831ED4EDCB448D801B8E67B06022AE-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--89831ED4EDCB448D801B8E67B06022AE-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--89831ED4EDCB448D801B8E67B06022AE-->  <NAME><![CDATA[Document Type Budget Certificate]]></NAME>
+<!--89831ED4EDCB448D801B8E67B06022AE-->  <TYPE><![CDATA[S]]></TYPE>
+<!--89831ED4EDCB448D801B8E67B06022AE-->  <CODE><![CDATA[C_DocType.DocBaseType = 'SFB_BC' AND (AD_ISORGINCLUDED(@AD_Org_ID@,C_DocType.AD_Org_ID, @#AD_Client_ID@) <> '-1' OR COALESCE(@AD_Org_ID@,'-1')='-1')]]></CODE>
+<!--89831ED4EDCB448D801B8E67B06022AE-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--89831ED4EDCB448D801B8E67B06022AE--></AD_VAL_RULE>
+
+<!--8F92A0510CA04B279BF2CF0BD1014216--><AD_VAL_RULE>
+<!--8F92A0510CA04B279BF2CF0BD1014216-->  <AD_VAL_RULE_ID><![CDATA[8F92A0510CA04B279BF2CF0BD1014216]]></AD_VAL_RULE_ID>
+<!--8F92A0510CA04B279BF2CF0BD1014216-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--8F92A0510CA04B279BF2CF0BD1014216-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--8F92A0510CA04B279BF2CF0BD1014216-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--8F92A0510CA04B279BF2CF0BD1014216-->  <NAME><![CDATA[Budget Item]]></NAME>
+<!--8F92A0510CA04B279BF2CF0BD1014216-->  <TYPE><![CDATA[S]]></TYPE>
+<!--8F92A0510CA04B279BF2CF0BD1014216-->  <CODE><![CDATA[sfb_budget_item_id in (select bl.sfb_budget_item_id from sfb_budget_line bl left join sfb_budget_version bv on bl.sfb_budget_version_id = bv.sfb_budget_version_id left join sfb_budget b on bv.sfb_budget_id = b.sfb_budget_id where bl.ad_client_id = @AD_Client_ID@ and bl.ad_org_id = @AD_Org_ID@ and ((@Type@ = 'M' or @Type@ = 'S') and bl.c_costcenter_id = @C_Costcenter_ID@ or @Type@ = 'A' and bl.c_costcenter_id = @C_Costcenter_To_ID@) and ((@Type@ = 'M' or @Type@ = 'S') and bl.user1_id = @User1_ID@ or @Type@ = 'A' and bl.user1_id = @User1_To_ID@) and ((@Type@ = 'M' or @Type@ = 'S') and bl.sfb_budget_area_id = @SFB_Budget_Area_ID@ or @Type@ = 'A' and bl.sfb_budget_area_id = @SFB_Budget_Area_To_ID@) and bv.version_status = 'AP' and b.type_of_budget = @Type_Of_Budget@ and b.c_year_id = @C_Year_ID@)]]></CODE>
+<!--8F92A0510CA04B279BF2CF0BD1014216-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--8F92A0510CA04B279BF2CF0BD1014216--></AD_VAL_RULE>
+
+<!--A26451C948B84219ACAB5FCB42BEF4E3--><AD_VAL_RULE>
+<!--A26451C948B84219ACAB5FCB42BEF4E3-->  <AD_VAL_RULE_ID><![CDATA[A26451C948B84219ACAB5FCB42BEF4E3]]></AD_VAL_RULE_ID>
+<!--A26451C948B84219ACAB5FCB42BEF4E3-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--A26451C948B84219ACAB5FCB42BEF4E3-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--A26451C948B84219ACAB5FCB42BEF4E3-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--A26451C948B84219ACAB5FCB42BEF4E3-->  <NAME><![CDATA[Budget Item Not Duplicated]]></NAME>
+<!--A26451C948B84219ACAB5FCB42BEF4E3-->  <TYPE><![CDATA[S]]></TYPE>
+<!--A26451C948B84219ACAB5FCB42BEF4E3-->  <CODE><![CDATA[sfb_budget_item_id not in (select sfb_budget_item_id from sfb_budget_area_item where sfb_budget_area_id = @SFB_Budget_Area_ID@ and sfb_budget_item_id is not null and (sfb_budget_item_id <> @SFB_Budget_Item_ID@ or @SFB_Budget_Item_ID@ IS NULL))]]></CODE>
+<!--A26451C948B84219ACAB5FCB42BEF4E3-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--A26451C948B84219ACAB5FCB42BEF4E3--></AD_VAL_RULE>
+
+<!--A7D05514316C4222882966FE4034F43E--><AD_VAL_RULE>
+<!--A7D05514316C4222882966FE4034F43E-->  <AD_VAL_RULE_ID><![CDATA[A7D05514316C4222882966FE4034F43E]]></AD_VAL_RULE_ID>
+<!--A7D05514316C4222882966FE4034F43E-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--A7D05514316C4222882966FE4034F43E-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--A7D05514316C4222882966FE4034F43E-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--A7D05514316C4222882966FE4034F43E-->  <NAME><![CDATA[Budget Item Available Balance   2]]></NAME>
+<!--A7D05514316C4222882966FE4034F43E-->  <TYPE><![CDATA[S]]></TYPE>
+<!--A7D05514316C4222882966FE4034F43E-->  <CODE><![CDATA[sfb_budget_item_id in  (select sfb_budget_area_item.sfb_budget_item_id from sfb_budget_area left join sfb_budget_area_item on sfb_budget_area_item.sfb_budget_item_id = sfb_budget_item_id
+where sfb_budget_area.sfb_budget_area_id = @SFB_Budget_Area_ID@)]]></CODE>
+<!--A7D05514316C4222882966FE4034F43E-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--A7D05514316C4222882966FE4034F43E--></AD_VAL_RULE>
+
+<!--ABA829144E1B460699CCEBB80DB2024F--><AD_VAL_RULE>
+<!--ABA829144E1B460699CCEBB80DB2024F-->  <AD_VAL_RULE_ID><![CDATA[ABA829144E1B460699CCEBB80DB2024F]]></AD_VAL_RULE_ID>
+<!--ABA829144E1B460699CCEBB80DB2024F-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--ABA829144E1B460699CCEBB80DB2024F-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--ABA829144E1B460699CCEBB80DB2024F-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--ABA829144E1B460699CCEBB80DB2024F-->  <NAME><![CDATA[Order Line Certificate Line]]></NAME>
+<!--ABA829144E1B460699CCEBB80DB2024F-->  <TYPE><![CDATA[S]]></TYPE>
+<!--ABA829144E1B460699CCEBB80DB2024F-->  <CODE><![CDATA[sfb_budget_cert_line_id in (select sfb_budget_cert_line_id from sfb_budget_cert_line bcl left join sfb_budget_certificate bc on bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id left join c_year cy on bc.c_year_id = cy.c_year_id where bc.ad_client_id = @AD_Client_ID@ and bc.ad_org_id = @AD_Org_ID@ and bc.hash_code = coalesce(@EM_Sfb_Hashcode@, (select em_sfb_hashcode from c_order where c_order_id = @C_Order_ID@)) and bc.process = 'Y' and bcl.c_costcenter_id = coalesce(@C_Costcenter_ID@, (select c_costcenter_id from c_order where c_order_id = @C_Order_ID@)) and bcl.user1_id = coalesce(@User1_ID@, (select user1_id from c_order where c_order_id = @C_Order_ID@)) and bcl.available_balance > 0 and cast(cy.year as double precision) = extract(year from to_date(@DateOrdered@)) and bc.c_currency_id = @C_Currency_ID@ )]]></CODE>
+<!--ABA829144E1B460699CCEBB80DB2024F-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--ABA829144E1B460699CCEBB80DB2024F--></AD_VAL_RULE>
+
+<!--AD209A6539C24701B0963CCE14E00914--><AD_VAL_RULE>
+<!--AD209A6539C24701B0963CCE14E00914-->  <AD_VAL_RULE_ID><![CDATA[AD209A6539C24701B0963CCE14E00914]]></AD_VAL_RULE_ID>
+<!--AD209A6539C24701B0963CCE14E00914-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--AD209A6539C24701B0963CCE14E00914-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--AD209A6539C24701B0963CCE14E00914-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--AD209A6539C24701B0963CCE14E00914-->  <NAME><![CDATA[Budget Item Available Balance  ]]></NAME>
+<!--AD209A6539C24701B0963CCE14E00914-->  <TYPE><![CDATA[S]]></TYPE>
+<!--AD209A6539C24701B0963CCE14E00914-->  <CODE><![CDATA[sfb_budget_item_id in (select bl.sfb_budget_item_id from sfb_budget_line bl left join sfb_budget_version bv on bl.sfb_budget_version_id = bv.sfb_budget_version_id left join sfb_budget b on bv.sfb_budget_id = b.sfb_budget_id where bl.ad_client_id = @AD_Client_ID@ and bl.ad_org_id = @AD_Org_ID@ and bl.c_costcenter_id = @C_Costcenter_ID@ and bl.user1_id = @User1_ID@ and bl.available_balance > 0 and bl.sfb_budget_area_id = @SFB_Budget_Area_ID@ and bv.version_status = 'AP' and b.type_of_budget = @Type_Of_Budget@ and b.c_year_id = @C_Year_ID@)]]></CODE>
+<!--AD209A6539C24701B0963CCE14E00914-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--AD209A6539C24701B0963CCE14E00914--></AD_VAL_RULE>
+
+<!--AD794571643C4346AFC384E08C44356C--><AD_VAL_RULE>
+<!--AD794571643C4346AFC384E08C44356C-->  <AD_VAL_RULE_ID><![CDATA[AD794571643C4346AFC384E08C44356C]]></AD_VAL_RULE_ID>
+<!--AD794571643C4346AFC384E08C44356C-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--AD794571643C4346AFC384E08C44356C-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--AD794571643C4346AFC384E08C44356C-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--AD794571643C4346AFC384E08C44356C-->  <NAME><![CDATA[Budget Area]]></NAME>
+<!--AD794571643C4346AFC384E08C44356C-->  <TYPE><![CDATA[S]]></TYPE>
+<!--AD794571643C4346AFC384E08C44356C-->  <CODE><![CDATA[sfb_budget_area_id in ( select sfb_budget_area_id from sfb_budget_user_area where ad_user_id = @#AD_User_ID@)]]></CODE>
+<!--AD794571643C4346AFC384E08C44356C-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--AD794571643C4346AFC384E08C44356C--></AD_VAL_RULE>
+
+<!--CF02031E053548D9909CE91BE78BD5C2--><AD_VAL_RULE>
+<!--CF02031E053548D9909CE91BE78BD5C2-->  <AD_VAL_RULE_ID><![CDATA[CF02031E053548D9909CE91BE78BD5C2]]></AD_VAL_RULE_ID>
+<!--CF02031E053548D9909CE91BE78BD5C2-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--CF02031E053548D9909CE91BE78BD5C2-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--CF02031E053548D9909CE91BE78BD5C2-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--CF02031E053548D9909CE91BE78BD5C2-->  <NAME><![CDATA[Doctype Create Line Budget]]></NAME>
+<!--CF02031E053548D9909CE91BE78BD5C2-->  <TYPE><![CDATA[S]]></TYPE>
+<!--CF02031E053548D9909CE91BE78BD5C2-->  <CODE><![CDATA[C_DocType.ad_table_id in ('BEE0598F559E45048DD528687ECFB45E')]]></CODE>
+<!--CF02031E053548D9909CE91BE78BD5C2-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--CF02031E053548D9909CE91BE78BD5C2--></AD_VAL_RULE>
+
+<!--DF498C6BBA03413CB7F7110C212D3F2E--><AD_VAL_RULE>
+<!--DF498C6BBA03413CB7F7110C212D3F2E-->  <AD_VAL_RULE_ID><![CDATA[DF498C6BBA03413CB7F7110C212D3F2E]]></AD_VAL_RULE_ID>
+<!--DF498C6BBA03413CB7F7110C212D3F2E-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--DF498C6BBA03413CB7F7110C212D3F2E-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--DF498C6BBA03413CB7F7110C212D3F2E-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--DF498C6BBA03413CB7F7110C212D3F2E-->  <NAME><![CDATA[open_period]]></NAME>
+<!--DF498C6BBA03413CB7F7110C212D3F2E-->  <TYPE><![CDATA[S]]></TYPE>
+<!--DF498C6BBA03413CB7F7110C212D3F2E-->  <CODE><![CDATA[EXISTS (SELECT * FROM c_periodcontrol_log pc WHERE C_Period.C_Period_ID=pc.periodno AND pc.Periodaction='O')]]></CODE>
+<!--DF498C6BBA03413CB7F7110C212D3F2E-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--DF498C6BBA03413CB7F7110C212D3F2E--></AD_VAL_RULE>
+
+<!--F4D0F7FB5D374594AA1379429FD85D67--><AD_VAL_RULE>
+<!--F4D0F7FB5D374594AA1379429FD85D67-->  <AD_VAL_RULE_ID><![CDATA[F4D0F7FB5D374594AA1379429FD85D67]]></AD_VAL_RULE_ID>
+<!--F4D0F7FB5D374594AA1379429FD85D67-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--F4D0F7FB5D374594AA1379429FD85D67-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--F4D0F7FB5D374594AA1379429FD85D67-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--F4D0F7FB5D374594AA1379429FD85D67-->  <NAME><![CDATA[Payment Detail Certificate Line]]></NAME>
+<!--F4D0F7FB5D374594AA1379429FD85D67-->  <TYPE><![CDATA[S]]></TYPE>
+<!--F4D0F7FB5D374594AA1379429FD85D67-->  <CODE><![CDATA[sfb_budget_cert_line_id in (select sfb_budget_cert_line_id from sfb_budget_cert_line bcl left join sfb_budget_certificate bc on bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id left join c_year cy on bc.c_year_id = cy.c_year_id where bc.ad_client_id = @AD_Client_ID@ and bc.ad_org_id = @AD_Org_ID@ and bc.hash_code = coalesce(@EM_Sfb_Hashcode@, (select em_sfb_hashcode from fin_payment where fin_payment_id = @FIN_Payment_ID@)) and bc.process = 'Y' and bcl.c_costcenter_id = coalesce(@EM_Sfb_C_Costcenter_ID@, (select c_costcenter_id from fin_payment where fin_payment_id = @FIN_Payment_ID@)) and bcl.user1_id = coalesce(@EM_Sfb_User1_ID@, (select user1_id from fin_payment where fin_payment_id = @FIN_Payment_ID@)) and bcl.actual_value > 0 and cast(cy.year as double precision) = extract(year from to_date(@Paymentdate@)) and bc.c_currency_id = @C_Currency_ID@ )]]></CODE>
+<!--F4D0F7FB5D374594AA1379429FD85D67-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--F4D0F7FB5D374594AA1379429FD85D67--></AD_VAL_RULE>
+
+<!--F80704C4D7894D85ADA71FE3AF7409C9--><AD_VAL_RULE>
+<!--F80704C4D7894D85ADA71FE3AF7409C9-->  <AD_VAL_RULE_ID><![CDATA[F80704C4D7894D85ADA71FE3AF7409C9]]></AD_VAL_RULE_ID>
+<!--F80704C4D7894D85ADA71FE3AF7409C9-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--F80704C4D7894D85ADA71FE3AF7409C9-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--F80704C4D7894D85ADA71FE3AF7409C9-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--F80704C4D7894D85ADA71FE3AF7409C9-->  <NAME><![CDATA[Journal Budget Flopec]]></NAME>
+<!--F80704C4D7894D85ADA71FE3AF7409C9-->  <DESCRIPTION><![CDATA[validaciòn solo para flopec]]></DESCRIPTION>
+<!--F80704C4D7894D85ADA71FE3AF7409C9-->  <TYPE><![CDATA[S]]></TYPE>
+<!--F80704C4D7894D85ADA71FE3AF7409C9-->  <CODE><![CDATA[sfb_budget_cert_line_id in (select sfb_budget_cert_line_id 
+from sfb_budget_cert_line bcl 
+left join sfb_budget_certificate bc on bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id 
+left join c_year cy on bc.c_year_id = cy.c_year_id 
+where  bc.hash_code = @EM_Sfb_Hashcode@ and bc.process = 'Y' and bcl.c_costcenter_id = @C_Costcenter_ID@  
+and cast(cy.year as double precision) = extract(year from to_date(@Dateacct@)) and ((TO_NUMBER (@AmtSourceCr@, '999,999,999.99')>0 and bcl.actual_value >= 0) OR (TO_NUMBER (@AmtSourceDr@, '999,999,999.99')>0 and bcl.actual_value >0 )))]]></CODE>
+<!--F80704C4D7894D85ADA71FE3AF7409C9-->  <AD_MODULE_ID><![CDATA[75856ABEF4614636A5FABB70AD0CD4C8]]></AD_MODULE_ID>
+<!--F80704C4D7894D85ADA71FE3AF7409C9--></AD_VAL_RULE>
+
+</data>

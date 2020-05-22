@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="4D187DFC8E35491BA1C4D2C5E525C95E" trl="N">
+    <value column="Name" isTrl="N" original="Budget Line">Budget Line</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E9F785EF5B5B4470857C8961E60919A5" trl="N">
+    <value column="Name" isTrl="N" original="Budget Item">Budget Item</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

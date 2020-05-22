@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="348D59136F8645AD8806DA0A854DB965" trl="N">
+    <value column="Name" isTrl="Y" original="Report General Sales">Reporte General de Ventas</value>
+    <value column="Description" isTrl="Y" original="Report General Sales">Reporte General de Ventas</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3E6636E8D13149A7B01231AA3530CE17" trl="N">
+    <value column="Name" isTrl="Y" original="General Sales Report by Cost Center">Reporte General de Ventas por Centro de Costos</value>
+    <value column="Description" isTrl="N" original="">Reporte General de Ventas por Centro de Costos</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="617A01DD098A42D2B78CEDCFDB078F90" trl="N">
+    <value column="Name" isTrl="Y" original="Daily Report Collection">Reporte de Recaudación Diaria</value>
+    <value column="Description" isTrl="Y" original="Daily Report Collection">Reporte de Recaudación Diaria</value>
+    <value column="Help" isTrl="Y" original="Daily Report Collection">Reporte de Recaudación Diaria</value>
+  </row>
+  <row id="C9212991E79B4AFCA94A66650C2AC80D" trl="N">
+    <value column="Name" isTrl="Y" original="Report Income Asset">Reporte de Ingreso de Activos Fijos</value>
+    <value column="Description" isTrl="N" original="">Reporte de Ingreso de Activos Fijos</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="FE45F939437A49B19E7C959786ECCE3A" trl="N">
+    <value column="Name" isTrl="Y" original="Report Income Based on Payment In">Reporte de Ingresos Basados en Cobros</value>
+    <value column="Description" isTrl="Y" original="Report Income Based on Payment In">Reporte de Ingresos Basados en Cobros</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

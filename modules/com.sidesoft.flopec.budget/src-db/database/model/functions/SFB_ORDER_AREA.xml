@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFB_ORDER_AREA">
+    <function name="SFB_ORDER_AREA" type="NULL">
+      <parameter name="p_ep_instance" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[p_message         VARCHAR2(2000);    
+p_record_id       VARCHAR2(60);      
+p_docaction       VARCHAR2(60);      
+p_user            VARCHAR2(60);      
+p_result          NUMBER;
+
+v_ResultStr       VARCHAR2(2000):='';
+v_invoice_id      VARCHAR2(32);      
+v_budget_area_id  VARCHAR2(32);      
+v_inout_id        VARCHAR2(32);      
+
+TYPE RECORD IS REF CURSOR;
+cur_params        RECORD;
+cur_lines         RECORD;
+
+BEGIN
+
+    FOR Cur_Params IN (
+      SELECT *
+      FROM ad_ep_instance_para
+      WHERE ad_ep_instance_id = p_ep_instance
+    ) LOOP
+      IF (cur_params.parametername LIKE 'DocAction') THEN
+      p_docaction := Cur_Params.p_string;
+      ELSIF (cur_params.parametername LIKE 'Record_ID') THEN
+      p_record_id := cur_params.p_string;
+      ELSIF (cur_params.parametername LIKE 'User') THEN
+      p_user := cur_params.p_string;
+      ELSIF (cur_params.parametername LIKE 'Message') THEN
+      p_message := cur_params.p_text;
+      ELSIF (cur_params.parametername LIKE 'Result') THEN
+      p_result := cur_params.p_number;
+      END IF;
+    END LOOP;
+
+    IF (p_docaction = 'CO' OR p_docaction = 'RE' ) THEN
+
+      SELECT COALESCE(em_sfb_budget_area_id, 'ND') INTO v_budget_area_id FROM c_order WHERE c_order_id = p_record_id;
+	
+      SELECT COALESCE(c_invoice_id, 'ND') 
+      INTO v_invoice_id
+      FROM c_invoice 
+      WHERE c_order_id = p_record_id;
+
+      SELECT COALESCE(m_inout_id, 'ND')
+      INTO v_inout_id
+      FROM m_inout 
+      WHERE c_order_id = p_record_id;
+
+      IF ( v_invoice_id <> 'ND' AND v_budget_area_id <> 'ND') THEN
+        UPDATE c_invoice SET em_sfb_budget_area_id = v_budget_area_id WHERE c_invoice_id = v_invoice_id;
+      END IF;
+
+      IF ( v_inout_id <> 'ND' AND v_budget_area_id <> 'ND') THEN
+        UPDATE m_inout SET em_sfb_budget_area_id = v_budget_area_id WHERE m_inout_id = v_inout_id;
+      END IF;       
+        
+    END IF;
+
+EXCEPTION
+WHEN OTHERS THEN
+  DBMS_OUTPUT.PUT_LINE('SFB_ORDER_AREA exception: '|| v_ResultStr);
+  RAISE;
+END SFB_ORDER_AREA
+]]></body>
+    </function>
+  </database>

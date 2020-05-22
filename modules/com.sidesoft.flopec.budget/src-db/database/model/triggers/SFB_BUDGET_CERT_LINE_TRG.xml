@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_BUDGET_CERT_LINE_TRG">
+    <trigger name="SFB_BUDGET_CERT_LINE_TRG" table="SFB_BUDGET_CERT_LINE" fires="before" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+  v_budget_certificate_id VARCHAR2(32);
+  v_process               VARCHAR2(60);
+  v_Cert_Update           BOOLEAN := false;
+  v_CertificateStatus     VARCHAR2(60);
+  
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF (INSERTING OR UPDATING) THEN
+
+    v_budget_certificate_id := :new.sfb_budget_certificate_id;
+    
+    IF (UPDATING) THEN
+      -- Second IF in order to avoid Postgresql lazy evaluation issue.
+      IF (COALESCE(:old.committed_value, '0') <> COALESCE(:new.committed_value, '0') OR
+                      COALESCE(:old.budget_committed_value, '0') <> COALESCE(:new.budget_committed_value, '0') OR
+                      COALESCE(:old.executed_value, '0') <> COALESCE(:new.executed_value, '0') OR
+                      COALESCE(:old.Paidout_Value, '0') <> COALESCE(:new.Paidout_Value, '0') OR
+                      COALESCE(:old.Paidout_Value_Currency, '0') <> COALESCE(:new.Paidout_Value_Currency, '0') OR
+                      COALESCE(:old.budget_executed_value, '0') <> COALESCE(:new.budget_executed_value, '0')) THEN
+                      
+        v_Cert_Update := true;
+
+      END IF;
+                      
+    END IF;
+
+  ELSIF(DELETING) THEN
+
+    v_budget_certificate_id := :old.sfb_budget_certificate_id;
+
+  END IF;
+
+  SELECT process, certificate_status INTO v_process, v_CertificateStatus
+  FROM SFB_BUDGET_CERTIFICATE
+  WHERE sfb_budget_certificate_id = v_budget_certificate_id;
+
+  IF(v_CertificateStatus = 'CL') THEN
+
+    RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyClosedBudgetCertificate@');
+    
+  END IF;
+
+  IF(v_process = 'Y' AND NOT v_Cert_Update) THEN
+
+    RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyProcessedBudgetCertificate@');
+    
+  END IF;
+
+  IF (INSERTING OR UPDATING) THEN
+
+    :new.available_balance := :new.certified_value - :new.committed_value; 
+    :new.actual_value := :new.certified_value - :new.executed_value;
+
+    :new.budget_available_balance := :new.budget_certified_value - :new.budget_committed_value; 
+    :new.budget_actual_value := :new.budget_certified_value - :new.budget_executed_value;
+
+  END IF; 
+
+  END SFB_BUDGET_CERT_LINE_TRG
+]]></body>
+    </trigger>
+  </database>

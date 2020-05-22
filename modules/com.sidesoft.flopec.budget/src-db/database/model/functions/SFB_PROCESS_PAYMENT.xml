@@ -1,0 +1,577 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFB_PROCESS_PAYMENT">
+    <function name="SFB_PROCESS_PAYMENT" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+  Cur_Lines                       RECORD;
+  Cur_Lines2                      RECORD;
+  Cur_Parameter                   RECORD;
+  
+  v_client_id                     VARCHAR2(32);
+  v_user_id                       VARCHAR2(32);
+  
+  v_ResultStr                     VARCHAR2(2000) := '';
+  v_payment_id                    VARCHAR2(32);
+  v_f_payment_scheduledetail_id   VARCHAR2(32);
+  v_process                       VARCHAR2(60);  
+  v_posted                        VARCHAR2(60);  
+  v_Message                       VARCHAR2(2000):='';
+  v_costcenter_id                 VARCHAR2(2000):='';
+  v_user1_id                      VARCHAR2(2000):='';
+  v_user2_id                      VARCHAR2(2000):='';
+
+  v_count                         INTEGER;
+  v_count_doctype                 INTEGER;
+  v_budgeted                      CHAR(1);
+  v_amt NUMBER:= -1;      -- Revenue (-)
+  v_baccount_lines                VARCHAR2(2000):='';
+  v_nbaccount_lines               VARCHAR2(2000):='';
+  v_bamount_lines                 VARCHAR2(2000):='';
+  v_currency_id                   VARCHAR2(32);      
+  v_budget_line_id                VARCHAR2(32);      
+  v_converted                     NUMBER;
+  v_cert_converted                NUMBER;
+  v_sql                           VARCHAR2(4000):='';
+  v_sql2                          VARCHAR2(4000):='';
+  v_exchange_line_id              VARCHAR2(32);      
+
+BEGIN
+  -- Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN -- BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+    
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID,
+              i.AD_User_ID, 
+              i.AD_Client_ID,
+              i.AD_Org_ID                    
+       FROM AD_PInstance i      
+       WHERE i.AD_PInstance_ID = PInstance_ID)
+    LOOP
+    
+      v_payment_id := Cur_Parameter.record_id;	  
+      v_client_id := Cur_Parameter.ad_client_id;
+      v_user_id := Cur_Parameter.ad_user_id;     
+      
+    END LOOP; -- Get Parameter
+
+
+   --UPDATE FIELD REFUND CORE
+   UPDATE fin_payment_detail
+   SET refund = 'N'
+   WHERE fin_payment_id = v_payment_id; 
+   
+  
+    SELECT em_sfb_process, posted, c_costcenter_id, user1_id, user2_id 
+      INTO v_process, v_posted, v_costcenter_id, v_user1_id, v_user2_id
+    FROM fin_payment
+    WHERE fin_payment_id = v_payment_id;
+
+    IF (v_posted = 'Y') THEN
+    
+      RAISE_APPLICATION_ERROR(-20000, '@DocumentPosted@');
+      
+    END IF;  
+
+    IF (v_process = 'N') THEN -- Process
+
+      -- Reset amount to 0 before calculation
+      UPDATE FIN_PAYMENT SET amount = 0, finacc_txn_amount = 0
+      WHERE fin_payment_id = v_payment_id;
+      
+      FOR Cur_Lines IN
+        (SELECT ad_org_id, fin_payment_detail_id, amount, em_sfb_c_costcenter_id, em_sfb_user1_id, em_sfb_user2_id
+         FROM FIN_PAYMENT_DETAIL
+         WHERE fin_payment_id = v_payment_id)
+      LOOP
+        
+        DELETE FROM FIN_PAYMENT_SCHEDULEDETAIL WHERE fin_payment_detail_id = Cur_Lines.fin_payment_detail_id;
+
+        v_f_payment_scheduledetail_id := get_uuid();
+        INSERT INTO FIN_PAYMENT_SCHEDULEDETAIL (ad_client_id, ad_org_id, created, createdby, updated, updatedby,
+                                                amount, isactive, writeoffamt, iscanceled, doubtfuldebt_amount, fin_payment_scheduledetail_id,
+                                                fin_payment_detail_id, c_costcenter_ID, user1_id, user2_id) 
+        VALUES (v_client_id, Cur_Lines.ad_org_id, now(), v_user_id, now(), v_user_id,
+                Cur_Lines.amount, 'Y', 0, 'N', 0, v_f_payment_scheduledetail_id,
+                Cur_Lines.fin_payment_detail_id, coalesce(Cur_Lines.em_sfb_c_costcenter_id, v_costcenter_id), coalesce(Cur_Lines.em_sfb_user1_id, v_user1_id), coalesce(Cur_Lines.em_sfb_user2_id, v_user2_id));
+
+        UPDATE FIN_PAYMENT SET updated = now(), amount = amount + Cur_Lines.amount, finacc_txn_amount = finacc_txn_amount + Cur_Lines.amount
+        WHERE fin_payment_id = v_payment_id;
+        
+      END LOOP;
+
+      UPDATE FIN_PAYMENT SET updated = now(), status = 'RPAE', processed = 'Y', description = 'Budget GL Items', em_aprm_process_payment= 'RE'
+      WHERE fin_payment_id = v_payment_id;
+
+      -- Is a Document Type that has been enabled for the budget.
+      SELECT count(*) INTO v_count_doctype
+      FROM FIN_PAYMENT fp, SFB_BUDGET_DOCTYPE bdt
+      WHERE AD_ISORGINCLUDED(fp.ad_org_id, bdt.ad_org_id, fp.ad_client_id) <> -1  
+            AND bdt.c_doctype_id = fp.c_doctype_id 
+            AND bdt.isactive = 'Y'
+            AND fp.fin_payment_id = v_payment_id;
+
+      IF (v_count_doctype > 0) THEN
+
+        v_resultstr := 'Update budget (executed certificate value).';
+
+        FOR Cur_Lines2 IN (
+          SELECT (CASE WHEN extract(year from TO_DATE(fp.paymentdate)) = extract(year from TO_DATE(bc.date_issue)) THEN 1 ELSE 0 END) AS sameyear,
+                 (CASE WHEN fp.c_currency_id = bc.c_currency_id THEN 1 ELSE 0 END) AS samecurrency,
+                 (CASE WHEN coalesce(fpd.em_sfb_hashcode, fp.em_sfb_hashcode) = bc.hash_code THEN 1 ELSE 0 END) AS samehashcode,
+                 (CASE WHEN fpd.ad_org_id = bcl.ad_org_id THEN 1 ELSE 0 END) AS sameorg,
+                 (CASE WHEN ((bcl.actual_value >= (fpd.amount)) AND
+                            (bcl.actual_value >= 
+                            (SELECT sum(amount) 
+                             FROM FIN_PAYMENT_DETAIL 
+                             WHERE em_sfb_budget_cert_line_id = fpd.em_sfb_budget_cert_line_id AND fin_payment_id = fp.fin_payment_id)))
+                 THEN 1 ELSE 0 END) AS enoughamount,
+                 fp.ad_client_id, fp.ad_org_id, fp.c_doctype_id, fp.paymentdate, fp.c_currency_id, fp.em_sfb_isnotbudgetable AS header_isnotbudgetable,
+                 fpd.amount AS linetotalamt, fpd.em_sfb_budget_cert_line_id AS linecertificate, fpd.c_glitem_id, cgli.name AS glitem_name,
+                 bcl.c_costcenter_id, bcl.user1_id, bcl.sfb_budget_cert_line_id, bcl.sfb_budget_item_id,
+                 bc.type_of_budget, bc.c_year_id, bc.date_issue
+          FROM fin_payment fp 
+               LEFT JOIN fin_payment_detail fpd ON fp.fin_payment_id = fpd.fin_payment_id
+               LEFT JOIN c_glitem cgli ON fpd.c_glitem_id = cgli.c_glitem_id
+               LEFT JOIN sfb_budget_cert_line bcl ON fpd.em_sfb_budget_cert_line_id = bcl.sfb_budget_cert_line_id
+               LEFT JOIN sfb_budget_certificate bc ON bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id
+          WHERE fp.fin_payment_id = v_payment_id AND fp.isreceipt = 'N'
+        )
+        LOOP
+
+          -- Get Account
+      
+          SELECT count(*) INTO v_count
+          FROM C_DOCTYPE
+          WHERE c_doctype_id = Cur_Lines2.c_doctype_id AND docbasetype like '%AP%';
+
+          IF (v_count = 1) THEN
+
+            v_amt := 1; -- Expense (+)
+
+          END IF;
+            
+          IF (Cur_Lines2.header_isnotbudgetable = 'N') THEN
+
+            IF (Cur_Lines2.linetotalamt <> 0) THEN
+      
+              IF (Cur_Lines2.linecertificate IS NULL) THEN
+
+                RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCertificateLine@');
+      
+              ELSIF (Cur_Lines2.sameorg = 0) THEN
+
+                RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCertificateOrganization@');
+
+              ELSIF(Cur_Lines2.samecurrency = 0) THEN
+
+                RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCertificateCurrency@');
+
+              ELSIF(Cur_Lines2.samehashcode = 0) THEN
+
+                RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCertificateHashcode@');
+
+              ELSIF(Cur_Lines2.sameyear = 0) THEN
+
+                RAISE_APPLICATION_ERROR(-20000, '@SFB_NoDateWithinYear@');
+
+              ELSIF(Cur_Lines2.enoughamount = 0) THEN
+
+                IF (COALESCE(v_bamount_lines, '0') <> COALESCE('', '0')) THEN
+
+                  v_bamount_lines := v_bamount_lines || ', ';
+
+                END IF;
+
+                v_bamount_lines := v_bamount_lines || Cur_Lines2.glitem_name;
+
+                -- IF there are some amount errors then save error lines only 
+                IF (COALESCE(v_bamount_lines, '0') <> COALESCE('', '0')) THEN
+
+                  CONTINUE;
+
+                END IF;
+
+              ELSE
+
+                -- GL Item directly from Payment Detail
+
+                SELECT count(*) INTO v_count
+                FROM SFB_BUDGET_ITEM_ACCOUNT
+                WHERE sfb_budget_item_id = Cur_Lines2.sfb_budget_item_id AND account_id IN (
+
+                  SELECT CASE WHEN v_amt = 1 THEN cvc1.account_id ELSE cvc2.account_id END AS account_id
+                  FROM C_GLITEM_ACCT gli LEFT JOIN C_VALIDCOMBINATION cvc1 ON gli.glitem_debit_acct  = cvc1.c_validcombination_id
+                                         LEFT JOIN C_VALIDCOMBINATION cvc2 ON gli.glitem_credit_acct = cvc2.c_validcombination_id
+                  WHERE c_glitem_id = Cur_Lines2.c_glitem_id AND gli.c_acctschema_id IN (
+                
+                    SELECT DISTINCT ad_org_acctschema.c_acctschema_id
+                    FROM ad_org_acctschema, c_acctschema
+                    WHERE ad_org_acctschema.c_acctschema_id = c_acctschema.c_acctschema_id
+      		      AND ad_org_acctschema.ad_client_id = Cur_Lines2.ad_client_id
+      		      AND (ad_isorgincluded(Cur_Lines2.ad_org_id, ad_org_acctschema.ad_org_id, ad_org_acctschema.ad_client_id) <> -1 OR Cur_Lines2.ad_org_id = '0')
+      		      AND c_acctschema.isactive = 'Y'
+      		      AND ad_org_acctschema.isactive = 'Y')
+                );    
+
+                -- Account checks
+
+                IF (v_count = 0) THEN
+
+                  IF (COALESCE(v_baccount_lines, '0') <> COALESCE('', '0')) THEN
+
+                    v_baccount_lines := v_baccount_lines || ', ';
+
+                  END IF;
+
+                  v_baccount_lines := v_baccount_lines || Cur_Lines2.glitem_name;
+
+                END IF;
+
+                -- IF there are some nature of account errors then save error lines only 
+                IF (COALESCE(v_baccount_lines, '0') <> COALESCE('', '0')) THEN
+
+                  CONTINUE;
+
+                END IF;
+
+                -- Get budget currency
+                SELECT b.c_currency_id, bl.sfb_budget_line_id INTO v_currency_id, v_budget_line_id
+                FROM SFB_BUDGET_LINE bl 
+                     LEFT JOIN sfb_budget_version bv ON bl.sfb_budget_version_id = bv.sfb_budget_version_id 
+                     LEFT JOIN sfb_budget b ON bv.sfb_budget_id = b.sfb_budget_id 
+                WHERE bl.ad_client_id = Cur_Lines2.ad_client_id AND bl.ad_org_id = Cur_Lines2.ad_org_id 
+                AND bl.c_costcenter_id = Cur_Lines2.c_costcenter_id AND bl.user1_id = Cur_Lines2.user1_id AND bl.sfb_budget_item_id = Cur_Lines2.sfb_budget_item_id
+                AND bv.version_status = 'AP' AND b.type_of_budget = Cur_Lines2.type_of_budget AND b.c_year_id = Cur_Lines2.c_year_id;
+
+                IF (Cur_Lines2.c_currency_id = v_currency_id) THEN
+
+                  v_converted := Cur_Lines2.linetotalamt;
+                  v_cert_converted := Cur_Lines2.linetotalamt;
+
+                ELSE
+
+                  v_converted := C_Currency_Round(C_Currency_Convert(Cur_Lines2.linetotalamt, Cur_Lines2.c_currency_id, v_currency_id, Cur_Lines2.paymentdate, null, Cur_Lines2.ad_client_id, Cur_Lines2.ad_org_id), v_currency_id, null);
+                  v_cert_converted := C_Currency_Round(C_Currency_Convert(Cur_Lines2.linetotalamt, Cur_Lines2.c_currency_id, v_currency_id, Cur_Lines2.date_issue, null, Cur_Lines2.ad_client_id, Cur_Lines2.ad_org_id), v_currency_id, null);
+
+                END IF;
+
+                IF (v_converted IS NULL OR v_cert_converted IS NULL) THEN
+
+                  RAISE_APPLICATION_ERROR(-20000, '@NoConversionRateHeader@');
+
+                END IF;
+
+                v_resultstr := 'Add amount to executed value';
+                UPDATE SFB_BUDGET_CERT_LINE 
+                SET executed_value = executed_value + Cur_Lines2.linetotalamt, 
+                    committed_value = committed_value + Cur_Lines2.linetotalamt, 
+                    budget_executed_value = budget_executed_value + v_converted
+                WHERE sfb_budget_cert_line_id = Cur_Lines2.sfb_budget_cert_line_id;
+
+                v_sql := 'UPDATE SFB_BUDGET_LINE SET ';
+
+                SELECT
+                CASE extract(month from TO_DATE(Cur_Lines2.paymentdate))
+                  WHEN 1  THEN v_sql || 'jan_executed_value = jan_executed_value + '
+                  WHEN 2  THEN v_sql || 'feb_executed_value = feb_executed_value + '
+                  WHEN 3  THEN v_sql || 'mar_executed_value = mar_executed_value + '
+                  WHEN 4  THEN v_sql || 'apr_executed_value = apr_executed_value + '
+                  WHEN 5  THEN v_sql || 'may_executed_value = may_executed_value + '
+                  WHEN 6  THEN v_sql || 'jun_executed_value = jun_executed_value + '
+                  WHEN 7  THEN v_sql || 'jul_executed_value = jul_executed_value + '
+                  WHEN 8  THEN v_sql || 'aug_executed_value = aug_executed_value + '
+                  WHEN 9  THEN v_sql || 'sep_executed_value = sep_executed_value + '
+                  WHEN 10 THEN v_sql || 'oct_executed_value = oct_executed_value + '
+                  WHEN 11 THEN v_sql || 'nov_executed_value = nov_executed_value + '
+                  WHEN 12 THEN v_sql || 'dec_executed_value = dec_executed_value + '
+                END INTO v_sql
+                FROM DUAL;
+
+                v_sql := v_sql || v_cert_converted || ' WHERE SFB_BUDGET_LINE_ID = ''' || v_budget_line_id || '''';
+                EXECUTE IMMEDIATE v_sql;
+
+                IF ( v_cert_converted <> v_converted) THEN
+
+                  -- Get exchange difference budget line
+                  SELECT sfb_budget_line_id INTO v_exchange_line_id
+                  FROM sfb_budget_line bl
+                  LEFT JOIN sfb_budget_version bv ON bl.sfb_budget_version_id = bv.sfb_budget_version_id 
+                  LEFT JOIN sfb_budget b ON bv.sfb_budget_id = b.sfb_budget_id 
+                  WHERE bl.isexchange = 'Y' AND bl.ad_client_id = Cur_Lines2.ad_client_id AND
+                        bl.ad_org_id = Cur_Lines2.ad_org_id AND 
+                        b.type_of_budget = Cur_Lines2.type_of_budget AND 
+                        b.c_year_id = Cur_Lines2.c_year_id;
+
+	          v_sql2 := 'UPDATE SFB_BUDGET_LINE SET ';
+
+                  SELECT
+                  CASE extract(month from TO_DATE(Cur_Lines2.paymentdate))
+                    WHEN 1  THEN v_sql2 || 'jan_executed_value = jan_executed_value + '
+                    WHEN 2  THEN v_sql2 || 'feb_executed_value = feb_executed_value + '
+                    WHEN 3  THEN v_sql2 || 'mar_executed_value = mar_executed_value + '
+                    WHEN 4  THEN v_sql2 || 'apr_executed_value = apr_executed_value + '
+                    WHEN 5  THEN v_sql2 || 'may_executed_value = may_executed_value + '
+                    WHEN 6  THEN v_sql2 || 'jun_executed_value = jun_executed_value + '
+                    WHEN 7  THEN v_sql2 || 'jul_executed_value = jul_executed_value + '
+                    WHEN 8  THEN v_sql2 || 'aug_executed_value = aug_executed_value + '
+                    WHEN 9  THEN v_sql2 || 'sep_executed_value = sep_executed_value + '
+                    WHEN 10 THEN v_sql2 || 'oct_executed_value = oct_executed_value + '
+                    WHEN 11 THEN v_sql2 || 'nov_executed_value = nov_executed_value + '
+                    WHEN 12 THEN v_sql2 || 'dec_executed_value = dec_executed_value + '
+                  END INTO v_sql2
+                  FROM DUAL;
+
+                  v_sql2 := v_sql2 || TO_CHAR(v_converted - v_cert_converted) || ' WHERE SFB_BUDGET_LINE_ID = ''' || v_exchange_line_id || '''';
+                  EXECUTE IMMEDIATE v_sql2; 
+
+                END IF;
+
+              END IF;
+
+            END IF;
+
+          ELSE -- Check Budget Item account must be budgetable
+
+            -- GL Item directly from Invoice Line
+
+            SELECT count(*) INTO v_count
+            FROM SFB_BUDGET_ITEM_ACCOUNT bia LEFT JOIN SFB_BUDGET_ITEM bi ON bia.sfb_budget_item_id = bi.sfb_budget_item_id
+                                             LEFT JOIN SFB_BUDGET_LINE bl ON bl.sfb_budget_item_id = bi.sfb_budget_item_id 
+                                             LEFT JOIN SFB_BUDGET_VERSION bv ON bl.sfb_budget_version_id = bv.sfb_budget_version_id 
+                                             LEFT JOIN SFB_BUDGET b ON bv.sfb_budget_id = b.sfb_budget_id
+                                             LEFT JOIN C_YEAR cy ON b.c_year_id = cy.c_year_id
+            WHERE bv.version_status = 'AP' AND cast(cy.year as double precision) = extract(year from TO_DATE(Cur_Lines2.paymentdate)) AND bia.account_id IN (
+
+              SELECT CASE WHEN v_amt = 1 THEN cvc1.account_id ELSE cvc2.account_id END AS account_id
+              FROM C_GLITEM_ACCT gli LEFT JOIN C_VALIDCOMBINATION cvc1 ON gli.glitem_debit_acct  = cvc1.c_validcombination_id
+                                     LEFT JOIN C_VALIDCOMBINATION cvc2 ON gli.glitem_credit_acct = cvc2.c_validcombination_id
+              WHERE c_glitem_id = Cur_Lines2.c_glitem_id AND gli.c_acctschema_id IN (
+                
+                SELECT DISTINCT ad_org_acctschema.c_acctschema_id
+                FROM ad_org_acctschema, c_acctschema
+                WHERE ad_org_acctschema.c_acctschema_id = c_acctschema.c_acctschema_id
+      		  AND ad_org_acctschema.ad_client_id = Cur_Lines2.ad_client_id
+      		  AND (ad_isorgincluded(Cur_Lines2.ad_org_id, ad_org_acctschema.ad_org_id, ad_org_acctschema.ad_client_id) <> -1 OR Cur_Lines2.ad_org_id = '0')
+      		  AND c_acctschema.isactive = 'Y'
+      		  AND ad_org_acctschema.isactive = 'Y')
+            );    
+
+            
+            -- Account chekcks
+
+            IF (v_count > 0) THEN
+
+              IF (COALESCE(v_nbaccount_lines, '0') <> COALESCE('', '0')) THEN
+
+                v_nbaccount_lines := v_nbaccount_lines || ', ';
+
+              END IF;
+
+              v_nbaccount_lines := v_nbaccount_lines || Cur_Lines2.glitem_name;
+
+            END IF;
+
+          END IF;  
+
+        END LOOP;
+
+        IF (COALESCE(v_baccount_lines, '0') <> COALESCE('', '0')) THEN
+
+          RAISE_APPLICATION_ERROR(-20000, '@SFB_NoBudgetableAccountLines@' || ' (' || v_baccount_lines || ')');
+
+        ELSIF (COALESCE(v_nbaccount_lines, '0') <> COALESCE('', '0')) THEN
+
+          RAISE_APPLICATION_ERROR(-20000, '@SFB_NoNotBudgetAccountLines@' || ' (' || v_nbaccount_lines || ')');
+
+        ELSIF (COALESCE(v_bamount_lines, '0') <> COALESCE('', '0')) THEN
+
+          RAISE_APPLICATION_ERROR(-20000, '@SFB_NoEnoughAmount@' || ' (' || v_bamount_lines || ')');
+
+        END IF;
+
+        UPDATE fin_payment SET em_sfb_isbudgeted = 'Y' WHERE fin_payment_id = v_payment_id;
+
+      END IF;
+
+      v_process := 'Y';
+
+    ELSE -- Unprocess
+    
+      SELECT count(*) INTO v_count 
+      FROM FIN_FINACC_TRANSACTION
+      WHERE fin_payment_id = v_payment_id;
+      
+      IF (v_count > 0) THEN
+      
+        RAISE_APPLICATION_ERROR(-20000, '@APRM_TransactionExists@');
+        
+      END IF;
+
+      UPDATE FIN_PAYMENT SET updated = now(), processed = 'N', Status = 'RPAP', Description = '', em_aprm_process_payment = 'P'
+      WHERE fin_payment_id = v_payment_id;
+
+      SELECT em_sfb_isbudgeted INTO v_budgeted
+      FROM fin_payment
+      WHERE fin_payment_id = v_payment_id;
+
+      IF (v_budgeted = 'Y') THEN
+
+        v_resultstr := 'Update budget (executed certificate value).';
+    
+        FOR Cur_Lines2 IN (
+          SELECT fp.ad_client_id, fp.ad_org_id, fp.paymentdate, fp.c_currency_id, fp.em_sfb_isnotbudgetable AS header_isnotbudgetable,
+                 fpd.amount AS linetotalamt, 
+                 bcl.c_costcenter_id, bcl.user1_id, bcl.sfb_budget_cert_line_id, bcl.sfb_budget_item_id,
+                 bc.type_of_budget, bc.c_year_id, bc.date_issue
+          FROM fin_payment fp 
+               LEFT JOIN fin_payment_DETAIL fpd ON fp.fin_payment_id = fpd.fin_payment_id
+               LEFT JOIN sfb_budget_cert_line bcl ON fpd.em_sfb_budget_cert_line_id = bcl.sfb_budget_cert_line_id
+               LEFT JOIN sfb_budget_certificate bc ON bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id
+          WHERE fp.fin_payment_id = v_payment_id AND fp.isreceipt = 'N'
+        )
+        LOOP
+
+          IF (Cur_Lines2.header_isnotbudgetable = 'N' AND Cur_Lines2.linetotalamt <> 0) THEN
+
+            -- Get budget currency
+            SELECT b.c_currency_id, bl.sfb_budget_line_id INTO v_currency_id, v_budget_line_id
+            FROM SFB_BUDGET_LINE bl 
+                 LEFT JOIN sfb_budget_version bv ON bl.sfb_budget_version_id = bv.sfb_budget_version_id 
+                 LEFT JOIN sfb_budget b ON bv.sfb_budget_id = b.sfb_budget_id 
+            WHERE bl.ad_client_id = Cur_Lines2.ad_client_id AND bl.ad_org_id = Cur_Lines2.ad_org_id 
+            AND bl.c_costcenter_id = Cur_Lines2.c_costcenter_id AND bl.user1_id = Cur_Lines2.user1_id AND bl.sfb_budget_item_id = Cur_Lines2.sfb_budget_item_id
+            AND bv.version_status = 'AP' AND b.type_of_budget = Cur_Lines2.type_of_budget AND b.c_year_id = Cur_Lines2.c_year_id;
+
+            IF (Cur_Lines2.c_currency_id = v_currency_id) THEN
+
+              v_converted := Cur_Lines2.linetotalamt;
+              v_cert_converted := Cur_Lines2.linetotalamt;
+
+            ELSE
+
+              v_converted := C_Currency_Round(C_Currency_Convert(Cur_Lines2.linetotalamt, Cur_Lines2.c_currency_id, v_currency_id, Cur_Lines2.paymentdate, null, Cur_Lines2.ad_client_id, Cur_Lines2.ad_org_id), v_currency_id, null);
+              v_cert_converted := C_Currency_Round(C_Currency_Convert(Cur_Lines2.linetotalamt, Cur_Lines2.c_currency_id, v_currency_id, Cur_Lines2.date_issue, null, Cur_Lines2.ad_client_id, Cur_Lines2.ad_org_id), v_currency_id, null);
+
+            END IF;
+
+            IF (v_converted IS NULL OR v_cert_converted IS NULL) THEN
+
+              RAISE_APPLICATION_ERROR(-20000, '@NoConversionRateHeader@');
+
+            END IF;
+
+            v_resultstr := 'Subtract amount to executed value';
+            UPDATE SFB_BUDGET_CERT_LINE 
+            SET executed_value = executed_value - Cur_Lines2.linetotalamt, 
+                committed_value = committed_value - Cur_Lines2.linetotalamt, 
+                budget_executed_value = budget_executed_value - v_converted
+            WHERE sfb_budget_cert_line_id = Cur_Lines2.sfb_budget_cert_line_id;
+
+            v_sql := 'UPDATE SFB_BUDGET_LINE SET ';
+
+            SELECT
+            CASE extract(month from TO_DATE(Cur_Lines2.paymentdate))
+              WHEN 1  THEN v_sql || 'jan_executed_value = jan_executed_value - '
+              WHEN 2  THEN v_sql || 'feb_executed_value = feb_executed_value - '
+              WHEN 3  THEN v_sql || 'mar_executed_value = mar_executed_value - '
+              WHEN 4  THEN v_sql || 'apr_executed_value = apr_executed_value - '
+              WHEN 5  THEN v_sql || 'may_executed_value = may_executed_value - '
+              WHEN 6  THEN v_sql || 'jun_executed_value = jun_executed_value - '
+              WHEN 7  THEN v_sql || 'jul_executed_value = jul_executed_value - '
+              WHEN 8  THEN v_sql || 'aug_executed_value = aug_executed_value - '
+              WHEN 9  THEN v_sql || 'sep_executed_value = sep_executed_value - '
+              WHEN 10 THEN v_sql || 'oct_executed_value = oct_executed_value - '
+              WHEN 11 THEN v_sql || 'nov_executed_value = nov_executed_value - '
+              WHEN 12 THEN v_sql || 'dec_executed_value = dec_executed_value - '
+            END INTO v_sql
+            FROM DUAL;
+
+            v_sql := v_sql || v_cert_converted || ' WHERE SFB_BUDGET_LINE_ID = ''' || v_budget_line_id || '''';
+            EXECUTE IMMEDIATE v_sql;
+
+            IF (v_cert_converted <> v_converted) THEN
+
+              -- Get exchange difference budget line
+              SELECT sfb_budget_line_id INTO v_exchange_line_id
+              FROM sfb_budget_line bl
+              LEFT JOIN sfb_budget_version bv ON bl.sfb_budget_version_id = bv.sfb_budget_version_id 
+              LEFT JOIN sfb_budget b ON bv.sfb_budget_id = b.sfb_budget_id 
+              WHERE bl.isexchange = 'Y' AND bl.ad_client_id = Cur_Lines2.ad_client_id AND
+                    bl.ad_org_id = Cur_Lines2.ad_org_id AND 
+                    b.type_of_budget = Cur_Lines2.type_of_budget AND 
+                    b.c_year_id = Cur_Lines2.c_year_id;
+
+	      v_sql2 := 'UPDATE SFB_BUDGET_LINE SET ';
+
+              SELECT
+              CASE extract(month from TO_DATE(Cur_Lines2.paymentdate))
+                WHEN 1  THEN v_sql2 || 'jan_executed_value = jan_executed_value - '
+                WHEN 2  THEN v_sql2 || 'feb_executed_value = feb_executed_value - '
+                WHEN 3  THEN v_sql2 || 'mar_executed_value = mar_executed_value - '
+                WHEN 4  THEN v_sql2 || 'apr_executed_value = apr_executed_value - '
+                WHEN 5  THEN v_sql2 || 'may_executed_value = may_executed_value - '
+                WHEN 6  THEN v_sql2 || 'jun_executed_value = jun_executed_value - '
+                WHEN 7  THEN v_sql2 || 'jul_executed_value = jul_executed_value - '
+                WHEN 8  THEN v_sql2 || 'aug_executed_value = aug_executed_value - '
+                WHEN 9  THEN v_sql2 || 'sep_executed_value = sep_executed_value - '
+                WHEN 10 THEN v_sql2 || 'oct_executed_value = oct_executed_value - '
+                WHEN 11 THEN v_sql2 || 'nov_executed_value = nov_executed_value - '
+                WHEN 12 THEN v_sql2 || 'dec_executed_value = dec_executed_value - '
+              END INTO v_sql2
+              FROM DUAL;
+
+              v_sql2 := v_sql2 || TO_CHAR(v_converted - v_cert_converted) || ' WHERE SFB_BUDGET_LINE_ID = ''' || v_exchange_line_id || '''';
+              EXECUTE IMMEDIATE v_sql2; 
+
+            END IF;
+
+          END IF; 
+
+        END LOOP;
+
+        UPDATE fin_payment SET em_sfb_isbudgeted = 'N' WHERE fin_payment_id = v_payment_id;
+
+      END IF;
+      
+      v_process := 'N';
+
+    END IF;    
+
+  -- End Processing
+    
+  v_ResultStr:='UpdatingRecord';
+  UPDATE fin_payment
+  SET em_sfb_process = v_process,
+      updated = now(),
+      updatedby= v_user_id
+  WHERE fin_payment_id = v_payment_id;    
+
+  v_Message := 'Budget Payment Out Processed.';
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+  RETURN;
+  
+  COMMIT;
+    
+END; -- BODY
+EXCEPTION
+WHEN OTHERS THEN
+  ROLLBACK;
+  DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+  v_ResultStr:= '@ERROR=' || SQLERRM;
+  DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+  RETURN;
+END SFB_PROCESS_PAYMENT
+]]></body>
+    </function>
+  </database>

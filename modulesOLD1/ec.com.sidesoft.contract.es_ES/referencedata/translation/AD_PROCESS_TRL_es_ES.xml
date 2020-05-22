@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="A50940460C4E4974885473E518AC2515" trl="N">
+    <value column="Name" isTrl="Y" original="Process Payment Contract">Procesar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="BE4BA6F9C69A40DBBD1272B3130E3BC7" trl="N">
+    <value column="Name" isTrl="Y" original="Update Percentage Advance">Procesar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="CEA46372AA9243CA917810180CAE8AE4" trl="N">
+    <value column="Name" isTrl="Y" original="Report Advance Physical">Reporte Físico de Fases</value>
+    <value column="Description" isTrl="Y" original="Report Advance Physical">Reporte Físico de Fases</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2C4EE3E3F8BC457BB189F4238D5A815B" trl="N">
+    <value column="Name" isTrl="Y" original="Reporte Warranty">Reporte de Garantías</value>
+    <value column="Description" isTrl="Y" original="Reporte Warranty">Reporte de Garantías</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4D5CA698991D41E8BCCD18A2806E9703" trl="N">
+    <value column="Name" isTrl="Y" original="Unprocessed Percentage">Reactivar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="6AC3E9DA93D146E3AEA9FC750BA65D04" trl="N">
+    <value column="Name" isTrl="Y" original="Report Advance Economic">Reporte Económico de Fases</value>
+    <value column="Description" isTrl="Y" original="Report Advance Economic">Reporte Económico de Fases</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="901A13F106724D0C95B23B09F3338025" trl="N">
+    <value column="Name" isTrl="Y" original="Reactive Payment Contract">Reactivar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

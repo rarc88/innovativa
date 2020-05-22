@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="1B70B0072F6C4AFBA156FB750288B5F4" trl="N">
+    <value column="MsgText" isTrl="Y" original="No line purchasing is permitted zero">No se permite línea de compra con valor cero</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

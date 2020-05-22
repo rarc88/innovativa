@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="26AE35E6E3F04FCEA4000D07CA333954" trl="N">
+    <value column="Text" isTrl="N" original="Producto / Actividad / Fuente de Financiamiento">Producto / Actividad / Fuente de Financiamiento</value>
+  </row>
+  <row id="3FDD83CA5A3641F89458F53B3A69B546" trl="N">
+    <value column="Text" isTrl="N" original="Partidas Presupuestarias:">Partidas Presupuestarias:</value>
+  </row>
+  <row id="4AF64785B30048D29DBE09F4D195C976" trl="N">
+    <value column="Text" isTrl="N" original="Partida">Partida</value>
+  </row>
+  <row id="631C1CAF2E9A40FB9925BA44E7AA7125" trl="N">
+    <value column="Text" isTrl="N" original="REFORMA PRESUPUESTARIA No:">REFORMA PRESUPUESTARIA No:</value>
+  </row>
+  <row id="9EC260F0C408410B81EAEDBE9B57B111" trl="N">
+    <value column="Text" isTrl="N" original="Valor">Valor</value>
+  </row>
+  <row id="BA5B4CB4A1DC4C20B2A085DC2D94D6FE" trl="N">
+    <value column="Text" isTrl="N" original="Nombre">Nombre</value>
+  </row>
+  <row id="BD33F96B24D94E47976B5F281AFF03FC" trl="N">
+    <value column="Text" isTrl="N" original="Identificación :">Identificación :</value>
+  </row>
+  <row id="C247C441FB954852AB97F3334D345F22" trl="N">
+    <value column="Text" isTrl="N" original="Solicitante :">Solicitante :</value>
+  </row>
+  <row id="E92946CBE1084F3F809F43A385252C39" trl="N">
+    <value column="Text" isTrl="N" original="Producto :">Producto :</value>
+  </row>
+  <row id="F71AC6EC605A4BFFB4B00F9723415934" trl="N">
+    <value column="Text" isTrl="N" original="Detalle:">Detalle:</value>
+  </row>
+  <row id="FC00CF128A314FB5B0B9976F7D1FC552" trl="N">
+    <value column="Text" isTrl="N" original="Fecha :">Fecha :</value>
+  </row>
+</compiereTrl>

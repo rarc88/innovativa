@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFBIN_PAYMENT_TRG">
+    <trigger name="SFBIN_PAYMENT_TRG" table="FIN_PAYMENT" fires="after" insert="false" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+
+  TYPE RECORD IS REF CURSOR;
+  cur_lines     RECORD;
+
+  v_converted       NUMBER;
+  v_amt             NUMBER;
+  v_amt_proc_unproc NUMBER:=1;
+  v_ResultStr       VARCHAR2(2000):=''; 
+  v_sql             VARCHAR2(4000):=''; 
+  
+
+
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (UPDATING) THEN
+
+    -- Second IF in order to avoid Postgresql lazy evaluation issue.
+    IF (:new.isreceipt = 'Y' AND (:old.processed = 'N' AND :new.processed = 'Y' OR :old.processed = 'Y' AND :new.processed = 'N')) THEN
+    
+      IF (:old.processed = 'Y' AND :new.processed = 'N') THEN
+        v_amt_proc_unproc := -1;
+      END IF;
+    
+      FOR cur_lines IN (
+        SELECT  i.ad_client_id, i.ad_org_id, i.c_doctypetarget_id, i.dateinvoiced,
+                i.c_currency_id, i.em_sfb_isnotbudgetable AS header_isnotbudgetable, il.line, il.linenetamt AS linetotalamt,
+                il.em_sfb_budget_cert_line_id AS linecertificate, il.m_product_id, il.c_charge_id, il.account_id,
+                bln.c_costcenter_id, bln.user1_id, bln.sfb_budget_item_id, bln.sfb_budget_line_id,
+                b.c_currency_id as budget_currency_id, pd.amount as pmt_det_amount, i.totallines, i.grandtotal
+        FROM fin_payment_detail pd
+        JOIN fin_payment_scheduledetail psd ON psd.fin_payment_detail_id = pd.fin_payment_detail_id
+        JOIN fin_payment_schedule ps ON psd.fin_payment_schedule_invoice = ps.fin_payment_schedule_id
+        JOIN c_invoice i ON ps.c_invoice_id = i.c_invoice_id
+        JOIN c_invoiceline il ON i.c_invoice_id = il.c_invoice_id
+        LEFT JOIN (
+          m_product_acct pa
+          JOIN c_validcombination vc ON vc.c_validcombination_id = pa.p_revenue_acct
+        ) ON il.m_product_id = pa.m_product_id
+        LEFT JOIN (
+          sfb_budget b
+          JOIN c_year y on y.c_year_id = b.c_year_id
+          JOIN sfb_budget_version bv ON bv.sfb_budget_id = b.sfb_budget_id AND bv.version_status = 'AP'
+          JOIN sfb_budget_line bln ON bln.sfb_budget_version_id = bv.sfb_budget_version_id
+          JOIN sfb_budget_item_account bia ON bia.sfb_budget_item_id = bln.sfb_budget_item_id 
+        ) ON  bln.c_costcenter_id = COALESCE(il.c_costcenter_id, i.c_costcenter_id)
+          AND bln.user1_id = COALESCE(il.user1_id, i.user1_id)
+          AND bln.sfb_budget_area_id = COALESCE(il.em_sfbin_budget_area_id, i.em_sfb_budget_area_id)
+          AND bia.isactive = 'Y'
+          AND bia.account_id = vc.account_id
+          AND CAST(y.year AS NUMBER(10,0)) = CAST(EXTRACT(YEAR FROM i.dateinvoiced) AS NUMBER(10,0))
+        WHERE pd.fin_payment_id = :new.fin_payment_id
+          AND i.issotrx = 'Y'
+        ORDER BY il.line
+      )
+      LOOP
+      
+        IF (cur_lines.header_isnotbudgetable = 'N') THEN
+
+          IF (cur_lines.linetotalamt <> 0) THEN
+          
+            v_amt := cur_lines.linetotalamt * cur_lines.pmt_det_amount / cur_lines.grandtotal;
+IF (cur_lines.c_currency_id <> cur_lines.budget_currency_id) THEN
+            v_converted := C_Currency_Round(C_Currency_Convert(v_amt * v_amt_proc_unproc, cur_lines.c_currency_id, cur_lines.budget_currency_id, cur_lines.dateinvoiced, null, cur_lines.ad_client_id, cur_lines.ad_org_id), cur_lines.budget_currency_id, null);
+ELSE
+ v_converted := (v_amt * v_amt_proc_unproc);
+ END IF;
+            IF (v_converted IS NULL) THEN
+              RAISE_APPLICATION_ERROR(-20000, '@NoConversionRateHeader@');
+            END IF;
+            
+            v_resultstr := 'Add amount to paid out value';
+
+            v_sql := 'UPDATE SFB_BUDGET_LINE SET ';
+
+            SELECT
+            CASE extract(month from TO_DATE(cur_lines.dateinvoiced))
+              WHEN 1  THEN v_sql || 'jan_paidout_value = jan_paidout_value + '
+              WHEN 2  THEN v_sql || 'feb_paidout_value = feb_paidout_value + '
+              WHEN 3  THEN v_sql || 'mar_paidout_value = mar_paidout_value + '
+              WHEN 4  THEN v_sql || 'apr_paidout_value = apr_paidout_value + '
+              WHEN 5  THEN v_sql || 'may_paidout_value = may_paidout_value + '
+              WHEN 6  THEN v_sql || 'jun_paidout_value = jun_paidout_value + '
+              WHEN 7  THEN v_sql || 'jul_paidout_value = jul_paidout_value + '
+              WHEN 8  THEN v_sql || 'aug_paidout_value = aug_paidout_value + '
+              WHEN 9  THEN v_sql || 'sep_paidout_value = sep_paidout_value + '
+              WHEN 10 THEN v_sql || 'oct_paidout_value = oct_paidout_value + '
+              WHEN 11 THEN v_sql || 'nov_paidout_value = nov_paidout_value + '
+              WHEN 12 THEN v_sql || 'dec_paidout_value = dec_paidout_value + '
+            END INTO v_sql
+            FROM DUAL;
+
+            v_sql := v_sql || COALESCE(v_converted,0) || ' WHERE SFB_BUDGET_LINE_ID = ''' || COALESCE(cur_lines.sfb_budget_line_id,'') || '''';
+            EXECUTE IMMEDIATE v_sql;
+
+          END IF;
+
+        END IF;  
+
+      END LOOP;
+            
+    END IF;
+
+  END IF;
+
+  END SFBIN_PAYMENT_TRG
+]]></body>
+    </trigger>
+  </database>

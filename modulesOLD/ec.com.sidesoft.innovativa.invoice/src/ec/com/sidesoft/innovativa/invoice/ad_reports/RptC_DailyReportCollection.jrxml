@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptC_DailyReportCollection" pageWidth="2304" pageHeight="595" orientation="Landscape" columnWidth="2264" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="0.7513148009015789"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="F_DESDE" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="F_HASTA" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="C_COSTCENTER_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="USER1_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="USER2_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+fecha_factura as "fecha_factura",
+documento as "documento",
+ruc as "ruc",
+tercero as "tercero",
+ base12 as "base12",
+basecero as "basecero",
+iva12  as "iva12",
+sum(transferencia) as "transferencia",
+sum(tarjeta_debito) as "tarjeta_debito",
+sum(paypal) as "paypal",
+sum(tarjeta_credito) as "tarjeta_credito",
+sum(cruce) as "cruce",
+unidad_gestion as "unidad_gestion",
+proyecto as "proyecto",
+curso as "curso",
+tipo as "tipo"
+
+from
+(
+select
+to_date(to_char(i.dateinvoiced,'dd-MM-yyyy')) as "fecha_factura",
+i.documentno as "documento",
+cbp.taxid as "ruc",
+cbp.name as "tercero",
+b.paidconverted * -1 as valor,
+base12 as "base12",
+basecero as "basecero",
+iva12,
+case when i.c_currency_id = '100' then b.paidconverted * -1
+       else b.paidconverted * ((select multiplyrate from C_Conversion_Rate
+                          where c_currency_id = i.c_currency_id
+                                                  and c_currency_id_to = '100'
+                                                  and ( b.paymentdate between validfrom
+                                                  and  validto ))) * -1
+end as GrandTotalConvert,
+case fpm.name
+		when 'TRANSFERENCIA' then b.paidconverted
+		ELSE 0
+	end as "transferencia",
+	case fpm.name
+		when 'TARJETA DE DEBITO' then b.paidconverted
+		ELSE 0
+	end as "tarjeta_debito",
+	case fpm.name
+		when 'PAYPAL' then b.paidconverted
+		ELSE 0
+	end as "paypal",
+	case ps.EM_Ssfi_Isbanktransfer
+		when 'Y' then b.paidconverted
+		ELSE 0
+	end as "tarjeta_credito",
+	case fpm.name
+		when 'CRUCE' then b.paidconverted
+		ELSE 0
+	end as "cruce",
+	'    ' || cc.name as "unidad_gestion",
+	'  ' || u1.name as "proyecto",
+	'  ' || u2.name as "curso",
+	case
+		when to_date(to_char(i.dateinvoiced,'dd-MM-yyyy')) = to_date(to_char(ps.paymentdate,'dd-MM-yyyy')) then to_char('1')
+	end  as tipo
+	,b.paidconverted
+from  C_Invoice i
+left join C_Bpartner cbp on i.c_bpartner_id = cbp.c_bpartner_id
+left join FIN_Payment_Sched_Inv_V a on i.c_invoice_id = a.c_invoice_id and a.expected <> 0
+left join FIN_Payment_Detail_V b on a.fin_payment_sched_inv_v_id = b.fin_payment_sched_inv_v_id and FIN_Payment_Detail_V_id is not null
+left join fin_payment ps on ps.fin_payment_id =  b.fin_payment_id
+left join fin_paymentmethod fpm on fpm.fin_paymentmethod_id = b.fin_paymentmethod_id
+left join c_costcenter cc on cc.c_costcenter_id = i.c_costcenter_id
+left join user1 u1 on u1.user1_id = i.user1_id
+left join user2 u2 on u2.user2_id = i.user2_id
+ LEFT JOIN (select c_invoice_id, sum(basecero) as basecero,sum(base12) as base12,sum(iva12) as iva12,sum(grandtotal) as gtotal from (select a.c_invoice_id,c.name,c.taxid,a.documentno,d.taxbaseamt,d.taxamt, e.rate,
+	case when e.rate = 0  and e.istaxdeductable ='Y' then d.taxbaseamt else 0 end basecero,
+	case when e.rate <> 0  and e.istaxdeductable ='Y' then d.taxbaseamt else 0 end base12,
+	case when e.rate <> 0  and e.istaxdeductable ='Y' then d.taxamt else 0 end iva12,
+	((case when e.rate = 0  and e.istaxdeductable ='Y' then d.taxbaseamt else 0 end) + (case when e.rate <> 0  and e.istaxdeductable ='Y' then d.taxbaseamt else 0 end) + case when e.rate <> 0  and e.istaxdeductable ='Y' then d.taxamt else 0 end) grandtotal
+	from c_invoice a
+	left join c_invoiceline b on a.c_invoice_id = b.c_invoice_id
+	left join c_bpartner c on a.c_bpartner_id = c.c_bpartner_id
+	left join c_invoicelinetax d on b.c_invoiceline_id = d.c_invoiceline_id
+	left join c_tax e on d.c_tax_id = e.c_tax_id) impuestos
+	group by c_invoice_id) IMP on imp.c_invoice_id = i.c_invoice_id
+where b.PAIDCONVERTED is not null
+and i.issotrx ='Y' and i.docstatus = 'CO'
+and (i.posted = 'Y')
+and (to_date(to_char(i.dateinvoiced,'dd-MM-yyyy')) = to_date(to_char(ps.paymentdate,'dd-MM-yyyy')))
+and (to_date(to_char(i.dateinvoiced,'dd-MM-yyyy'))  between $P{F_DESDE}  and  $P{F_HASTA}
+)
+and (i.c_costcenter_id = $P{C_COSTCENTER_ID} or $P{C_COSTCENTER_ID} is null)
+and (i.user1_id = $P{USER1_ID} or $P{USER1_ID} is null)
+and (i.user2_id = $P{USER2_ID} or $P{USER2_ID} is null)
+group by 18,1,2,3,4,5,
+6,7,
+8,9,10,11,12,13,14,15,16,17,19
+order by 18,1
+
+) diario_rec
+group by 1,2,3,4,5,6,7,13,14,15,16
+union all
+select
+fecha_factura as "fecha_factura",
+documento as "documento",
+ruc as "ruc",
+tercero as "tercero",
+ base12 as "base12",
+basecero as "basecero",
+iva12  as "iva12",
+sum(transferencia) as "transferencia",
+sum(tarjeta_debito) as "tarjeta_debito",
+sum(paypal) as "paypal",
+sum(tarjeta_credito) as "tarjeta_credito",
+sum(cruce) as "cruce",
+unidad_gestion as "unidad_gestion",
+proyecto as "proyecto",
+curso as "curso",
+tipo as "tipo"
+
+from
+(
+select
+to_date(to_char(i.dateinvoiced,'dd-MM-yyyy')) as "fecha_factura",
+i.documentno as "documento",
+cbp.taxid as "ruc",
+cbp.name as "tercero",
+b.paidconverted * -1 as valor,
+base12 as "base12",
+basecero as "basecero",
+iva12,
+case when i.c_currency_id = '100' then b.paidconverted * -1
+       else b.paidconverted * ((select multiplyrate from C_Conversion_Rate
+                          where c_currency_id = i.c_currency_id
+                                                  and c_currency_id_to = '100'
+                                                  and ( b.paymentdate between validfrom
+                                                  and  validto ))) * -1
+end as GrandTotalConvert,
+case fpm.name
+		when 'TRANSFERENCIA' then b.paidconverted
+		ELSE 0
+	end as "transferencia",
+	case fpm.name
+		when 'TARJETA DE DEBITO' then b.paidconverted
+		ELSE 0
+	end as "tarjeta_debito",
+	case fpm.name
+		when 'PAYPAL' then b.paidconverted
+		ELSE 0
+	end as "paypal",
+	case ps.EM_Ssfi_Isbanktransfer
+		when 'Y' then b.paidconverted
+		ELSE 0
+	end as "tarjeta_credito",
+	case fpm.name
+		when 'CRUCE' then b.paidconverted
+		ELSE 0
+	end as "cruce",
+	'    ' || cc.name as "unidad_gestion",
+	'  ' || u1.name as "proyecto",
+	'  ' || u2.name as "curso",
+	case
+		when to_date(to_char(i.dateinvoiced,'dd-MM-yyyy')) <> to_date(to_char(ps.paymentdate,'dd-MM-yyyy')) then to_char('2')
+	end  as tipo
+	,b.paidconverted
+from  C_Invoice i
+left join C_Bpartner cbp on i.c_bpartner_id = cbp.c_bpartner_id
+left join FIN_Payment_Sched_Inv_V a on i.c_invoice_id = a.c_invoice_id and a.expected <> 0
+left join FIN_Payment_Detail_V b on a.fin_payment_sched_inv_v_id = b.fin_payment_sched_inv_v_id and FIN_Payment_Detail_V_id is not null
+left join fin_payment ps on ps.fin_payment_id =  b.fin_payment_id
+left join fin_paymentmethod fpm on fpm.fin_paymentmethod_id = b.fin_paymentmethod_id
+left join c_costcenter cc on cc.c_costcenter_id = i.c_costcenter_id
+left join user1 u1 on u1.user1_id = i.user1_id
+left join user2 u2 on u2.user2_id = i.user2_id
+ LEFT JOIN (select c_invoice_id, sum(basecero) as basecero,sum(base12) as base12,sum(iva12) as iva12,sum(grandtotal) as gtotal from (select a.c_invoice_id,c.name,c.taxid,a.documentno,d.taxbaseamt,d.taxamt, e.rate,
+	case when e.rate = 0  and e.istaxdeductable ='Y' then d.taxbaseamt else 0 end basecero,
+	case when e.rate <> 0  and e.istaxdeductable ='Y' then d.taxbaseamt else 0 end base12,
+	case when e.rate <> 0  and e.istaxdeductable ='Y' then d.taxamt else 0 end iva12,
+	((case when e.rate = 0  and e.istaxdeductable ='Y' then d.taxbaseamt else 0 end) + (case when e.rate <> 0  and e.istaxdeductable ='Y' then d.taxbaseamt else 0 end) + case when e.rate <> 0  and e.istaxdeductable ='Y' then d.taxamt else 0 end) grandtotal
+	from c_invoice a
+	left join c_invoiceline b on a.c_invoice_id = b.c_invoice_id
+	left join c_bpartner c on a.c_bpartner_id = c.c_bpartner_id
+	left join c_invoicelinetax d on b.c_invoiceline_id = d.c_invoiceline_id
+	left join c_tax e on d.c_tax_id = e.c_tax_id) impuestos
+	group by c_invoice_id) IMP on imp.c_invoice_id = i.c_invoice_id
+where b.PAIDCONVERTED is not null
+and i.issotrx ='Y' and i.docstatus = 'CO'
+and (i.posted = 'Y')
+and (to_date(to_char(i.dateinvoiced,'dd-MM-yyyy')) <> to_date(to_char(ps.paymentdate,'dd-MM-yyyy')))
+and (to_date(to_char(ps.paymentdate,'dd-MM-yyyy'))  between $P{F_DESDE}  and  $P{F_HASTA}
+)
+and (i.c_costcenter_id = $P{C_COSTCENTER_ID} or $P{C_COSTCENTER_ID} is null)
+and (i.user1_id = $P{USER1_ID} or $P{USER1_ID} is null)
+and (i.user2_id = $P{USER2_ID} or $P{USER2_ID} is null)
+group by 18,1,2,3,4,5,
+6,7,
+8,9,10,11,12,13,14,15,16,17,19
+order by 18,1
+
+) diario_rec
+group by 1,2,3,4,5,6,7,13,14,15,16
+order by 16,1,2]]>
+	</queryString>
+	<field name="fecha_factura" class="java.sql.Timestamp"/>
+	<field name="documento" class="java.lang.String"/>
+	<field name="ruc" class="java.lang.String"/>
+	<field name="tercero" class="java.lang.String"/>
+	<field name="base12" class="java.math.BigDecimal"/>
+	<field name="basecero" class="java.math.BigDecimal"/>
+	<field name="iva12" class="java.math.BigDecimal"/>
+	<field name="transferencia" class="java.math.BigDecimal"/>
+	<field name="tarjeta_debito" class="java.math.BigDecimal"/>
+	<field name="paypal" class="java.math.BigDecimal"/>
+	<field name="tarjeta_credito" class="java.math.BigDecimal"/>
+	<field name="cruce" class="java.math.BigDecimal"/>
+	<field name="unidad_gestion" class="java.lang.String"/>
+	<field name="proyecto" class="java.lang.String"/>
+	<field name="curso" class="java.lang.String"/>
+	<field name="tipo" class="java.lang.String"/>
+	<variable name="V_TOTAL" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{base12}.add($F{basecero}).add($F{iva12})]]></variableExpression>
+	</variable>
+	<variable name="SUB_BASE12" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOCOBRO" calculation="Sum">
+		<variableExpression><![CDATA[$F{base12}]]></variableExpression>
+	</variable>
+	<variable name="SUB_BASECERO" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOCOBRO" calculation="Sum">
+		<variableExpression><![CDATA[$F{basecero}]]></variableExpression>
+	</variable>
+	<variable name="SUB_IVA" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOCOBRO">
+		<variableExpression><![CDATA[$F{iva12}]]></variableExpression>
+	</variable>
+	<variable name="SUB_TOTAL" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOCOBRO" calculation="Sum">
+		<variableExpression><![CDATA[$F{base12}.add($F{basecero}).add($F{iva12})]]></variableExpression>
+	</variable>
+	<variable name="SUB_TRANSFERENCIA" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOCOBRO" calculation="Sum">
+		<variableExpression><![CDATA[$F{transferencia}]]></variableExpression>
+	</variable>
+	<variable name="SUB_TARJ_DEB" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOCOBRO" calculation="Sum">
+		<variableExpression><![CDATA[$F{tarjeta_debito}]]></variableExpression>
+	</variable>
+	<variable name="SUB_PAYPAL" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOCOBRO" calculation="Sum">
+		<variableExpression><![CDATA[$F{paypal}]]></variableExpression>
+	</variable>
+	<variable name="SUB_TARJ_CRED" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOCOBRO" calculation="Sum">
+		<variableExpression><![CDATA[$F{tarjeta_credito}]]></variableExpression>
+	</variable>
+	<variable name="SUB_CRUCE" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPOCOBRO" calculation="Sum">
+		<variableExpression><![CDATA[$F{cruce}]]></variableExpression>
+	</variable>
+	<group name="TIPOCOBRO">
+		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
+		<groupHeader>
+			<band height="64">
+				<staticText>
+					<reportElement x="0" y="43" width="107" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FECHA FACTURA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="107" y="43" width="100" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[NRO. FACTURA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="207" y="43" width="100" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[RUC]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="307" y="43" width="297" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TERCERO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="604" y="43" width="100" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TARIFA IVA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="704" y="43" width="100" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TARIFA 0%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="804" y="43" width="100" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[IVA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1028" y="43" width="120" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TRANSFERENCIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1148" y="43" width="182" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TARJETA DE DÉBITO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1330" y="43" width="100" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PAYPAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1430" y="43" width="138" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TARJETA DE CRÉDITO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1568" y="43" width="100" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CRUCE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1668" y="43" width="188" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[UNIDAD DE GESTIÓN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2044" y="43" width="188" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CURSO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1856" y="43" width="188" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PROYECTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="904" y="43" width="124" height="20"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="19" width="307" height="20">
+						<printWhenExpression><![CDATA[$F{tipo}.equals("2")]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[INGRESOS DE CAJA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="19" width="307" height="20">
+						<printWhenExpression><![CDATA[$F{tipo}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FACTURA]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="604" y="0" width="100" height="20"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_BASE12}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="704" y="0" width="100" height="20"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_BASECERO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="804" y="0" width="100" height="20"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_IVA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="904" y="0" width="124" height="20"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="1028" y="0" width="120" height="20"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_TRANSFERENCIA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="1148" y="0" width="182" height="20"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_TARJ_DEB}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="1330" y="0" width="100" height="20"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_PAYPAL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="1430" y="0" width="138" height="20"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_TARJ_CRED}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement x="1568" y="0" width="100" height="20"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUB_CRUCE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="-1" width="604" height="21">
+						<printWhenExpression><![CDATA[$F{tipo}.equals("2")]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0" lineStyle="Solid"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL   ]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="2457" height="37"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="21" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE RECAUDACIÓN DIARIA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="107" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{fecha_factura}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="107" y="0" width="100" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="207" y="0" width="100" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ruc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="307" y="0" width="297" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tercero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="604" y="0" width="100" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{base12}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="704" y="0" width="100" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{basecero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="804" y="0" width="100" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{iva12}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="1028" y="0" width="120" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{transferencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="1148" y="0" width="182" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{tarjeta_debito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="1330" y="0" width="100" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{paypal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="1430" y="0" width="138" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{tarjeta_credito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="1568" y="0" width="100" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{cruce}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1668" y="0" width="188" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{unidad_gestion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2044" y="0" width="188" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1856" y="0" width="188" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{proyecto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="904" y="0" width="124" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{V_TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

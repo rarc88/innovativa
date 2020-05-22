@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_BUDGET_AREA_TRG">
+    <trigger name="SFB_BUDGET_AREA_TRG" table="C_INVOICE" fires="before" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+/*************************************************************************
+* The contents of this file are subject to the Openbravo  Public  License
+* Version  1.0  (the  "License"),  being   the  Mozilla   Public  License
+* Version 1.1  with a permitted attribution clause; you may not  use this
+* file except in compliance with the License. You  may  obtain  a copy of
+* the License at http://www.openbravo.com/legal/license.html
+* Software distributed under the License  is  distributed  on  an "AS IS"
+* basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+* License for the specific  language  governing  rights  and  limitations
+* under the License.
+* The Original Code is Openbravo ERP.
+* The Initial Developer of the Original Code is Openbravo SL
+* All portions are Copyright (C) 2001-2006 Openbravo SL
+* All Rights Reserved.
+* Contributor(s):  ______________________________________.
+************************************************************************/
+v_sfb_budget_area_id varchar(32);
+v_c_costcenter_id  varchar(32);
+v_user1_id  varchar(32);
+v_default_id   varchar(32);
+v_validate_area_id  varchar(32); 
+v_validate_costc_id  varchar(32);
+v_validate_user1_id varchar(32);
+v_budget_area_query varchar(32);
+v_budget_costcenter_query varchar(32);
+v_budget_user1_query varchar(32);
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  
+  IF INSERTING OR UPDATING THEN
+  
+    -- If inserting or updating add new values
+    v_sfb_budget_area_id:=:NEW.EM_SFB_BUDGET_AREA_ID;
+    v_validate_area_id:=coalesce(v_sfb_budget_area_id,'ND');
+    
+    v_c_costcenter_id:=:NEW.C_COSTCENTER_ID;
+    v_validate_costc_id:=coalesce(v_c_costcenter_id,'ND');
+    
+     v_user1_id:=:NEW.USER1_ID;
+    v_validate_user1_id:=coalesce(v_user1_id,'ND');
+    
+ 
+    IF (v_validate_area_id='ND' and :NEW.ISSOTRX='Y') THEN
+
+      SELECT sfb_budget_area_id
+       INTO v_budget_area_query
+      FROM sfb_budget_configuration
+      ORDER BY created DESC;
+     
+      IF (v_budget_area_query IS NOT NULL) THEN
+        v_default_id:= v_budget_area_query;
+        :NEW.EM_SFB_BUDGET_AREA_ID:=v_default_id;        
+      ELSE
+        RAISE_APPLICATION_ERROR(-20000,'@Sfb_ValidateBudgetArea@');
+      END IF;        
+
+    END IF;
+
+
+    IF (v_validate_costc_id='ND' and :NEW.ISSOTRX='Y') THEN
+
+      SELECT c_costcenter_id
+       INTO v_budget_costcenter_query
+      FROM sfb_budget_configuration
+      ORDER BY created DESC;
+     
+      IF (v_budget_costcenter_query IS NOT NULL) THEN
+        v_default_id:= v_budget_costcenter_query;
+        :NEW.C_COSTCENTER_ID:=v_default_id;        
+      ELSE
+        RAISE_APPLICATION_ERROR(-20000,'@Sfb_ValidateCostCenter@');
+      END IF;        
+
+    END IF;    
+
+
+    IF (v_validate_user1_id='ND' and :NEW.ISSOTRX='Y') THEN
+
+      SELECT user1_id
+       INTO v_budget_user1_query
+      FROM sfb_budget_configuration
+      ORDER BY created DESC;
+     
+      IF (v_budget_user1_query IS NOT NULL) THEN
+        v_default_id:= v_budget_user1_query;
+        :NEW.USER1_ID:=v_default_id;        
+      ELSE
+        RAISE_APPLICATION_ERROR(-20000,'@Sfb_ValidateUser1@');
+      END IF;        
+
+    END IF;
+ 
+  END IF;
+
+END SFB_BUDGET_AREA_TRG
+]]></body>
+    </trigger>
+  </database>

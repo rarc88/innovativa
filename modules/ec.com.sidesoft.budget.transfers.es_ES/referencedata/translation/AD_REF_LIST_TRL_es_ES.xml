@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REF_LIST" version="">
+  <row id="1FF248D285D84CCB83A57BD905E59EE8" trl="N">
+    <value column="Name" isTrl="Y" original="Approve">Aprobar</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="379204B2A6E14BEDB17A00AFF655B067" trl="N">
+    <value column="Name" isTrl="Y" original="Registered">Registrado</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="4459B7C094D447C194E37E932C790C57" trl="N">
+    <value column="Name" isTrl="Y" original="Approved">Aprobado</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="75FE5D6EAE754A139E8F8EEEEB804AD3" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Transfers">Transferencias presupuestarias</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="B06E2B5EC8F34E8DBD9F69A598648F38" trl="N">
+    <value column="Name" isTrl="Y" original="Registry">Registro</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="C916691B8165459B9E05E18AA055A583" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Ceiling Adjustment">Ajuste de techo presupuestario</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="E37ACD9AE09E494D8135C0BD376FFB27" trl="N">
+    <value column="Name" isTrl="Y" original="Draft">Borrador</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

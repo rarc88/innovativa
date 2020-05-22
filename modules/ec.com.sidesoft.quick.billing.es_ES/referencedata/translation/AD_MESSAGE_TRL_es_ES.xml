@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="09CFD278C07141178229B5E8BD533A36" trl="N">
+    <value column="MsgText" isTrl="Y" original="The price list is not set.">La tarifa de precios no se encuentra configurado.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="1CDD3F1E5EEF48D89AD64896ADEFAA84" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is necessary to configure the city for the address of the Parttner.&#10;">Falta configurar la ciudad para la dirección del Tercero.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="1F91E05DA7F74F8DB563956941C28A15" trl="N">
+    <value column="MsgText" isTrl="Y" original="You must enter a name.">Debe introducir un nombre.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="2370C73BFDBF4751BC2A6EB2BD66FFF1" trl="N">
+    <value column="MsgText" isTrl="Y" original="Tax ID must have 10 digits">La identificación tiene mas de 10 dígitos</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="26E5BBF9E5F545128023CD21623E1F91" trl="N">
+    <value column="MsgText" isTrl="Y" original="Please introduce a Nro. ID or RUC.">Debe introducir un Nro. Cédula o RUC.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="3C922E0FA31C4258A8884F4D4E54F6CB" trl="N">
+    <value column="MsgText" isTrl="Y" original="You must enter the email.">Debe introducir el correo electrónico.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="4E7A4E5BBEB841B19EA24C3793358231" trl="N">
+    <value column="MsgText" isTrl="Y" original="Before generating the invoice, proceed to create the lines.">Antes de generar la factura, proceda a crear las líneas.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="51EAF41FCA194ACEB328DD3F277143E6" trl="N">
+    <value column="MsgText" isTrl="Y" original="You must enter the address">Debe introducir la dirección.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="549506BEC4BE4E3FA81186FE69F1BF5C" trl="N">
+    <value column="MsgText" isTrl="Y" original="To update the third change the status to active.">Para actualizar los datos del tercero cambie el estado a activo.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="5806ADFDD4D644D0B749701AF5F3CE15" trl="N">
+    <value column="MsgText" isTrl="Y" original="There is an Invoice with this data.">Existe una Factura con estos datos.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="5C15ACD1E9F04C13860FE1E176ADDA15" trl="N">
+    <value column="MsgText" isTrl="Y" original="You need to set the Type of Taxpayer.">Falta configurar el Tipo de Contribuyente.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="5D91C4B8858649A5BD529A5F818CE18E" trl="N">
+    <value column="MsgText" isTrl="Y" original="There is no configuration to create Invoices.">No existe una configuración para crear Facturas.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="601C11084AA44232BB74B5532FE43C11" trl="N">
+    <value column="MsgText" isTrl="Y" original="Tax ID must end with 00 #">La identificación debe terminar en 00#(Ej.:001)</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="698EE858973140B7877F316862B25A50" trl="N">
+    <value column="MsgText" isTrl="Y" original="Tax ID Digit Verifier">Error de dígito verificador en la identificación</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="6FEE5B49AAF645499C6FDBC6EDB56AEE" trl="N">
+    <value column="MsgText" isTrl="Y" original="Configure the address of the organization.">Configurar la dirección de la organización.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="7262FC7857324D3EA9C82C1EC4666EAD" trl="N">
+    <value column="MsgText" isTrl="Y" original="Tax ID location incorrect code.">Código de identificación de ubicación 
+incorrecto.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="8A514335D170413E979CC938FB7F2B4F" trl="N">
+    <value column="MsgText" isTrl="Y" original="You must enter a valid ID or RUC.">Debe introducir una cédula o RUC válido.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="9D15F621F6E04E5F84C9D33476241026" trl="N">
+    <value column="MsgText" isTrl="Y" original="You need to set the Language of the Partner">Falta configurar el Idioma del Tercero.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="A78212F0A559413BAB18DD8610DD485E" trl="N">
+    <value column="MsgText" isTrl="Y" original="You can not bill @tercero@ a value greater than @maximo@.">No se puede facturar a @tercero@ un valor mayor a @maximo@.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="AB0431F56FAF4774ADEF9CE5E23A17EE" trl="N">
+    <value column="MsgText" isTrl="Y" original="This configuration can only have a default product selected.">Esta configuración solo puede tener seleccionado un producto por defecto.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="B3C2F919876C49CA8B6BC0E9E156AEE5" trl="N">
+    <value column="MsgText" isTrl="Y" original="Tax ID must have 13 digits">La identificación tiene mas de 13 Dígitos</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="B5C914689BB346ACBFCBF87CAC6E59D2" trl="N">
+    <value column="MsgText" isTrl="Y" original="Set the tax for the selected product.">Configurar el impuesto del producto seleccionado.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="CF8A236D294942D8828F05EBDA6ABFBD" trl="N">
+    <value column="MsgText" isTrl="Y" original="You need to set up the Third Party group.">Falta configurar el grupo de Tercero.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="EB4938AAD35A4463AC92E514B64C9E3C" trl="N">
+    <value column="MsgText" isTrl="Y" original="Tax ID must be numeric.">La identificación debe ser numérica</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="FE23325328AB44D9A0D3380A30387929" trl="N">
+    <value column="MsgText" isTrl="Y" original="The user can not be registered, since it exists in another configuration in active state.&#10;">El usuario no puede ser registrado, ya que existe en otra configuración en estado activo.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

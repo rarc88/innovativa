@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+  <database name="VIEW SCPP_PAYMENT_DETAIL_V">
+    <view name="SCPP_PAYMENT_DETAIL_V"><![CDATA[SELECT a.scpp_approvalpayment_id AS scpp_payment_detail_v_id, a.ad_client_id, a.ad_org_id, to_char('Y') AS isactive, a.created, a.createdby, a.updated, a.updatedby, a.sspr_payroll_id, a.scpp_approvalpayment_id, a.dateapproval, a.datepayment FROM sspr_payroll b LEFT JOIN scpp_approvalpayment a ON b.sspr_payroll_id = a.sspr_payroll_id WHERE a.sspr_payroll_id IS NOT NULL]]></view>
+  </database>

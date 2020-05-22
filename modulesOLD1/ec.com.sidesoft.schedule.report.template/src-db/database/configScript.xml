@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.34312"/>
+    <columnDataChange tablename="OBUIAPP_PROCESS" columnname="CLASSNAME" pkRow="0D37A9F6109549DEB058373EF2DAEB6A">
+      <oldValue><![CDATA[org.openbravo.common.actionhandler.AgingBalanceReportActionHandler]]></oldValue>
+      <newValue><![CDATA[ec.com.sidesoft.schedule.report.AgingBalanceReportActionHandler]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="OBUIAPP_PROCESS" columnname="CLASSNAME" pkRow="EB4C4053F3B94A17A08D1DD7E89CEB7E">
+      <oldValue><![CDATA[org.openbravo.common.actionhandler.AgingBalanceReportActionHandler]]></oldValue>
+      <newValue><![CDATA[ec.com.sidesoft.schedule.report.AgingBalanceReportActionHandler]]></newValue>
+    </columnDataChange>
+  </vector>

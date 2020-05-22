@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptC_Invoice_Fact_Serv_Martmo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0000000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREP_RptC_Invoice_Fact_Serv_Mart_Recap" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Openbravo-3.0MP27\\src\\org\\openbravo\\erpReports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREP_RptC_Invoice_ConvertValue" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="LANGUAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["es_Es"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+CI.EM_SSFL_PRINT_TYPE_RECAP,
+ci.em_ssfl_type_recap as "type_recap",
+ci.c_invoice_id AS "c_invoice_id",
+AU.NAME AS "contact_name_invoice",
+cl.postal as "postal",
+COALESCE(TO_CHAR(CL.CITY),' - ') AS "city_invoice",
+COALESCE(TO_CHAR(CR.NAME),' - ') AS "region_invoice",
+CCTY.NAME AS "country_invoice",
+TO_CHAR('TELEPHONE 1: ' || COALESCE(TO_CHAR(CBPL.PHONE),'-')) AS "phone_invoice",
+TO_CHAR('TELEPHONE 2: ' || COALESCE(TO_CHAR(CBPL.PHONE2),'-')) AS "phone2_invoice",
+COALESCE(TO_CHAR(CBPL.FAX), '-') AS "fax_invoice",
+CI.DATEINVOICED as "date_invoiced",
+ssfl_return_name_date(to_char(CI.DATEINVOICED, 'month')) as "mes_consumo",
+CI.DOCUMENTNO as "documentno",
+COALESCE(TO_CHAR(CI.DESCRIPTION), '-') AS "description_cab",
+CBP.VALUE AS "code_bpartner" ,
+AD_CLIENT.DESCRIPTION AS "entity",
+C_Location_Description(AD_ORGINFO.C_LOCATION_ID) AS "location",
+CCY.ISO_CODE AS "currency_code",
+CCY.DESCRIPTION AS "symbol_largo",
+CCY.CURSYMBOL AS "symbol",
+CPT.NAME AS "payterm",
+CPT.NETDAYS AS "numero_dias",
+CASE WHEN  CPT.NETDAYS=0 THEN CI.DATEINVOICED ELSE (CI.DATEINVOICED + CPT.NETDAYS) END AS "fecha_pago",
+AD_ORGINFO.ad_org_id AS "organizationid",
+CI.docstatus AS "status",
+AD_ORG.NAME AS "org_name",
+AD_ORGINFO.TAXID AS "org_taxid",
+CBP.TAXID AS "bp_taxid",
+(COALESCE(TO_CHAR(AU.NAME), '') || CASE WHEN AU.NAME IS null THEN '' ELSE CHR(13) END || COALESCE(TO_CHAR(CBP.TAXID), '') || CASE WHEN CBP.TAXID IS null THEN '' ELSE CHR(13) END ||
+
+COALESCE(TO_CHAR(CL.ADDRESS1), '') || CASE WHEN CL.ADDRESS1 IS null THEN '' ELSE CHR(13) END || COALESCE(TO_CHAR(CL.POSTAL), '') || CASE WHEN CL.POSTAL IS null THEN '' ELSE CHR(13) END ||
+COALESCE(TO_CHAR(CBPL.PHONE), '') || CASE WHEN CBPL.PHONE IS null THEN '' ELSE CHR(13) END || COALESCE(TO_CHAR(CBPL.FAX), '') ||
+CASE WHEN CBPL.FAX IS null THEN '' ELSE CHR(13) END) AS "bp_data",
+SHOWLOGO,
+SHOWCOMPANYDATA,
+HEADERMARGIN,
+CI.ISSOTRX as "issotrx",
+CIL.QTYINVOICED as "qtyinvoiced",
+CIL.PRICEACTUAL as "priceactual",
+CIL.LINENETAMT as "linenetamt",
+coalesce(TO_CHAR(CIL.DESCRIPTION), '-') AS "description_line",
+MP.VALUE as "value",MP.NAME as "producto",
+CI.TOTALLINES as "totallines",
+CI.GRANDTOTAL as "grandtotal",
+(CI.GRANDTOTAL -  CI.TOTALLINES) AS "iva_12",
+ssfl_convert_numbertoletters(
+                                      case when ci.GRANDTOTAL < 0 then to_number(ci.GRANDTOTAL * -1)
+                                      else to_number(ci.grandtotal) end ) AS "letras",
+COALESCE(TO_CHAR(MI.DOCUMENTNO),' - ') AS "referencia",
+VEND.NAME AS "vendedor",
+ COALESCE(TO_CHAR(CO.poreference),'-') AS "referencia_pedido", now()  as "fecha_Actual",
+substr(CI.description,32,9) as "contrato_description",
+CCENTER.NAME AS "vessel",
+VT.NAME AS "vessel_type",
+LT.NAME AS "load_type",
+VOYAGE.USER2_ID AS "cod_voyage",
+VOYAGE.NAME AS "name_dimension2",
+TO_CHAR(SSFL_RETURN_NAME_MONTH(CI.EM_SSFL_BILLING_PERIOD_FROM,cbp.ad_language)) || TO_CHAR(CI.EM_SSFL_BILLING_PERIOD_FROM,'dd, yyyy "' || Case when cbp.ad_language= 'es_EC' then 'a las' when cbp.ad_language= 'en_US' then 'to' end || '" HH24:MI:SS') AS "billing_period_from_invoice",
+TO_CHAR(SSFL_RETURN_NAME_MONTH(CI.EM_SSFL_BILLING_PERIOD_TO,cbp.ad_language)) || TO_CHAR(CI.EM_SSFL_BILLING_PERIOD_TO,'dd, yyyy "' || Case when cbp.ad_language= 'es_EC' then 'a las' when cbp.ad_language= 'en_US' then 'to' end || '" HH24:MI:SS') AS "billing_period_to_invoice",
+(CASE  CI.EM_SSFL_ISFOREIGN
+  WHEN 'Y'  	THEN (FTAC.DESCRIPTION )
+END
+) AS "isforeign",
+ci.EM_SSFL_TYPE_RECAP AS "voyage_print",
+CI.EM_SSFL_PRINT_TYPE_RECAP AS "recap_print",
+coalesce(to_char(
+CASE
+(CASE 	WHEN ci.EM_SSFL_TYPE_RECAP = '1' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+	WHEN ci.EM_SSFL_TYPE_RECAP = '2' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+	WHEN ci.EM_SSFL_TYPE_RECAP = '3' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+END)
+	WHEN '1' THEN CBP.name
+	WHEN '2' THEN BROKER.NAME
+	WHEN  '3' THEN  (CBP.name)  || ' / '  || (BROKER.NAME)
+END ),'') AS "name_header",
+UPPER(
+CASE
+(CASE 	WHEN ci.EM_SSFL_TYPE_RECAP = '1' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+	WHEN ci.EM_SSFL_TYPE_RECAP = '2' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+	WHEN ci.EM_SSFL_TYPE_RECAP = '3' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+END)
+	WHEN '1' THEN CL.ADDRESS1 || COALESCE(TO_CHAR(CL.ADDRESS2),'') || ' ' || COALESCE(TO_CHAR(CL.POSTAL),'') ||  ' ' || COALESCE(TO_CHAR(', ' || CCTY.NAME),'')
+	WHEN '2' THEN BROKER_LOCATION.ADDRESS1 || COALESCE(TO_CHAR(BROKER_LOCATION.ADDRESS2),'') || ' ' || COALESCE(TO_CHAR(',' || BROKER_LOCATION.POSTAL),'') ||  ' ' || COALESCE(TO_CHAR(BROKER_CITY.NAME),'')
+	WHEN '3' THEN   BROKER_LOCATION.ADDRESS1 || COALESCE(TO_CHAR(BROKER_LOCATION.ADDRESS2),'') || ' ' || COALESCE(TO_CHAR(',' || BROKER_LOCATION.POSTAL),'') ||  ' ' || COALESCE(TO_CHAR(BROKER_CITY.NAME),'')
+END ) AS "address_header" ,
+CASE CBP.em_ssfi_foreign WHEN 'Y'
+THEN CBP.EM_Ssfl_Additional
+ELSE (CASE WHEN (CBPG.NAME) = 'CLIENTE EXTERIOR'
+THEN
+coalesce(to_char(
+CASE
+(CASE 	WHEN ci.EM_SSFL_TYPE_RECAP = '1' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+	WHEN ci.EM_SSFL_TYPE_RECAP = '2' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+	WHEN ci.EM_SSFL_TYPE_RECAP = '3' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+END)
+	WHEN '1' THEN CBP.EM_SSFL_ADDITIONAL
+	WHEN '2' THEN BROKER.EM_SSFL_ADDITIONAL
+	WHEN '3' THEN CBP.EM_SSFL_ADDITIONAL|| ' / '  ||BROKER.EM_SSFL_ADDITIONAL
+END ),'')
+WHEN (CBPG.NAME ) <> 'CLIENTE EXTERIOR' OR (CBPG.NAME) IS NULL
+THEN
+coalesce(to_char(
+CASE
+(CASE 	WHEN ci.EM_SSFL_TYPE_RECAP = '1' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+	WHEN ci.EM_SSFL_TYPE_RECAP = '2' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+	WHEN ci.EM_SSFL_TYPE_RECAP = '3' THEN CI.EM_SSFL_PRINT_TYPE_RECAP
+END)
+	WHEN '1' THEN CBP.TAXID
+	WHEN '2' THEN BROKER.TAXID
+	WHEN '3' THEN CBP.TAXID || ' / '  || BROKER.TAXID
+END ),'') END) END
+ AS "taxid_header",
+TO_CHAR(CI.DATEINVOICED,'dd-MON-yyyy') AS "date_invoice",
+CI.DESCRIPTION AS "no_period_invoice" ,
+MP.NAME AS "product_name",
+coalesce(to_char(CIL.DESCRIPTION),to_char(mp.name)) AS "description_product",
+CIL.QTYINVOICED AS "qty_product",
+CIL.PRICEACTUAL AS "price_product",
+TRUNC(CIL.QTYINVOICED * CIL.PRICEACTUAL,2) AS "total_line",
+TO_CHAR(TRUNC(CIL.QTYINVOICED * CIL.PRICEACTUAL,2)) AS "total_line2",
+CBP.AD_LANGUAGE as "ad_language"
+
+FROM C_INVOICE CI
+	 LEFT JOIN C_BPARTNER CBP ON CI.C_BPARTNER_ID = CBP.C_BPARTNER_ID
+	 LEFT JOIN AD_USER AU ON CI.AD_USER_ID = AU.AD_USER_ID
+	 LEFT JOIN C_BPARTNER_LOCATION CBPL ON CI.C_BPARTNER_LOCATION_ID = CBPL.C_BPARTNER_LOCATION_ID AND  CBPL.isbillto='Y'
+	 LEFT JOIN C_LOCATION CL ON CBPL.C_LOCATION_ID = CL.C_LOCATION_ID
+	 LEFT JOIN C_REGION CR ON CL.C_REGION_ID = CR.C_REGION_ID
+	 LEFT JOIN C_COUNTRY CCTY ON CL.C_COUNTRY_ID = CCTY.C_COUNTRY_ID
+	 LEFT JOIN C_PAYMENTTERM  CPT ON CI.C_PAYMENTTERM_ID = CPT.C_PAYMENTTERM_ID
+	 LEFT JOIN C_CURRENCY CCY ON CI.C_CURRENCY_ID = CCY.C_CURRENCY_ID
+	 LEFT JOIN C_INVOICELINE  CIL ON CI.C_INVOICE_ID = CIL.C_INVOICE_ID
+	 LEFT JOIN M_PRODUCT MP ON CIL.M_PRODUCT_ID = MP.M_PRODUCT_ID
+	 LEFT JOIN M_INOUTLINE MIL ON CIL.M_INOUTLINE_ID = MIL.M_INOUTLINE_ID
+	 LEFT JOIN M_INOUT MI ON MIL.M_INOUT_ID= MI.M_INOUT_ID
+	 LEFT JOIN C_POC_DOCTYPE_TEMPLATE CPDT ON CPDT.C_DOCTYPE_ID = CI.C_DOCTYPE_ID
+	 LEFT JOIN C_ORDERLINE COL ON CIL.C_ORDERLINE_ID= COL.C_ORDERLINE_ID
+	 LEFT JOIN C_ORDER CO ON COL.C_ORDER_ID= CO.C_ORDER_ID
+	 LEFT JOIN AD_USER USU ON CI.salesrep_id=USU.AD_USER_ID
+	 LEFT JOIN C_COSTCENTER CCENTER ON CCENTER.C_COSTCENTER_ID = CI.C_COSTCENTER_ID
+	 LEFT JOIN SSFL_VESSEL_TYPE VT ON VT.SSFL_VESSEL_TYPE_ID = CCENTER.EM_SSFL_VESSEL_TYPE_ID
+	 LEFT JOIN SSFL_LOAD_TYPE LT ON LT.SSFL_LOAD_TYPE_ID = CCENTER.EM_SSFL_LOAD_TYPE_ID
+	 LEFT JOIN USER1 LINE_BUSINESS ON  LINE_BUSINESS.USER1_ID = CI.USER1_ID
+	 LEFT JOIN USER2 VOYAGE ON VOYAGE.USER2_ID = CI.USER2_ID
+	 LEFT JOIN C_COSTCENTER CCTR ON CCTR.C_COSTCENTER_ID = VOYAGE.EM_SSFL_C_COSTCENTER_ID
+	 LEFT JOIN C_BPARTNER BROKER ON VOYAGE.EM_SSFL_BROKERVALUE = BROKER.C_BPARTNER_ID
+	 LEFT JOIN C_BPARTNER_LOCATION BROKER_CBPLOCATION ON BROKER.C_BPARTNER_ID = BROKER_CBPLOCATION.C_BPARTNER_ID  AND  BROKER_CBPLOCATION.ISBILLTO='Y'
+	 LEFT JOIN C_LOCATION BROKER_LOCATION ON BROKER_CBPLOCATION.C_LOCATION_ID = BROKER_LOCATION.C_LOCATION_ID
+	 LEFT JOIN C_CITY BROKER_CITY ON BROKER_LOCATION.C_CITY_ID = BROKER_CITY.C_CITY_ID
+   LEFT JOIN C_BPARTNER VEND2 ON  VEND2.c_bpartner_id = CI.c_bpartner_id
+   LEFT JOIN C_BPARTNER VEND ON VEND.C_BPARTNER_ID = VEND2.salesrep_id
+   LEFT JOIN FIN_FINANCIAL_ACCOUNT  FTAC ON FTAC.FIN_FINANCIAL_ACCOUNT_ID = CI.EM_SSFL_BANK_ID
+   LEFT JOIN C_BP_Group CBPG ON CBPG.C_BP_GROUP_ID = CBP.C_BP_GROUP_ID,AD_ORGINFO, AD_CLIENT, AD_ORG
+WHERE CI.ad_client_id = AD_CLIENT.ad_client_id
+AND CI.C_INVOICE_ID  = $P{DOCUMENT_ID}
+AND CI.DOCSTATUS = 'CO'
+AND AD_ORG.ad_org_id = AD_ORGINFO.ad_org_id
+AND AD_ORG.ad_org_id = (SELECT o.AD_ORG_ID
+			FROM AD_ORG o JOIN AD_OrgType t USING (AD_ORGTYPE_ID)
+                        WHERE AD_ISORGINCLUDED(CI.AD_ORG_ID, o.ad_org_id, CI.ad_client_id)<>-1
+                              AND (t.IsLegalEntity='Y' OR t.IsAcctLegalEntity='Y'))
+ORDER BY CIL.LINE ASC]]>
+	</queryString>
+	<field name="EM_SSFL_PRINT_TYPE_RECAP" class="java.lang.String"/>
+	<field name="type_recap" class="java.lang.String"/>
+	<field name="c_invoice_id" class="java.lang.String"/>
+	<field name="contact_name_invoice" class="java.lang.String"/>
+	<field name="postal" class="java.lang.String"/>
+	<field name="city_invoice" class="java.lang.String"/>
+	<field name="region_invoice" class="java.lang.String"/>
+	<field name="country_invoice" class="java.lang.String"/>
+	<field name="phone_invoice" class="java.lang.String"/>
+	<field name="phone2_invoice" class="java.lang.String"/>
+	<field name="fax_invoice" class="java.lang.String"/>
+	<field name="date_invoiced" class="java.sql.Timestamp"/>
+	<field name="mes_consumo" class="java.lang.String"/>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="description_cab" class="java.lang.String"/>
+	<field name="code_bpartner" class="java.lang.String"/>
+	<field name="entity" class="java.lang.String"/>
+	<field name="location" class="java.lang.String"/>
+	<field name="currency_code" class="java.lang.String"/>
+	<field name="symbol_largo" class="java.lang.String"/>
+	<field name="symbol" class="java.lang.String"/>
+	<field name="payterm" class="java.lang.String"/>
+	<field name="numero_dias" class="java.math.BigDecimal"/>
+	<field name="fecha_pago" class="java.sql.Timestamp"/>
+	<field name="organizationid" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="org_name" class="java.lang.String"/>
+	<field name="org_taxid" class="java.lang.String"/>
+	<field name="bp_taxid" class="java.lang.String"/>
+	<field name="bp_data" class="java.lang.String"/>
+	<field name="SHOWLOGO" class="java.lang.String"/>
+	<field name="SHOWCOMPANYDATA" class="java.lang.String"/>
+	<field name="HEADERMARGIN" class="java.lang.String"/>
+	<field name="issotrx" class="java.lang.String"/>
+	<field name="qtyinvoiced" class="java.math.BigDecimal"/>
+	<field name="priceactual" class="java.math.BigDecimal"/>
+	<field name="linenetamt" class="java.math.BigDecimal"/>
+	<field name="description_line" class="java.lang.String"/>
+	<field name="value" class="java.lang.String"/>
+	<field name="producto" class="java.lang.String"/>
+	<field name="totallines" class="java.math.BigDecimal"/>
+	<field name="grandtotal" class="java.math.BigDecimal"/>
+	<field name="iva_12" class="java.math.BigDecimal"/>
+	<field name="letras" class="java.lang.String"/>
+	<field name="referencia" class="java.lang.String"/>
+	<field name="vendedor" class="java.lang.String"/>
+	<field name="referencia_pedido" class="java.lang.String"/>
+	<field name="fecha_Actual" class="java.sql.Timestamp"/>
+	<field name="contrato_description" class="java.lang.String"/>
+	<field name="vessel" class="java.lang.String"/>
+	<field name="vessel_type" class="java.lang.String"/>
+	<field name="load_type" class="java.lang.String"/>
+	<field name="cod_voyage" class="java.lang.String"/>
+	<field name="name_dimension2" class="java.lang.String"/>
+	<field name="billing_period_from_invoice" class="java.lang.String"/>
+	<field name="billing_period_to_invoice" class="java.lang.String"/>
+	<field name="isforeign" class="java.lang.String"/>
+	<field name="voyage_print" class="java.lang.String"/>
+	<field name="recap_print" class="java.lang.String"/>
+	<field name="name_header" class="java.lang.String"/>
+	<field name="address_header" class="java.lang.String"/>
+	<field name="taxid_header" class="java.lang.String"/>
+	<field name="date_invoice" class="java.lang.String"/>
+	<field name="no_period_invoice" class="java.lang.String"/>
+	<field name="product_name" class="java.lang.String"/>
+	<field name="description_product" class="java.lang.String"/>
+	<field name="qty_product" class="java.math.BigDecimal"/>
+	<field name="price_product" class="java.math.BigDecimal"/>
+	<field name="total_line" class="java.math.BigDecimal"/>
+	<field name="total_line2" class="java.lang.String"/>
+	<field name="ad_language" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="175" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="94" y="78" width="461" height="20"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name_header}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="94" y="98" width="461" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{address_header}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="94" y="118" width="314" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{taxid_header}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="444" y="148" width="111" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{date_invoice}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="44" splitType="Stretch">
+			<subreport isUsingCache="true">
+				<reportElement key="subreport" x="0" y="0" width="555" height="43"/>
+				<subreportParameter name="TYPE_RECAP">
+					<subreportParameterExpression><![CDATA[$F{type_recap}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="VOYAGE_ID">
+					<subreportParameterExpression><![CDATA[$F{cod_voyage}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LANGUAGE">
+					<subreportParameterExpression><![CDATA[$F{ad_language}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BILLING_FROM">
+					<subreportParameterExpression><![CDATA[$F{billing_period_from_invoice}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BILLING_TO">
+					<subreportParameterExpression><![CDATA[$F{billing_period_to_invoice}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCRIPTION_INVOICE">
+					<subreportParameterExpression><![CDATA[$F{no_period_invoice}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{SUBREP_RptC_Invoice_Fact_Serv_Mart_Recap}]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="94" y="0" width="39" height="21">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ITEM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="0" y="0" width="30" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="408" y="-1" width="42" height="22">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="510" y="-1" width="41" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="90" y="0" width="82" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="0" y="0" width="64" height="20">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="396" y="-1" width="54" height="22">
+					<printWhenExpression><![CDATA[$F{ad_language}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="90" y="0" width="264" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description_product}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement key="textField" x="6" y="0" width="34" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{qty_product}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="373" y="0" width="72" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{price_product}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="456" y="0" width="90" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{total_line}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="66" splitType="Stretch">
+			<printWhenExpression><![CDATA[!$F{isforeign}.equals("")]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="0" y="6" width="372" height="56" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{isforeign}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="149" splitType="Stretch">
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="455" y="96" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{iva_12}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="455" y="56" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totallines}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="455" y="116" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{grandtotal}]]></textFieldExpression>
+			</textField>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport" x="5" y="23" width="344" height="73"/>
+				<subreportParameter name="Value">
+					<subreportParameterExpression><![CDATA[$F{grandtotal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="Language">
+					<subreportParameterExpression><![CDATA[$F{ad_language}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{SUBREP_RptC_Invoice_ConvertValue}]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement key="staticText" x="455" y="76" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[0,00]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

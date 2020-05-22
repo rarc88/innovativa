@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rpt_IncomeAssetSub" pageWidth="575" pageHeight="822" columnWidth="575" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ASSET_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[--detalleş
+select
+--ingresos
+a.created as fecha,
+a.description,
+c.name as grupoactivo,
+a.name as activo,
+a.value as identificador_activo,
+a.em_ssal_bar_code as codigo_activo,
+--caracteristicas
+g.name as estado,
+h.name as marca,
+i.name as modelo,
+j.name as serie,
+n.name as unidad_gestion,
+o.name as proyecto,
+p.name as centrp_cap,
+a.datepurchased as fecha_adquisicion,
+a.assetvalueamt as valor,
+a.amortizationvalueamt as dep_acumulada,
+case when a.amortizationtype = 'LI' then 'Lineal'end as tipo_amortizacion,
+case when a.amortizationcalctype = 'PE' then 'Porcentaje'
+when a.amortizationcalctype = 'TI' then 'Tiempo' end as tipo_calculo,
+a.uselifemonths as vida_util,
+a.amortizationvalueamt as dep_mensual,
+a.assetvalueamt as valor_libros,
+a.amortizationstartdate as fecha_apli_deprec,
+a.residualassetvalueamt as valor_residual,
+--componentes
+m.name as nombrecomponente,
+m.description as description_comp
+from a_asset a
+left join a_asset_group c on a.a_asset_group_id = c.a_asset_group_id
+left join ssal_state_asset g on a.em_ssal_state_asset_id = g.ssal_state_asset_id
+left join ssal_mark h on a.em_ssal_mark_id = h.ssal_mark_id
+left join ssal_model i on a.em_ssal_model_id = i.ssal_model_id
+left join ssal_series j on a.em_ssal_series = j.ssal_series_id
+left join c_bpartner k on a.em_ssal_custodio_id = k.c_bpartner_id
+left join ssal_asset_com m on a.a_asset_id = m.a_asset_id
+left join c_costcenter n on a.c_costcenter_id = n.c_costcenter_id
+left join user1 o on a.user1_id = o.user1_id
+left join user2 p on a.user2_id = p.user2_id
+WHERE (a.a_asset_id = $P{ASSET_ID})
+order by 5]]>
+	</queryString>
+	<field name="fecha" class="java.sql.Timestamp"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="grupoactivo" class="java.lang.String"/>
+	<field name="activo" class="java.lang.String"/>
+	<field name="identificador_activo" class="java.lang.String"/>
+	<field name="codigo_activo" class="java.lang.String"/>
+	<field name="estado" class="java.lang.String"/>
+	<field name="marca" class="java.lang.String"/>
+	<field name="modelo" class="java.lang.String"/>
+	<field name="serie" class="java.lang.String"/>
+	<field name="unidad_gestion" class="java.lang.String"/>
+	<field name="proyecto" class="java.lang.String"/>
+	<field name="centrp_cap" class="java.lang.String"/>
+	<field name="fecha_adquisicion" class="java.sql.Timestamp"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<field name="dep_acumulada" class="java.math.BigDecimal"/>
+	<field name="tipo_amortizacion" class="java.lang.String"/>
+	<field name="tipo_calculo" class="java.lang.String"/>
+	<field name="vida_util" class="java.math.BigDecimal"/>
+	<field name="dep_mensual" class="java.math.BigDecimal"/>
+	<field name="valor_libros" class="java.math.BigDecimal"/>
+	<field name="fecha_apli_deprec" class="java.sql.Timestamp"/>
+	<field name="valor_residual" class="java.math.BigDecimal"/>
+	<field name="nombrecomponente" class="java.lang.String"/>
+	<field name="description_comp" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="42" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="1" width="556" height="41"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="2" width="557" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[COMPONENTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="22" width="246" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="272" y="22" width="286" height="20"/>
+				<textElement/>
+				<text><![CDATA[Descripcion]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="19" width="556" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="17" y="2" width="254" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombrecomponente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="271" y="2" width="286" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description_comp}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="556" y="0" width="1" height="22"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="22"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="70" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="2" width="556" height="68"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="5" width="202" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Responsable de Bodega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="5" width="188" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Jefe de Proyecto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="5" width="163" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Jefe Coordinador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="30" width="48" height="20"/>
+				<textElement/>
+				<text><![CDATA[Firma:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="50" width="48" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="30" width="48" height="20"/>
+				<textElement/>
+				<text><![CDATA[Firma:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="50" width="48" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="30" width="48" height="20"/>
+				<textElement/>
+				<text><![CDATA[Firma:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="50" width="48" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="24" width="556" height="1"/>
+			</line>
+			<line>
+				<reportElement x="396" y="2" width="1" height="68"/>
+			</line>
+			<line>
+				<reportElement x="208" y="2" width="1" height="68"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="557" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

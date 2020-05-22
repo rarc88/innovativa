@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_FIELDGROUP" version="">
+  <row id="725A3752C8F34AA5A250DC84CF6BBEDF" trl="N">
+    <value column="Name" isTrl="N" original="Employee Data">Employee Data</value>
+  </row>
+  <row id="B1BB19BE558D4210B867A32FE9DAC43D" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Data">Viatical Data</value>
+  </row>
+  <row id="DBA4DAA283CB4296B9F61C3177F0E702" trl="N">
+    <value column="Name" isTrl="N" original="Mobilization">Mobilization</value>
+  </row>
+</compiereTrl>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="D2C5D4D29C76472B8C87A2B63DBD6BA7" trl="N">
+    <value column="Name" isTrl="N" original="Reference Contract">Reference Contract</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="037A313E34344F31AAAE953210D1FE78" trl="N">
+    <value column="Name" isTrl="N" original="C_BPartner Vendor or Employee">C_BPartner Vendor or Employee</value>
+    <value column="Description" isTrl="N" original="Vendor or Employee selection">Vendor or Employee selection</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1CE1C41FABA54EC99146913EEB277B85" trl="N">
+    <value column="Name" isTrl="N" original="Advanced Payment Contract">Advanced Payment Contract</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2E69EF115E0842FA8BBE5CC3E1D0CD14" trl="N">
+    <value column="Name" isTrl="N" original="SSCT_Employee">SSCT_Employee</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2525157AB0544A67888375699FC64E50" trl="N">
+    <value column="Name" isTrl="N" original="Status Parameter Process Advance">Status Parameter Process Advance</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3D65EFB00B204AF48A4BEE28BE3EED95" trl="N">
+    <value column="Name" isTrl="N" original="Contract Payment Form List">Contract Payment Form List</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4FA11F691E1B4671B07B161E7C7DA34B" trl="N">
+    <value column="Name" isTrl="N" original="Status Warranty">Status Warranty</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5F3CC12D8BBD4DFE9A06FF1158C82A01" trl="N">
+    <value column="Name" isTrl="Y" original="Client/Provider">Cliente/Proveedor</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="82E2DD59E12941AEA4A21EBA6B1D2BC2" trl="N">
+    <value column="Name" isTrl="N" original="Status Advance Contract">Status Advance Contract</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

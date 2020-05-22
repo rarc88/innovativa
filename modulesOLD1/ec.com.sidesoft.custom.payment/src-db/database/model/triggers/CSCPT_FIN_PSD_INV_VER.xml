@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER CSCPT_FIN_PSD_INV_VER">
+    <trigger name="CSCPT_FIN_PSD_INV_VER" table="FIN_PAYMENT_SCHEDULEDETAIL" fires="after" insert="false" update="true" delete="false" foreach="row">
+      <body><![CDATA[	estado character(1); --OBTG:VARCHAR2--
+	tipo character(1); --OBTG:VARCHAR2--
+	factura character varying(100); --OBTG:VARCHAR2--
+	proveedor character varying(100); --OBTG:VARCHAR2--
+BEGIN   
+	IF AD_isTriggerEnabled()='N' THEN RETURN;
+	END IF;
+	IF UPDATING THEN
+		IF :OLD.fin_payment_detail_id IS NULL THEN
+			IF :NEW.fin_payment_detail_id IS NOT NULL THEN
+				IF :OLD.fin_payment_schedule_invoice IS NOT NULL THEN
+					select c.posted, c.documentno, p.name, c.issotrx into estado, factura, proveedor, tipo
+						from fin_payment_schedule fps 
+						inner join c_invoice c on fps.c_invoice_id=c.c_invoice_id
+						inner join c_bpartner p on p.c_bpartner_id = c.c_bpartner_id
+						where fps.fin_payment_schedule_id = :OLD.fin_payment_schedule_invoice;
+					IF tipo = 'N' THEN
+						IF estado = 'N' THEN
+							RAISE_APPLICATION_ERROR(-20000, 'La factura ' || factura  || ' del proveedor ' || proveedor || 'no ha sido contabilizada.');
+						END IF;
+					END IF;
+				END IF;
+			END IF;
+		END IF;
+	END IF;
+	END CSCPT_FIN_PSD_INV_VER
+]]></body>
+    </trigger>
+  </database>

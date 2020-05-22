@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+  <database name="VIEW SSVE_VIATICAL_DETAILS_V">
+    <view name="SSVE_VIATICAL_DETAILS_V"><![CDATA[SELECT get_uuid() AS ssve_viatical_details_v_id, v.ad_client_id, v.ad_org_id, v.isactive, v.created, v.createdby, v.updated, v.updatedby, v.c_bpartner_id, va.ssve_viatical_id, va.totalamt_viatical, vs.ssve_viatical_settlement_id, vs.totalamt_sett, va.sfb_budget_cert_line_id, v.viaticaldate, v.docstatus FROM ssve_viatical_details_aux2 va LEFT JOIN ssve_viatical_details_aux4 vs ON vs.ssve_viatical_id = va.ssve_viatical_id AND vs.sfb_budget_cert_line_id = va.sfb_budget_cert_line_id LEFT JOIN ssve_viatical v ON v.ssve_viatical_id = va.ssve_viatical_id]]></view>
+  </database>

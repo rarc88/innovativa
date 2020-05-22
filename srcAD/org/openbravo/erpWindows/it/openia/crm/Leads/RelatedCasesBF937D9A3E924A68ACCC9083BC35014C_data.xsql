@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlClass id="class" name="RelatedCasesBF937D9A3E924A68ACCC9083BC35014CData" package="org.openbravo.erpWindows.it.openia.crm.Leads">
+  <SqlClassComment>WAD Generated class</SqlClassComment>
+
+  <SqlMethod name="dummy" type="preparedStatement" return="multiple">
+    <Sql>
+      SELECT '' AS dummy from DUAL
+    </Sql>
+  </SqlMethod>
+
+
+   <SqlMethod name="selectActP33BD1CE5A5934EDFAE283A16E6BF5257_startdate" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT c.deadline_date FROM opcrm_cases c WHERE c.opcrm_cases_id = ? 
+    ]]></Sql>
+
+<Parameter name="opcrm_cases_id"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectActP33BD1CE5A5934EDFAE283A16E6BF5257_subject" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT c.case_subject FROM opcrm_cases c WHERE c.opcrm_cases_id = ? 
+    ]]></Sql>
+
+<Parameter name="opcrm_cases_id"/>
+  </SqlMethod>
+
+
+
+
+
+
+</SqlClass>

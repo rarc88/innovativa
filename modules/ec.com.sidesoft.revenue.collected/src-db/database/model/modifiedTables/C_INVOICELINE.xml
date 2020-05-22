@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE C_INVOICELINE">
+    <table name="C_INVOICELINE" primaryKey="C_INVOICELINE_KEY">
+      <column name="EM_SSRFC_BALANCECONTROL" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSRFC_BUDGET_LINE_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SFB_BUDGET_LINE" name="EM_SSRFC_INVOICELINE_BGLINE">
+        <reference local="EM_SSRFC_BUDGET_LINE_ID" foreign="SFB_BUDGET_LINE_ID"/>
+      </foreign-key>
+      <check name="EM_SSRFC_BALANCECONTROL_CHECK"><![CDATA[EM_SSRFC_BALANCECONTROL IN ('Y', 'N')]]></check>
+    </table>
+  </database>

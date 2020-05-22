@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rpt_BudgetReforms" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f621ada-fcd3-4404-a5a6-aef5e3de1f49">
+	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="NUMBERFORMAT" class="java.text.DecimalFormat" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new DecimalFormat("###,##0.00;-###,##0.00", new DecimalFormatSymbols())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DOCUMENT_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT pp.* FROM (
+SELECT
+	org.ad_org_id as "ad_org_id"
+	,UPPER(org.name) as "organizacion"
+	,UPPER(CASE WHEN (brf.type='SFBTR_BT') THEN 'Transferencias presupuestarias'
+		WHEN (brf.type='SFBTR_BCA') THEN 'Ajuste de Techo presupuestario'
+		ELSE 'No reconocido'
+	END) as "document_tipo"
+	,COALESCE(brf.resolution,'') as "documentno"
+	,brf.registration_date as "fecha_registro"
+	,bpa.name as "solicitante"
+	,bpa.value as "tercero_identificador"
+	,ba.name as "producto_head"
+	,brf.description as "descripcion"
+	,bi.value as "partida_no"
+	,bi.name as "partida_name"
+	,ba.name||' / '||cc.name||' / '||usr.name as "producto_actividad_fuente"
+	,brf.value_to_adjust as "valor"
+	,brf.sfbtr_budgetary_reforms_id
+FROM sfbtr_budgetary_reforms brf
+JOIN ad_org org on org.ad_org_id = brf.ad_org_id
+JOIN c_bpartner bpa on bpa.c_bpartner_id = brf.c_bpartner_id
+JOIN sfb_budget_area ba on ba.sfb_budget_area_id = brf.sfb_budget_area_id
+JOIN sfb_budget_item bi on bi.sfb_budget_item_id = brf.sfb_budget_item_id
+JOIN c_costcenter cc on cc.c_costcenter_id = brf.c_costcenter_id
+JOIN user1 usr on usr.user1_id = brf.user1_id
+WHERE brf.status ='AP' AND brf.type = 'SFBTR_BCA'
+UNION ALL
+SELECT
+	org.ad_org_id as "ad_org_id"
+	,UPPER(org.name) as "organizacion"
+	,UPPER(CASE WHEN (brf.type='SFBTR_BT') THEN 'Transferencias presupuestarias'
+		WHEN (brf.type='SFBTR_BCA') THEN 'Ajuste de Techo presupuestario'
+		ELSE 'No reconocido'
+	END) as "document_tipo"
+	,COALESCE(brf.resolution,'') as "documentno"
+	,brf.registration_date as "fecha_registro"
+	,bpa.name as "solicitante"
+	,bpa.value as "tercero_identificador"
+	,ba.name as "producto_head"
+	,brf.description as "descripcion"
+	,bi.value as "partida_no"
+	,bi.name as "partida_name"
+	,bal.name||' / '||cc.name||' / '||usr.name as "producto_actividad_fuente"
+	,tf.value_discounted*(-1) as "valor"
+	,brf.sfbtr_budgetary_reforms_id
+FROM sfbtr_budgetary_reforms brf
+JOIN ad_org org on org.ad_org_id = brf.ad_org_id
+JOIN c_bpartner bpa on bpa.c_bpartner_id = brf.c_bpartner_id
+LEFT JOIN sfb_budget_area ba on ba.sfb_budget_area_id = brf.sfb_budget_area_id
+JOIN sfbtr_transfer_from tf on tf.sfbtr_budgetary_reforms_id = brf.sfbtr_budgetary_reforms_id
+JOIN sfb_budget_area bal on bal.sfb_budget_area_id = tf.sfb_budget_area_id
+JOIN sfb_budget_item bi on bi.sfb_budget_item_id = tf.sfb_budget_item_id
+JOIN c_costcenter cc on cc.c_costcenter_id = tf.c_costcenter_id
+JOIN user1 usr on usr.user1_id = tf.user1_id
+WHERE brf.status ='AP' AND brf.type = 'SFBTR_BT'
+UNION ALL
+SELECT
+	org.ad_org_id as "ad_org_id"
+	,UPPER(org.name) as "organizacion"
+	,UPPER(CASE WHEN (brf.type='SFBTR_BT') THEN 'Transferencias presupuestarias'
+		WHEN (brf.type='SFBTR_BCA') THEN 'Ajuste de Techo presupuestario'
+		ELSE 'No reconocido'
+	END) as "document_tipo"
+	,COALESCE(brf.resolution,'') as "documentno"
+	,brf.registration_date as "fecha_registro"
+	,bpa.name as "solicitante"
+	,bpa.value as "tercero_identificador"
+	,ba.name as "producto_head"
+	,brf.description as "descripcion"
+	,bi.value as "partida_no"
+	,bi.name as "partida_name"
+	,bal.name||' / '||cc.name||' / '||usr.name as "producto_actividad_fuente"
+	,tt.value_increase as "valor"
+	,brf.sfbtr_budgetary_reforms_id
+FROM sfbtr_budgetary_reforms brf
+JOIN ad_org org on org.ad_org_id = brf.ad_org_id
+JOIN c_bpartner bpa on bpa.c_bpartner_id = brf.c_bpartner_id
+LEFT JOIN sfb_budget_area ba on ba.sfb_budget_area_id = brf.sfb_budget_area_id
+JOIN sfbtr_transfer_to tt on tt.sfbtr_budgetary_reforms_id = brf.sfbtr_budgetary_reforms_id
+JOIN sfb_budget_area bal on bal.sfb_budget_area_id = tt.sfb_budget_area_id
+JOIN sfb_budget_item bi on bi.sfb_budget_item_id = tt.sfb_budget_item_id
+JOIN c_costcenter cc on cc.c_costcenter_id = tt.c_costcenter_id
+JOIN user1 usr on usr.user1_id = tt.user1_id
+WHERE brf.status ='AP' AND brf.type = 'SFBTR_BT') pp WHERE pp.sfbtr_budgetary_reforms_id = $P{DOCUMENT_ID}]]>
+	</queryString>
+	<field name="ad_org_id" class="java.lang.String"/>
+	<field name="organizacion" class="java.lang.String"/>
+	<field name="document_tipo" class="java.lang.String"/>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="fecha_registro" class="java.sql.Timestamp"/>
+	<field name="solicitante" class="java.lang.String"/>
+	<field name="tercero_identificador" class="java.lang.String"/>
+	<field name="producto_head" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="partida_no" class="java.lang.String"/>
+	<field name="partida_name" class="java.lang.String"/>
+	<field name="producto_actividad_fuente" class="java.lang.String"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<field name="sfbtr_budgetary_reforms_id" class="java.lang.String"/>
+	<variable name="SUM_Total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="183" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="38" width="572" height="20" uuid="c39f6f85-1363-494f-8c6e-20fb0c1eb73f"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{organizacion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="58" width="572" height="20" uuid="92c4149d-b65f-4d9f-bd74-a86222992608"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{document_tipo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="78" width="572" height="20" uuid="6729be0e-2158-4962-9f6e-2a207ad5940e"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["REFORMA PRESUPUESTARIA No: "+$F{documentno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="98" width="143" height="14" uuid="67e754e4-fdf4-4d66-a749-d3eaac1a29e2"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="143" y="98" width="429" height="14" uuid="d4cee332-0ea4-422f-9745-463624a9a4e4"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_registro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="112" width="143" height="14" uuid="e5755fc7-bfae-470b-89f9-93dd91da7331"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Solicitante :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="143" y="112" width="429" height="14" uuid="0f79f179-0497-4b27-a27d-782d1dbce009"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{solicitante}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="140" width="143" height="14" uuid="ea9631a3-00e7-483f-ab1a-dd17042a669f"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Producto :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="143" y="140" width="429" height="14" uuid="706d212a-c0ee-4af6-b938-bed93c11308b"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto_head}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="126" width="143" height="14" uuid="aafeb063-c504-4a56-b76d-f77e1bb2b72f"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Identificación :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="143" y="126" width="429" height="14" uuid="2654f1b2-d118-4815-9c49-a7a7cad84b7c"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tercero_identificador}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="154" width="143" height="14" uuid="7f7350ae-fbd3-4118-844c-98114d3d8cef"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Detalle:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="168" width="572" height="14" uuid="28a8285d-09f2-4a90-bfd9-7b464a3145d5"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top" isUsingCache="true">
+				<reportElement key="image-1" x="0" y="0" width="143" height="38" uuid="9c690613-31cd-4a6b-8de6-b03e19043e27"/>
+				<imageExpression><![CDATA[org.openbravo.erpCommon.utility.Utility.showImageLogo("yourcompanylegal", $F{ad_org_id})]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="12" width="60" height="12" uuid="be1c689a-80a4-48e6-92bd-e6254fa4f6f6"/>
+				<box leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Partida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="12" width="170" height="12" uuid="2ac0b48d-8c78-481c-90ca-c12cdb70b4d5"/>
+				<box leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="12" width="283" height="12" uuid="27b26b51-e186-4587-9594-c34e76d91959"/>
+				<box leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producto / Actividad / Fuente de Financiamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="513" y="12" width="59" height="12" uuid="ff5a55e2-40e8-4269-975d-7f5cf13a65d0"/>
+				<box leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="143" height="12" uuid="a5f8596b-22fc-4a5f-93b4-166486b2864e"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Partidas Presupuestarias: ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="12" uuid="59d4bbf1-9e2a-401f-bd18-c7a45c3420dc"/>
+				<box topPadding="2" leftPadding="5" bottomPadding="2" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partida_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="60" y="0" width="170" height="12" uuid="2a7a7b91-33a5-4a31-9eaf-5858bf32bdc7"/>
+				<box topPadding="2" leftPadding="5" bottomPadding="2" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partida_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="230" y="0" width="283" height="12" uuid="bf1b0c16-52d4-4361-afe2-df23825ffc29"/>
+				<box topPadding="2" leftPadding="5" bottomPadding="2" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto_actividad_fuente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="513" y="0" width="59" height="12" uuid="51c42e37-7eb8-4596-a101-93e01df30843"/>
+				<box topPadding="2" leftPadding="5" bottomPadding="2" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+				<patternExpression><![CDATA[$P{NUMBERFORMAT}.toPattern()]]></patternExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="513" height="12" uuid="7a4c797e-e45a-4ed9-ae2d-9347d936d0c7"/>
+				<box leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="513" y="0" width="59" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="6aab4682-4239-4caf-92d2-d0c2a6837da9"/>
+				<box topPadding="2" leftPadding="5" bottomPadding="2" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

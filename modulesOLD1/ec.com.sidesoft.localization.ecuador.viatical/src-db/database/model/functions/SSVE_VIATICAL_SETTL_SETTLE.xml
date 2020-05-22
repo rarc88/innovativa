@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSVE_VIATICAL_SETTL_SETTLE">
+    <function name="SSVE_VIATICAL_SETTL_SETTLE" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+Cur_Parameter RECORD;
+Cur_InvoiceLine RECORD;
+
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+  
+  v_ResultStr VARCHAR2(2000) := '';  
+
+  v_Record_ID  VARCHAR2(32);
+  V_MESSAGE VARCHAR2(2000):='';
+  V_Processed Varchar2(60);
+  V_Processing Varchar2(60);
+  V_DocStatus Varchar2(60);
+  V_SETTLE CHAR(1);
+  V_viatical_settlement_id VARCHAR2(32);
+
+BEGIN
+  --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID,
+        i.AD_User_ID,
+        i.AD_Client_ID,
+        i.AD_Org_ID 
+                          
+      FROM AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+      )
+    LOOP
+    
+      v_Record_ID := Cur_Parameter.Record_ID;      
+      v_Client_ID := Cur_Parameter.AD_Client_ID;
+      v_Org_ID := Cur_Parameter.AD_Org_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;     
+      
+    END LOOP; -- End Get Parameter
+
+    -- Get viatical processed status
+    Select v.Processed, v.Docstatus, v.Processing, v.Settle 
+    Into V_Processed, V_DocStatus, V_Processing, V_Settle 
+    From ssve_viatical_settlement v Where v.ssve_viatical_settlement_id = V_Record_Id;
+    
+  If V_Processing = 'Y' Then
+      v_Message := '@Processing@';
+      AD_UPDATE_PINSTANCE(Pinstance_Id, Null, 'N', 0, v_Message);
+      return;
+    End If;
+    
+    If V_Processed = 'N' Or V_DocStatus <> 'CO' Then
+      v_Message := '@SSVE_NoProcessedSettle@';
+      AD_UPDATE_PINSTANCE(Pinstance_Id, Null, 'N', 0, v_Message);
+      return;
+    End If;
+    
+    -- Set processing 'Y'
+    Update ssve_viatical_settlement v Set Processing = 'Y' Where v.ssve_viatical_settlement_id = V_Record_Id;
+    
+    if V_Settle = 'N' then
+      
+      -- Set settle 'Y'
+      Update ssve_viatical_settlement v Set Settle = 'Y' Where v.ssve_viatical_settlement_id = V_Record_Id;    
+      
+    ELSIF V_SETTLE = 'Y' THEN
+    
+      BEGIN
+        SELECT P.EM_SSVE_VIAT_SETTLEMENT_ID 
+        INTO V_VIATICAL_SETTLEMENT_ID
+        FROM FIN_PAYMENT P
+        where P.EM_SSVE_VIAT_SETTLEMENT_ID = V_Record_Id;
+      EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+        V_VIATICAL_SETTLEMENT_ID := NULL;
+      END;
+      
+      --Check if it is paid
+      if V_viatical_settlement_id is not null then
+        RAISE_APPLICATION_ERROR(-20000, '@SSVE_SettlementAlreadyPaid@');
+      end if;
+      
+      -- Set settle 'N'
+      Update ssve_viatical_settlement v Set Settle = 'N' Where v.ssve_viatical_settlement_id = V_Record_Id;    
+      
+    end if;
+    
+    -- Set processing 'N'
+    Update ssve_viatical_settlement v Set Processing = 'N' Where v.ssve_viatical_settlement_Id = V_Record_Id;
+    COMMIT;
+   
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+    RETURN;
+  
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    ROLLBACK;
+    -- Set processing 'N'
+    Update ssve_viatical_settlement v Set Processing = 'N' Where v.ssve_viatical_settlement_Id = V_Record_Id;
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+    RETURN;
+END SSVE_VIATICAL_SETTL_SETTLE
+]]></body>
+    </function>
+  </database>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSCT_ADVANCED_TRG">
+    <trigger name="SSCT_ADVANCED_TRG" table="SSCT_PAYMENT" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+ v_count NUMBER:=0;
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (UPDATING or INSERTING)THEN
+    IF :NEW.Paymentform = 'A' THEN
+	:NEW.Amountpaid = :NEW.Grandtotal;
+	return NEW;
+    END IF;
+  END IF;
+
+  END SSCT_ADVANCED_TRG
+]]></body>
+    </trigger>
+  </database>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<SqlClass name="DocLineBudgetCertificateData" package="org.openbravo.erpCommon.ad_forms">
+  <SqlClassComment></SqlClassComment>
+  <SqlMethod name="select" type="preparedStatement" return="multiple">
+    <SqlMethodComment></SqlMethodComment>
+    <Sql>
+      <![CDATA[
+        SELECT CL.SFB_BUDGET_CERT_LINE_ID, CL.AD_ORG_ID, CL.LINE, CL.DESCRIPTION, 
+        CL.BUDGET_CERTIFIED_VALUE, C.C_CURRENCY_ID, CL.C_COSTCENTER_ID, CL.USER1_ID, CL.EM_SSBP_SSPR_CONCEPT_ID,
+        Cl.EM_SSBP_SSPR_CATEGORY_ACCT_ID
+        FROM SFB_BUDGET_CERT_LINE Cl left join SFB_BUDGET_CERTIFICATE C on C.SFB_BUDGET_CERTIFICATE_ID = CL.SFB_BUDGET_CERTIFICATE_ID
+        WHERE C.SFB_BUDGET_CERTIFICATE_ID=? AND CL.BUDGET_CERTIFIED_VALUE > 0
+            
+        UNION ALL
+           
+        SELECT NCL.SSBP_NO_BUDGET_CERT_LINE_ID, NCL.AD_ORG_ID, NCL.LINE, '' AS DESCRIPTION, 
+        NCL.AMOUNT, C.C_CURRENCY_ID, NCL.C_COSTCENTER_ID, NCL.USER1_ID, NCL.SSPR_CONCEPT_ID,
+        NCl.SSPR_CATEGORY_ACCT_ID
+        FROM SSBP_NO_BUDGET_CERT_LINE NCL LEFT JOIN SFB_BUDGET_CERTIFICATE C ON C.SFB_BUDGET_CERTIFICATE_ID = NCL.SFB_BUDGET_CERTIFICATE_ID
+        WHERE C.SFB_BUDGET_CERTIFICATE_ID=? AND NCL.AMOUNT > 0
+            
+        ORDER BY Line
+      ]]>
+    </Sql>
+    <Parameter name="certificate"/>
+    <Parameter name="certificate"/>
+  </SqlMethod>
+</SqlClass>

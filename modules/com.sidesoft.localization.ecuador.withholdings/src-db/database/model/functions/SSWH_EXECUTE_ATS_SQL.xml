@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSWH_EXECUTE_ATS_SQL">
+    <function name="SSWH_EXECUTE_ATS_SQL" type="NULL">
+      <parameter name="p_period" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_org" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_process" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_strStartDate DATE;
+  v_strendDate  DATE;
+  v_SqlText VARCHAR2(4000);
+
+    --  Parameter
+  TYPE RECORD IS REF CURSOR;
+    Cur_Parametersql RECORD;
+  v_processID VARCHAR(32);
+
+    V_ORG  VARCHAR(100);
+    
+BEGIN
+
+select startdate,enddate f
+INTO v_strStartDate,v_strendDate
+from c_period where c_period_id = p_period;
+
+
+v_processID:=p_process;
+
+V_ORG:= coalesce(p_org,to_char('ND'));
+
+V_ORG:= (case when p_org <> to_char('ND') then '''' || p_org  || '''' else to_char('NULL') end) ;
+
+FOR Cur_Parametersql in(
+	select replace(replace(replace(replace(replace(sqlscript,':p',v_processID),':sd', to_char(v_strStartDate)), ':edd', to_char(v_strendDate)),':og1' , V_ORG),
+	':prd',p_period ) AS sqlscript
+    from sswh_rptc_sql where isactive ='Y'
+)LOOP
+
+	v_SqlText:= (Cur_Parametersql.sqlscript);
+
+	EXECUTE IMMEDIATE v_SqlText;
+END LOOP;
+END SSWH_EXECUTE_ATS_SQL
+]]></body>
+    </function>
+  </database>

@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_INVOICELINE_TRG">
+    <trigger name="SFB_INVOICELINE_TRG" table="C_INVOICELINE" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+v_hashcode            VARCHAR2(60);
+v_costcenter_id       VARCHAR2(60);
+v_user1_id            VARCHAR2(60);
+v_other_hashcode      VARCHAR2(60);
+v_other_line_hashcode VARCHAR2(60);
+v_other_costcenter_id VARCHAR2(60);
+v_other_user1_id      VARCHAR2(60);
+v_budget_cert_line_id VARCHAR2(32);
+v_doctypetarget_id    VARCHAR2(32);
+v_issotrx             CHAR(1);
+v_count               INTEGER;
+
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (INSERTING OR UPDATING) THEN
+
+    -- Select invoice data
+    SELECT em_sfb_hashcode, issotrx, c_costcenter_id, user1_id, c_doctypetarget_id
+      INTO v_hashcode, v_issotrx, v_costcenter_id, v_user1_id, v_doctypetarget_id
+    FROM C_INVOICE
+    WHERE c_invoice_id = :new.c_invoice_id;
+
+    -- Is a Document Type that has been enabled for budget.
+    SELECT count(*) INTO v_count
+    FROM SFB_BUDGET_DOCTYPE
+    WHERE AD_ISORGINCLUDED(:new.ad_org_id, ad_org_id, :new.ad_client_id) <> -1  AND c_doctype_id = v_doctypetarget_id AND isactive = 'Y';
+
+    IF (v_issotrx = 'N' AND v_count > 0) THEN
+
+      -- Check Line Dimensions
+      IF (:new.c_costcenter_id IS NOT NULL AND :new.user1_id IS NULL) THEN
+
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_NoUser1Dimension@');
+
+      END IF;
+
+      IF (:new.c_orderline_id IS NOT NULL) THEN
+
+        -- Select order data
+        SELECT co.em_sfb_hashcode, col.em_sfb_hashcode, em_sfb_budget_cert_line_id, co.c_costcenter_id, co.user1_id
+          INTO v_other_hashcode, v_other_line_hashcode, v_budget_cert_line_id, v_other_costcenter_id, v_other_user1_id
+        FROM C_ORDERLINE col LEFT JOIN C_ORDER co ON col.c_order_id = co.c_order_id
+        WHERE c_orderline_id = :new.c_orderline_id;
+
+      END IF;
+
+      IF (v_budget_cert_line_id IS NOT NULL) THEN
+   
+        --IF (COALESCE(v_costcenter_id, '0') <> COALESCE(v_other_costcenter_id, '0') 
+           -- OR COALESCE(v_user1_id, '0') <> COALESCE(v_other_user1_id, '0')) THEN
+
+          --RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCompatibleDimensions@');
+
+        --ELSIF (v_other_line_hashcode IS NOT NULL) THEN
+
+          :new.em_sfb_budget_cert_line_id := v_budget_cert_line_id;
+          :new.em_sfb_hashcode := coalesce(to_char(v_other_line_hashcode),to_char(v_other_hashcode));
+ 
+       -- ELSIF (v_hashcode = v_other_hashcode) THEN
+
+         -- :new.em_sfb_budget_cert_line_id := v_budget_cert_line_id;
+ 
+        --ELSE  
+
+          --RAISE_APPLICATION_ERROR(-20000, '@SFB_NoCompatibleHashcode@');
+
+        --END IF;
+
+      END IF;
+
+    END IF;  
+
+  END IF;  
+
+  END SFB_INVOICELINE_TRG
+]]></body>
+    </trigger>
+  </database>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFBIN_BUDGET_ITEM_ACCOUNT_TRG">
+    <trigger name="SFBIN_BUDGET_ITEM_ACCOUNT_TRG" table="SFB_BUDGET_ITEM_ACCOUNT" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+  v_count INTEGER;
+  v_isincome CHARACTER(1); --OBTG:VARCHAR2--
+
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (INSERTING OR UPDATING) THEN
+
+    IF (:new.isactive = 'Y') THEN
+
+    select EM_Sfbin_Isincome 
+    into v_isincome
+    from sfb_budget_item
+    where sfb_budget_item_id = :new.sfb_budget_item_id;
+    
+    If(v_isincome = 'Y')Then
+    
+	SELECT count(*)
+	INTO v_count
+	FROM sfb_budget_item_account bia
+	WHERE bia.isactive = 'Y'
+	AND bia.account_id = :new.account_id
+	AND bia.sfb_budget_item_account_id <> :new.sfb_budget_item_account_id;
+
+	IF (v_count > 0) THEN
+		RAISE_APPLICATION_ERROR(-20000, '@SFBIN_DuplicatedAccount@');
+	END IF;
+	
+    End If;
+      
+    END IF;
+    
+  END IF;
+
+  END SFBIN_BUDGET_ITEM_ACCOUNT_TRG
+]]></body>
+    </trigger>
+  </database>

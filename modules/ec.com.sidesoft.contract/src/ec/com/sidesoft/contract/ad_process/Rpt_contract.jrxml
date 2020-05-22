@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rpt_contract" pageWidth="1160" pageHeight="595" orientation="Landscape" columnWidth="1120" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String"/>
+	<parameter name="BASE_WEB" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{BASE_WEB}.replace("web","src-loc/design")+"/ec/com/sidesoft/contract/ad_process/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BASE_DIR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+	org.name as organizacion,
+	org.ad_org_id as ad_org_id,
+	to_char(now(), 'DD-MM-YYYY HH24:MI:SS') as emision,
+	cdt.name as tipodocumento,
+	sc.documentno as documentno,
+	sc.name as nombrecont,
+	sct.name as tipocont,
+	sc.object as objetocont,
+	scterm.name as terminocont,
+	sc.observations as observcont,
+	now() as fechaemision,
+	bp.name as nameterc,
+	bp.taxid as ructerc,
+	sc.amount as importe,
+	sc.outstandingamount as montopendiente,
+	case  when sc.client_provider = 'CL' then 'Cliente'
+	when sc.client_provider = 'PR' then 'Proveedor' end as tipoterc
+from ssct_contract sc
+left join ad_org org on org.ad_org_id = sc.ad_org_id
+left join c_doctype cdt on sc.c_doctype_id = cdt.c_doctype_id
+left join ssct_contracttype sct on sct.ssct_contracttype_id = sc.ssct_contracttype_id
+left join ssct_contractterm scterm on scterm.ssct_contractterm_id = sc.ssct_contractterm_id
+left join c_bpartner bp on bp.c_bpartner_id = sc.c_bpartner_id
+where ssct_contract_id = $P{DOCUMENT_ID}]]>
+	</queryString>
+	<field name="organizacion" class="java.lang.String"/>
+	<field name="ad_org_id" class="java.lang.String"/>
+	<field name="emision" class="java.lang.String"/>
+	<field name="tipodocumento" class="java.lang.String"/>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="nombrecont" class="java.lang.String"/>
+	<field name="tipocont" class="java.lang.String"/>
+	<field name="objetocont" class="java.lang.String"/>
+	<field name="terminocont" class="java.lang.String"/>
+	<field name="observcont" class="java.lang.String"/>
+	<field name="fechaemision" class="java.sql.Timestamp"/>
+	<field name="nameterc" class="java.lang.String"/>
+	<field name="ructerc" class="java.lang.String"/>
+	<field name="importe" class="java.math.BigDecimal"/>
+	<field name="montopendiente" class="java.math.BigDecimal"/>
+	<field name="tipoterc" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="221" splitType="Stretch">
+			<textField>
+				<reportElement x="218" y="0" width="584" height="28"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{organizacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="802" y="8" width="318" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Fecha de emisión: "+$F{emision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="64" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="84" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="104" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de contrato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="124" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Objeto de contrato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="144" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Términos del contrato]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="122" y="40" width="370" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipodocumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="64" width="370" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documentno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="84" width="370" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombrecont}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="104" width="370" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipocont}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="124" width="370" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{objetocont}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="144" width="370" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{terminocont}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="802" y="64" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC / CI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="802" y="144" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Administrador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="802" y="104" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto pendiente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="802" y="124" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="802" y="84" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importe]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="924" y="124" width="198" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoterc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="924" y="40" width="198" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nameterc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="924" y="84" width="198" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{importe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="924" y="64" width="198" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ructerc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="802" y="40" width="122" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tercero]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="924" y="104" width="198" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montopendiente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="924" y="144" width="198" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{terminocont}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="174" width="122" height="40"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observación]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="122" y="174" width="680" height="40"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{observcont}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="127" splitType="Immediate">
+			<subreport isUsingCache="true">
+				<reportElement positionType="Float" x="2" y="60" width="1120" height="10"/>
+				<subreportParameter name="DOCUMENT_ID">
+					<subreportParameterExpression><![CDATA[$P{DOCUMENT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"Rpt_contract_warranty.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="0" width="421" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GARANTIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="40" width="421" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FASES / ACTIVIDADES]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="2" y="20" width="1120" height="10"/>
+				<subreportParameter name="DOCUMENT_ID">
+					<subreportParameterExpression><![CDATA[$P{DOCUMENT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"Rpt_contract_activity.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="82" width="421" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMA DE PAGO]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="2" y="102" width="1120" height="10"/>
+				<subreportParameter name="DOCUMENT_ID">
+					<subreportParameterExpression><![CDATA[$P{DOCUMENT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"Rpt_contract_payment.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Immediate"/>
+	</summary>
+</jasperReport>

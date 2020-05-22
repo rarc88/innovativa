@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<SqlClass name="PaymentPreviousYearData" package="ec.com.sidesoft.purchase.advanced.accounting.payment">
+  <SqlClassComment></SqlClassComment>
+  <SqlMethod name="selectPreviousYear" type="preparedStatement" return="multiple">
+    <SqlMethodComment></SqlMethodComment>
+    <Sql>
+      <![CDATA[
+       select a.fin_payment_id, a.fin_payment_id_used,
+		b.paymentdate as paymentdate, c.paymentdate as creditdate,
+		to_number(to_char(b.paymentdate,'YYYY')) as paymentyear,
+		to_number(to_char(c.paymentdate,'YYYY')) as credityear,
+		case when to_number(to_char(b.paymentdate,'YYYY')) <> to_number(to_char(c.paymentdate,'YYYY')) then 'true' else 'false' end previousyear
+		from FIN_Payment_Credit a 
+		left join fin_payment b on b.fin_payment_id = a.fin_payment_id
+		left join fin_payment c on c.fin_payment_id = a.fin_payment_id_used
+		where a.FIN_Payment_Credit_id = ? 
+      ]]>
+    </Sql>
+    <Parameter name="FIN_Payment_Credit_id"/>
+   </SqlMethod>
+</SqlClass>

@@ -1,0 +1,1330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BudgetReport" pageWidth="1950" pageHeight="1161" orientation="Landscape" columnWidth="1940" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="6d629e19-6fd6-480d-b0bb-1f63b7d6b9f0">
+	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.x" value="326"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.white.page.background" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.columns" value="true"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="C_Year_ID" class="java.lang.String"/>
+	<parameter name="Budget_Type" class="java.lang.String">
+		<defaultValueExpression><![CDATA["O"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="C_Costcenter_ID" class="java.lang.String"/>
+	<parameter name="Periodfrom" class="java.lang.String"/>
+	<parameter name="Area_Filter" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select
+  budget.type_of_budget,
+  budget.c_costcenter_id as c_costcenter_id,
+  budget.sfb_budget_item_id as sfb_budget_item_id,
+  budget.budgetitem AS budgetitem,
+  budget.user1_id as user1_id,
+  budget.orgname AS orgname ,
+  budget.costcenter AS costcenter,
+  budget.area_name as area_name,
+  budget.c_year_id as c_year_id,
+  coalesce(sum(sfb_certificate.executed_value), 0) as executed_value,
+  coalesce(sum(sfb_certificate.committed_value), 0) as committed_value,
+  (sum(budget.budgetvalue - sfb_certificate.executed_value)) as Saldo,
+  budget.budgetvalue as budgetvalue,
+  budget.committed_budget,
+  budget.executed_budget as executed_budget,
+  coalesce( ( budget.adjusted_budget - budget.budgetvalue), 0)as budget_reforma,
+ coalesce(( budget.budgetvalue + (budget.adjusted_budget - budget.budgetvalue)), 0) as budget_codificado ,
+(budget.pavailable_balance  * committed_budget)  as  saldo_comprometido,
+(coalesce(sum(sfb_certificate.executed_value), 0) * budget.pavailable_balance)  as saldo_debengado,
+ (case when  ( budget.budgetvalue + (budget.adjusted_budget - budget.budgetvalue)) > 0 then (budget.executed_budget/ ( budget.budgetvalue + (budget.adjusted_budget - budget.budgetvalue)))*100  else   0 end ) as budget_exe,
+ budget.adjusted_budget as adjusted_budget,
+ budget.actual_budget as actual_budget,
+  budget.user1,
+  budget.year as c_yearname
+from (select
+  sfb_b.type_of_budget,
+  c_costcenter.c_costcenter_id,
+  sfb_bi.sfb_budget_item_id as sfb_budget_item_id,
+  sfb_bi.name AS budgetitem,
+  sfb_bl.user1_id,
+  ad_org.name AS orgname,
+  c_costcenter.name AS costcenter,
+  sfb_area.name as area_name,
+  sfb_b.c_year_id,
+(case
+when (select PERIODNO from c_period where c_period_id = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value + sfb_bl.oct_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value + sfb_bl.oct_budgeted_value + sfb_bl.nov_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value + sfb_bl.oct_budgeted_value + sfb_bl.nov_budgeted_value + sfb_bl.dec_budgeted_value )
+ end) as budgetvalue,
+(case when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value + sfb_bl.oct_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value + sfb_bl.oct_Executed_value + sfb_bl.nov_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value + sfb_bl.oct_Executed_value + sfb_bl.nov_Executed_value + sfb_bl.dec_Executed_value )
+end) as executed_budget,
+(case when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value + sfb_bl.oct_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value + sfb_bl.oct_adjusted_value + sfb_bl.nov_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value + sfb_bl.oct_adjusted_value + sfb_bl.nov_adjusted_value + sfb_bl.dec_adjusted_value )
+end)as adjusted_budget,
+(case when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value + sfb_bl.oct_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value + sfb_bl.oct_actual_value + sfb_bl.nov_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value + sfb_bl.oct_actual_value + sfb_bl.nov_actual_value + sfb_bl.dec_actual_value )
+end)as actual_budget,
+(case when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value + sfb_bl.aug_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value + sfb_bl.aug_committed_value + sfb_bl.sep_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value + sfb_bl.aug_committed_value + sfb_bl.sep_committed_value + sfb_bl.oct_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_value + sfb_bl.aug_committed_value + sfb_bl.sep_committed_value + sfb_bl.oct_committed_value + sfb_bl.nov_committed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_committed_value + sfb_bl.feb_committed_value + sfb_bl.mar_committed_value + sfb_bl.apr_committed_value + sfb_bl.may_committed_value + sfb_bl.jun_committed_value + sfb_bl.jul_committed_Value + sfb_bl.aug_committed_value + sfb_bl.sep_committed_value + sfb_bl.oct_committed_value + sfb_bl.nov_committed_value + sfb_bl.dec_committed_value )
+end) as committed_budget,
+(case when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_available_balance) --available_balance
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance + sfb_bl.sep_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance + sfb_bl.sep_available_balance + sfb_bl.oct_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance + sfb_bl.sep_available_balance + sfb_bl.oct_available_balance + sfb_bl.nov_available_balance)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Periodfrom},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_available_balance + sfb_bl.feb_available_balance + sfb_bl.mar_available_balance + sfb_bl.apr_available_balance + sfb_bl.may_available_balance + sfb_bl.jun_available_balance + sfb_bl.jul_available_balance + sfb_bl.aug_available_balance + sfb_bl.sep_available_balance + sfb_bl.oct_available_balance + sfb_bl.nov_available_balance + sfb_bl.dec_available_balance )
+end) as pavailable_balance,
+us.name as user1,
+cyear.year as year
+FROM sfb_budget_line sfb_bl
+left join ad_org on sfb_bl.ad_org_id=ad_org.ad_org_id
+left join sfb_budget_version sfb_bv on sfb_bv.sfb_budget_version_id = sfb_bl.sfb_budget_version_id
+left join sfb_budget sfb_b on sfb_b.sfb_budget_id = sfb_bv.sfb_budget_id
+left join sfb_budget_item sfb_bi on sfb_bi.sfb_budget_item_id = sfb_bl.sfb_budget_item_id
+left join c_costcenter on c_costcenter.c_costcenter_id = sfb_bl.c_costcenter_id
+left join sfb_budget_cert_line sfb_bcl on (sfb_bcl.c_costcenter_id = sfb_bl.c_costcenter_id and sfb_bcl.sfb_budget_item_id = sfb_bl.sfb_budget_item_id and sfb_bcl.user1_id = sfb_bl.user1_id)
+left join sfb_budget_certificate sfb_bc on sfb_bcl.sfb_budget_certificate_id = sfb_bc.sfb_budget_certificate_id
+left join c_invoiceline c_il on c_il.em_sfb_budget_cert_line_id = sfb_bcl.sfb_budget_cert_line_id
+left join c_invoice c_i on c_i.c_invoice_id = c_il.c_invoice_id
+left join sfb_budget_area_item sfb_aitem on (sfb_aitem.sfb_budget_item_id = sfb_bi.sfb_budget_item_id and  sfb_aitem.sfb_budget_area_id  = sfb_bl.sfb_budget_area_id)
+left join sfb_budget_area sfb_area on ( sfb_area.sfb_budget_area_id = sfb_aitem.sfb_budget_area_id)
+left join User1 us on sfb_bl.User1_id = us.User1_id
+inner join c_year cyear on sfb_b.c_year_id =cyear.c_year_id 
+where
+sfb_b.type_of_budget = sfb_bc.type_of_budget
+and sfb_b.c_year_id = $P{C_Year_ID}
+and sfb_b.type_of_budget = $P{Budget_Type}
+and (sfb_bl.c_costcenter_id = $P{C_Costcenter_ID} or $P{C_Costcenter_ID} is null)
+and (sfb_area.sfb_budget_area_id =  $P{Area_Filter} or $P{Area_Filter} is null)
+and c_i.docstatus='CO'
+and sfb_b.budget_status = 'AP'
+group by user1,
+  sfb_b.type_of_budget,
+  c_costcenter.c_costcenter_id,
+  sfb_bi.sfb_budget_item_id,
+  sfb_bi.name ,
+  sfb_bl.user1_id,
+  ad_org.name,
+  c_costcenter.name,
+  sfb_area.name,
+  sfb_b.c_year_id,
+  budgetvalue,
+  executed_budget,
+  adjusted_budget,
+  actual_budget,
+  committed_budget,
+  user1,
+  year,
+  pavailable_balance
+ order by sfb_bi.name 
+)  budget
+left join
+(
+select sfb_bcl.user1_id,sfb_bcl.sfb_budget_item_id,sfb_bcl.c_costcenter_id,sfb_bcl.committed_value,
+sfb_bcl.executed_value
+from sfb_budget_cert_line sfb_bcl
+left join sfb_budget_certificate sfb_bc on sfb_bcl.sfb_budget_certificate_id = sfb_bc.sfb_budget_certificate_id
+where sfb_bc.c_year_id = $P{C_Year_ID}
+and
+(sfb_bc.date_issue  between (select min(startdate)
+                            from c_period where c_year_id = coalesce($P{C_Year_ID},(select c_year_id from c_period where now() between startdate and enddate )))
+                            and coalesce((select (select enddate from c_period where c_period_id = $P{Periodfrom} ) - 1 from dual),(select max(enddate -1) from c_period where now() between startdate and enddate)) )
+order by  sfb_bcl.user1_id, sfb_bcl.sfb_budget_item_id,c_costcenter_id) sfb_certificate on (sfb_certificate.c_costcenter_id = budget.c_costcenter_id and sfb_certificate.sfb_budget_item_id = budget.sfb_budget_item_id and sfb_certificate.user1_id = budget.user1_id)
+group by
+  budget.c_costcenter_id ,
+  budget.sfb_budget_item_id,
+  budget.budgetitem,
+  budget.user1_id ,
+  budget.orgname,
+  budget.costcenter,
+  budget.area_name,
+  budget.c_year_id
+  ,budget.budgetvalue
+,budget.executed_budget,
+budget.type_of_budget,
+budget.adjusted_budget,
+  budget.actual_budget,
+  budget.user1,
+  budget.year,
+  budget.committed_budget,
+  budget.pavailable_balance
+  order by  budget.user1_id , budget.c_costcenter_id]]>
+	</queryString>
+	<field name="type_of_budget" class="java.lang.String"/>
+	<field name="c_costcenter_id" class="java.lang.String"/>
+	<field name="sfb_budget_item_id" class="java.lang.String"/>
+	<field name="budgetitem" class="java.lang.String"/>
+	<field name="user1_id" class="java.lang.String"/>
+	<field name="orgname" class="java.lang.String"/>
+	<field name="costcenter" class="java.lang.String"/>
+	<field name="area_name" class="java.lang.String"/>
+	<field name="c_year_id" class="java.lang.String"/>
+	<field name="executed_value" class="java.math.BigDecimal"/>
+	<field name="committed_value" class="java.math.BigDecimal"/>
+	<field name="saldo" class="java.math.BigDecimal"/>
+	<field name="budgetvalue" class="java.math.BigDecimal"/>
+	<field name="executed_budget" class="java.math.BigDecimal"/>
+	<field name="adjusted_budget" class="java.math.BigDecimal"/>
+	<field name="actual_budget" class="java.math.BigDecimal"/>
+	<field name="user1" class="java.lang.String"/>
+	<field name="c_yearname" class="java.lang.String"/>
+	<field name="budget_reforma" class="java.math.BigDecimal"/>
+	<field name="budget_codificado" class="java.math.BigDecimal"/>
+	<field name="saldo_comprometido" class="java.math.BigDecimal"/>
+	<field name="saldo_debengado" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="budget_exe" class="java.math.BigDecimal"/>
+	<field name="committed_budget" class="java.math.BigDecimal"/>
+	<variable name="totalbudgetvalue" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{budgetvalue}]]></variableExpression>
+	</variable>
+	<variable name="totaladjustedbudget" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{adjusted_budget}]]></variableExpression>
+	</variable>
+	<variable name="totalcommited" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{committed_value}]]></variableExpression>
+	</variable>
+	<variable name="totalexecutedbudget" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{executed_budget}]]></variableExpression>
+	</variable>
+	<variable name="totalactualbudget" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{actual_budget}]]></variableExpression>
+	</variable>
+	<variable name="totalsaldo" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<variable name="Variable_1" class="java.math.BigDecimal" resetType="Group" resetGroup="Group3" calculation="Sum">
+		<variableExpression><![CDATA[$F{budgetvalue}]]></variableExpression>
+	</variable>
+	<variable name="Variable_reforma" class="java.math.BigDecimal" resetType="Group" resetGroup="Group3" calculation="Sum">
+		<variableExpression><![CDATA[$F{budget_reforma}]]></variableExpression>
+	</variable>
+	<variable name="variable_codificado" class="java.math.BigDecimal" resetType="Group" resetGroup="Group3" calculation="Sum">
+		<variableExpression><![CDATA[$F{budget_codificado}]]></variableExpression>
+	</variable>
+	<variable name="Variable_committed" class="java.math.BigDecimal" resetType="Group" resetGroup="Group3" calculation="Sum">
+		<variableExpression><![CDATA[$F{committed_budget}]]></variableExpression>
+	</variable>
+	<variable name="Variable_debengado" class="java.math.BigDecimal" resetType="Group" resetGroup="Group3" calculation="Sum">
+		<variableExpression><![CDATA[$F{executed_budget}]]></variableExpression>
+	</variable>
+	<variable name="Variable_executado" class="java.math.BigDecimal" resetType="Group" resetGroup="Group3" calculation="Sum">
+		<variableExpression><![CDATA[$F{executed_value}]]></variableExpression>
+	</variable>
+	<variable name="Variable_saldocomprometido" class="java.math.BigDecimal" resetType="Group" resetGroup="Group3" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_comprometido}]]></variableExpression>
+	</variable>
+	<variable name="Variable_saldodebengado" class="java.math.BigDecimal" resetType="Group" resetGroup="Group3" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_debengado}]]></variableExpression>
+	</variable>
+	<variable name="Variable_exe" class="java.math.BigDecimal" resetType="Group" resetGroup="Group3" calculation="Sum">
+		<variableExpression><![CDATA[$F{budget_exe}]]></variableExpression>
+	</variable>
+	<variable name="Variable_budgetvalueg2" class="java.math.BigDecimal" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{budgetvalue}]]></variableExpression>
+	</variable>
+	<variable name="variable_bugetreformg2" class="java.math.BigDecimal" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{budget_reforma}]]></variableExpression>
+	</variable>
+	<variable name="variable_codificadog2" class="java.math.BigDecimal" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{budget_codificado}]]></variableExpression>
+	</variable>
+	<variable name="variable_committedg2" class="java.math.BigDecimal" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{committed_budget}]]></variableExpression>
+	</variable>
+	<variable name="variable_debengadog2" class="java.math.BigDecimal" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{executed_budget}]]></variableExpression>
+	</variable>
+	<variable name="variable_pagrecuperadog2" class="java.math.BigDecimal" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{executed_value}]]></variableExpression>
+	</variable>
+	<variable name="variable_saldocomprometidog2" class="java.math.BigDecimal" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_comprometido}]]></variableExpression>
+	</variable>
+	<variable name="variable_saldodebengadog2" class="java.math.BigDecimal" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_debengado}]]></variableExpression>
+	</variable>
+	<variable name="variable_exeg2" class="java.math.BigDecimal" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{budget_exe}]]></variableExpression>
+	</variable>
+	<variable name="variable_reformatotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{budget_reforma}]]></variableExpression>
+	</variable>
+	<variable name="total_codificado" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{budget_codificado}]]></variableExpression>
+	</variable>
+	<variable name="totaldebengado" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{executed_budget}]]></variableExpression>
+	</variable>
+	<variable name="totalexecuted" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{executed_value}]]></variableExpression>
+	</variable>
+	<variable name="totalsaldocomprometido" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_comprometido}]]></variableExpression>
+	</variable>
+	<variable name="totalsaldodebengado" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_debengado}]]></variableExpression>
+	</variable>
+	<variable name="totalexe" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{budget_exe}]]></variableExpression>
+	</variable>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{c_costcenter_id}]]></groupExpression>
+		<groupHeader>
+			<band>
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="35">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<line>
+					<reportElement x="630" y="15" width="1269" height="1" uuid="2a2bcb9e-8c6a-4677-8148-ef28143531a6">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</line>
+				<staticText>
+					<reportElement x="630" y="15" width="120" height="20" uuid="b9792e61-87a3-481a-af6a-bc41976feed5">
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Totales]]></text>
+				</staticText>
+				<textField pattern="###0.00">
+					<reportElement x="750" y="15" width="118" height="20" uuid="d71e0451-2e35-4652-9619-dfc140f0c0e6">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{Variable_budgetvalueg2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="868" y="15" width="105" height="20" uuid="005115a1-1910-41f6-a11b-7d992394aa23">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{variable_bugetreformg2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="973" y="15" width="104" height="20" uuid="2ff25ef5-267f-4531-820d-ccc5d7fe4f96">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{variable_codificadog2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1077" y="15" width="111" height="20" uuid="f15c2fb0-be3c-4070-a7c1-4f61f9853475">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{variable_committedg2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1188" y="15" width="138" height="20" uuid="3ea6aa42-6c04-4017-895c-60482532cdbd">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{variable_debengadog2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1326" y="15" width="138" height="20" uuid="0584ea8f-3d4b-48cd-a909-ff00fc58f5ec">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{variable_pagrecuperadog2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1464" y="15" width="138" height="20" uuid="02a41f8b-489e-4fe5-bf69-0e4227a30223">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{variable_saldocomprometidog2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1602" y="15" width="138" height="20" uuid="cd314203-b17e-4719-bd81-e4b7b589da5c">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{variable_saldodebengadog2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1740" y="15" width="159" height="20" uuid="15d4ebe0-de78-4759-99ea-97ed58d5d289">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{variable_exeg2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group3">
+		<groupExpression><![CDATA[$F{user1_id}]]></groupExpression>
+		<groupHeader>
+			<band height="56">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" x="9" y="3" width="158" height="21" uuid="8f7e5f8d-dd53-4c69-a4f4-c5ccfb15c8b6">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{user1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText" x="168" y="30" width="159" height="26" uuid="704725e2-e581-46f9-ac11-c0ac30a3f818"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Linea de Negocio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText" x="326" y="30" width="174" height="26" uuid="d5b69aac-30ea-4f01-bbe2-3e1776a5dd79"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Partida presupuestaria]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText" x="750" y="30" width="118" height="26" uuid="cc2cc0b0-5296-4d5a-9536-6edf5aa02121"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Presupuesto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText" x="1188" y="30" width="138" height="26" uuid="abc994d2-e3e3-41d7-aa5c-6110f0888096"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Debengado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText" x="500" y="30" width="130" height="26" uuid="9a543c04-66cd-45ed-952c-20890c83edff"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Area]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText" x="973" y="30" width="105" height="26" uuid="b442c207-a2bf-441f-9747-3de9589552e7"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Codificado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText" x="1078" y="30" width="110" height="26" uuid="b8354d77-1dec-4c7c-aa49-0595ec6e3fa9"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Comprometido]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-1" x="9" y="30" width="159" height="26" uuid="ae9c42f4-0de4-4c7e-a033-ca82964974a7"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cost Center]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-2" x="868" y="30" width="105" height="26" uuid="4c3c67df-c24e-4c43-8034-df91576df743"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reformas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-3" x="1326" y="30" width="138" height="26" uuid="10d700f5-a361-4034-b885-f65c53d09baf"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pagado / Recaudado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-3" x="1464" y="30" width="138" height="26" uuid="bfde7680-754d-4ced-b271-5c9135a76516">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Saldo x comprometido]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-3" x="1602" y="30" width="138" height="26" uuid="a9d4e589-8870-4e5a-9094-3cc581905e0a">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Saldo x Debengado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-3" x="1740" y="30" width="158" height="26" uuid="f0413a32-4546-437c-be30-3840d4b14645">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[% EXE]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="26">
+				<staticText>
+					<reportElement positionType="Float" x="630" y="1" width="120" height="20" uuid="d83c45ef-df5e-4148-9c14-7ceb2ec25407">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Totales]]></text>
+				</staticText>
+				<textField pattern="###0.00">
+					<reportElement x="750" y="1" width="118" height="20" uuid="5374a1a0-9945-41b0-a4d1-0488441a491d">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{Variable_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="868" y="1" width="105" height="20" uuid="37a6e0a1-e3f4-49b3-9ed8-57863348da80">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{Variable_reforma}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="973" y="1" width="105" height="20" uuid="00827d6f-ab35-43af-8f28-e4cd672cefe1">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{variable_codificado}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1078" y="1" width="110" height="20" uuid="a552fd5a-11c8-472e-8a69-d17ed41dd742">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{Variable_committed}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1188" y="1" width="138" height="20" uuid="d8e58fed-0d3f-4ecf-adc9-95dbb02bf5de">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{Variable_debengado}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1326" y="1" width="138" height="20" uuid="ded8791a-b384-44f4-8368-4bbad57cf6e8">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{Variable_executado}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1464" y="1" width="137" height="20" uuid="4cb2d1e7-5fef-40ea-b61a-8a0dbd846278">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{Variable_saldocomprometido}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="1602" y="1" width="138" height="20" uuid="3326433e-0d98-42d9-8596-2f46b83a376b">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{Variable_saldodebengado}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.0000">
+					<reportElement x="1740" y="1" width="159" height="20" uuid="23919f11-c2bd-4861-bcf5-6362e17e5ac3">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{Variable_exe}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="98" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement key="staticText" x="750" y="10" width="118" height="20" uuid="0000ad5a-99e8-4b68-b61d-d1091cd6c648"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[    Ejecución del ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="168" y="78" width="158" height="20" uuid="8a1433c7-9624-4875-96d0-39a663caabd1">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_yearname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="78" width="159" height="20" uuid="713bd34c-0fff-44d4-8927-182111db2ebb">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EJERCICIO : ]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="1740" y="78" width="158" height="20" uuid="4837bfdc-e35a-49d6-be7a-e6b837dbcd4d">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="MMMMM dd, yyyy">
+				<reportElement x="1740" y="56" width="158" height="20" uuid="e4127dac-84c6-408c-b0fe-105c0f2a662d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="868" y="10" width="104" height="20" uuid="51ad02ae-a054-4025-ab5c-256c8654ef0f">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presupuesto]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="1740" y="0" width="158" height="18" uuid="f79fd5cb-2bf4-49b5-af7d-995ebd5126d0">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="1898" y="0" width="39" height="18" uuid="f987e66a-f7a0-49a5-8c21-42e8faa94b3c">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="168" y="1" width="158" height="21" uuid="2bc15486-0a59-491f-bd2e-28ffd32b9c96">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{user1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="327" y="1" width="173" height="21" uuid="621dcf99-a848-4832-bf3a-16805367a019">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{budgetitem}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="750" y="1" width="118" height="21" uuid="90f677b9-6ae0-4e1d-b0bc-a0d17c695924">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{budgetvalue}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="500" y="1" width="129" height="21" uuid="02a0ef3f-d64a-417e-bf9e-595e8fdfda20">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{area_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="973" y="1" width="105" height="21" uuid="a12bcaa4-603c-4764-8ec6-3a85b487e54a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{budget_codificado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1078" y="1" width="110" height="21" uuid="192b19ab-da64-4297-accb-344af9ff74b4">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{committed_budget}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1188" y="1" width="138" height="21" uuid="cec05d80-b9e0-4fb8-80ec-fe2c583eb961">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{executed_budget}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-1" positionType="Float" x="9" y="1" width="159" height="21" uuid="4e7e24de-f89a-45e7-832e-bf8e6bf8e0f6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{costcenter}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="868" y="1" width="105" height="21" uuid="9117b1a3-8a24-45da-956a-b6106ea1f231">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{budget_reforma}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="1326" y="1" width="138" height="21" uuid="37ee3f51-5f96-4598-8331-f9654663d00c">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{executed_value}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="1464" y="1" width="137" height="21" uuid="d2d6ce49-4e24-444d-b5a9-70bad7ff0dff">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saldo_comprometido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="1602" y="1" width="137" height="21" uuid="967f9aad-8675-4443-a24b-5dce4e2080f2">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saldo_debengado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0000" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="1740" y="1" width="158" height="21" uuid="7e04294f-5542-4499-ba26-35bd8976e9c6">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{budget_exe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="60">
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="750" y="5" width="118" height="22" uuid="27d9566f-7783-4e59-9a37-f085da3a44e9">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{totalbudgetvalue}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="868" y="5" width="105" height="22" uuid="8b79e329-f3ef-4e31-b0cf-3e5c774b78a7">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{variable_reformatotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="973" y="5" width="104" height="22" uuid="23db9769-a520-4b3a-a69e-bb8ab86ecb04">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{total_codificado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1078" y="5" width="110" height="22" uuid="df6424c9-3a85-4ca5-ac0d-7cd5cfdf81e6">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{totalexecutedbudget}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1188" y="5" width="138" height="22" uuid="ed897c9b-e2e7-4ba9-ba2b-ac95d6930f00">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{totaldebengado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1326" y="5" width="138" height="22" uuid="c52ee8a9-710c-4058-9b70-b0d6fac694a9">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{totalexecuted}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1464" y="5" width="137" height="22" uuid="b569d790-0474-4b3f-9b2e-965de8042eb8">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{totalsaldocomprometido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1602" y="5" width="137" height="22" uuid="58f01b6d-1640-490e-a34c-ab310020bea8">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{totalsaldodebengado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1740" y="5" width="158" height="22" uuid="fb610a01-4d75-4171-9eb0-59293472bdb1">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{totalexe}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="629" y="5" width="121" height="22" uuid="7ed6bbd9-18b9-490c-b9eb-730f75a27545">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Gran Total:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

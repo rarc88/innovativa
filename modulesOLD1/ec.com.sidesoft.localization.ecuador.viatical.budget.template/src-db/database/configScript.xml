@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.34312"/>
+    <columnSizeChange tablename="SSVE_VIATICAL" columnname="DESCRIPTION" newSize="1000" oldSize="255"/>
+    <columnSizeChange tablename="SSVE_VIATICAL_SETTLEMENT" columnname="DESCRIPTION" newSize="1000" oldSize="255"/>
+    <columnDataChange tablename="AD_COLUMN" columnname="FIELDLENGTH" pkRow="12A51CEE0CB547EDAA8FD7292834A237">
+      <oldValue><![CDATA[255]]></oldValue>
+      <newValue><![CDATA[1000]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="FIELDLENGTH" pkRow="462E5C43946E4E5DAB93804C6E01EE7D">
+      <oldValue><![CDATA[255]]></oldValue>
+      <newValue><![CDATA[1000]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_TAB" columnname="AD_PROCESS_ID" pkRow="67B4299FEC3E4463A3247A8CEB31A90D">
+      <oldValue><![CDATA[7F10743AD9AD482BBCA4B9BFBCC1CE16]]></oldValue>
+      <newValue><![CDATA[D2D68238ED9A46E1877AE18511B3131F]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_TAB" columnname="AD_PROCESS_ID" pkRow="893B013D688B4B2893A3B157088AB17F">
+      <oldValue><![CDATA[341433C577A748DB834D013A0759001F]]></oldValue>
+      <newValue><![CDATA[5B981C8E03F44C06A22D6360AC381872]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_FIELD" columnname="DISPLAYLOGIC" pkRow="279E39C25EBC467089523D025FBE3F73">
+      <oldValue/>
+      <newValue><![CDATA[@EM_SVTB_ACCOUNTINGBUDGET@='N']]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_TABLE" columnname="ACCTDATE_COLUMN_ID" pkRow="5E2670C090A14B798B165203C31FA920">
+      <oldValue/>
+      <newValue><![CDATA[3186C8A056B740039474FAD23904CE9C]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_TABLE" columnname="ACCTCLASSNAME" pkRow="5E2670C090A14B798B165203C31FA920">
+      <oldValue/>
+      <newValue><![CDATA[ec.com.sidesoft.localization.ecuador.viatical.budget.DocViaticalSettlement]]></newValue>
+    </columnDataChange>
+  </vector>

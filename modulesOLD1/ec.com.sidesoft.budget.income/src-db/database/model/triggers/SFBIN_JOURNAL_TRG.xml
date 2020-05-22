@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFBIN_JOURNAL_TRG">
+    <trigger name="SFBIN_JOURNAL_TRG" table="GL_JOURNAL" fires="after" insert="false" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+
+  TYPE RECORD IS REF CURSOR;
+  cur_lines         RECORD;
+  Cur_budgetlog     RECORD;
+
+  v_converted       NUMBER;
+  v_amt_proc_unproc NUMBER:=1;
+  v_ResultStr       VARCHAR2(2000):=''; 
+  v_sql             VARCHAR2(4000):=''; 
+  
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (UPDATING) THEN
+
+    -- Second IF in order to avoid Postgresql lazy evaluation issue.
+    IF (:old.processed = 'N' AND :new.processed = 'Y' OR :old.processed = 'Y' AND :new.processed = 'N') THEN
+    
+      IF (:old.processed = 'Y' AND :new.processed = 'N') THEN
+        v_amt_proc_unproc := -1;
+      END IF;
+    
+      FOR cur_lines IN (
+        SELECT  :new.ad_client_id AS ad_client_id, :new.ad_org_id AS ad_org_id, :new.c_doctype_id AS c_doctype_id, :new.datedoc AS datedoc,
+                :new.c_currency_id AS c_currency_id, jl.line, (jl.amtacctcr - jl.amtacctdr) AS linetotalamt, jl.gl_journalline_id,
+                bln.c_costcenter_id, bln.user1_id, bln.sfb_budget_item_id, bln.sfb_budget_line_id,
+                b.c_currency_id as budget_currency_id
+        FROM gl_journalline jl
+        JOIN c_validcombination vc ON vc.c_validcombination_id = jl.c_validcombination_id
+        LEFT JOIN (
+          sfb_budget b
+          JOIN c_year y on y.c_year_id = b.c_year_id
+          JOIN sfb_budget_version bv ON bv.sfb_budget_id = b.sfb_budget_id AND bv.version_status = 'AP'
+          JOIN sfb_budget_line bln ON bln.sfb_budget_version_id = bv.sfb_budget_version_id
+          JOIN sfb_budget_item_account bia ON bia.sfb_budget_item_id = bln.sfb_budget_item_id 
+        ) ON  bln.c_costcenter_id = COALESCE(jl.c_costcenter_id, :new.c_costcenter_id)
+          AND bln.user1_id = COALESCE(jl.user1_id, :new.user1_id)
+          AND bln.sfb_budget_area_id = :new.em_sfb_budget_area_id
+          AND bia.isactive = 'Y'
+          AND bia.account_id = vc.account_id
+          AND CAST(y.year AS NUMBER(10,0)) = CAST(EXTRACT(YEAR FROM :new.datedoc) AS NUMBER(10,0))
+        WHERE jl.gl_journal_id = :new.gl_journal_id
+          AND jl.em_sfbin_affectincomebudget = 'Y'
+          AND jl.em_sfb_isbudgeted = :old.processed
+        ORDER BY jl.line
+      )
+      LOOP
+      
+        IF (cur_lines.sfb_budget_line_id IS NOT NULL) THEN
+
+          IF (cur_lines.linetotalamt <> 0) THEN
+          
+            v_converted := C_Currency_Round(C_Currency_Convert(cur_lines.linetotalamt * v_amt_proc_unproc, cur_lines.c_currency_id, cur_lines.budget_currency_id, cur_lines.datedoc, null, cur_lines.ad_client_id, cur_lines.ad_org_id), cur_lines.budget_currency_id, null);
+
+            IF (v_converted IS NULL) THEN
+              RAISE_APPLICATION_ERROR(-20000, '@NoConversionRateHeader@');
+            END IF;
+            
+            v_resultstr := 'Add amount to executed value';
+
+            v_sql := 'UPDATE SFB_BUDGET_LINE SET ';
+
+            SELECT
+            CASE extract(month from TO_DATE(cur_lines.datedoc))
+              WHEN 1  THEN v_sql || 'jan_executed_value = jan_executed_value + '
+              WHEN 2  THEN v_sql || 'feb_executed_value = feb_executed_value + '
+              WHEN 3  THEN v_sql || 'mar_executed_value = mar_executed_value + '
+              WHEN 4  THEN v_sql || 'apr_executed_value = apr_executed_value + '
+              WHEN 5  THEN v_sql || 'may_executed_value = may_executed_value + '
+              WHEN 6  THEN v_sql || 'jun_executed_value = jun_executed_value + '
+              WHEN 7  THEN v_sql || 'jul_executed_value = jul_executed_value + '
+              WHEN 8  THEN v_sql || 'aug_executed_value = aug_executed_value + '
+              WHEN 9  THEN v_sql || 'sep_executed_value = sep_executed_value + '
+              WHEN 10 THEN v_sql || 'oct_executed_value = oct_executed_value + '
+              WHEN 11 THEN v_sql || 'nov_executed_value = nov_executed_value + '
+              WHEN 12 THEN v_sql || 'dec_executed_value = dec_executed_value + '
+            END INTO v_sql
+            FROM DUAL;
+
+            v_sql := v_sql || COALESCE(v_converted,0) || ' WHERE SFB_BUDGET_LINE_ID = ''' || COALESCE(cur_lines.sfb_budget_line_id,'') || '''';
+            EXECUTE IMMEDIATE v_sql;
+            
+            UPDATE gl_journalline jl SET em_sfb_isbudgeted = :new.processed WHERE jl.gl_journalline_id = cur_lines.gl_journalline_id;
+
+          END IF;
+
+        END IF;  
+
+      END LOOP;
+      
+      FOR Cur_budgetlog IN (
+        SELECT jl.gl_journalline_id, jl.ad_org_id, jl.ad_client_id, jl.updatedby
+        FROM  gl_journalline jl
+        WHERE jl.em_sfb_isbudgeted = 'N'
+          AND jl.em_sfbin_affectincomebudget = 'Y'
+          AND jl.gl_journal_id = :new.gl_journal_id
+      )LOOP
+        
+        IF (:old.processed = 'N' AND :new.processed = 'Y') THEN
+        
+          -- Procesando inserto en el log
+          INSERT INTO sfb_budget_journalline_log (
+            sfb_budget_journalline_log_id, ad_client_id, ad_org_id, isactive,
+            created, createdby, updated, updatedby,
+            gl_journalline_id
+          ) VALUES (
+            get_uuid(), Cur_budgetlog.ad_client_id, Cur_budgetlog.ad_org_id, 'Y',
+            now(), Cur_budgetlog.updatedby, now(),Cur_budgetlog.updatedby,
+            Cur_budgetlog.gl_journalline_id
+          );
+        
+        ELSIF (:old.processed = 'Y' AND :new.processed = 'N') THEN
+        
+         -- Desprocesando elimino del log
+          DELETE FROM sfb_budget_journalline_log WHERE gl_journalline_id = Cur_budgetlog.gl_journalline_id;
+        
+        END IF;
+        
+      END LOOP;
+
+    END IF;
+
+  END IF;
+
+  END SFBIN_JOURNAL_TRG
+]]></body>
+    </trigger>
+  </database>

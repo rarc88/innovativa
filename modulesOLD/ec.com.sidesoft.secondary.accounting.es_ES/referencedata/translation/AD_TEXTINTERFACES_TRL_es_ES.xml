@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="022F9D8C034E46F18C3903B872ECD06F" trl="N">
+    <value column="Text" isTrl="N" original="Cost Center">Cost Center</value>
+  </row>
+  <row id="02A38F712D414937B8A3748C2326C8F4" trl="N">
+    <value column="Text" isTrl="N" original="Dimensions         ">Dimensions         </value>
+  </row>
+  <row id="0773D1F5ACA143F49B494395E256B488" trl="N">
+    <value column="Text" isTrl="N" original="Acumulado Deudor">Acumulado Deudor</value>
+  </row>
+  <row id="111D0AF52AFC4727B97CB8F408B82CFF" trl="N">
+    <value column="Text" isTrl="N" original="Include Zero Figures">Include Zero Figures</value>
+  </row>
+  <row id="13310E4F3DDC46F2BC3D45CE8BCAC976" trl="N">
+    <value column="Text" isTrl="N" original="Flujo Acreedor">Flujo Acreedor</value>
+  </row>
+  <row id="17A48B732E0444509B7F49965403135D" trl="N">
+    <value column="Text" isTrl="N" original="Nombre">Nombre</value>
+  </row>
+  <row id="21E3FE8A12744F3A96F6C76C73C759CB" trl="N">
+    <value column="Text" isTrl="N" original="Balance As Of">Balance As Of</value>
+  </row>
+  <row id="2DADCB973F954DB58F3CEAF3B0E06017" trl="N">
+    <value column="Text" isTrl="N" original="Balance As Of">Balance As Of</value>
+  </row>
+  <row id="314F51ED682E4A59ADE0A34841B42D63" trl="N">
+    <value column="Text" isTrl="N" original="Balance As Of">Balance As Of</value>
+  </row>
+  <row id="3FE6715B58B549EBA32CB22D637ADAD5" trl="N">
+    <value column="Text" isTrl="N" original="Loading...">Loading...</value>
+  </row>
+  <row id="41A6217B7F1143398F4628D15296CD32" trl="N">
+    <value column="Text" isTrl="N" original="Account Element Value selector">Account Element Value selector</value>
+  </row>
+  <row id="465D62FDBE90461AB747AF832CAF9E1C" trl="N">
+    <value column="Text" isTrl="N" original="Cost Center">Cost Center</value>
+  </row>
+  <row id="479C227B5D4D444D8B390A2EBA31C4D8" trl="N">
+    <value column="Text" isTrl="N" original="Group By">Group By</value>
+  </row>
+  <row id="47E7FCFF70944F2CB5DDE37265091F44" trl="N">
+    <value column="Text" isTrl="N" original="Acumulado Acreedor">Acumulado Acreedor</value>
+  </row>
+  <row id="4B22F397C214444A864AD61C55FB8F0A" trl="N">
+    <value column="Text" isTrl="N" original="DataGrid">DataGrid</value>
+  </row>
+  <row id="539C6F2072FC43C5BB5CD883556F6024" trl="N">
+    <value column="Text" isTrl="N" original="Árbol de Cuentas">Árbol de Cuentas</value>
+  </row>
+  <row id="57558AB9A76344649AEBD47AEA55E5A6" trl="N">
+    <value column="Text" isTrl="N" original="Advanced Filters">Advanced Filters</value>
+  </row>
+  <row id="5F5084E1B2484A6E92CFCF116E23D34D" trl="N">
+    <value column="Text" isTrl="N" original="Saldo Inicial Deudor">Saldo Inicial Deudor</value>
+  </row>
+  <row id="6E0C4B0D321443AE85EC5AA5047B5392" trl="N">
+    <value column="Text" isTrl="N" original="Identificador">Identificador</value>
+  </row>
+  <row id="72C9C9E3F00440628620B4E22F859DAB" trl="N">
+    <value column="Text" isTrl="N" original="Initial Page Number">Initial Page Number</value>
+  </row>
+  <row id="78FA64729B2844C9AD83214A0CB1AE9C" trl="N">
+    <value column="Text" isTrl="N" original="Value">Value</value>
+  </row>
+  <row id="7F294F896B9A4566AF200198ADB75FF7" trl="N">
+    <value column="Text" isTrl="N" original="Saldo Final Deudor">Saldo Final Deudor</value>
+  </row>
+  <row id="84498D772E7847429451188F7A35B14E" trl="N">
+    <value column="Text" isTrl="N" original="Cuentas">Cuentas</value>
+  </row>
+  <row id="8776921AF19D434893699D3A3D587A3F" trl="N">
+    <value column="Text" isTrl="N" original="Primary Filters    ">Primary Filters    </value>
+  </row>
+  <row id="88CC12DE4F354F7FBB1B65507702AFD3" trl="N">
+    <value column="Text" isTrl="N" original="Trial Balance">Trial Balance</value>
+  </row>
+  <row id="89A48DF35BE445AFB118971C9CD9C316" trl="N">
+    <value column="Text" isTrl="N" original="Trial Balance">Trial Balance</value>
+  </row>
+  <row id="930B6F529C6440D38F557030BB85406D" trl="N">
+    <value column="Text" isTrl="N" original="Opening Entry Amount to Initial Balance">Opening Entry Amount to Initial Balance</value>
+  </row>
+  <row id="9C50018EB15941DF8380AF07ACEA3352" trl="N">
+    <value column="Text" isTrl="N" original="Flujo Deudor">Flujo Deudor</value>
+  </row>
+  <row id="A244A049B19942629B671E11E606F3AD" trl="N">
+    <value column="Text" isTrl="N" original="Saldo Final Acreedor">Saldo Final Acreedor</value>
+  </row>
+  <row id="E71BC416778F4137A1CDB8937F394295" trl="N">
+    <value column="Text" isTrl="N" original="Balance Sheet">Balance Sheet</value>
+  </row>
+  <row id="E9057D7F79F74478AEB45DE851C01881" trl="N">
+    <value column="Text" isTrl="N" original="Account Element Value Selector">Account Element Value Selector</value>
+  </row>
+  <row id="E9DB4AED66CF4E1F9FAF978DA032C6AC" trl="N">
+    <value column="Text" isTrl="N" original="Saldo Inicial Acreedor">Saldo Inicial Acreedor</value>
+  </row>
+  <row id="EE0451348C7B4248B2DCCE353B928249" trl="N">
+    <value column="Text" isTrl="N" original="Homologación de cuentas">Homologación de cuentas</value>
+  </row>
+  <row id="FD8CB2B1F56D48FEB3786D2302947C61" trl="N">
+    <value column="Text" isTrl="N" original="View Results       ">View Results       </value>
+  </row>
+  <row id="FECA7FDEA7CF4BA9AEBF73D96D66F926" trl="N">
+    <value column="Text" isTrl="N" original="{P}">{P}</value>
+  </row>
+</compiereTrl>

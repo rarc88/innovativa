@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSFL_ORDERLINE_AMT_TRG">
+    <trigger name="SSFL_ORDERLINE_AMT_TRG" table="C_ORDERLINE" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+BEGIN
+  
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (INSERTING OR UPDATING) THEN
+
+    IF(:new.linenetamt = 0) THEN
+       
+       RAISE_APPLICATION_ERROR(-20000, '@em_ssfl_amountline@');
+
+    END IF;  
+    
+  END IF;	
+  
+END SSFL_ORDERLINE_AMT_TRG
+]]></body>
+    </trigger>
+  </database>

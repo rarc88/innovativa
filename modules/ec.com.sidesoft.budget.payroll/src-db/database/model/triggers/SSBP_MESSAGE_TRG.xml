@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSBP_MESSAGE_TRG">
+    <trigger name="SSBP_MESSAGE_TRG" table="SSPR_CONCEPT_ACCT" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+v_Count NUMBER;  
+v_DebitAccount VARCHAR(32);
+v_budgetItem  VARCHAR(32);
+
+  BEGIN
+
+	v_Count:=0;
+	v_DebitAccount:= new.c_debit_acct;
+	v_budgetItem:=coalesce(:NEW.em_ssbp_sfb_budget_item_id,to_char('ND'));
+
+	SELECT COALESCE((select count(*)
+	from c_validcombination cv
+	join c_elementvalue cev on cev.c_elementvalue_id = cv.account_id
+	join sfb_budget_item_account sia on sia.account_id= cev.c_elementvalue_id
+	where cv.c_validcombination_id = v_DebitAccount),0)
+	INTO v_Count
+	FROM DUAL;
+
+   IF( v_budgetItem='ND' AND v_Count > 0 )THEN
+    RAISE_APPLICATION_ERROR(-20000, '@Ssbp_ValidConceptBudget@');
+   END IF;
+
+END SSBP_MESSAGE_TRG
+]]></body>
+    </trigger>
+  </database>

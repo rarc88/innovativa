@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_INVOICEBUDGET_TRG">
+    <trigger name="SFB_INVOICEBUDGET_TRG" table="C_INVOICELINE" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+v_hashcode            VARCHAR2(60);
+v_costcenter_id       VARCHAR2(60);
+v_user1_id            VARCHAR2(60);
+v_other_hashcode      VARCHAR2(60);
+v_other_line_hashcode VARCHAR2(60);
+v_other_costcenter_id VARCHAR2(60);
+v_other_user1_id      VARCHAR2(60);
+v_budget_cert_line_id VARCHAR2(32);
+v_doctypetarget_id    VARCHAR2(32);
+v_c_doctype_id        VARCHAR2(32);
+v_issotrx             CHAR(1);
+v_count               INTEGER;
+v_isnotbudgetable     CHAR(1);
+v_docbasetype         VARCHAR2(60);
+v_isreversal         CHAR(1);
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (INSERTING OR UPDATING) THEN
+
+    -- Select invoice data
+    SELECT ci.c_doctypetarget_id,ci.c_doctype_id,ci.issotrx,ci.em_sfb_isnotbudgetable,docbasetype,isreversal
+      INTO v_doctypetarget_id,v_c_doctype_id,v_issotrx,v_isnotbudgetable,v_docbasetype,v_isreversal
+    FROM C_INVOICE ci
+    LEFT JOIN c_doctype cd on cd.C_DOCTYPE_ID = ci.C_DOCTYPETARGET_ID
+    WHERE c_invoice_id = :new.c_invoice_id;
+  
+    --validate invoice is not budgetable
+    IF v_isnotbudgetable = 'N'  THEN 
+        
+        -- Is a Document Type that has been enabled for budget.
+        SELECT count(*) INTO v_count 
+        FROM SFB_BUDGET_DOCTYPE
+        WHERE --AD_ISORGINCLUDED(new.ad_org_id, ad_org_id, new.ad_client_id) <> -1  AND 
+        c_doctype_id = v_doctypetarget_id AND isactive = 'Y';
+    
+        IF (v_issotrx = 'N' AND v_count > 0 ) THEN
+          
+          
+          -- Check Line Dimensions
+          IF (:new.c_orderline_id IS NULL and v_isreversal='N' AND v_docbasetype <> 'APC') THEN
+          
+            RAISE_APPLICATION_ERROR(-20000, '@ERROR= Use la opcion Crear Lineas De. Referencia de Solicitud de Pago requerida. @');
+
+          END IF;  
+    
+        END IF;  
+    END IF;    
+
+  END IF;  
+
+  END SFB_INVOICEBUDGET_TRG
+]]></body>
+    </trigger>
+  </database>

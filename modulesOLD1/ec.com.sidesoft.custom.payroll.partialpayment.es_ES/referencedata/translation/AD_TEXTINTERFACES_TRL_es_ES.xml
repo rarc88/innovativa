@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TEXTINTERFACES" version="">
+  <row id="99523AC8E037405284D956BB67C83E41" trl="N">
+    <value column="Text" isTrl="N" original="cedula_ruc_pasaporte">cedula_ruc_pasaporte</value>
+  </row>
+  <row id="C1D49C975FF3454AA132226507397007" trl="N">
+    <value column="Text" isTrl="N" original="referencia">referencia</value>
+  </row>
+</compiereTrl>

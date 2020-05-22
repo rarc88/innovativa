@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="010B1267B2C14B11BFD16EE986B5AF3E" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Line">Línea presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="0ACC62D2649241229894B5AA02C8C9AE" trl="N">
+    <value column="Name" isTrl="Y" original="Type of Budget">Tipo de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="106A62BF6F554EEDACFC333D561EDE27" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Log Type">Tipo de registro de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1133862377594E4BA307932CCB60BFB0" trl="N">
+    <value column="Name" isTrl="Y" original="Open Period">Periodo Abierto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="15AA66CF3EC24033A8042AB99FA9959F" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Item">Partida Presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="174278D3808C48B58CE996DBBC25F1B1" trl="N">
+    <value column="Name" isTrl="Y" original="Cost Center To">Buque / Área para</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="207C0D6E498F45399E5AFC89CBCC8445" trl="N">
+    <value column="Name" isTrl="N" original="sfb_costcenter">sfb_costcenter</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2D366C7BCF7C4A58B378B3C48F747428" trl="Y">
+    <value column="Name" isTrl="Y" original="Review status">Revisar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="35EC507F2517456C9D17C8F46076BD85" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Area">Area de presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="42D961A8A7344C12AA2F6B5BAEED0AC2" trl="N">
+    <value column="Name" isTrl="Y" original="Month_Filter">Filtro Mes</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5511702228FE4148B89DB8F160CB2343" trl="N">
+    <value column="Name" isTrl="N" original="A_Amortization">A_Amortization</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="699919A8029B485F85E3B210C98450C8" trl="N">
+    <value column="Name" isTrl="Y" original="All_closed_Status">Estatus Cerrado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="6CE0FBDDCF1F4A7FB372488F106A6593" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Status">Estatus de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7043B1D6D5B1449E8DE3163353201FE6" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Area To">Area de presupuesto para</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7581DF89120346D099C93CB0FE88651F" trl="N">
+    <value column="Name" isTrl="N" original="sfb_budgetline">sfb_budgetline</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7663A09588454303A9C60AC012D442A5" trl="N">
+    <value column="Name" isTrl="Y" original="Movement Direction">Dirección del Movimiento</value>
+    <value column="Description" isTrl="Y" original="Movement Direction">Dirección del Movimiento</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7E9E68D699054BC5BA3C894A1814A444" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Vesrion">Version de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9907C5A6692C43BAA431A54D828B7EA5" trl="N">
+    <value column="Name" isTrl="Y" original="Month">Mes</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A0B946F2BF2B41C1AD3EAF62B6D01991" trl="N">
+    <value column="Name" isTrl="Y" original="Type of Operation - Budget">Tipo Operación - Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="B26D47288CAF49078BB753E4737B2092" trl="N">
+    <value column="Name" isTrl="N" original="All_Load_Status">All_Load_Status</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="BF55B48AADA64B25B4CDF8DCD754EAF8" trl="N">
+    <value column="Name" isTrl="N" original="sfb_user1">sfb_user1</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="C57FE1EEC69E4D74BABE9F9206524A4F" trl="N">
+    <value column="Name" isTrl="Y" original="All_Requested_Status">Estatus Requerido</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E64FAE91B7C44FE4A439F5C1F8695DE7" trl="N">
+    <value column="Name" isTrl="N" original="Type of Certificate">Tipo de Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E73077A446B94113A43E95996AEEECB1" trl="N">
+    <value column="Name" isTrl="Y" original="1st Dimension To">Línea de negocio para</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="EFD4E5EB0F344F368AE6AE59A10B5B09" trl="N">
+    <value column="Name" isTrl="Y" original="Certificate Line">Línea de Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="F07B870287CA49DDAB1174EF6F38C652" trl="N">
+    <value column="Name" isTrl="Y" original="Get Lines">Obtener líneas</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="F188525C262747EB9528F01A7FBCC71B" trl="N">
+    <value column="Name" isTrl="Y" original="Area_Cbo">Area CBO</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

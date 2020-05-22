@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="OBUIAPP_PROCESS" version="">
+  <row id="C9D7D71E836742CDBD5F816D613A1D10" trl="N">
+    <value column="Name" isTrl="Y" original="Eliminar Asinetos Contables">SSACCT_DeletePosting</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

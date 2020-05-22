@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptFIN_Payment_Pago_SubAnt.jrxml" pageWidth="595" pageHeight="842" columnWidth="583" leftMargin="0" rightMargin="12" topMargin="0" bottomMargin="0" isIgnorePagination="true">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR__" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Openbravo-3.0MP27\\src\\org\\openbravo\\erpReports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREP_RptFIN_PaymentLines" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Sidesoft\\Desktop\\fin_paymen\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+p.documentno as "document_payment",
+p.isreceipt AS  TYPECE,
+bp.ad_org_id as legalentity,
+bp.name as Client,
+cl.address1 as Address,
+p.documentno as PAYMENTNO,
+bp.name AS BUSINESSPARTNER,
+p.paymentdate as PAYMENT_DATE,
+(UPPER(ssfl_convert_numbertoletters( p.amount))) as TOTAL,
+ COALESCE(TO_NUMBER(p.amount),0) as TOTALNUMBER,
+pm.name as PAYMENT_METHOD,
+cur.iso_code as CURRENCY,
+p.description,
+p.isreceipt as ISRECEIPT,
+org.name as LE_NAME,
+p.ad_org_id as "organizationid",
+ad.name as user_name,
+--anticipo
+pa.paymentdate as paymentdate_ant,
+bpa.name as partner_ant,
+pa.documentno as documentno_ant,
+doc.name as doc_ant,
+pc.amount as total_ant
+FROM fin_payment p
+  left join FIN_Payment_Credit pc on p.fin_payment_id = pc.fin_payment_id
+  left join fin_payment pa on pc.fin_payment_id_used = pa.fin_payment_id
+  left join c_bpartner bpa on pa.c_bpartner_id=bpa.c_bpartner_id
+  left join c_doctype doc on pa.c_doctype_id = doc.c_doctype_id
+	left join c_bpartner bp on (p.c_bpartner_id=bp.c_bpartner_id)
+	left join c_bpartner_location cbpl on cbpl.c_bpartner_id = bp.c_bpartner_id
+	left join c_location cl on cl.c_location_id = cbpl.c_location_id
+	join c_currency cur on (p.c_currency_id=cur.c_currency_id)
+  left join ad_user ad on ad.ad_user_id = p.createdby
+  left join ssfi_banktransfer bt on p.em_ssfi_banktransfer_id = bt.ssfi_banktransfer_id
+  left join c_bp_bankaccount ba on p.EM_Sswh_Bp_Bankaccount_ID = ba.c_bp_bankaccount_id
+
+	left outer join fin_paymentmethod pm on (p.fin_paymentmethod_id=pm.fin_paymentmethod_id), ad_org org, ad_orginfo
+
+WHERE p.fin_payment_id= $P{DOCUMENT_ID}
+      and
+      org.ad_org_id = ad_orginfo.ad_org_id
+      and org.ad_org_id = (select o.ad_org_id
+                           from ad_org o join ad_orgtype t on (o.ad_orgtype_id=t.ad_orgtype_id)
+                           where ad_isorgincluded(p.ad_org_id, o.ad_org_id, p.ad_client_id)<>-1
+                                 and (t.islegalentity='Y' OR t.isacctlegalentity='Y'))
+--and  p.amount<>0]]>
+	</queryString>
+	<field name="document_payment" class="java.lang.String"/>
+	<field name="typece" class="java.lang.String"/>
+	<field name="legalentity" class="java.lang.String"/>
+	<field name="client" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="paymentno" class="java.lang.String"/>
+	<field name="businesspartner" class="java.lang.String"/>
+	<field name="payment_date" class="java.sql.Timestamp"/>
+	<field name="total" class="java.lang.String"/>
+	<field name="totalnumber" class="java.math.BigDecimal"/>
+	<field name="payment_method" class="java.lang.String"/>
+	<field name="currency" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="isreceipt" class="java.lang.String"/>
+	<field name="le_name" class="java.lang.String"/>
+	<field name="organizationid" class="java.lang.String"/>
+	<field name="user_name" class="java.lang.String"/>
+	<field name="paymentdate_ant" class="java.sql.Timestamp"/>
+	<field name="partner_ant" class="java.lang.String"/>
+	<field name="documentno_ant" class="java.lang.String"/>
+	<field name="doc_ant" class="java.lang.String"/>
+	<field name="total_ant" class="java.math.BigDecimal"/>
+	<variable name="GRANTOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="SumTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<rectangle>
+				<reportElement x="3" y="25" width="565" height="25"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="71" y="30" width="220" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Beneficiario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="30" width="84" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<line>
+				<reportElement x="385" y="25" width="1" height="25"/>
+			</line>
+			<staticText>
+				<reportElement x="4" y="30" width="65" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="30" width="94" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Transaccion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="30" width="97" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Transaccion]]></text>
+			</staticText>
+			<line>
+				<reportElement x="484" y="25" width="1" height="25"/>
+			</line>
+			<line>
+				<reportElement x="293" y="24" width="1" height="25"/>
+			</line>
+			<line>
+				<reportElement x="70" y="25" width="1" height="25"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="2" width="196" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Anticipos y Cobros]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<line direction="BottomUp">
+				<reportElement x="3" y="0" width="1" height="12"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="568" y="0" width="1" height="12"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="4" y="0" width="65" height="12"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{paymentdate_ant}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="72" y="0" width="220" height="12"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_ant}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="294" y="0" width="91" height="12"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{doc_ant}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="386" y="0" width="96" height="12"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{doc_ant}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="485" y="0" width="81" height="12"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{total_ant}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="2" splitType="Stretch">
+			<line>
+				<reportElement x="2" y="1" width="567" height="1"/>
+			</line>
+		</band>
+	</summary>
+	<noData>
+		<band height="64">
+			<rectangle>
+				<reportElement x="3" y="23" width="566" height="41"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="72" y="28" width="220" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Beneficiario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="28" width="84" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<line>
+				<reportElement x="386" y="23" width="1" height="25"/>
+			</line>
+			<staticText>
+				<reportElement x="5" y="28" width="65" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="28" width="94" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Transaccion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="28" width="97" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Transaccion]]></text>
+			</staticText>
+			<line>
+				<reportElement x="485" y="23" width="1" height="25"/>
+			</line>
+			<line>
+				<reportElement x="294" y="22" width="1" height="25"/>
+			</line>
+			<line>
+				<reportElement x="71" y="23" width="1" height="25"/>
+			</line>
+			<staticText>
+				<reportElement x="4" y="0" width="196" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Anticipos y Cobros]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="48" width="567" height="1"/>
+			</line>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.24112"/>
+    <columnDataChange tablename="AD_REF_LIST" columnname="ISACTIVE" pkRow="3E57229C00884494AA67F9903832370A">
+      <oldValue><![CDATA[Y]]></oldValue>
+      <newValue><![CDATA[N]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_REF_LIST" columnname="ISACTIVE" pkRow="9C3C68CD97624D489594D303572511FD">
+      <oldValue><![CDATA[Y]]></oldValue>
+      <newValue><![CDATA[N]]></newValue>
+    </columnDataChange>
+  </vector>

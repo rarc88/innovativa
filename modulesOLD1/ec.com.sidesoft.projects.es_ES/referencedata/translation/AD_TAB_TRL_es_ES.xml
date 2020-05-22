@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="0B49DA98070A4B60BFD5D852573903FA" trl="N">
+    <value column="Name" isTrl="Y" original="Service Project">Proyecto de servicio</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Add service projects for which your products will be needed.">Añade los proyectos de servicio que requieran sus productos.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Add service projects for which your products will be needed.">Añade los proyectos de servicio que requieran sus productos.</value>
+  </row>
+  <row id="0B4F7CE5AC1C41008864245C8069A122" trl="N">
+    <value column="Name" isTrl="Y" original="Proposal">Presupuesto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Create a proposal for a business partner trying to win the bid for the construction project.">Crea una propuesta para el tercero que participa de la licitación de un proyecto de construcción.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Create a proposal for a business partner trying to win the bid for the construction project.">Crea una propuesta para el tercero que participa de la licitación de un proyecto de construcción.</value>
+  </row>
+  <row id="10865FF62981401AB8C54D706F406512" trl="N">
+    <value column="Name" isTrl="Y" original="Project Type">Tipo de proyecto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Define a project type.">Define un tipo de proyecto.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Define a project type.">Define un tipo de proyecto.</value>
+  </row>
+  <row id="125A369902DA4BD58B786EFAE51C6B9D" trl="N">
+    <value column="Name" isTrl="Y" original="Standard Task">Tarea estándar</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Define tasks to be completed during each phase.  Each task is added by creating a line.">Define las tareas que deben completarse durante cada fase. Cada tarea se añade creando una línea.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Define tasks to be completed during each phase.  Each task is added by creating a line.">Define las tareas que deben completarse durante cada fase. Cada tarea se añade creando una línea.</value>
+  </row>
+  <row id="1392C1A35B6747A4A1EFE8BB8BCE890A" trl="N">
+    <value column="Name" isTrl="Y" original="Project Line">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Add your products and plan their prices for this project.  Each product is added on its own line.">Añada sus productos y planifique sus precios para este proyecto. Cada producto se añade en su propia línea.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="Add your products and plan their prices for this project.  Each product is added on its own line.">Add your products and plan their prices for this project.  Each product is added on its own line.</value>
+  </row>
+  <row id="2146281CA1714E60BC9A3F94CFEF7C8D" trl="N">
+    <value column="Name" isTrl="Y" original="Proposal Line">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Add products to be included in your proposal for this business partner.  Each product is added on its own line.">Añada los productos que van a incluirse en su propuesta para este tercero. Cada producto se añade en su propia línea.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="Add products to be included in your proposal for this business partner.  Each product is added on its own line.">Add products to be included in your proposal for this business partner.  Each product is added on its own line.</value>
+  </row>
+  <row id="234E52C0AF0F45ACBDFBC60A8F0CD8E0" trl="N">
+    <value column="Name" isTrl="Y" original="Unavailability">No disponible</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Resource unavailability">Recursos no disponibles</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Dates, when the resource is not available (e.g. vacation)">Registra cuando la información no está disponible </value>
+  </row>
+  <row id="23DBA309B58147ABBCA3C1387AA34E5B" trl="N">
+    <value column="Name" isTrl="Y" original="Standard Phase">Fase estándar</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Define phases and products required during each phase, to be included in this type.  Each phase is added by creating a line.">Define las fases y los productos requeridos por cada fase para este tipo de proyecto. Cada fase se añade creando una línea.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Define phases and products required during each phase, to be included in this type.  Each phase is added by creating a line.">Define las fases y los productos requeridos por cada fase para este tipo de proyecto. Cada fase se añade creando una línea.</value>
+  </row>
+  <row id="2C12FD453EC146298EA933C9EC223868" trl="N">
+    <value column="Name" isTrl="N" original="Header">Header</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="Create and process an expense sheet.">Create and process an expense sheet.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="Create and process an expense sheet.">Create and process an expense sheet.</value>
+  </row>
+  <row id="2DE25EBEE3154465BF16A123F5DBC545" trl="N">
+    <value column="Name" isTrl="N" original="Lines">Lines</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="View each expense line for the employee.">View each expense line for the employee.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="View each expense line for the employee.">View each expense line for the employee.</value>
+  </row>
+  <row id="35697F2A8D834ACEBAD1725C83F34B00" trl="N">
+    <value column="Name" isTrl="Y" original="Price">Precio</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Expense Type Pricing">Gastos según el tipo de precio</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Expense Type Pricing">Gastos según el tipo de precio</value>
+  </row>
+  <row id="381115BD23DB40AFBBF88A4CDEAAAD59" trl="N">
+    <value column="Name" isTrl="Y" original="Expense Product">Gastos producto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Product definition of Expense Type">Definición de un producto de tipo gastoDefinición de un producto de tipo gasto</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Product definition of Expense Type">Definición de un producto de tipo gasto </value>
+  </row>
+  <row id="4778FF542C5243248B9905857C619803" trl="N">
+    <value column="Name" isTrl="N" original="Supplier">Supplier</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="Add suppliers from whom you will buy products if necessary.">Add suppliers from whom you will buy products if necessary.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="The suppliers from whom you will buy products are listed here.">The suppliers from whom you will buy products are listed here.</value>
+  </row>
+  <row id="4E85FA6507634C4EA03F0DC8C0DC36C4" trl="N">
+    <value column="Name" isTrl="Y" original="Followup">Seguimiento </value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Edit the status of partners bid and thoughts on your proposal by following up with them.">Edita el estado de la licitación de los terceros y las opiniones de ellos respecto de su propuesta, haciendo un seguimiento conjunto.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Edit the status of partners bid and thoughts on your proposal by following up with them.">Edita el estado de la licitación de los terceros y las opiniones de ellos respecto de su propuesta, haciendo un seguimiento conjunto.</value>
+  </row>
+  <row id="5BCE44EAFC67442CB5539094A12CD9E5" trl="N">
+    <value column="Name" isTrl="Y" original="Accounting">Contabilidad</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Define Accounting Parameters">Define los parámetros de contabilidad</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Define Accounting Parameters">Define los parámetros de contabilidad</value>
+  </row>
+  <row id="5DA6C5BB11C544619985C433FD81F722" trl="N">
+    <value column="Name" isTrl="N" original="Proposal List">Proposal List</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="View proposals made to a budget project.">View proposals made to a budget project.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="View proposals made to a budget project.">View proposals made to a budget project.</value>
+  </row>
+  <row id="64D8B587C12849CAA8003181F27C4D8D" trl="Y">
+    <value column="Name" isTrl="Y" original="Project Phase">Fase</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Define the invidual phases of this project.">Define las fases individuales de este proyecto.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Define the invidual phases of this project.">Define las fases individuales de este proyecto.</value>
+  </row>
+  <row id="6A1D277E7E3C419589A562FC695CB470" trl="N">
+    <value column="Name" isTrl="Y" original="Assignment">Asignación</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Resource Assignments">Asignación de recursos</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="History of Assignments">Histórico de asignaciones</value>
+  </row>
+  <row id="706DF777192345E38C2C2C5D0C8905C4" trl="N">
+    <value column="Name" isTrl="Y" original="Customer|">Cliente</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Select the customer who will be receiving the sales invoice.">Seleccione el cliente que va de recibir la factura de ventas.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Select the customer who will be receiving the sales invoice.">Seleccione el cliente que va de recibir la factura de ventas.</value>
+  </row>
+  <row id="7B16ED07AFEA41FD85AB01D6B5DA03D6" trl="N">
+    <value column="Name" isTrl="Y" original="Lines">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="View each expense line to be included in the sales invoice">Muestra cada línea de gastos incluida en la factura de ventas.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="View each expense line to be included in the sales invoice">Muestra cada línea de gastos incluida en la factura de ventas.</value>
+  </row>
+  <row id="A2479FEA05364C2ABFA7733462A44C8C" trl="N">
+    <value column="Name" isTrl="N" original="Resource">Resource</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="Maintain Resources">Maintain Resources</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="Maintain Resources">Maintain Resources</value>
+  </row>
+  <row id="B560A19E16434DFFA5B81AFA1291ACEE" trl="N">
+    <value column="Name" isTrl="Y" original="Expense Type">Tipo de gasto</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Maintain Expense Report Type">Mantenimiento de los tipos de gasto</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Maintain Expense Report Type">Mantenimiento de los tipos de gasto</value>
+  </row>
+  <row id="BA96A29B87AF40E2A2FA080BAC6E9CB0" trl="N">
+    <value column="Name" isTrl="Y" original="Resource Product">Producto del recurso</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Maintain Product information of Resource">Mantenimiento de la información de los productos del recurso</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Maintain Product information of Resource">Mantenimiento de la información de los productos del recurso</value>
+  </row>
+  <row id="CECEBB1A72FA4553BE016CDFFAEE3E26" trl="N">
+    <value column="Name" isTrl="N" original="Employee">Employee</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="Select the employee who is submitting the expenses.">Select the employee who is submitting the expenses.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="Select the employee who is submitting the expenses.">Select the employee who is submitting the expenses.</value>
+  </row>
+  <row id="D5EAFC8EB0454FD4ABA6C0A3F8C50442" trl="N">
+    <value column="Name" isTrl="Y" original="Lines">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Add time and regular expense lines to your sheet.  Each expense is added to an individual line and may or may not be invoiced to your customers.">Añade líneas de horarios y gastos regulares a su hoja. Cada gasto se añade a una línea individual y puede facturarse o no a los clientes.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Add time and regular expense lines to your sheet.  Each expense is added to an individual line and may or may not be invoiced to your customers.">Añade líneas de horarios y gastos regulares a su hoja. Cada gasto se añade a una línea individual y puede facturarse o no a los clientes.</value>
+  </row>
+  <row id="D97F5BCC7DFC40369809D88B48ED61F8" trl="N">
+    <value column="Name" isTrl="Y" original="Price">Precio</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Resource Pricing">Precios de los recursos</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Resource Pricing">Precios de los recursos</value>
+  </row>
+  <row id="EF4215F227004122ABA752D5914F297F" trl="N">
+    <value column="Name" isTrl="Y" original="Resource Type">Tipo de Recurso</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Maintain Resource Types">Mantenimiento de los tipos de recurso</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Maintain Resource types and their principal availability.">Mantenimiento de los tipos de Recursos y su disponibilidad</value>
+  </row>
+  <row id="F20B9D33BA444419804855244A02987B" trl="N">
+    <value column="Name" isTrl="Y" original="Accounting">Contabilidad</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Create an account number for the expense type in order to manage the General Ledger Accounting.">Crea un número de cuenta para cada tipo de gasto a fin de gestionar la contabilidad del libro mayor.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Create an account number for the expense type in order to manage the General Ledger Accounting.">Crea un número de cuenta para cada tipo de gasto a fin de gestionar la contabilidad del libro mayor.</value>
+  </row>
+  <row id="F6EEF200673F471DAD8D2923B9136C9D" trl="Y">
+    <value column="Name" isTrl="Y" original="Multiphase Project">Proyecto multifase</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Cree y planifique un proyecto multifase.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Create and plan a multiphase project.">Cree y planifique un proyecto multifase.</value>
+  </row>
+  <row id="F895D6156EDE473C8AD3A6A344168C23" trl="Y">
+    <value column="Name" isTrl="Y" original="Accounting">Contabilidad</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Define Project Accounting">Define los parámetros de contabilidad</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Define Project Accounting">Define los parámetros de contabilidad</value>
+  </row>
+  <row id="FED99CC30AE948BDB6B16F17BAC60672" trl="Y">
+    <value column="Name" isTrl="Y" original="Project Task">Tarea</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Define the individual tasks needed to complete this phase of the project.">Define las tareas individuales necesarias para completar esta fase del proyecto.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Define the individual tasks needed to complete this phase of the project.">Define las tareas individuales necesarias para completar esta fase del proyecto.</value>
+  </row>
+</compiereTrl>

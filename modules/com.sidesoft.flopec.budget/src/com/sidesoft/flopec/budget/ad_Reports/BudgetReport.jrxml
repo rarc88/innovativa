@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BudgetReport" pageWidth="1666" pageHeight="1161" orientation="Landscape" columnWidth="1656" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.x" value="326"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="C_Year_ID" class="java.lang.String"/>
+	<parameter name="Budget_Type" class="java.lang.String">
+		<defaultValueExpression><![CDATA["O"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="C_Costcenter_ID" class="java.lang.String"/>
+	<parameter name="Period" class="java.lang.String"/>
+	<parameter name="Area_Filter" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+  budget.type_of_budget,
+  budget.c_costcenter_id as c_costcenter_id,
+  budget.sfb_budget_item_id as sfb_budget_item_id,
+  budget.budgetitem AS budgetitem,
+  budget.user1_id as user1_id,
+  budget.orgname AS orgname ,
+  budget.costcenter AS costcenter,
+  budget.area_name as area_name,
+  budget.c_year_id as c_year_id,
+  sum(sfb_certificate.executed_value) as executed_value,
+  sum(sfb_certificate.committed_value) as committed_value,
+  (sum(budget.budgetvalue - sfb_certificate.executed_value)) as Saldo,
+  budget.budgetvalue as budgetvalue,
+  budget.executed_budget as executed_budget,
+  --(budget.budgetvalue - budget.available_budget) as adjuested_value
+  budget.adjusted_budget as adjusted_budget,
+  budget.actual_budget as actual_budget,
+  budget.user1
+from (select
+  sfb_b.type_of_budget,
+  c_costcenter.c_costcenter_id,
+  sfb_bi.sfb_budget_item_id as sfb_budget_item_id,
+  sfb_bi.name AS budgetitem,
+  sfb_bl.user1_id,
+  ad_org.name AS orgname,
+  c_costcenter.name AS costcenter,
+  sfb_area.name as area_name,
+  sfb_b.c_year_id,
+
+(case
+when (select PERIODNO from c_period where c_period_id = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value + sfb_bl.oct_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value + sfb_bl.oct_budgeted_value + sfb_bl.nov_budgeted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_budgeted_value + sfb_bl.feb_budgeted_value + sfb_bl.mar_budgeted_value + sfb_bl.apr_budgeted_value + sfb_bl.may_budgeted_value + sfb_bl.jun_budgeted_value + sfb_bl.jul_budgeted_value + sfb_bl.aug_budgeted_value + sfb_bl.sep_budgeted_value + sfb_bl.oct_budgeted_value + sfb_bl.nov_budgeted_value + sfb_bl.dec_budgeted_value )
+ end) as budgetvalue,
+(case when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value + sfb_bl.oct_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value + sfb_bl.oct_Executed_value + sfb_bl.nov_Executed_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_Executed_value + sfb_bl.feb_Executed_value + sfb_bl.mar_Executed_value + sfb_bl.apr_Executed_value + sfb_bl.may_Executed_value + sfb_bl.jun_Executed_value + sfb_bl.jul_Executed_value + sfb_bl.aug_Executed_value + sfb_bl.sep_Executed_value + sfb_bl.oct_Executed_value + sfb_bl.nov_Executed_value + sfb_bl.dec_Executed_value )
+end) as executed_budget,
+(case when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value + sfb_bl.oct_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value + sfb_bl.oct_adjusted_value + sfb_bl.nov_adjusted_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_adjusted_value + sfb_bl.feb_adjusted_value + sfb_bl.mar_adjusted_value + sfb_bl.apr_adjusted_value + sfb_bl.may_adjusted_value + sfb_bl.jun_adjusted_value + sfb_bl.jul_adjusted_value + sfb_bl.aug_adjusted_value + sfb_bl.sep_adjusted_value + sfb_bl.oct_adjusted_value + sfb_bl.nov_adjusted_value + sfb_bl.dec_adjusted_value )
+end)as adjusted_budget,
+(case when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 1 then (sfb_bl.jan_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 2 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 3 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 4 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 5 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 6 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 7 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 8 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 9 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 10 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value + sfb_bl.oct_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 11 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value + sfb_bl.oct_actual_value + sfb_bl.nov_actual_value)
+when (select PERIODNO from c_period where c_period_id  = coalesce($P{Period},(select c_period_id from c_period where now() between startdate and enddate  ))) = 12 then (sfb_bl.jan_actual_value + sfb_bl.feb_actual_value + sfb_bl.mar_actual_value + sfb_bl.apr_actual_value + sfb_bl.may_actual_value + sfb_bl.jun_actual_value + sfb_bl.jul_actual_value + sfb_bl.aug_actual_value + sfb_bl.sep_actual_value + sfb_bl.oct_actual_value + sfb_bl.nov_actual_value + sfb_bl.dec_actual_value )
+end)as actual_budget,
+us.name as user1
+FROM sfb_budget_line sfb_bl
+left join ad_org on sfb_bl.ad_org_id=ad_org.ad_org_id
+left join sfb_budget_version sfb_bv on sfb_bv.sfb_budget_version_id = sfb_bl.sfb_budget_version_id
+left join sfb_budget sfb_b on sfb_b.sfb_budget_id = sfb_bv.sfb_budget_id
+left join sfb_budget_item sfb_bi on sfb_bi.sfb_budget_item_id = sfb_bl.sfb_budget_item_id
+left join c_costcenter on c_costcenter.c_costcenter_id = sfb_bl.c_costcenter_id
+left join sfb_budget_cert_line sfb_bcl on (sfb_bcl.c_costcenter_id = sfb_bl.c_costcenter_id and sfb_bcl.sfb_budget_item_id = sfb_bl.sfb_budget_item_id and sfb_bcl.user1_id = sfb_bl.user1_id)
+left join sfb_budget_certificate sfb_bc on sfb_bcl.sfb_budget_certificate_id = sfb_bc.sfb_budget_certificate_id
+left join c_invoiceline c_il on c_il.em_sfb_budget_cert_line_id = sfb_bcl.sfb_budget_cert_line_id
+left join c_invoice c_i on c_i.c_invoice_id = c_il.c_invoice_id
+left join sfb_budget_area_item sfb_aitem on (sfb_aitem.sfb_budget_item_id = sfb_bi.sfb_budget_item_id and  sfb_aitem.sfb_budget_area_id  = sfb_bl.sfb_budget_area_id)
+left join sfb_budget_area sfb_area on ( sfb_area.sfb_budget_area_id = sfb_aitem.sfb_budget_area_id)
+left join User1 us on sfb_bl.User1_id = us.User1_id
+where
+sfb_b.type_of_budget = sfb_bc.type_of_budget
+and sfb_b.c_year_id = $P{C_Year_ID}
+and sfb_b.type_of_budget = $P{Budget_Type}
+and (sfb_bl.c_costcenter_id = $P{C_Costcenter_ID} or $P{C_Costcenter_ID} is null)
+and (sfb_area.sfb_budget_area_id =  $P{Area_Filter} or $P{Area_Filter} is null)
+and c_i.docstatus='CO'
+and sfb_b.budget_status = 'AP'
+order by sfb_bi.name
+)  budget
+left join
+(
+select sfb_bcl.user1_id,sfb_bcl.sfb_budget_item_id,sfb_bcl.c_costcenter_id,sfb_bcl.committed_value,
+sfb_bcl.executed_value
+from sfb_budget_cert_line sfb_bcl
+left join sfb_budget_certificate sfb_bc on sfb_bcl.sfb_budget_certificate_id = sfb_bc.sfb_budget_certificate_id
+where sfb_bc.c_year_id = $P{C_Year_ID}
+and
+(sfb_bc.date_issue  between (select min(startdate)
+                            from c_period where c_year_id = coalesce($P{C_Year_ID},(select c_year_id from c_period where now() between startdate and enddate )))
+                            and coalesce((select (select enddate from c_period where c_period_id = $P{Period} ) - 1 from dual),(select max(enddate -1) from c_period where now() between startdate and enddate)) )
+order by sfb_bcl.sfb_budget_item_id,c_costcenter_id,sfb_bcl.user1_id) sfb_certificate on (sfb_certificate.c_costcenter_id = budget.c_costcenter_id and sfb_certificate.sfb_budget_item_id = budget.sfb_budget_item_id and sfb_certificate.user1_id = budget.user1_id)
+group by
+  budget.c_costcenter_id ,
+  budget.sfb_budget_item_id,
+  budget.budgetitem,
+  budget.user1_id ,
+  budget.orgname,
+  budget.costcenter,
+  budget.area_name,
+  budget.c_year_id
+  ,budget.budgetvalue
+,budget.executed_budget,
+budget.type_of_budget,
+budget.adjusted_budget,
+  budget.actual_budget,
+  budget.user1]]>
+	</queryString>
+	<field name="type_of_budget" class="java.lang.String"/>
+	<field name="c_costcenter_id" class="java.lang.String"/>
+	<field name="sfb_budget_item_id" class="java.lang.String"/>
+	<field name="budgetitem" class="java.lang.String"/>
+	<field name="user1_id" class="java.lang.String"/>
+	<field name="orgname" class="java.lang.String"/>
+	<field name="costcenter" class="java.lang.String"/>
+	<field name="area_name" class="java.lang.String"/>
+	<field name="c_year_id" class="java.lang.String"/>
+	<field name="executed_value" class="java.math.BigDecimal"/>
+	<field name="committed_value" class="java.math.BigDecimal"/>
+	<field name="saldo" class="java.math.BigDecimal"/>
+	<field name="budgetvalue" class="java.math.BigDecimal"/>
+	<field name="executed_budget" class="java.math.BigDecimal"/>
+	<field name="adjusted_budget" class="java.math.BigDecimal"/>
+	<field name="actual_budget" class="java.math.BigDecimal"/>
+	<field name="user1" class="java.lang.String"/>
+	<variable name="totalbudgetvalue" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{budgetvalue}]]></variableExpression>
+	</variable>
+	<variable name="totaladjustedbudget" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{adjusted_budget}]]></variableExpression>
+	</variable>
+	<variable name="totalcommited" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{committed_value}]]></variableExpression>
+	</variable>
+	<variable name="totalexecutedbudget" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{executed_budget}]]></variableExpression>
+	</variable>
+	<variable name="totalactualbudget" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{actual_budget}]]></variableExpression>
+	</variable>
+	<variable name="totalsaldo" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<group name="item">
+		<groupExpression><![CDATA[$F{budgetitem}]]></groupExpression>
+		<groupHeader>
+			<band height="1" splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="32" splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="9" y="3" width="1053" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Budget Report]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="9" y="23" width="527" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{orgname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle" x="1188" y="2" width="138" height="26"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="1078" y="2" width="110" height="26"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="973" y="2" width="105" height="26"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="750" y="2" width="118" height="26"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="327" y="2" width="211" height="26"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="168" y="2" width="159" height="26"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText" x="168" y="2" width="159" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[User1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="326" y="2" width="210" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Budget Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="750" y="2" width="118" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Budgeted]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="1188" y="2" width="138" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Real]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle" x="539" y="2" width="211" height="26"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText" x="538" y="2" width="212" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Area]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="973" y="2" width="105" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Commited]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="1078" y="2" width="110" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Executed]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle-1" x="9" y="2" width="159" height="26"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-1" x="9" y="2" width="159" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cost Center]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle-3" x="868" y="2" width="105" height="26"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-2" x="868" y="2" width="105" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Adjusted]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement key="rectangle-5" x="1326" y="2" width="138" height="26"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-3" x="1326" y="2" width="138" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle" x="1188" y="1" width="138" height="21"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="1078" y="1" width="110" height="21"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="973" y="1" width="105" height="21"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="750" y="1" width="118" height="21"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="539" y="1" width="211" height="21"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="327" y="1" width="211" height="21"/>
+			</rectangle>
+			<rectangle>
+				<reportElement key="rectangle" x="168" y="1" width="159" height="21"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="168" y="1" width="159" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{user1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="327" y="1" width="211" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{budgetitem}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="750" y="0" width="118" height="22"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{budgetvalue}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="539" y="1" width="211" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{area_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="973" y="1" width="105" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{committed_value}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1078" y="1" width="110" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{executed_budget}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1188" y="1" width="138" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{actual_budget}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement key="rectangle-2" x="9" y="1" width="159" height="21"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-1" x="9" y="1" width="159" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{costcenter}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement key="rectangle-4" x="868" y="1" width="105" height="21"/>
+			</rectangle>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="868" y="1" width="105" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{adjusted_budget}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement key="rectangle-6" x="1326" y="1" width="138" height="21"/>
+			</rectangle>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="1326" y="1" width="138" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="32">
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1078" y="7" width="110" height="18"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalexecutedbudget}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1188" y="7" width="138" height="18"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalactualbudget}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="1326" y="7" width="138" height="18"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalsaldo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="538" y="7" width="212" height="18"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="868" y="7" width="105" height="18"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totaladjustedbudget}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="973" y="7" width="105" height="18"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalcommited}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="750" y="7" width="118" height="18"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalbudgetvalue}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

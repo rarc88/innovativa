@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="DC1954A7BED54CCF956B9E855C9AC7F9" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty Form">Forma de Garantías</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E6545FCB778548D09E7765630EE8F82A" trl="N">
+    <value column="Name" isTrl="Y" original="Payment Form">Forma de Pago</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="FA0361705F854CA5B845C7DB4418ADFA" trl="N">
+    <value column="Name" isTrl="Y" original="Advance">Fases</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Fases</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="F00AF28ACDEA4590A7A9124CD8BB1BCD" trl="N">
+    <value column="Name" isTrl="Y" original="Contracts">Contratos</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2ECF5284D8C9481B9D9F6646159A30EB" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty Type">Tipo de Garantía</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3B0512C3346949EDB317D505FABC1872" trl="N">
+    <value column="Name" isTrl="Y" original="Payment Form">Forma de Pago</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Forma de Pago</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="31946388FABB448D9F05B4752882E573" trl="N">
+    <value column="Name" isTrl="Y" original="Information">Información Adicional</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Información Adicional</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5823C7E234B64B0B8C7A2A5FA3699F2E" trl="N">
+    <value column="Name" isTrl="Y" original="Contract Type">Tipo de Contrato</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Tipo de Contrato</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="6F522796E7484187B8E634E964904920" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty">Garantía</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Garantía</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="8294F83D20DC47BE85BEF9038857CD1F" trl="N">
+    <value column="Name" isTrl="Y" original="Insurance Warranties">Seguro de Garantías</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Seguro de Garantías</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="901F9EA37C964B5E98E84102E1E5198C" trl="N">
+    <value column="Name" isTrl="Y" original="Contract Term">Términos del Contrato</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Términos del Contrato</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="92D6825900F84006B50106B8FB17C8B4" trl="N">
+    <value column="Name" isTrl="Y" original="Warranty Status">Estado de la Garantía</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Estado de la Garantía</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

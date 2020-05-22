@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="2FEF2C85160C4D06B0769BFDE6CE401E" trl="N">
+    <value column="Name" isTrl="N" original="Ssfieg_Fin_Acct_Payable_ID">Ssfieg_Fin_Acct_Payable_ID</value>
+    <value column="PrintName" isTrl="N" original="Ssfieg_Fin_Acct_Payable_ID">Ssfieg_Fin_Acct_Payable_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="34B0AB88DB2E41CDBAE218C0EC2BBF4D" trl="N">
+    <value column="Name" isTrl="Y" original="Valor_Contabilidad">Valor Contabilidad</value>
+    <value column="PrintName" isTrl="Y" original="Valor_Contabilidad">Valor Contabilidad</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="3FF3F19B346B4E5A8BB9C2D89A0E8226" trl="N">
+    <value column="Name" isTrl="Y" original="Tipo_Partida">Tipo Partida</value>
+    <value column="PrintName" isTrl="Y" original="Tipo_Partida">Tipo Partida</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4A512719053D4626A428EF7B9B1732D6" trl="N">
+    <value column="Name" isTrl="Y" original="Iva">IVA</value>
+    <value column="PrintName" isTrl="Y" original="Iva">IVA</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4D396461EA3744EC890085A8D0E62528" trl="N">
+    <value column="Name" isTrl="Y" original="Base_Ret_Renta">Base Retención Renta</value>
+    <value column="PrintName" isTrl="Y" original="Base_Ret_Renta">Base Retención Renta</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="586DCC57555D46BC9247D1284357D08B" trl="N">
+    <value column="Name" isTrl="Y" original="RET_Renta">Retención Renta</value>
+    <value column="PrintName" isTrl="Y" original="RET_Renta">Retención Renta</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="66A4B43C78894382B36A0D536247018B" trl="N">
+    <value column="Name" isTrl="N" original="Ssfieg_Fin_Rece_Debit_V_ID">Ssfieg_Fin_Rece_Debit_V_ID</value>
+    <value column="PrintName" isTrl="N" original="Ssfieg_Fin_Rece_Debit_V_ID">Ssfieg_Fin_Rece_Debit_V_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="6E849EC7353D45A3B9CA431D0F138CA7" trl="N">
+    <value column="Name" isTrl="Y" original="Tipo_Transaccion">Tipo Transacción</value>
+    <value column="PrintName" isTrl="Y" original="Tipo_Transaccion">Tipo Transacción</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="74D11CB81BD4478A93ADBB41DC1E5495" trl="N">
+    <value column="Name" isTrl="Y" original="Monto_Haber">Monto Haber</value>
+    <value column="PrintName" isTrl="Y" original="Monto_Haber">Monto Haber</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="755C75C49AC4472288D0B8ED52894A29" trl="N">
+    <value column="Name" isTrl="Y" original="Monto_Debe">Monto Debe</value>
+    <value column="PrintName" isTrl="Y" original="Monto_Debe">Monto Debe</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="75D4F66701A44D0F98A13004F7C0BF27" trl="N">
+    <value column="Name" isTrl="N" original="Tipo_Gasto">Tipo_Gasto</value>
+    <value column="PrintName" isTrl="N" original="Tipo_Gasto">Tipo_Gasto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="90B3297AF5794DBDBA575B95528A4F8D" trl="N">
+    <value column="Name" isTrl="Y" original="Base_Iva">Base IVA</value>
+    <value column="PrintName" isTrl="Y" original="Base_Iva">Base IVA</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A341E125E41F4D47B404933E64F8E492" trl="N">
+    <value column="Name" isTrl="N" original="Ssfieg_Fin_Acct_Receivable_ID">Ssfieg_Fin_Acct_Receivable_ID</value>
+    <value column="PrintName" isTrl="N" original="Ssfieg_Fin_Acct_Receivable_ID">Ssfieg_Fin_Acct_Receivable_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A3F67D5AC94E452CB9F5B3D4C6B37426" trl="N">
+    <value column="Name" isTrl="N" original="Ssfieg_Fin_Payable_Debit_V_ID">Ssfieg_Fin_Payable_Debit_V_ID</value>
+    <value column="PrintName" isTrl="N" original="Ssfieg_Fin_Payable_Debit_V_ID">Ssfieg_Fin_Payable_Debit_V_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A53B8F379D934EC7BB539F5005508F82" trl="N">
+    <value column="Name" isTrl="Y" original="Valor_Final">Valor Final</value>
+    <value column="PrintName" isTrl="Y" original="Valor_Final">Valor Final</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D5340FD83D674A71B006ABC70F43CD53" trl="N">
+    <value column="Name" isTrl="N" original="Ssfieg_Finances_Esigef_V_ID">Ssfieg_Finances_Esigef_V_ID</value>
+    <value column="PrintName" isTrl="N" original="Ssfieg_Finances_Esigef_V_ID">Ssfieg_Finances_Esigef_V_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D9CD4D7B5F204114A256B857B3ACCE94" trl="N">
+    <value column="Name" isTrl="Y" original="Base_Ret_Iva">Base Retención IVA</value>
+    <value column="PrintName" isTrl="Y" original="Base_Ret_Iva">Base Retención IVA</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D9FCE751CCD04C66AE0051A31C7695A9" trl="N">
+    <value column="Name" isTrl="N" original="Ssfieg_Fin_Rece_Credit_V_ID">Ssfieg_Fin_Rece_Credit_V_ID</value>
+    <value column="PrintName" isTrl="N" original="Ssfieg_Fin_Rece_Credit_V_ID">Ssfieg_Fin_Rece_Credit_V_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DB01D0E87DCF48D397F96FEB3B3B5BB0" trl="N">
+    <value column="Name" isTrl="Y" original="Tipo_Ingreso">Tipo Ingreso</value>
+    <value column="PrintName" isTrl="Y" original="Tipo_Ingreso">Tipo Ingreso</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="FBBE925C35AD44CFAA02FE866ECFE821" trl="N">
+    <value column="Name" isTrl="Y" original="RET_Iva">Retención IVA</value>
+    <value column="PrintName" isTrl="Y" original="RET_Iva">Retención IVA</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

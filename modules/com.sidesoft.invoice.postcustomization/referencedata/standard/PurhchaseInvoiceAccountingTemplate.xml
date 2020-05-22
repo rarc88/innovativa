@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ob:Openbravo xmlns:ob="http://www.openbravo.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AD_CreateFact_template id="57B2CB22AAEE46838A13F53FE59FA739" identifier="Accounting template for purchase invoices">
+    <id>57B2CB22AAEE46838A13F53FE59FA739</id>
+    <isactive>true</isactive>
+    <creationDate transient="true">2013-09-18T09:37:55.49Z</creationDate>
+    <createdBy transient="true" id="100" entity-name="ADUser" identifier="Openbravo"/>
+    <updated transient="true">2013-09-18T23:49:07.582Z</updated>
+    <updatedBy transient="true" id="100" entity-name="ADUser" identifier="Openbravo"/>
+    <name>Accounting template for purchase invoices</name>
+    <classname>com.sidesoft.invoice.postcustomization.PurchaseInvoicePostCustomization</classname>
+    <description xsi:nil="true"/>
+    <table id="318" entity-name="ADTable" identifier="C_Invoice"/>
+  </AD_CreateFact_template>
+</ob:Openbravo>

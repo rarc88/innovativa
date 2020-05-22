@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSFW_APPROVAL_ORDER_FLOW">
+    <function name="SSFW_APPROVAL_ORDER_FLOW" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[p_message         VARCHAR2(2000);    
+v_Record_ID       VARCHAR2(60);      
+p_docaction       VARCHAR2(60);      
+v_User_ID            VARCHAR2(60);      
+p_result          NUMBER;
+V_CLIENT	  VARCHAR2(32);      
+V_ORG		  VARCHAR2(32);      
+
+v_ResultStr       VARCHAR2(2000):='';
+v_currency_id     VARCHAR2(32);      
+v_hashcode        VARCHAR2(32);      
+v_converted       NUMBER;
+v_amt NUMBER:= -1;      -- Revenue (-)
+v_count           INTEGER;
+v_count_doctype   INTEGER;
+v_budgeted        CHAR(1);
+v_baccount_lines  VARCHAR2(2000):='';
+v_nbaccount_lines VARCHAR2(2000):='';
+v_bamount_lines   VARCHAR2(2000):='';
+--
+v_doctype	  VARCHAR2(32);      
+v_approval_doctype VARCHAR2(32);      
+V_budget_area_id  VARCHAR2(32);      
+v_ordertotal      NUMBER;
+V_approval_level  VARCHAR2(60);      
+V_approver1_id	  VARCHAR2(32);      
+V_approval1	  CHAR(1);
+V_approver2_id	  VARCHAR2(32);      
+V_approval2	  CHAR(1);
+V_observations1   VARCHAR2(255);      
+V_observations2   VARCHAR2(255);      
+v_approver1	  VARCHAR2(32);      
+v_approver2	  VARCHAR2(32);      
+v_approver_id     VARCHAR2(32);      
+V_COUNT_APP_ORDER INTEGER;
+V_ISSOTRX	  CHAR(1);
+v_Client_ID 	  VARCHAR2(32);      
+v_Org_ID 	  VARCHAR2(32);      
+V_NAME_USER	  VARCHAR2(60);      
+
+v_available       NUMBER; --OBTG:NUMBER--
+v_real_1          NUMBER; --OBTG:NUMBER--
+v_real_2          NUMBER; --OBTG:NUMBER--
+v_line    	  NUMBER; --OBTG:NUMBER--
+V_PROCES_ACTIVE   CHAR(1);
+
+
+TYPE RECORD IS REF CURSOR;
+Cur_Parameter        RECORD;
+cur_lines         RECORD;
+
+BEGIN
+
+--  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+      
+   
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID,
+        i.AD_User_ID,
+        i.AD_Client_ID,
+        i.AD_Org_ID 
+                          
+      FROM AD_PInstance i      
+      WHERE i.AD_PInstance_ID = PInstance_ID      
+      )
+    LOOP
+    
+      v_Record_ID := Cur_Parameter.Record_ID;      
+      v_Client_ID := Cur_Parameter.AD_Client_ID;
+      v_Org_ID := Cur_Parameter.AD_Org_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;     
+      
+    END LOOP; -- End Get Parameter
+
+ 
+
+SELECT FLOW_PAYMENT_ACTIVE INTO V_PROCES_ACTIVE FROM SSFW_ACTIVE_PROCESS;
+
+
+IF (V_PROCES_ACTIVE = 'Y') THEN 
+
+ -- Is a Document Type that has been enabled for the budget.
+    SELECT count(*) INTO v_count_doctype
+    FROM C_ORDER co, ssfw_approval_doctype AD
+    WHERE AD_ISORGINCLUDED(co.ad_org_id, AD.ad_org_id, co.ad_client_id) <> -1 
+          AND AD.c_doctype_id = co.c_doctype_id
+          ---AND CO.em_sfb_budget_area_id = AD.em_sfb_budget_area_id
+          AND AD.isactive = 'Y'
+          AND co.c_order_id = v_Record_ID; 
+
+    IF (v_count_doctype > 0) THEN
+
+    
+      v_resultstr := 'Update budget (committed certificate value).'; 
+
+      --OBTENGO DATOS DE PEDIDO DE COMPRA
+      SELECT CO.c_doctype_id,CO.AD_CLIENT_ID, CO.AD_ORG_ID,AD.approval_level,co.grandtotal,AD.ssfw_approval_doctype_id,CO.ISSOTRX,
+      APPROVAL1,APPROVAL2
+      ---,em_sfb_budget_area_id
+      INTO v_doctype,V_CLIENT,V_ORG,V_approval_level,v_ordertotal,v_approval_doctype,V_ISSOTRX,
+      V_approval1,V_approval2
+      ---,V_budget_area_id
+      FROM C_ORDER co, ssfw_approval_doctype AD,ssfw_order_approval OA
+      WHERE AD_ISORGINCLUDED(co.ad_org_id, AD.ad_org_id, co.ad_client_id) <> -1 
+          AND AD.c_doctype_id = co.c_doctype_id
+          AND AD.isactive = 'Y'
+          AND OA.c_order_id = v_Record_ID
+          AND co.c_order_id = v_Record_ID;
+      
+      --VALIDO Q SEA ORDEN DE COMPRA
+      IF ( V_ISSOTRX='N') THEN       
+
+
+	--OBTENGO DATOS DEL USUARIO LOGUEADO
+	SELECT TO_CHAR(COALESCE((SELECT TO_CHAR(NAME) FROM C_BPARTNER 
+	WHERE C_BPARTNER_ID IN (SELECT C_BPARTNER_ID FROM AD_USER WHERE AD_USER_ID = v_User_ID)),TO_CHAR(' ')))  
+	INTO V_NAME_USER FROM DUAL;   
+
+	      IF (V_approval_level='A') THEN 
+
+	      
+	         IF (V_approval1='N' AND V_approval2='N') THEN 
+		      	   
+		      UPDATE ssfw_order_approval 
+		      SET
+			updated = now(),
+			updatedby = v_User_ID, 
+			approval1 = 'Y', 			
+			observations1 = V_observations1||' <'||V_NAME_USER ||'>'
+			WHERE c_order_id = v_Record_ID;
+				
+		 ELSIF (V_approval1='Y' AND V_approval2='N') THEN 
+
+			--UPDATE IN ORDER APPROVAL        
+			UPDATE ssfw_order_approval 
+		        SET
+			updated = now(),
+			updatedby = v_User_ID, 
+			approval2 = 'Y', 			
+			observations2 = V_observations2||' <'||V_NAME_USER ||'>'
+			WHERE c_order_id = v_Record_ID;
+
+		 END IF;
+	      ELSE 
+
+		IF (V_approval1='Y' AND V_approval2='N') THEN 
+
+			--UPDATE IN ORDER APPROVAL        
+			UPDATE ssfw_order_approval 
+		        SET
+			updated = now(),
+			updatedby = v_User_ID, 
+			approval2 = 'Y', 			
+			observations2 = V_observations2||' <'||V_NAME_USER ||'>'
+			WHERE c_order_id = v_Record_ID;
+
+		 END IF;
+	      END IF;            
+      END IF;    
+    
+  END IF;
+END IF;
+
+ END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+    RETURN;
+END SSFW_APPROVAL_ORDER_FLOW
+]]></body>
+    </function>
+  </database>

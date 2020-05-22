@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SWSIC_BUDGET_IMPACT">
+    <function name="SWSIC_BUDGET_IMPACT" type="NULL">
+      <parameter name="p_mproduct" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_costcenter" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_user1" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_budgetarea" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_c_currency_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="v_dateinvoice" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_sfb_budgetcertline_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_linetotalamt" type="NUMERIC" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_client" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="p_org" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_SqlSelectConfig		        VARCHAR2(1000):='';
+ v_SqlUpdateInvoice		        VARCHAR2(1000):='';
+ v_area				            VARCHAR2(32):='';
+ v_modulebudget		 	        NUMBER; --OBTG:NUMBER--
+ v_modulebudgetinvoicecreate  NUMBER; --OBTG:NUMBER--
+ v_budget_currency_id		    VARCHAR2(32):='';
+ v_sfb_budget_line_id		    VARCHAR2(32):='';
+ v_converted           		    NUMBER;
+ v_sql                 		    VARCHAR2(4000):=''; 
+  
+  BEGIN
+
+	SELECT
+	COALESCE((SELECT COUNT(*) AS CONTAR FROM AD_MODULE WHERE JAVAPACKAGE='com.sidesoft.flopec.budget'),0) 
+	INTO v_modulebudget
+	FROM DUAL;
+
+	SELECT
+	COALESCE((SELECT COUNT(*) AS CONTAR FROM AD_MODULE WHERE JAVAPACKAGE='ec.com.sidesoft.ws.invoicecreate.budget'),0) 
+	INTO v_modulebudgetinvoicecreate
+	FROM DUAL;
+	
+	IF (v_modulebudget = 1 AND v_modulebudgetinvoicecreate = 1) THEN
+
+		select b.c_currency_id, bln.sfb_budget_line_id into v_budget_currency_id, v_sfb_budget_line_id
+		from m_product_acct pa
+        JOIN c_validcombination vc ON vc.c_validcombination_id = pa.p_revenue_acct and pa.m_product_id = p_mproduct
+        LEFT JOIN (sfb_budget b
+            JOIN c_year y on y.c_year_id = b.c_year_id
+            JOIN sfb_budget_version bv ON bv.sfb_budget_id = b.sfb_budget_id AND bv.version_status = 'AP'
+            JOIN sfb_budget_line bln ON bln.sfb_budget_version_id = bv.sfb_budget_version_id
+            JOIN sfb_budget_item_account bia ON bia.sfb_budget_item_id = bln.sfb_budget_item_id 
+        ) ON  bln.c_costcenter_id = p_costcenter
+        AND bln.user1_id = p_user1
+        AND bln.sfb_budget_area_id = p_budgetarea
+        AND bia.isactive = 'Y'
+        AND bia.account_id = vc.account_id
+        AND CAST(y.year AS NUMBER(10,0)) = CAST(EXTRACT(YEAR FROM DATE(v_dateinvoice)) AS NUMBER(10,0))        
+        LEFT JOIN sfb_budget_cert_line bcl ON bcl.sfb_budget_cert_line_id = p_sfb_budgetcertline_id
+        LEFT JOIN sfb_budget_certificate bc ON bcl.sfb_budget_certificate_id = bc.sfb_budget_certificate_id;
+
+        IF v_sfb_budget_line_id IS NULL THEN
+            RAISE_APPLICATION_ERROR(-20000, '@SFB_NoBudgetConfiguration@');
+        END IF;
+
+        IF p_c_currency_id <> v_budget_currency_id THEN
+            v_converted := C_Currency_Round(C_Currency_Convert(p_linetotalamt, p_c_currency_id, v_budget_currency_id, v_dateinvoice, null, p_client, p_org), v_budget_currency_id, null);
+        ELSE
+            v_converted := p_linetotalamt;
+        END IF;
+
+        IF (v_converted IS NULL) THEN
+            RAISE_APPLICATION_ERROR(-20000, '@NoConversionRateHeader@');
+        END IF;
+
+        v_sql := 'UPDATE SFB_BUDGET_LINE SET ';
+
+        SELECT
+        CASE EXTRACT(MONTH FROM TO_DATE(v_dateinvoice))
+        WHEN 1  THEN v_sql || 'jan_executed_value = jan_executed_value + '
+        WHEN 2  THEN v_sql || 'feb_executed_value = feb_executed_value + '
+        WHEN 3  THEN v_sql || 'mar_executed_value = mar_executed_value + '
+        WHEN 4  THEN v_sql || 'apr_executed_value = apr_executed_value + '
+        WHEN 5  THEN v_sql || 'may_executed_value = may_executed_value + '
+        WHEN 6  THEN v_sql || 'jun_executed_value = jun_executed_value + '
+        WHEN 7  THEN v_sql || 'jul_executed_value = jul_executed_value + '
+        WHEN 8  THEN v_sql || 'aug_executed_value = aug_executed_value + '
+        WHEN 9  THEN v_sql || 'sep_executed_value = sep_executed_value + '
+        WHEN 10 THEN v_sql || 'oct_executed_value = oct_executed_value + '
+        WHEN 11 THEN v_sql || 'nov_executed_value = nov_executed_value + '
+        WHEN 12 THEN v_sql || 'dec_executed_value = dec_executed_value + '
+        END INTO v_sql
+        FROM DUAL;
+        
+        v_sql := v_sql || v_converted || ' WHERE SFB_BUDGET_LINE_ID = ''' || v_sfb_budget_line_id || '''';
+        EXECUTE IMMEDIATE v_sql;
+			                                
+    END IF;
+END SWSIC_BUDGET_IMPACT
+]]></body>
+    </function>
+  </database>

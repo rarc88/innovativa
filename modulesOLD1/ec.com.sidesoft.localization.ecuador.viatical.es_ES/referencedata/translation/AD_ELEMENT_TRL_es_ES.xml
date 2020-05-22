@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="003C0BA1B85B44AAAB32F04C1C11559D" trl="N">
+    <value column="Name" isTrl="Y" original="Table Amount">Asignación según tabla</value>
+    <value column="PrintName" isTrl="Y" original="Table Amount">Asignación según tabla</value>
+    <value column="Description" isTrl="N" original="">Asignación según tabla</value>
+    <value column="Help" isTrl="N" original="">Asignación según tabla</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="015D7770372F40B7B8CF22AC38BD5AEC" trl="N">
+    <value column="Name" isTrl="Y" original="To Day">Hasta el día</value>
+    <value column="PrintName" isTrl="Y" original="To Day">Hasta el día</value>
+    <value column="Description" isTrl="Y" original="To Day">Hasta el día</value>
+    <value column="Help" isTrl="Y" original="To Day">Hasta el día</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="086E94A414A14C44B2172CB705302F15" trl="N">
+    <value column="Name" isTrl="Y" original="Limit Time">Hora límite</value>
+    <value column="PrintName" isTrl="Y" original="Limit Time">Hora límite</value>
+    <value column="Description" isTrl="Y" original="Limit Time">Hora límite</value>
+    <value column="Help" isTrl="N" original="">Hora límite</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="09EB8C1173EF4AD6ABD93E7F8ECB2BFF" trl="N">
+    <value column="Name" isTrl="Y" original="Departure Date">Fecha de salida</value>
+    <value column="PrintName" isTrl="Y" original="Departure Date">Fecha de salida</value>
+    <value column="Description" isTrl="N" original="">Fecha de salida</value>
+    <value column="Help" isTrl="N" original="">Fecha de salida</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="104CA43E292144519DD284088242C009" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Details">Viatical Details</value>
+    <value column="PrintName" isTrl="N" original="Viatical Details">Viatical Details</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="124AADAD9F1F4AADBDFB5EFE2D8919B8" trl="N">
+    <value column="Name" isTrl="Y" original="Payable Account">Cuenta por pagar</value>
+    <value column="PrintName" isTrl="Y" original="Payable Account">Cuenta por pagar</value>
+    <value column="Description" isTrl="Y" original="Payable Account">Cuenta por pagar</value>
+    <value column="Help" isTrl="N" original="">Cuenta por pagar</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="151202FB33E64EC48BADC77DED731402" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Configuration">Configuración de Viáticos</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Configuration">Configuración de Viáticos</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="15336EDE542B46118C99D7223F93C64C" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Accounting Type">Tipo de cuenta de viático</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Accounting Type">Tipo de cuenta de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Accounting Type">Tipo de cuenta de viático</value>
+    <value column="Help" isTrl="N" original="">Tipo de cuenta de viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="156DD56F017040428207F192982A9309" trl="N">
+    <value column="Name" isTrl="Y" original="Mobil Departure Time">Hora de salida a la movilización</value>
+    <value column="PrintName" isTrl="Y" original="Mobil Departure Time">Hora de salida a la movilización</value>
+    <value column="Description" isTrl="N" original="">Hora de salida a la movilización</value>
+    <value column="Help" isTrl="N" original="">Hora de salida a la movilización</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="159E533884524C4A8B8CBDB0FFFB563C" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Value Type">Tipo de valor de viático</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Value Type">Tipo de valor de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Value Type">Tipo de valor de viático</value>
+    <value column="Help" isTrl="N" original="">Tipo de valor de viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="18313D0CAC264C47B0FCBFEED076D10B" trl="N">
+    <value column="Name" isTrl="Y" original="Is Not Budgetable">No presupuestable</value>
+    <value column="PrintName" isTrl="Y" original="Is Not Budgetable">No presupuestable</value>
+    <value column="Description" isTrl="N" original="">No presupuestable</value>
+    <value column="Help" isTrl="N" original="">No presupuestable</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="18543EDDA04642C4AC799ADE8368C9EB" trl="N">
+    <value column="Name" isTrl="Y" original="Isrefundable">Reembolsable</value>
+    <value column="PrintName" isTrl="Y" original="Isrefundable">Reembolsable</value>
+    <value column="Description" isTrl="N" original="">Reembolsable</value>
+    <value column="Help" isTrl="N" original="">Reembolsable</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="1F0802B2762D45019CB7EB80DFD3CD5C" trl="N">
+    <value column="Name" isTrl="Y" original="Feeding Ammount">Importe de alimentación</value>
+    <value column="PrintName" isTrl="Y" original="Feeding Ammount">Importe de alimentación</value>
+    <value column="Description" isTrl="N" original="">Importe de alimentación</value>
+    <value column="Help" isTrl="N" original="">Importe de alimentación</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="20188BE171914732A6E41A66D11F86AA" trl="N">
+    <value column="Name" isTrl="Y" original="Application Date">Fecha de solicitud</value>
+    <value column="PrintName" isTrl="Y" original="Application Date">Fecha de solicitud</value>
+    <value column="Description" isTrl="N" original="">Fecha de solicitud</value>
+    <value column="Help" isTrl="N" original="">Fecha de solicitud</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="216C9ADB2FF643C280B8A953C1EF095F" trl="N">
+    <value column="Name" isTrl="Y" original="Cuadre Account">Cuenta cuadre</value>
+    <value column="PrintName" isTrl="N" original="Cuadre Account">Cuadre Account</value>
+    <value column="Description" isTrl="N" original="">Cuenta cuadre</value>
+    <value column="Help" isTrl="N" original="">Cuenta cuadre</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="28BB46752DA742298B9DC1426EE32BCB" trl="N">
+    <value column="Name" isTrl="Y" original="Transport Calculation Type">Tipo de cálculo de transporte</value>
+    <value column="PrintName" isTrl="Y" original="Transport Calculation Type">Tipo de cálculo de transporte</value>
+    <value column="Description" isTrl="N" original="">Tipo de cálculo de transporte</value>
+    <value column="Help" isTrl="N" original="">Tipo de cálculo de transporte</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="29EB1BFA4C614A459EAFC347074B19B2" trl="N">
+    <value column="Name" isTrl="N" original="Date From">Date From</value>
+    <value column="PrintName" isTrl="N" original="Date From">Date From</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2C285BECC4AD44F387E9B9A672D68656" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Movil_City_Value_ID">Movilización por ciudad</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Movil_City_Value_ID">Movilización por ciudad</value>
+    <value column="Description" isTrl="N" original="">Movilización por ciudad</value>
+    <value column="Help" isTrl="N" original="">Movilización por ciudad</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2D639F00C61C41FD9437FB9571B883E6" trl="N">
+    <value column="Name" isTrl="Y" original="Commission Result">Resultado de la comisión</value>
+    <value column="PrintName" isTrl="Y" original="Commission Result">Resultado de la comisión</value>
+    <value column="Description" isTrl="N" original="">Resultado de la comisión</value>
+    <value column="Help" isTrl="N" original="">Resultado de la comisión</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2E1847494BE14654B6F4612598450E36" trl="N">
+    <value column="Name" isTrl="Y" original="Reason for travel">Motivo del viaje</value>
+    <value column="PrintName" isTrl="Y" original="Reason for travel">Motivo del viaje</value>
+    <value column="Description" isTrl="N" original="">Motivo del viaje</value>
+    <value column="Help" isTrl="N" original="">Motivo del viaje</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="32ADF8FB3B71483288B13B58E817A6CA" trl="N">
+    <value column="Name" isTrl="Y" original="Arrival Time Limit">Hora límite de llegada</value>
+    <value column="PrintName" isTrl="Y" original="Arrival Time Limit">Hora límite de llegada</value>
+    <value column="Description" isTrl="N" original="">Hora límite de llegada</value>
+    <value column="Help" isTrl="N" original="">Hora límite de llegada</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="357DCBEAB3BF441CA6B88C56CE846774" trl="N">
+    <value column="Name" isTrl="Y" original="Hash Code">Código Hash</value>
+    <value column="PrintName" isTrl="Y" original="Hash Code">Código Hash</value>
+    <value column="Description" isTrl="N" original="">Código Hash</value>
+    <value column="Help" isTrl="N" original="">Código Hash</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="3FCFA619B0EC4E858DFE576FDA999149" trl="N">
+    <value column="Name" isTrl="Y" original="Arrival Date">Fecha de llegada</value>
+    <value column="PrintName" isTrl="Y" original="Arrival Date">Fecha de llegada</value>
+    <value column="Description" isTrl="N" original="">Fecha de llegada</value>
+    <value column="Help" isTrl="N" original="">Fecha de llegada</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="40CFF7F381ED493697064294021ABBE2" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+    <value column="Description" isTrl="N" original="">Liquidación de viático</value>
+    <value column="Help" isTrl="N" original="">Liquidación de viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4143D00662AC4ACD8E00994BE7E35491" trl="N">
+    <value column="Name" isTrl="Y" original="Get Lines">Crear líneas</value>
+    <value column="PrintName" isTrl="Y" original="Get Lines">Crear líneas</value>
+    <value column="Description" isTrl="N" original="">Crear líneas</value>
+    <value column="Help" isTrl="N" original="">Crear líneas</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4C230CF84D2A4A5788EE6C78BC1D14D0" trl="N">
+    <value column="Name" isTrl="Y" original="Zone">Zona</value>
+    <value column="PrintName" isTrl="Y" original="Zone">Zona</value>
+    <value column="Description" isTrl="Y" original="Zone">Zona</value>
+    <value column="Help" isTrl="N" original="">Zona</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4CBEDB908A1C4078AB714B9DDD49F9B6" trl="N">
+    <value column="Name" isTrl="Y" original="Route">Ruta</value>
+    <value column="PrintName" isTrl="Y" original="Route">Ruta</value>
+    <value column="Description" isTrl="N" original="">Ruta</value>
+    <value column="Help" isTrl="N" original="">Ruta</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="52B3199C5244481A9E4ED3729AE6E599" trl="N">
+    <value column="Name" isTrl="Y" original="Is Budgeted">Presupuestado</value>
+    <value column="PrintName" isTrl="Y" original="Is Budgeted">Presupuestado</value>
+    <value column="Description" isTrl="N" original="">Presupuestado</value>
+    <value column="Help" isTrl="N" original="">Presupuestado</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="52B641DC95ED4E71BFE42DE85B2A329E" trl="N">
+    <value column="Name" isTrl="Y" original="Additional Funds">Fondos adicionales</value>
+    <value column="PrintName" isTrl="Y" original="Additional Funds">Fondos adicionales</value>
+    <value column="Description" isTrl="N" original="">Fondos adicionales</value>
+    <value column="Help" isTrl="N" original="">Fondos adicionales</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="597BF0C373F440E7B13ACE89A9D69455" trl="N">
+    <value column="Name" isTrl="Y" original="From Day">Desde el día</value>
+    <value column="PrintName" isTrl="Y" original="From Day">Desde el día</value>
+    <value column="Description" isTrl="Y" original="From Day">Desde el día</value>
+    <value column="Help" isTrl="Y" original="From Day">Desde el día</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="5C51094F637A437386C740D03DDC8D75" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Viatical_Config_Ondays_Int_ID">Configuración internacional de viáticos por día</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Viatical_Config_Ondays_Int_ID">Configuración internacional de viáticos por día</value>
+    <value column="Description" isTrl="N" original="">Configuración internacional de viáticos por día</value>
+    <value column="Help" isTrl="N" original="">Configuración internacional de viáticos por día</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="5DC02B0650E6445085E70EA789D4C0FA" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Mobilization Amount">Presupuesto para movilización</value>
+    <value column="PrintName" isTrl="Y" original="Budget Mobilization Amount">Presupuesto para movilización</value>
+    <value column="Description" isTrl="N" original="">Presupuesto para movilización</value>
+    <value column="Help" isTrl="N" original="">Presupuesto para movilización</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="613B8686C46F483AAC91E6C67AC5CC5F" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Country_Rate_ID">Índice por país</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Country_Rate_ID">Índice por país</value>
+    <value column="Description" isTrl="N" original="">Índice por país</value>
+    <value column="Help" isTrl="N" original="">Índice por país</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="65A3080C5D624CE9A55FCAAC9F543BCF" trl="N">
+    <value column="Name" isTrl="Y" original="Number of days">Cantidad de días</value>
+    <value column="PrintName" isTrl="Y" original="Number of days">Cantidad de días</value>
+    <value column="Description" isTrl="Y" original="Number of days">Cantidad de días</value>
+    <value column="Help" isTrl="Y" original="Number of days">Cantidad de días</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="68FBA70BCEB34D02B727D0CB79968BBB" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+    <value column="Help" isTrl="N" original="">Liquidación de viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="6AA30515EFB644209BDF5CDCBECCB57A" trl="N">
+    <value column="Name" isTrl="Y" original="Certificate Line for Additional Values">Certificado para valores adicionales</value>
+    <value column="PrintName" isTrl="Y" original="Certificate Line for Additional Values">Certificado para valores adicionales</value>
+    <value column="Description" isTrl="Y" original="Certificate Line for Additional Values">Certificado para valores adicionales</value>
+    <value column="Help" isTrl="N" original="">Certificado para valores adicionales</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="72D33ED4481F444B8C4EF8490DA23D32" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Application">Solicitud de viáticos</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Application">Solicitud de viáticos</value>
+    <value column="Description" isTrl="Y" original="Viatical Application">Solicitud de viáticos</value>
+    <value column="Help" isTrl="N" original="">Solicitud de viáticos</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="7422C855981948D39991FFF5DCCB11B2" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Viatical_Value_ID">Valor de viático</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Viatical_Value_ID">Valor de viático</value>
+    <value column="Description" isTrl="N" original="">Valor de viático</value>
+    <value column="Help" isTrl="N" original="">Valor de viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="75B30C995E6F47AEB2FA00433F2FD92C" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Viatical_Config_Ondays_ID">Configuración nacional de viáticos por día</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Viatical_Config_Ondays_ID">Configuración nacional de viáticos por día</value>
+    <value column="Description" isTrl="N" original="">Configuración nacional de viáticos por día</value>
+    <value column="Help" isTrl="N" original="">Configuración nacional de viáticos por día</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="7E88735F189A4819AF5EECCF99B44E1F" trl="N">
+    <value column="Name" isTrl="N" original="Certificate Executed Value">Certificate Executed Value</value>
+    <value column="PrintName" isTrl="N" original="Certificate Executed Value">Certificate Executed Value</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="822A1791B928456C81F5E2B91190B792" trl="N">
+    <value column="Name" isTrl="Y" original="Infinity">En adelante</value>
+    <value column="PrintName" isTrl="Y" original="Infinity">En adelante</value>
+    <value column="Description" isTrl="N" original="">En adelante</value>
+    <value column="Help" isTrl="N" original="">En adelante</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="82CA5EB42A4147D39308A815FF602254" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Application">Solicitud de viático</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Application">Solicitud de viático</value>
+    <value column="Description" isTrl="N" original="">Solicitud de viático</value>
+    <value column="Help" isTrl="N" original="">Solicitud de viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="88EC19A165584B07AC6B291B1146C0FD" trl="N">
+    <value column="Name" isTrl="Y" original="Modifiers">Modificadores</value>
+    <value column="PrintName" isTrl="Y" original="Modifiers">Modificadores</value>
+    <value column="Description" isTrl="N" original="">Modificadores</value>
+    <value column="Help" isTrl="N" original="">Modificadores</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="8F92A02C70444CB18204A46D0AAB9EB2" trl="N">
+    <value column="Name" isTrl="Y" original="Feeding Value">Valor de alimentación</value>
+    <value column="PrintName" isTrl="Y" original="Feeding Value">Valor de alimentación</value>
+    <value column="Description" isTrl="N" original="">Valor de alimentación</value>
+    <value column="Help" isTrl="N" original="">Valor de alimentación</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="92EE952A21F44815BF43D0CDAA993A6C" trl="N">
+    <value column="Name" isTrl="Y" original="Departure Time">Hora de salida</value>
+    <value column="PrintName" isTrl="Y" original="Departure Time">Hora de salida</value>
+    <value column="Description" isTrl="N" original="">Hora de salida</value>
+    <value column="Help" isTrl="N" original="">Hora de salida</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="9558C8A8DB574747A8956C5612D1CF40" trl="N">
+    <value column="Name" isTrl="Y" original="Amount per day">Importe diario</value>
+    <value column="PrintName" isTrl="Y" original="Amount per day">Importe diario</value>
+    <value column="Description" isTrl="Y" original="Amount per day">Importe diario</value>
+    <value column="Help" isTrl="Y" original="Amount per day">Importe diario</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="97C42EDCA2184E3C8AD3672BD28E562C" trl="N">
+    <value column="Name" isTrl="Y" original="Level">Nivel</value>
+    <value column="PrintName" isTrl="Y" original="Level">Nivel</value>
+    <value column="Description" isTrl="Y" original="Level">Nivel</value>
+    <value column="Help" isTrl="N" original="">Nivel</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="9DEF55FA52F14967A83150203745F570" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Viaticalline_ID">Líneas de solicitud de viáticos</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Viaticalline_ID">Líneas de solicitud de viáticos</value>
+    <value column="Description" isTrl="N" original="">Líneas de solicitud de viáticos</value>
+    <value column="Help" isTrl="N" original="">Líneas de solicitud de viáticos</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A284782FCF4D4ADCAAA971B8E254C4BC" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Viatical_Transp_ID">Transporte de solicitud de viáticos</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Viatical_Transp_ID">Transporte de solicitud de viáticos</value>
+    <value column="Description" isTrl="N" original="">Transporte de solicitud de viáticos</value>
+    <value column="Help" isTrl="N" original="">Transporte de solicitud de viáticos</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="AB927E5C0EE54B49BF2EB71B54CEBDD5" trl="N">
+    <value column="Name" isTrl="Y" original="Mobil Arrival Time">Hora de regreso de la movilización</value>
+    <value column="PrintName" isTrl="Y" original="Mobil Arrival Time">Hora de regreso de la movilización</value>
+    <value column="Description" isTrl="N" original="">Hora de regreso de la movilización</value>
+    <value column="Help" isTrl="N" original="">Hora de regreso de la movilización</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B0916A1E17C6443EBADCA51055BA15FA" trl="N">
+    <value column="Name" isTrl="N" original="Ssve_Budget_Details_V_ID">Ssve_Budget_Details_V_ID</value>
+    <value column="PrintName" isTrl="N" original="Ssve_Budget_Details_V_ID">Ssve_Budget_Details_V_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B3147B1ACEA0411E8D86DB82A8A8CA90" trl="N">
+    <value column="Name" isTrl="N" original="Total Amountt Liquidation">Total Amountt Liquidation</value>
+    <value column="PrintName" isTrl="N" original="Total Amount Liquidation">Total Amount Liquidation</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B384E7DA8D2544AEA3965E291FF03A71" trl="N">
+    <value column="Name" isTrl="Y" original="Mobil Departure Date">Fecha de salida a la movilización</value>
+    <value column="PrintName" isTrl="Y" original="Mobil Departure Date">Fecha de salida a la movilización</value>
+    <value column="Description" isTrl="N" original="">Fecha de salida a la movilización</value>
+    <value column="Help" isTrl="N" original="">Fecha de salida a la movilización</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="BB2900FC776F416193B71D203D1F0CCF" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Amount">Importe del viático</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Amount">Importe del viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Amount">Importe del viático</value>
+    <value column="Help" isTrl="N" original="">Importe del viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="BD2EFB083F364A42A1D4E092CF27A7C2" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Additional Funds">Pesupuesto para fondos adicionales</value>
+    <value column="PrintName" isTrl="Y" original="Budgetadditfunds">Pesupuesto para fondos adicionales</value>
+    <value column="Description" isTrl="N" original="">Pesupuesto para fondos adicionales</value>
+    <value column="Help" isTrl="N" original="">Pesupuesto para fondos adicionales</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="BE30A35025EA46D987A009944E239EA3" trl="N">
+    <value column="Name" isTrl="Y" original="Budgetfeedingamt">Presupuesto para alimentación</value>
+    <value column="PrintName" isTrl="Y" original="Budgetfeedingamt">Presupuesto para alimentación</value>
+    <value column="Description" isTrl="N" original="">Presupuesto para alimentación</value>
+    <value column="Help" isTrl="N" original="">Presupuesto para alimentación</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C1988DE219DA4210AF0825226D9B4B84" trl="N">
+    <value column="Name" isTrl="Y" original="Expense Account">Cuenta de gasto</value>
+    <value column="PrintName" isTrl="Y" original="Expense Account">Cuenta de gasto</value>
+    <value column="Description" isTrl="Y" original="Expense Account">Cuenta de gasto</value>
+    <value column="Help" isTrl="N" original="">Cuenta de gasto</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C1F1AED29BAC479AAFD1CA07FF5A1489" trl="N">
+    <value column="Name" isTrl="Y" original="National Identification Document">Documento nacional de identificación</value>
+    <value column="PrintName" isTrl="Y" original="National Identification Document">Documento nacional de identificación</value>
+    <value column="Description" isTrl="Y" original="National Identification Document">Documento nacional de identificación</value>
+    <value column="Help" isTrl="Y" original="National Identification Document">Documento nacional de identificación</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C9775D5AD6E54DE18AE709932644E3D2" trl="N">
+    <value column="Name" isTrl="Y" original="Settle">Liquidar</value>
+    <value column="PrintName" isTrl="Y" original="Settle">Liquidar</value>
+    <value column="Description" isTrl="N" original="">Liquidar</value>
+    <value column="Help" isTrl="N" original="">Liquidar</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CA2073AF75E24CB284B566CC709DAA77" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Viatsettlementline_ID">Líneas de liquidación de viáticos</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Viatsettlementline_ID">Líneas de liquidación de viáticos</value>
+    <value column="Description" isTrl="N" original="">Líneas de liquidación de viáticos</value>
+    <value column="Help" isTrl="N" original="">Líneas de liquidación de viáticos</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CAA2223C8A414F96B44FC5C4E194F550" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Type">Tipo de viático</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Type">Tipo de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Type">Tipo de viático</value>
+    <value column="Help" isTrl="Y" original="Viatical Type">Tipo de viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CB40ACBA7C1048DC8B27AB05ECD65751" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Percent">Por ciento de viático</value>
+    <value column="PrintName" isTrl="Y" original="Viatical Percent">Por ciento de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Percent">Por ciento de viático</value>
+    <value column="Help" isTrl="Y" original="Viatical Percent">Por ciento de viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CB7CFA7CCBB74C27A315ACE4DF1367E8" trl="N">
+    <value column="Name" isTrl="Y" original="Mobil Arrival Date">Fecha de regreso de la movilización</value>
+    <value column="PrintName" isTrl="Y" original="Mobil Arrival Date">Fecha de regreso de la movilización</value>
+    <value column="Description" isTrl="N" original="">Fecha de regreso de la movilización</value>
+    <value column="Help" isTrl="N" original="">Fecha de regreso de la movilización</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CCD564EE1B9D491785EA531FDAEDBE22" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_City_Zone_ID">Ciudad por zona</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_City_Zone_ID">Ciudad por zona</value>
+    <value column="Description" isTrl="N" original="">Ciudad por zona</value>
+    <value column="Help" isTrl="N" original="">Ciudad por zona</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CD17ED3AFC184AB6B8FF1CDDFA603ADE" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Total Amount ">Viatical Total Amount </value>
+    <value column="PrintName" isTrl="N" original="Viatical Total Amount">Viatical Total Amount</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CF8206BF17B04749B7BE17BC0F22B8B1" trl="N">
+    <value column="Name" isTrl="Y" original="Mobilization Ammount">Importe de la mobilización</value>
+    <value column="PrintName" isTrl="Y" original="Mobilization Ammount">Importe de la mobilización</value>
+    <value column="Description" isTrl="N" original="">Importe de la mobilización</value>
+    <value column="Help" isTrl="N" original="">Importe de la mobilización</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D295DA10F2D64D0B94518BC027956B33" trl="N">
+    <value column="Name" isTrl="Y" original="Country Rate">Índice por país</value>
+    <value column="PrintName" isTrl="Y" original="Country Rate">Índice por país</value>
+    <value column="Description" isTrl="Y" original="Country Rate">Índice por país</value>
+    <value column="Help" isTrl="N" original="">Índice por país</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D2B3677E14FD4A1DBD237C9B05B413EC" trl="N">
+    <value column="Name" isTrl="Y" original="Receivable Account">Cuenta por cobrar</value>
+    <value column="PrintName" isTrl="Y" original="Receivable Account">Cuenta por cobrar</value>
+    <value column="Description" isTrl="N" original="">Cuenta por cobrar</value>
+    <value column="Help" isTrl="N" original="">Cuenta por cobrar</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D339988D14F44D2BAC99385D316CFF86" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Settlement Total Amount">Viatical Settlement Total Amount</value>
+    <value column="PrintName" isTrl="N" original="Viatical Settlement Total Amount">Viatical Settlement Total Amount</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D4FDF7661CA045F2A001BAD5DCBE2991" trl="N">
+    <value column="Name" isTrl="N" original="Certificate Actual_Value">Certificate Actual_Value</value>
+    <value column="PrintName" isTrl="N" original="Certificate Actual Value">Certificate Actual Value</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D9F4ACA87AB5403D9A5FFC642FAB0099" trl="N">
+    <value column="Name" isTrl="Y" original="Leave With Pay">Solicitud de licencia con remuneración</value>
+    <value column="PrintName" isTrl="Y" original="Leave With Pay">Solicitud de licencia con remuneración</value>
+    <value column="Description" isTrl="N" original="">Solicitud de licencia con remuneración</value>
+    <value column="Help" isTrl="N" original="">Solicitud de licencia con remuneración</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DA7FAB5D2E444A01860F0CC572CE3C99" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Position_Level_ID">Cargo por nivel</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Position_Level_ID">Cargo por nivel</value>
+    <value column="Description" isTrl="N" original="">Cargo por nivel</value>
+    <value column="Help" isTrl="N" original="">Cargo por nivel</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DB42877C2F5A46CB8C752003746BE35C" trl="N">
+    <value column="Name" isTrl="Y" original="Mobilization Value">Valor de la movilización</value>
+    <value column="PrintName" isTrl="Y" original="Mobilization Value">Valor de la movilización</value>
+    <value column="Description" isTrl="N" original="">Valor de la movilización</value>
+    <value column="Help" isTrl="N" original="">Valor de la movilización</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DE0CCFDCD4EC47E892669EA7BD208E70" trl="N">
+    <value column="Name" isTrl="Y" original="Departure Time Limit">Hora límite de salida</value>
+    <value column="PrintName" isTrl="Y" original="Departure Time Limit">Hora límite de salida</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DE26D945D5E54916B3F49BD1507F1109" trl="N">
+    <value column="Name" isTrl="N" original="Totalamt_Sett">Totalamt_Sett</value>
+    <value column="PrintName" isTrl="N" original="Totalamt_Sett">Totalamt_Sett</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E04A605ABC954F25860EF1FEF17C5CB1" trl="N">
+    <value column="Name" isTrl="Y" original="Employee City">Ciudad del empleado</value>
+    <value column="PrintName" isTrl="Y" original="Employee City">Ciudad del empleado</value>
+    <value column="Description" isTrl="N" original="">Ciudad del empleado</value>
+    <value column="Help" isTrl="N" original="">Ciudad del empleado</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E2A0BEF249E047E6923CEF87A167ADE1" trl="N">
+    <value column="Name" isTrl="Y" original="Commission People">Personas de la comisión</value>
+    <value column="PrintName" isTrl="Y" original="Commission People">Personas de la comisión</value>
+    <value column="Description" isTrl="N" original="">Personas de la comisión</value>
+    <value column="Help" isTrl="N" original="">Personas de la comisión</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E336EBB26C154443982D7DC761E8700A" trl="N">
+    <value column="Name" isTrl="Y" original="Subsistence Percent">Porciento de subsistencia</value>
+    <value column="PrintName" isTrl="Y" original="Subsistence Percent">Porciento de Subsistencia</value>
+    <value column="Description" isTrl="Y" original="Subsistence Percent">Porciento de Subsistencia</value>
+    <value column="Help" isTrl="Y" original="Subsistence Percent">Porciento de Subsistencia</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E4C1DB5925C3416BB31ACA28F9D79698" trl="N">
+    <value column="Name" isTrl="Y" original="Transportation Type">Tipo de transporte</value>
+    <value column="PrintName" isTrl="Y" original="Transportation Type">Tipo de transporte</value>
+    <value column="Description" isTrl="N" original="">Tipo de transporte</value>
+    <value column="Help" isTrl="N" original="">Tipo de transporte</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E9AF39DA41C24122A7F6DAFA4DA1E401" trl="N">
+    <value column="Name" isTrl="Y" original="Total Transp. Ammount">Importe total por transporte</value>
+    <value column="PrintName" isTrl="Y" original="Total Transp. Ammount">Importe total por transporte</value>
+    <value column="Description" isTrl="Y" original="Total Transportation Ammount">Importe total por transporte</value>
+    <value column="Help" isTrl="Y" original="Total Transportation Ammount">Importe total por transporte</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="EBB71A3B290249798472091579BD10D5" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Business Partner ">Viatical Business Partner </value>
+    <value column="PrintName" isTrl="N" original="Viatical Business Partner">Viatical Business Partner</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="EC8998E6E2FE487EB8DF06878F491E53" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Viatsettl_Transp_ID">Transporte de liquidación de viáticos</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Viatsettl_Transp_ID">Transporte de liquidación de viáticos</value>
+    <value column="Description" isTrl="N" original="">Transporte de liquidación de viáticos</value>
+    <value column="Help" isTrl="N" original="">Transporte de liquidación de viáticos</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="EECA2400518842D3926DFB99DDED6F89" trl="N">
+    <value column="Name" isTrl="Y" original="Total Viatical Ammount">Importe total del viático</value>
+    <value column="PrintName" isTrl="Y" original="Total Viatical Ammount">Importe total del viático</value>
+    <value column="Description" isTrl="Y" original="Total Viatical Ammount">Importe total del viático</value>
+    <value column="Help" isTrl="Y" original="Total Viatical Ammount">Importe total del viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="EF5D8F49F9294EFB8EC449DE26702744" trl="N">
+    <value column="Name" isTrl="Y" original="Arrival Time">Hora de llegada</value>
+    <value column="PrintName" isTrl="Y" original="Arrival Time">Hora de llegada</value>
+    <value column="Description" isTrl="N" original="">Hora de llegada</value>
+    <value column="Help" isTrl="N" original="">Hora de llegada</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F148D903140E458B803089850810FB90" trl="N">
+    <value column="Name" isTrl="Y" original="Mobilization City">Ciudad de la movilización</value>
+    <value column="PrintName" isTrl="Y" original="Mobilization City">Ciudad de la movilización</value>
+    <value column="Description" isTrl="N" original="">Ciudad de la movilización</value>
+    <value column="Help" isTrl="N" original="">Ciudad de la movilización</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F2FD056820754E40B6E392E728D4B7F3" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Value">Valor de viático</value>
+    <value column="PrintName" isTrl="Y" original="Viaticalvalue">Valor de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Value">Valor de viático</value>
+    <value column="Help" isTrl="Y" original="Viatical Value">Valor de viático</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F57FEBDBFA06486EBB3869729AC5EE68" trl="N">
+    <value column="Name" isTrl="Y" original="Is Based">Tiene sede</value>
+    <value column="PrintName" isTrl="Y" original="Is Based">Tiene sede</value>
+    <value column="Description" isTrl="N" original="">Tiene sede</value>
+    <value column="Help" isTrl="N" original="">Tiene sede</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F7129B0EE9244A31A7C61C51B6A97FDD" trl="N">
+    <value column="Name" isTrl="Y" original="Ssve_Viatical_Config_Acct_ID">Configuración de cuentas para viáticos</value>
+    <value column="PrintName" isTrl="Y" original="Ssve_Viatical_Config_Acct_ID">Configuración de cuentas para viáticos</value>
+    <value column="Description" isTrl="N" original="">Configuración de cuentas para viáticos</value>
+    <value column="Help" isTrl="N" original="">Configuración de cuentas para viáticos</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F7682843AD23422891077B1A7069E754" trl="N">
+    <value column="Name" isTrl="Y" original="Is Based Percent">Porciento con sede</value>
+    <value column="PrintName" isTrl="Y" original="Is Based Percent">Porciento con sede</value>
+    <value column="Description" isTrl="Y" original="Is Based Percent">Porciento con sede</value>
+    <value column="Help" isTrl="Y" original="Is Based Percent">Porciento con sede</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="FF4A4AB87ED44B72AADDA7F404988893" trl="N">
+    <value column="Name" isTrl="Y" original="Employee">Empleado</value>
+    <value column="PrintName" isTrl="Y" original="Employee">Empleado</value>
+    <value column="Description" isTrl="Y" original="Employee">Empleado</value>
+    <value column="Help" isTrl="Y" original="Employee">Empleado</value>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

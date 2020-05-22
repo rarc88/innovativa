@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_A_AMORTIZATION_TRG">
+    <trigger name="SFB_A_AMORTIZATION_TRG" table="A_AMORTIZATION" fires="before" insert="false" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+
+  v_Count NUMBER;
+  
+BEGIN
+
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+    
+  IF UPDATING THEN
+    IF(:OLD.Processed='Y' AND :NEW.Processed='N') THEN
+    
+      SELECT COUNT(*) INTO v_Count
+      FROM SFB_BUDGET_CERTIFICATE
+      WHERE A_Amortization_ID = :OLD.A_Amortization_ID AND Load_Amortization = 'Y';
+      
+      IF (v_Count > 0) THEN
+      
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_AmortizationUsed@') ;
+        
+      END IF;
+    
+    END IF;
+  
+  END IF;
+END SFB_A_AMORTIZATION_TRG]]></body>
+    </trigger>
+  </database>

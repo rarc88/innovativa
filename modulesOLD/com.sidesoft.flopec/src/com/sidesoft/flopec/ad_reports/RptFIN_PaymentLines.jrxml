@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptFIN_PaymentLines.jrxml" pageWidth="595" pageHeight="115" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.1000000000000032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FIN_PAYMENT_ID" class="java.lang.String"/>
+	<parameter name="AD_LANGUAGE" class="java.lang.String"/>
+	<parameter name="BPARTNER" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DOCTYPE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select bank_name, bank_account,dr,cr,case when $P{DOCTYPE} = 'N' then accountp  when $P{DOCTYPE} = 'Y' then account_p1 end as account_p,user_name  from (SELECT bank.name as Bank_Name,
+     bank.accountno as Bank_Account,
+     acct.amtacctdr as dr,
+     acct.amtacctcr as cr,
+     case when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='D' and ce.name ='PROVEEDORES' then ce.value || ' - ' ||  $P{BPARTNER}
+     when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='D' and ce.name <> 'PROVEEDORES' then ce.value || ' - ' || ce.name
+     when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='H' then (ce.value|| ' - ' || bank.name)
+     end as accountp,
+     case when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='H' and ce.name ='PROVEEDORES' then ce.value || ' - ' || $P{BPARTNER}
+     when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='H' and ce.name <> 'PROVEEDORES' then ce.value || ' - ' || ce.name
+     when (case when acct.amtacctdr=0 then 'H' when acct.amtacctcr=0 then 'D' end)='D' then ce.value || ' - ' || bank.name
+     end as account_p1,
+     ad.name as user_name
+   FROM fin_payment p
+  left join fact_acct acct on acct.record_id =  p.fin_payment_id
+  left join c_elementvalue ce on ce.c_elementvalue_id = acct.account_id
+  left join fin_financial_account bank on bank.fin_financial_account_id = p.fin_financial_account_id
+  left join ad_user ad on ad.ad_user_id = p.createdby
+  WHERE p.fin_payment_id =  $P{FIN_PAYMENT_ID}
+) A]]>
+	</queryString>
+	<field name="bank_name" class="java.lang.String"/>
+	<field name="bank_account" class="java.lang.String"/>
+	<field name="dr" class="java.math.BigDecimal"/>
+	<field name="cr" class="java.math.BigDecimal"/>
+	<field name="account_p" class="java.lang.String"/>
+	<field name="user_name" class="java.lang.String"/>
+	<variable name="GRANTOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{dr}]]></variableExpression>
+	</variable>
+	<variable name="SumTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{cr}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="0" width="304" height="10"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_p}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="344" y="0" width="100" height="10"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{dr}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="444" y="0" width="100" height="10"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{cr}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="555" y="0" width="1" height="11"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="11"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="115" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="82" y="18" width="172" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bank_account}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="18" width="70" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CTA.CTE NO.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="344" y="4" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{GRANTOTAL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="444" y="4" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SumTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="85" width="28" height="17">
+					<printWhenExpression><![CDATA[$P{AD_LANGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[T.I:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="68" width="114" height="20">
+					<printWhenExpression><![CDATA[$P{AD_LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ELABORADO POR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="65" width="118" height="20">
+					<printWhenExpression><![CDATA[$P{AD_LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECIBI CONFORME:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="83" width="28" height="20">
+					<printWhenExpression><![CDATA[$P{AD_LANGUAGE}.equals("es_EC")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C.I.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="65" width="118" height="20">
+					<printWhenExpression><![CDATA[$P{AD_LANGUAGE}.equals("en_US")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECEIVED UNDER:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="89" width="114" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{user_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="4" width="286" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bank_name}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1" height="112"/>
+			</line>
+			<line>
+				<reportElement x="0" y="111" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="555" y="0" width="1" height="112"/>
+			</line>
+			<line>
+				<reportElement x="114" y="68" width="1" height="44"/>
+			</line>
+			<line>
+				<reportElement x="1" y="67" width="114" height="1"/>
+			</line>
+			<line>
+				<reportElement x="344" y="4" width="164" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

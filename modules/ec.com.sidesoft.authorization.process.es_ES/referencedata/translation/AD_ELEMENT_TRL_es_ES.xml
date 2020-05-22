@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="07F90AB60A2446C8834938D7F606CA66" trl="Y">
+    <value column="Name" isTrl="Y" original="EM_Ecsap_Auth_Level_ID">Nivel Autorización</value>
+    <value column="PrintName" isTrl="Y" original="EM_Ecsap_Auth_Level_ID">Nivel Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="3EF7347846AB4C14A0FB05667C43B1E3" trl="Y">
+    <value column="Name" isTrl="Y" original="EM_Ecsap_Subject_Authorization">Susceptible para autorización</value>
+    <value column="PrintName" isTrl="Y" original="EM_Ecsap_Subject_Authorization">Susceptible para autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4FF2ECA1CE174896BB40198A646E6ABA" trl="Y">
+    <value column="Name" isTrl="Y" original="Date_Authorization">Fecha de Autorización</value>
+    <value column="PrintName" isTrl="Y" original="Date_Authorization">Fecha de Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="57A5466FF76B424F857BB94388D6D88D" trl="Y">
+    <value column="Name" isTrl="Y" original="EM_Ecsap_Reject">Rechazar</value>
+    <value column="PrintName" isTrl="Y" original="EM_Ecsap_Reject">Rechazar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="64614E8D8BB14B2A80B1C248FDE93E81" trl="Y">
+    <value column="Name" isTrl="Y" original="EM_Ecsap_Sign_Digital">Contraseña Firma Electronica</value>
+    <value column="PrintName" isTrl="Y" original="EM_Ecsap_Sign_Digital">Contraseña Firma Electronica</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="6C5DD2D6CEF344EFB146B9B677275269" trl="N">
+    <value column="Name" isTrl="N" original="Ecsap_Autho_Invoice_ID">Ecsap_Autho_Invoice_ID</value>
+    <value column="PrintName" isTrl="N" original="Ecsap_Autho_Invoice_ID">Ecsap_Autho_Invoice_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="75D0A4DFB8774F1CBFF4FC86B2762D5A" trl="Y">
+    <value column="Name" isTrl="Y" original="Authorization_Sign">Firma</value>
+    <value column="PrintName" isTrl="Y" original="Authorization_Sign">Firma</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="7F8BACEFB618488E9DD533634A623F7A" trl="Y">
+    <value column="Name" isTrl="Y" original="Reason">Motivo</value>
+    <value column="PrintName" isTrl="Y" original="Reason">Motivo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="8A3FC65F5F184483921DCE5C215D60FE" trl="Y">
+    <value column="Name" isTrl="Y" original="Ecsap_Reason_Rejection_ID">Información</value>
+    <value column="PrintName" isTrl="Y" original="Ecsap_Reason_Rejection_ID">Información</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="969A0E8A18254EB6A3DEC26AD2856C56" trl="Y">
+    <value column="Name" isTrl="Y" original="Ecsap_Authorization_Level_ID">NIvel Autorizado</value>
+    <value column="PrintName" isTrl="Y" original="Ecsap_Authorization_Level_ID">NIvel Autorizado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="96CAC66548314F77A2238C7979CBC200" trl="Y">
+    <value column="Name" isTrl="Y" original="EM_Ecsap_Authorization">Autorizar</value>
+    <value column="PrintName" isTrl="Y" original="EM_Ecsap_Authorization">Autorizar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B7D0D0EA01294F02BFC0B0C926CCF5B6" trl="Y">
+    <value column="Name" isTrl="Y" original="EM_Ecsap_Sign">Firmar</value>
+    <value column="PrintName" isTrl="Y" original="EM_Ecsap_Sign">Firmar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D119FF3EFD7A4249B9DFECE744FDCFB2" trl="Y">
+    <value column="Name" isTrl="Y" original="Code - ValidationCode">Nivel de Autorización</value>
+    <value column="PrintName" isTrl="Y" original="Code - ValidationCode">Nivel de Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D52E7AB1652440E4A639F716047A54D4" trl="N">
+    <value column="Name" isTrl="N" original="Ecsap_Autho_Line_ID">Ecsap_Autho_Line_ID</value>
+    <value column="PrintName" isTrl="N" original="Ecsap_Autho_Line_ID">Ecsap_Autho_Line_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D8DC0801BE274095B2108E92E056CE57" trl="Y">
+    <value column="Name" isTrl="Y" original="Description">Descripción</value>
+    <value column="PrintName" isTrl="Y" original="Description">Descripción</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DA93D97E3292444090C8D3027911C209" trl="N">
+    <value column="Name" isTrl="N" original="EM_Ecsap_Signed">EM_Ecsap_Signed</value>
+    <value column="PrintName" isTrl="N" original="EM_Ecsap_Signed">EM_Ecsap_Signed</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="FFA150CC1D8C41418FDF5FB2750443BD" trl="Y">
+    <value column="Name" isTrl="Y" original="Authorization_Level">Autorización</value>
+    <value column="PrintName" isTrl="Y" original="Authorization_Level">Autorización</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

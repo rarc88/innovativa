@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_JOURNALLINE_TRG">
+    <trigger name="SFB_JOURNALLINE_TRG" table="GL_JOURNALLINE" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+  /*************************************************************************
+  * The contents of this file are subject to the Compiere Public
+  * License 1.1 ("License"); You may not use this file except in
+  * compliance with the License. You may obtain a copy of the License in
+  * the legal folder of your Openbravo installation.
+  * Software distributed under the License is distributed on an
+  * "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  * implied. See the License for the specific language governing rights
+  * and limitations under the License.
+  * The Original Code is  Compiere  ERP &  Business Solution
+  * The Initial Developer of the Original Code is Jorg Janke and ComPiere, Inc.
+  * Portions created by Jorg Janke are Copyright (C) 1999-2001 Jorg Janke,
+  * parts created by ComPiere are Copyright (C) ComPiere, Inc.;
+  * All Rights Reserved.
+  * Contributor(s): Openbravo SLU
+  * Contributions are Copyright (C) 2001-2008 Openbravo, S.L.U.
+  *
+  * Specifically, this derivative work is based upon the following Compiere
+  * file and version.
+  *************************************************************************
+  *  Journal
+  * - Update Journal Batch Totals if exists (insert is always 0)
+  */
+  
+  V_Count_Acct NUMERIC := 0;
+v_sql VARCHAR(100);
+  v_docstatus VARCHAR(32);
+
+BEGIN
+
+  IF AD_isTriggerEnabled()='N' THEN
+    RETURN;
+  END IF;
+  
+  -- Check Budget Controled Acct
+  IF (INSERTING OR UPDATING) THEN
+  
+    v_sql:= 'SELECT docstatus AS doc  FROM GL_JOURNAL WHERE GL_JOURNAL_ID =  ''' || :new.gl_journal_id || '''';
+    
+   EXECUTE IMMEDIATE v_sql INTO v_docstatus;
+   
+    SELECT count(*) INTO V_Count_Acct
+    From Sfb_Budget_Item_Account Bia
+    WHERE bia.account_id = (SELECT vc.account_id FROM c_validcombination vc WHERE vc.c_validcombination_id = :new.c_validcombination_id);
+    IF (V_COUNT_ACCT > 0) AND (:new.em_sfb_budget_cert_line_id is null) AND (:new.em_sfbin_affectincomebudget = 'N') AND v_docstatus='CO' THEN
+      RAISE_APPLICATION_ERROR(-20000, '@SFB_NoBudgetCertificateLine@');
+    END IF;
+  END IF;
+  
+END SFB_JOURNALLINE_TRG
+]]></body>
+    </trigger>
+  </database>

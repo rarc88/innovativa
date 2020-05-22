@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.22845"/>
+    <columnDataChange tablename="AD_COLUMN" columnname="ISSESSIONATTR" pkRow="0F53F8D3FBC1A886E050007F0101202A">
+      <oldValue><![CDATA[N]]></oldValue>
+      <newValue><![CDATA[Y]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="ISMANDATORY" pkRow="4C1A664E16D24E7A82AE4D3182D38E89">
+      <oldValue><![CDATA[N]]></oldValue>
+      <newValue><![CDATA[Y]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="AD_VAL_RULE_ID" pkRow="A5FFFBE806054D96A57940504523270A">
+      <oldValue/>
+      <newValue><![CDATA[10C094BF2CED464499EF4EA291CDCB04]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="ISMANDATORY" pkRow="A5FFFBE806054D96A57940504523270A">
+      <oldValue><![CDATA[N]]></oldValue>
+      <newValue><![CDATA[Y]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="AD_VAL_RULE_ID" pkRow="DA6912D6561249BDAEB69DF65AC3C1B7">
+      <oldValue/>
+      <newValue><![CDATA[34FAD987873D4108A56AC7C86867A311]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_COLUMN" columnname="AD_VAL_RULE_ID" pkRow="E52CE4645F624647AFB46F546B9216C5">
+      <oldValue/>
+      <newValue><![CDATA[B3162B5D898D47D19831AAFA40EDC2F1]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_FIELD" columnname="ISDISPLAYED" pkRow="87CB5B97D280437D9F6E6B3B62BB1F59">
+      <oldValue><![CDATA[Y]]></oldValue>
+      <newValue><![CDATA[N]]></newValue>
+    </columnDataChange>
+    <columnDataChange tablename="AD_FIELD" columnname="ISDISPLAYED" pkRow="9532BC72BB3D4CF1BF34B2695940820F">
+      <oldValue><![CDATA[Y]]></oldValue>
+      <newValue><![CDATA[N]]></newValue>
+    </columnDataChange>
+  </vector>

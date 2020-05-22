@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSVE_VIATICAL_SETTL_LINE_TRG">
+    <trigger name="SSVE_VIATICAL_SETTL_LINE_TRG" table="SSVE_VIATICAL_SETTLEMENT" fires="after" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+
+
+/*************************************************************************
+* The contents of this file are subject to the Openbravo  Public  License
+* Version  1.0  (the  "License"),  being   the  Mozilla   Public  License
+* Version 1.1  with a permitted attribution clause; you may not  use this
+* file except in compliance with the License. You  may  obtain  a copy of
+* the License at http://www.openbravo.com/legal/license.html
+* Software distributed under the License  is  distributed  on  an "AS IS"
+* basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+* License for the specific  language  governing  rights  and  limitations
+* under the License.
+* The Original Code is Openbravo ERP.
+* The Initial Developer of the Original Code is Openbravo SL
+* All portions are Copyright (C) 2001-2006 Openbravo SL
+* All Rights Reserved.
+* Contributor(s):  ______________________________________.
+************************************************************************/
+TYPE RECORD IS REF CURSOR;
+CUR_VIATICALLINE RECORD;
+
+V_GETLINES BOOLEAN := FALSE;
+V_HASLINES NUMBER:= 0;
+        
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF INSERTING THEN V_GETLINES := TRUE;
+  ELSIF UPDATING AND :OLD.SSVE_VIATICAL_ID <> :NEW.SSVE_VIATICAL_ID THEN V_GETLINES := TRUE;
+  END IF;
+  
+  SELECT COUNT(*)
+  INTO V_HASLINES
+  FROM SSVE_VIATSETTL_TRANSP VST
+  WHERE VST.SSVE_VIATICAL_SETTLEMENT_ID = :NEW.SSVE_VIATICAL_SETTLEMENT_ID;
+  
+  IF V_GETLINES AND V_HASLINES = 0 THEN
+    FOR CUR_VIATICALLINE IN
+      (
+        SELECT  VT.DESCRIPTION, VT.LINE, VT.LINENETAMT, VT.TRANSPORTATIONTYPE, 
+                VT.ISREFUNDABLE, VT.NAME, VT.ROUTE, VT.DEPARTUREDATE, 
+                VT.ARRIVALDATE, VT.DEPARTURETIME, VT.ARRIVALTIME, 
+                VT.ISNOTBUDGETABLE, VT.HASHCODE, VT.SFB_BUDGET_CERT_LINE_ID
+        FROM SSVE_VIATICAL_TRANSP VT
+        WHERE VT.SSVE_VIATICAL_ID = :NEW.SSVE_VIATICAL_ID
+      )
+    LOOP
+      INSERT INTO SSVE_VIATSETTL_TRANSP 
+      (
+        SSVE_VIATSETTL_TRANSP_ID, AD_CLIENT_ID, AD_ORG_ID, ISACTIVE,
+        CREATED, CREATEDBY, UPDATED, UPDATEDBY,
+        DESCRIPTION, SSVE_VIATICAL_SETTLEMENT_ID, LINE, LINENETAMT,
+        TRANSPORTATIONTYPE, ISREFUNDABLE, NAME, ROUTE,
+        DEPARTUREDATE, ARRIVALDATE, DEPARTURETIME, ARRIVALTIME,
+        ISNOTBUDGETABLE, HASHCODE, SFB_BUDGET_CERT_LINE_ID
+      )
+      VALUES
+      (
+        GET_UUID(), :NEW.AD_CLIENT_ID, :NEW.AD_ORG_ID, 'Y', 
+        now(), :NEW.CREATEDBY, now(), :NEW.UPDATEDBY, 
+        CUR_VIATICALLINE.DESCRIPTION, :NEW.SSVE_VIATICAL_SETTLEMENT_ID, CUR_VIATICALLINE.LINE, CUR_VIATICALLINE.LINENETAMT, 
+        CUR_VIATICALLINE.TRANSPORTATIONTYPE, CUR_VIATICALLINE.ISREFUNDABLE, CUR_VIATICALLINE.NAME, CUR_VIATICALLINE.ROUTE, 
+        CUR_VIATICALLINE.DEPARTUREDATE, CUR_VIATICALLINE.ARRIVALDATE, CUR_VIATICALLINE.DEPARTURETIME, CUR_VIATICALLINE.ARRIVALTIME,
+        CUR_VIATICALLINE.ISNOTBUDGETABLE, CUR_VIATICALLINE.HASHCODE, CUR_VIATICALLINE.SFB_BUDGET_CERT_LINE_ID
+      );
+    END LOOP; -- End Get Parameter
+  END IF;
+
+END SSVE_VIATICAL_SETTL_LINE_TRG
+]]></body>
+    </trigger>
+  </database>

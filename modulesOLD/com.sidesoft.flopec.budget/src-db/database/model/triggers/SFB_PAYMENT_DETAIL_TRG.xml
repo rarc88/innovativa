@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_PAYMENT_DETAIL_TRG">
+    <trigger name="SFB_PAYMENT_DETAIL_TRG" table="FIN_PAYMENT_DETAIL" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+v_doctype_id          VARCHAR2(32);
+v_isreceipt           CHAR(1);
+v_isnotbudgetable     CHAR(1);
+v_count               INTEGER;
+v_acct                INTEGER := 0;
+
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (INSERTING OR UPDATING) THEN
+
+    -- Select payment data
+    SELECT c_doctype_id, isreceipt, em_sfb_isnotbudgetable INTO v_doctype_id, v_isreceipt, v_isnotbudgetable
+    FROM FIN_PAYMENT
+    WHERE fin_payment_id = :new.fin_payment_id;
+
+    -- Is a Document Type that has been enabled for budget.
+    SELECT count(*) INTO v_count
+    FROM SFB_BUDGET_DOCTYPE
+    WHERE AD_ISORGINCLUDED(:new.ad_org_id, ad_org_id, :new.ad_client_id) <> -1  AND c_doctype_id = v_doctype_id AND isactive = 'Y';
+
+    IF (v_isreceipt = 'N' AND v_count > 0 AND v_isnotbudgetable = 'N') THEN
+
+      SELECT COUNT(*) INTO V_ACCT
+      FROM SFB_BUDGET_ITEM_ACCOUNT BIA
+      JOIN C_ELEMENTVALUE EV ON BIA.ACCOUNT_ID = EV.C_ELEMENTVALUE_ID
+      JOIN C_VALIDCOMBINATION VC ON VC.ACCOUNT_ID = EV.C_ELEMENTVALUE_ID
+      JOIN C_GLITEM_ACCT GLIA ON GLIA.GLITEM_DEBIT_ACCT = VC.C_VALIDCOMBINATION_ID OR GLIA.GLITEM_CREDIT_ACCT = VC.C_VALIDCOMBINATION_ID
+      WHERE GLIA.C_GLITEM_ID = :new.c_glitem_id;
+
+      -- Check Mandatory fields for budget.
+      IF (:new.em_sfb_c_costcenter_id IS NOT NULL AND :new.em_sfb_user1_id IS NULL) THEN
+
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_NoUser1Dimension@');
+
+      ELSIF (:new.c_glitem_id IS NULL) THEN
+
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_NoGLItem@');
+
+      ELSIF (:new.em_sfb_budget_cert_line_id IS NULL) THEN
+
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_NoBudgetCertificateLine@');
+
+      ELSIF (v_acct = 0) THEN
+
+        RAISE_APPLICATION_ERROR(-20000, '@SFB_NoValidGLItem@');
+
+      END IF;
+
+    END IF;  
+
+  END IF;  
+
+  END SFB_PAYMENT_DETAIL_TRG
+]]></body>
+    </trigger>
+  </database>

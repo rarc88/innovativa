@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="21F4F4A442D042699A182EBB64FB10DA" trl="N">
+    <value column="Name" isTrl="Y" original="Transport Calculation Type">Tipo de cálculo de transporte</value>
+    <value column="Description" isTrl="Y" original="Transport Calculation Type">Tipo de cálculo de transporte</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="37E950306064456F9118C1BA337B6911" trl="N">
+    <value column="Name" isTrl="N" original="EM_Ssve_Viatical_ID">EM_Ssve_Viatical_ID</value>
+    <value column="Description" isTrl="N" original="Viatical Application">Viatical Application</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7A0EA717512F4E48A043522965403718" trl="N">
+    <value column="Name" isTrl="N" original="EM_Ssve_Viat_Settlement_ID">EM_Ssve_Viat_Settlement_ID</value>
+    <value column="Description" isTrl="N" original="Viatical Settlement">Viatical Settlement</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="865C643CA133494ABCF22E38121D9C11" trl="N">
+    <value column="Name" isTrl="N" original="Mobilization City Viatical">Mobilization City Viatical</value>
+    <value column="Description" isTrl="N" original="Mobilization City Viatical">Mobilization City Viatical</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="8E6FD40122D34177AD1F6B348425B3FB" trl="N">
+    <value column="Name" isTrl="N" original="Employee City Viatical">Employee City Viatical</value>
+    <value column="Description" isTrl="N" original="Employee City Viatical">Employee City Viatical</value>
+    <value column="Help" isTrl="N" original="Employee City Viatical">Employee City Viatical</value>
+  </row>
+  <row id="9F93A3FA89974095945860EA870B7776" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Type">Tipo de viático</value>
+    <value column="Description" isTrl="Y" original="Viatical Type">Tipo de viático</value>
+    <value column="Help" isTrl="Y" original="Viatical Type">Tipo de viático</value>
+  </row>
+  <row id="AE0B328126634E42BA2FB434B66552F4" trl="N">
+    <value column="Name" isTrl="Y" original="TransportationType">Tipo de transporte</value>
+    <value column="Description" isTrl="Y" original="TransportationType">Tipo de transporte</value>
+    <value column="Help" isTrl="Y" original="TransportationType">Tipo de transporte</value>
+  </row>
+  <row id="B811C8DED6DD4BD08A4D80015408A571" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Scope">Viatical Scope</value>
+    <value column="Description" isTrl="N" original="Viatical Scope">Viatical Scope</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E6DEDDAFBAEC41948A1617778417435D" trl="N">
+    <value column="Name" isTrl="N" original="Settle_Unsettle">Settle_Unsettle</value>
+    <value column="Description" isTrl="N" original="Viatical Settlement Settle/Unsettle">Viatical Settlement Settle/Unsettle</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

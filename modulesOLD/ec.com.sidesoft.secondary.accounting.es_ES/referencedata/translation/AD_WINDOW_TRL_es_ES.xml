@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="B487A6D6A9334751AE62DF02CBFBD2CD" trl="N">
+    <value column="Name" isTrl="Y" original="Simple G / L Secondary Journal">Simple G/L Journal Secundario</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="D3275F7E6F7D46E3B8D68458DC5C1B21" trl="N">
+    <value column="Name" isTrl="Y" original="Match Account">Homologación de cuentas</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

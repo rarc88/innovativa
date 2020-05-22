@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE USER2">
+    <table name="USER2" primaryKey="USER2_KEY">
+      <column name="EM_SSFL_USER1_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_C_COSTCENTER_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_STARTDATE" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default><![CDATA[SYSDATE]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_ENDDATE" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default><![CDATA[SYSDATE]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_VALUERECAP1" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_VALUERECAP2" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_VALUERECAP3" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_CUSTOMER_VOYAGE_NO" primaryKey="false" required="false" type="VARCHAR" size="40" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_BROKERVALUE" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_TYPE_RECAP" primaryKey="false" required="true" type="VARCHAR" size="60" autoIncrement="false">
+        <default><![CDATA[1]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_NAME" primaryKey="false" required="false" type="VARCHAR" size="60" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_BROKERVALUE2" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="C_BPARTNER" name="EM_SSFL_USER2_C_BPARTNER">
+        <reference local="EM_SSFL_BROKERVALUE" foreign="C_BPARTNER_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="C_COSTCENTER" name="EM_SSFL_USER2_C_COSTCENTER">
+        <reference local="EM_SSFL_C_COSTCENTER_ID" foreign="C_COSTCENTER_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSFL_RECAP" name="EM_SSFL_USER2_SSFL_RECAP1">
+        <reference local="EM_SSFL_VALUERECAP1" foreign="SSFL_RECAP_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSFL_RECAP" name="EM_SSFL_USER2_SSFL_RECAP2">
+        <reference local="EM_SSFL_VALUERECAP2" foreign="SSFL_RECAP_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSFL_RECAP" name="EM_SSFL_USER2_SSFL_RECAP3">
+        <reference local="EM_SSFL_VALUERECAP3" foreign="SSFL_RECAP_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="USER1" name="EM_SSFL_USER2_USER1">
+        <reference local="EM_SSFL_USER1_ID" foreign="USER1_ID"/>
+      </foreign-key>
+    </table>
+  </database>

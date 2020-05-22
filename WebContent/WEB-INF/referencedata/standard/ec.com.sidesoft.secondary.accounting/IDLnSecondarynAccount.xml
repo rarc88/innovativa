@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><ob:Openbravo xmlns:ob="http://www.openbravo.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <IDL_Entities id="8F9FFDEDDFBD45D48DCF2DA0497CB5A3" identifier="Importar Arbol de Cuentas Secundario">
+    <id>8F9FFDEDDFBD45D48DCF2DA0497CB5A3</id>
+    <active>true</active>
+    <creationDate transient="true">2019-07-17T12:41:46.457Z</creationDate>
+    <createdBy transient="true" id="100" entity-name="ADUser" identifier="Openbravo"/>
+    <updated transient="true">2019-07-18T10:35:37.672Z</updated>
+    <updatedBy transient="true" id="100" entity-name="ADUser" identifier="Openbravo"/>
+    <name>Importar Arbol de Cuentas Secundario</name>
+    <description>Importar Arbol de Cuentas Secundario</description>
+    <javaClassName>ec.com.sidesoft.secondary.accounting.ImportSecondaryAccount</javaClassName>
+  </IDL_Entities>
+</ob:Openbravo>

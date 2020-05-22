@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SQB_BPARTNER_TRG">
+    <trigger name="SQB_BPARTNER_TRG" table="SQB_QUICKBILLING" fires="after" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+  v_OrgID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_ClientID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_UpdatedBy CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_ConfigQuickBillingID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_ProductID  CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_QuickBillingID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_NewQuickBillingLineID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_PriceListID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+
+  v_TaxCalculate NUMBER; --OBTG:NUMBER--
+  v_PriceStandar NUMBER;	--OBTG:NUMBER--
+  v_PriceList NUMBER; --OBTG:NUMBER--
+  v_VAT NUMBER; --OBTG:NUMBER--
+  v_TotalVAT NUMBER; --OBTG:NUMBER--
+  v_TotalTaxByLines NUMBER; --OBTG:NUMBER--    
+    v_billFrom      VARCHAR2(32);
+
+  v_Location_Org  CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_Bpartner_QB_ID CHARACTER VARYING(32); --OBTG:VARCHAR2--
+  v_cTAXID  CHARACTER VARYING(32); --OBTG:VARCHAR2--
+      
+  
+BEGIN
+    
+    IF AD_isTriggerEnabled()='N' THEN RETURN;
+    END IF;
+
+  IF INSERTING THEN
+
+      v_QuickBillingID:=:new.sqb_quickbilling_id;
+      v_UpdatedBy:=:new.createdby;
+      v_OrgID :=:new.ad_org_id;
+      v_ClientID :=:new.ad_client_id;
+
+      SELECT C_Location_ID
+      INTO v_billFrom
+      FROM AD_OrgInfo
+      WHERE AD_Org_ID = v_OrgID;
+
+      SELECT COALESCE((select c_location_id from ad_orginfo  
+      where ad_org_id = v_OrgID),'ND')
+      INTO v_Location_Org
+      FROM DUAL;
+
+      IF (v_Location_Org<>'ND') THEN
+
+	      SELECT COALESCE((SELECT SQB_CONFIG_QUICKBILLING_ID
+			FROM SQB_CONFIG_USER WHERE   AD_USER_ID = v_UpdatedBy AND ISACTIVE = 'Y'
+	      ),'ND')
+	      INTO v_ConfigQuickBillingID
+	      FROM DUAL;
+
+	      IF (v_ConfigQuickBillingID<>'ND') THEN 
+
+
+		-- Producto por Defecto 
+		SELECT 
+		COALESCE((SELECT M_PRODUCT_ID 
+		FROM SQB_CONFIG_PRODUCT
+		WHERE SQB_CONFIG_QUICKBILLING_ID = v_ConfigQuickBillingID
+		AND ISDEFAULT = 'Y'
+		AND ISACTIVE = 'Y'
+		),'ND')
+		INTO v_ProductID
+		FROM DUAL;
+
+
+		-- Obetener Dirección del Tercero de la nueva Factura
+
+		SELECT COALESCE((
+			SELECT 
+			CBPL.C_BPARTNER_LOCATION_ID
+			FROM sqb_quickbilling SQB
+			JOIN C_BPARTNER CBP ON CBP.C_BPARTNER_ID = SQB.C_BPARTNER_ID
+			JOIN C_BPARTNER_LOCATION CBPL ON CBPL.C_BPARTNER_ID = CBP.C_BPARTNER_ID AND ISBILLTO='Y'
+			WHERE sqb_quickbilling_ID = v_QuickBillingID
+		),'ND')
+		INTO v_Bpartner_QB_ID
+		FROM DUAL;
+		
+		-- Obtener Impuesto del producto
+		SELECT COALESCE((
+		select  sqb_gettax(v_ProductID
+		, now()
+		, v_OrgID
+		, to_char('ND')
+		, v_Bpartner_QB_ID
+		, v_Location_Org
+		, to_char('ND')
+		, 'Y'::character
+		,to_char('ND')
+		,'N'::character) as uno
+		FROM DUAL),'ND')
+		INTO v_cTAXID
+		FROM DUAL;
+
+		SELECT COALESCE((SELECT RATE AS INDICE 
+		FROM C_TAX WHERE C_TAX_ID = v_cTAXID),99)
+		INTO v_TaxCalculate
+		FROM DUAL;
+
+
+		IF (v_TaxCalculate<>99) THEN 
+		
+			-- Tarifa
+			SELECT 
+			COALESCE((SELECT M_PRICELIST_ID 
+			FROM SQB_CONFIG_QUICKBILLING
+			WHERE SQB_CONFIG_QUICKBILLING_ID = v_ConfigQuickBillingID
+			),'ND')
+			INTO v_PriceListID
+			FROM DUAL;	
+
+			-- Obtener impuesto a calcular
+			/*SELECT
+			COALESCE((select to_number(e.rate) as indice
+			from c_tax e where  e.rate <> 0     
+			and e.istaxdeductable ='Y'   
+			and validfrom = (select max(validfrom)  as validfrom    
+					from c_tax e where e.rate <> 0     
+					and e.istaxdeductable ='Y' and validfrom <= (now())
+					)
+
+			),0) 
+			INTO v_TaxCalculate
+			FROM DUAL;*/
+
+			IF (v_TaxCalculate<>99) THEN
+
+				IF (v_PriceListID<>'ND') THEN
+
+				      
+				      SELECT COALESCE((select
+				      mpp.pricestd  as pricestd      
+				      from m_pricelist mp     
+				      left join m_pricelist_version mpv on mp.m_pricelist_id = mpv.m_pricelist_id    
+				      left join m_productprice mpp on mpp.m_pricelist_version_id = mpv.m_pricelist_version_id    
+				      where mp.m_pricelist_id = v_PriceListID     
+				      and mpv.validfrom = (select max(validfrom) as validfrom      
+							   from m_pricelist_version      
+							   where  m_pricelist_id = v_PriceListID)    
+				      and mpp.m_product_id = v_ProductID),0)
+				      INTO v_PriceStandar
+				      FROM DUAL;
+
+				      SELECT COALESCE((select
+				      mpp.pricelist as pricelist
+				      from m_pricelist mp     
+				      left join m_pricelist_version mpv on mp.m_pricelist_id = mpv.m_pricelist_id    
+				      left join m_productprice mpp on mpp.m_pricelist_version_id = mpv.m_pricelist_version_id    
+				      where mp.m_pricelist_id = v_PriceListID     
+				      and mpv.validfrom = (select max(validfrom) as validfrom      
+							   from m_pricelist_version      
+							   where  m_pricelist_id = v_PriceListID)    
+				      and mpp.m_product_id = v_ProductID),0)
+				      INTO v_PriceList
+				      FROM DUAL;
+
+				      IF (v_PriceStandar > 0 AND v_PriceList > 0 ) THEN
+
+
+					  IF (v_TaxCalculate>0) THEN
+					  v_VAT:= v_TaxCalculate /100;
+					  ELSE
+					  v_VAT:=0;
+					  END IF;
+
+					  v_TotalVAT:= v_PriceStandar * v_VAT;
+					  
+					  v_TotalTaxByLines:= v_PriceStandar + v_VAT; 
+					       
+					      INSERT
+					      INTO SQB_QUICKBILLINGLINE
+						(
+						  SQB_QUICKBILLINGLINE_ID, AD_Client_ID,
+						  AD_Org_ID, IsActive, Created,
+						  CreatedBy, Updated, UpdatedBy,
+						  SQB_QUICKBILLING_ID,
+						  LINE, qtyquickbilling, M_PRODUCT_ID,
+						  pricequickbilling, pricequickbillinglist
+						  , subtotal_qb, vat, docstatus,c_tax_id
+						)
+					      values (get_uuid(),v_ClientID, v_OrgID,
+						'Y', now(), v_UpdatedBy,
+						now(),v_UpdatedBy,
+						v_QuickBillingID,
+						10,1,v_ProductID,
+						v_PriceStandar,v_PriceList
+						,v_PriceStandar,v_TotalVAT,'RE',v_cTAXID
+						);
+				      ELSE
+
+					RAISE_APPLICATION_ERROR(-20000,'@Configure el precio del producto en la pantalla Tarifa@');
+
+				      END IF;
+				ELSE
+				      RAISE_APPLICATION_ERROR(-20000,'@Sqb_ErrorPriceListQuickBilling@');
+				END IF;
+			ELSE
+
+				RAISE_APPLICATION_ERROR(-20000,'@El producto no tiene configurado el IVA@');
+				
+			END IF;
+			
+		END IF;
+
+	      
+	      END IF;
+
+      ELSE
+
+	RAISE_APPLICATION_ERROR(-20000,'@Definir la dirección de la Organización@');
+		
+      END IF;
+    
+ 
+ END IF;
+ 
+END SQB_BPARTNER_TRG
+]]></body>
+    </trigger>
+  </database>

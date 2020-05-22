@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_PROCESS" version="">
+  <row id="006D8983826D47F4A7065566788F93E8" trl="N">
+    <value column="Name" isTrl="Y" original="Request Certificate">Solicitar Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="06BC21DBA5654E72A3EA175259AF4797" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Create Line">Crear Línea Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="0A7A590F8CF641B4B63AD85D83D5FD63" trl="Y">
+    <value column="Name" isTrl="Y" original="Review">Revisar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1461598AD3FC4C0B841E1922ED08F653" trl="N">
+    <value column="Name" isTrl="Y" original="Process Payment">Proceso de Pago</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1914633E5526404BA01DE320E40A2BC2" trl="N">
+    <value column="Name" isTrl="N" original="Budget Execute Payment">Budget Execute Payment</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="3554A6EF36544167B80B576909EC1F8A" trl="N">
+    <value column="Name" isTrl="Y" original="Get Budget Log Lines">Obtener líneas cambios en presupuesto</value>
+    <value column="Description" isTrl="Y" original="Get Budget Log Lines">Obtener líneas en registro de cambios en presupuesto</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4013B59DE8634430A564A7410D2399E0" trl="N">
+    <value column="Name" isTrl="Y" original="Reactivated">Reactivar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4321CD524F3E436A820DF05C76D37CAF" trl="N">
+    <value column="Name" isTrl="N" original="PRINTPAYMENTBUDGET">PRINTPAYMENTBUDGET</value>
+    <value column="Description" isTrl="N" original="PRINTPAYMENTBUDGET">PRINTPAYMENTBUDGET</value>
+    <value column="Help" isTrl="N" original="PRINTPAYMENTBUDGET">PRINTPAYMENTBUDGET</value>
+  </row>
+  <row id="4E6A308B439F4EA98584631DFA4CBCC4" trl="N">
+    <value column="Name" isTrl="Y" original="Print Certificate">Imprimir Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5AC5C4C39A8F4A37B6098A0512288889" trl="N">
+    <value column="Name" isTrl="Y" original="Create Version">Crear Versión</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5FE514F293DB458DAC6DC79C4FE83A8D" trl="N">
+    <value column="Name" isTrl="Y" original="Approve Version">Aprobar Version</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="6267329F022A4993A79776EEC7F2882F" trl="N">
+    <value column="Name" isTrl="N" original="Process Certificate Executed">Process Certificate Executed</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7D052DBDB45F45648373F2064BECD521" trl="N">
+    <value column="Name" isTrl="Y" original="Close Certificate">Cerrar Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7FE9F21345B34211AEFDEEA20260D9F9" trl="N">
+    <value column="Name" isTrl="N" original="Load Amortization">Load Amortization</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="8CC1042D100B4BDDB0D73256B0A444A9" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Report">Reporte de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="928A4483850046239A217B445A680E29" trl="N">
+    <value column="Name" isTrl="Y" original="Process Certificate">Procesar Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="97CC428CCD0A4EE892C44B79021DABBD" trl="N">
+    <value column="Name" isTrl="Y" original="Movements - Budget">Movimientos de Presupuestos</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9E6670BCC807442BB3B98432993F79A8" trl="N">
+    <value column="Name" isTrl="Y" original="Process Log">Procesar Registro</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="AAA9E77C2EB448E1A6FCA37F2979B99B" trl="N">
+    <value column="Name" isTrl="Y" original="Details Certifications">Certificado de presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="CF4385295E284CD09E3F4FF6F382A264" trl="N">
+    <value column="Name" isTrl="Y" original="Distribute Budget Deferred Invoices">Distribuir presupuesto de facturas diferidas</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E53228B7BE4143B5870F5BE80015CC09" trl="N">
+    <value column="Name" isTrl="Y" original="Process Budget Log">Procesar registro cambios presupuesto</value>
+    <value column="Description" isTrl="N" original="">Procesar registro de cambios de presupuesto</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

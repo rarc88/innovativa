@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+  <database name="TABLE SSVE_VIATICAL_CONFIG_ACCT">
+    <table name="SSVE_VIATICAL_CONFIG_ACCT" primaryKey="SSVE_VIATICAL_CONFIG_ACCT_KEY">
+      <column name="SSVE_VIATICAL_CONFIG_ACCT_ID" primaryKey="true" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="AD_CLIENT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="AD_ORG_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="ISACTIVE" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="CREATED" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="CREATEDBY" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="UPDATED" primaryKey="false" required="true" type="TIMESTAMP" size="7" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="UPDATEDBY" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="SSVE_VIATICAL_CONFIG_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="SSPR_CATEGORY_ACCT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="C_EXPENSEACCOUNT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="C_PAYABLEACCOUNT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="VIATICALACCTTYPE" primaryKey="false" required="true" type="VARCHAR" size="60" autoIncrement="false">
+        <default><![CDATA[NAT]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="C_RECEIVABLEACCOUNT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="C_CUADREACCOUNT_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SSPR_CATEGORY_ACCT" name="SSVE_VIATCFG_ACCT_CATACCT">
+        <reference local="SSPR_CATEGORY_ACCT_ID" foreign="SSPR_CATEGORY_ACCT_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="AD_CLIENT" name="SSVE_VIATCFG_ACCT_CLIENT">
+        <reference local="AD_CLIENT_ID" foreign="AD_CLIENT_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="C_VALIDCOMBINATION" name="SSVE_VIATCFG_ACCT_CUADACCT">
+        <reference local="C_CUADREACCOUNT_ID" foreign="C_VALIDCOMBINATION_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="C_VALIDCOMBINATION" name="SSVE_VIATCFG_ACCT_EXPACCT">
+        <reference local="C_EXPENSEACCOUNT_ID" foreign="C_VALIDCOMBINATION_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="AD_ORG" name="SSVE_VIATCFG_ACCT_ORG">
+        <reference local="AD_ORG_ID" foreign="AD_ORG_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="C_VALIDCOMBINATION" name="SSVE_VIATCFG_ACCT_PAYACCT">
+        <reference local="C_PAYABLEACCOUNT_ID" foreign="C_VALIDCOMBINATION_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="C_VALIDCOMBINATION" name="SSVE_VIATCFG_ACCT_RECACCT">
+        <reference local="C_RECEIVABLEACCOUNT_ID" foreign="C_VALIDCOMBINATION_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSVE_VIATICAL_CONFIG" name="SSVE_VIATCFG_ACCT_VIATCFG">
+        <reference local="SSVE_VIATICAL_CONFIG_ID" foreign="SSVE_VIATICAL_CONFIG_ID"/>
+      </foreign-key>
+      <index name="SSVE_VIATCFGACCT_CATACCT_IDX" unique="true">
+        <index-column name="AD_CLIENT_ID"/>
+        <index-column name="VIATICALACCTTYPE"/>
+        <index-column name="SSVE_VIATICAL_CONFIG_ACCT_ID"/>
+      </index>
+    </table>
+  </database>

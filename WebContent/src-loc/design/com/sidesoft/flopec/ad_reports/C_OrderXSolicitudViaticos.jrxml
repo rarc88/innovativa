@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="C_OrderXSolicitudViaticos" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
+	<parameter name="DOCUMENT_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+ao.ad_org_id as "organizationid",
+ao.name as "organization",
+co.documentno as "documentno",
+co.dateordered as "date_order",
+cbp.name as "partner_name",
+'C.I:' || cbp.taxid as "partner_taxid",
+cbp.value as "partner_value",
+co.description as "description",
+col.line as "line_order",
+mp.name as "product",
+col.qtyordered as "qty_order",
+col.priceactual as "price",
+(col.qtyordered * col.priceactual) as "total",
+co.grandtotal as "grandtotal",
+(SSFL_CONVERT_NUMBERTOLETTERS(co.grandtotal) || '  DOLARES') as "total_letters",
+to_char(co.dateordered) as "date_transaction",
+to_char(co.datepromised) as "date_delivery",
+to_char(co.EM_Ssfl_Enddate) as "date_to",
+pst.name as "partner_position",
+CO.DELIVERYNOTES AS "deliverynotes"
+from c_order co
+left join c_orderline col on col.c_order_id = co.c_order_id
+left join ad_org ao on ao.ad_org_id = co.ad_org_id
+left join c_bpartner cbp on cbp.c_bpartner_id = co.c_bpartner_id
+left join m_product mp on mp.m_product_id = col.m_product_id
+left join sspr_contract sct on sct.c_bpartner_id = cbp.c_bpartner_id
+left join sspr_contract_position scp on scp.sspr_contract_id = sct.sspr_contract_id
+left join sspr_position pst on pst.sspr_position_id = scp.sspr_position_id
+where
+co.docstatus = 'CO'
+and co.c_order_id = $P{DOCUMENT_ID}
+order by co.documentno,col.line asc]]>
+	</queryString>
+	<field name="organizationid" class="java.lang.String"/>
+	<field name="organization" class="java.lang.String"/>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="date_order" class="java.sql.Timestamp"/>
+	<field name="partner_name" class="java.lang.String"/>
+	<field name="partner_taxid" class="java.lang.String"/>
+	<field name="partner_value" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="line_order" class="java.math.BigDecimal"/>
+	<field name="product" class="java.lang.String"/>
+	<field name="qty_order" class="java.math.BigDecimal"/>
+	<field name="price" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="grandtotal" class="java.math.BigDecimal"/>
+	<field name="total_letters" class="java.lang.String"/>
+	<field name="date_transaction" class="java.lang.String"/>
+	<field name="date_delivery" class="java.lang.String"/>
+	<field name="date_to" class="java.lang.String"/>
+	<field name="partner_position" class="java.lang.String"/>
+	<field name="deliverynotes" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="644" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="117" width="572" height="43"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANTICIPO Y LIQUIDACION DE VIATICOS
+COMISION DE SERVICIOS]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="170" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{date_order}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="140" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documentno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="190" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="170" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_value}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="230" width="492" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="180" y="271" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{grandtotal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="291" width="492" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{total_letters}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="170" width="78" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="190" width="78" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="230" width="78" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESTINO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="271" width="178" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR ANTICIPADO POR US$:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="291" width="33" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SON:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="101" y="364" width="163" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="101" y="319" width="163" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECIBI CONFORME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="319" width="163" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AUTORIZADO POR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="327" y="364" width="163" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="442" y="140" width="30" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="170" width="57" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO :]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="108" height="48"/>
+				<imageExpression class="java.awt.Image"><![CDATA[org.openbravo.erpCommon.utility.Utility.showImageLogo("yourcompanylegal", $F{organizationid})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="108" y="0" width="464" height="48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPRESA PÚBLICA FLOTA PETROLERA ECUATORIANA EP FLOPEC
+SGI - MANUAL DE PROCEDIMIENTOS ADMINISTRATIVOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="51" width="273" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identificación: PA-70 / F6]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="91" width="208" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aprobado por: DMO / GGR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="71" width="271" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cumple con SGI: OCB/DPA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="71" width="208" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Escrito por: GSR / GFI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="51" width="208" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Revisión: 0.4]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="502" y="91" width="70" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{date_transaction}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="331" y="91" width="171" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de vigencia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="190" width="57" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARGO :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="190" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_position}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="210" width="78" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MOTIVO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="210" width="492" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{deliverynotes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="250" width="78" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="250" width="30" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AL:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="80" y="250" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{date_delivery}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="472" y="250" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{date_to}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="163" width="570" height="1"/>
+			</line>
+			<line>
+				<reportElement x="2" y="313" width="570" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="139" y="385" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[CI:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="7A5779A8CDA64AA18801E0FCD55E345F" trl="N">
+    <value column="Name" isTrl="Y" original="Conept Approval payment">Concepto - Aprobación de pago</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9D1F252B4D1B47099B720F439CA7FBAB" trl="Y">
+    <value column="Name" isTrl="Y" original="Payment Detail">Detalle de Pagos</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="AD90D57B28FE4718B03A89C290DAB1FB" trl="Y">
+    <value column="Name" isTrl="Y" original="Employees">Empleados</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="B482F46C3BFE4A0380B72DD082D7C547" trl="Y">
+    <value column="Name" isTrl="Y" original="Payroll Payment Approval - File Transfer">Aprobación de Pagos Nómina – Archivo de Tranferencia</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

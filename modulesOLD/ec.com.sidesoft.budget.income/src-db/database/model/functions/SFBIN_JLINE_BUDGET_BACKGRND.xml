@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SFBIN_JLINE_BUDGET_BACKGRND">
+    <function name="SFBIN_JLINE_BUDGET_BACKGRND" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[--p_message             VARCHAR(2000);      --OBTG:VARCHAR2--
+--  v_docaction           VARCHAR(60);        --OBTG:VARCHAR2--
+  v_user_id             VARCHAR2(32);       
+  v_client_id           VARCHAR2(32);       
+  v_org_id              VARCHAR2(32);       
+--  v_result              NUMERIC;
+
+  v_ResultStr           VARCHAR2(2000):=''; 
+  v_sql                 VARCHAR2(4000):=''; 
+  v_converted           NUMBER;
+--  v_budgeted            CHAR(1);
+--  v_nc_or_re            NUMERIC:= 1;
+--  v_new_exec_value      NUMERIC:= 1;
+--  v_totaldays           NUMERIC:= 0;
+--  v_defferperday        NUMERIC:= 0;
+--  v_pivotmonth          NUMERIC:= 0;
+--  v_pivotyear           NUMERIC:= 0;
+--  v_pivotdate           TIMESTAMP;
+--  v_pivotexecuted       NUMERIC:= 0;
+--  v_pivotexecutedmonth  NUMERIC:= 0;
+--  v_deferred_invoice_id VARCHAR(32);        --OBTG:VARCHAR2--
+--  v_postyear            NUMERIC;
+
+  TYPE RECORD IS REF CURSOR;
+  Cur_Parameter         RECORD;
+  cur_lines             RECORD;
+--  cur_invoice_lines     RECORD;
+--  cur_deferred_lines    RECORD;
+
+BEGIN
+
+  -- Get Parameters
+  v_ResultStr := 'ReadingParameters';
+
+  FOR Cur_Parameter IN
+  (
+    SELECT  i.AD_User_ID,
+            i.AD_Client_ID,
+            i.AD_Org_ID
+    FROM  AD_PInstance i      
+    WHERE i.AD_PInstance_ID = PInstance_ID      
+  )
+  LOOP
+  
+    v_Client_ID := Cur_Parameter.AD_Client_ID;
+    v_Org_ID := Cur_Parameter.AD_Org_ID;
+    v_User_ID := Cur_Parameter.AD_User_ID;     
+    
+  END LOOP; -- End Get Parameter
+
+  FOR cur_lines IN (
+    SELECT  j.ad_client_id, j.ad_org_id, j.c_doctype_id, j.datedoc,
+            j.c_currency_id, jl.line, (jl.amtacctcr - jl.amtacctdr) AS linetotalamt, jl.gl_journalline_id,
+            bln.c_costcenter_id, bln.user1_id, bln.sfb_budget_item_id, bln.sfb_budget_line_id,
+            b.c_currency_id as budget_currency_id
+    FROM gl_journal j
+    JOIN gl_journalline jl ON jl.gl_journal_id = j.gl_journal_id
+    JOIN c_validcombination vc ON vc.c_validcombination_id = jl.c_validcombination_id
+    LEFT JOIN (
+      sfb_budget b
+      JOIN c_year y on y.c_year_id = b.c_year_id
+      JOIN sfb_budget_version bv ON bv.sfb_budget_id = b.sfb_budget_id AND bv.version_status = 'AP'
+      JOIN sfb_budget_line bln ON bln.sfb_budget_version_id = bv.sfb_budget_version_id
+      JOIN sfb_budget_item_account bia ON bia.sfb_budget_item_id = bln.sfb_budget_item_id 
+    ) ON  bln.c_costcenter_id = COALESCE(jl.c_costcenter_id, j.c_costcenter_id)
+      AND bln.user1_id = COALESCE(jl.user1_id, j.user1_id)
+      AND bln.sfb_budget_area_id = j.em_sfb_budget_area_id
+      AND bia.isactive = 'Y'
+      AND bia.account_id = vc.account_id
+      AND CAST(y.year AS NUMBER(10,0)) = CAST(EXTRACT(YEAR FROM j.datedoc) AS NUMBER(10,0))
+    WHERE jl.em_sfbin_affectincomebudget = 'Y'
+      AND jl.em_sfb_isbudgeted = 'N'
+      AND j.processed = 'Y'
+    ORDER BY jl.line
+  )
+  LOOP
+
+    IF (cur_lines.linetotalamt <> 0) THEN
+
+      IF cur_lines.sfb_budget_line_id IS NOT NULL THEN
+        
+        IF cur_lines.c_currency_id <> cur_lines.budget_currency_id THEN
+          v_converted := C_Currency_Round(C_Currency_Convert(cur_lines.linetotalamt, cur_lines.c_currency_id, cur_lines.budget_currency_id, cur_lines.datedoc, null, cur_lines.ad_client_id, cur_lines.ad_org_id), cur_lines.budget_currency_id, null);
+        ELSE
+          v_converted := cur_lines.linetotalamt;
+        END IF;
+        IF (v_converted IS NOT NULL) THEN
+
+          v_sql := 'UPDATE SFB_BUDGET_LINE SET ';
+
+          SELECT
+          CASE extract(month from TO_DATE(cur_lines.datedoc))
+            WHEN 1  THEN v_sql || 'jan_executed_value = jan_executed_value + '
+            WHEN 2  THEN v_sql || 'feb_executed_value = feb_executed_value + '
+            WHEN 3  THEN v_sql || 'mar_executed_value = mar_executed_value + '
+            WHEN 4  THEN v_sql || 'apr_executed_value = apr_executed_value + '
+            WHEN 5  THEN v_sql || 'may_executed_value = may_executed_value + '
+            WHEN 6  THEN v_sql || 'jun_executed_value = jun_executed_value + '
+            WHEN 7  THEN v_sql || 'jul_executed_value = jul_executed_value + '
+            WHEN 8  THEN v_sql || 'aug_executed_value = aug_executed_value + '
+            WHEN 9  THEN v_sql || 'sep_executed_value = sep_executed_value + '
+            WHEN 10 THEN v_sql || 'oct_executed_value = oct_executed_value + '
+            WHEN 11 THEN v_sql || 'nov_executed_value = nov_executed_value + '
+            WHEN 12 THEN v_sql || 'dec_executed_value = dec_executed_value + '
+          END INTO v_sql
+          FROM DUAL;
+
+          v_sql := v_sql || v_converted || ' WHERE SFB_BUDGET_LINE_ID = ''' || cur_lines.sfb_budget_line_id || '''';
+          EXECUTE IMMEDIATE v_sql;
+            
+          UPDATE gl_journalline jl SET em_sfb_isbudgeted = 'Y' WHERE jl.gl_journalline_id = cur_lines.gl_journalline_id;
+          
+        END IF;
+        
+      END IF;
+
+    END IF;
+
+  END LOOP;
+
+  COMMIT;
+    
+EXCEPTION
+WHEN OTHERS THEN
+  ROLLBACK;
+  RAISE;
+END SFBIN_JLINE_BUDGET_BACKGRND
+]]></body>
+    </function>
+  </database>

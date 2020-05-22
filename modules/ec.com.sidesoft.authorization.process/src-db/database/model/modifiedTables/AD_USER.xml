@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE AD_USER">
+    <table name="AD_USER" primaryKey="AD_USER_KEY">
+      <column name="EM_ECSAP_SIGN_DIGITAL" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+    </table>
+  </database>

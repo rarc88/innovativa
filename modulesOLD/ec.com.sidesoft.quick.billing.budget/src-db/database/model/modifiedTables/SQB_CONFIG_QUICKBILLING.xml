@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE SQB_CONFIG_QUICKBILLING">
+    <table name="SQB_CONFIG_QUICKBILLING" primaryKey="SQB_CONFIG_QUICKBILLING_KEY">
+      <column name="EM_SQBBU_BUDGET_AREA_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SFB_BUDGET_AREA" name="EM_SQBBU_CONFQUICK_BUDGETAREA">
+        <reference local="EM_SQBBU_BUDGET_AREA_ID" foreign="SFB_BUDGET_AREA_ID"/>
+      </foreign-key>
+    </table>
+  </database>

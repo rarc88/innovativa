@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+<!--F405C2CB276C4DB295958F4A3980CD7B--><AD_VAL_RULE>
+<!--F405C2CB276C4DB295958F4A3980CD7B-->  <AD_VAL_RULE_ID><![CDATA[F405C2CB276C4DB295958F4A3980CD7B]]></AD_VAL_RULE_ID>
+<!--F405C2CB276C4DB295958F4A3980CD7B-->  <AD_CLIENT_ID><![CDATA[0]]></AD_CLIENT_ID>
+<!--F405C2CB276C4DB295958F4A3980CD7B-->  <AD_ORG_ID><![CDATA[0]]></AD_ORG_ID>
+<!--F405C2CB276C4DB295958F4A3980CD7B-->  <ISACTIVE><![CDATA[Y]]></ISACTIVE>
+<!--F405C2CB276C4DB295958F4A3980CD7B-->  <NAME><![CDATA[SEII - PRICING]]></NAME>
+<!--F405C2CB276C4DB295958F4A3980CD7B-->  <TYPE><![CDATA[S]]></TYPE>
+<!--F405C2CB276C4DB295958F4A3980CD7B-->  <CODE><![CDATA[EXISTS (select
+1
+from m_product mp
+left join m_productprice mpp on mpp.m_product_id = mp.m_product_id
+left join m_pricelist_version mpv on mpv.m_pricelist_version_id = mpp.m_pricelist_version_id
+left join m_pricelist mpl on mpl.m_pricelist_id = mpv.m_pricelist_id
+left join m_offer_product mop on mop.m_product_id = mp.m_product_id
+left join m_offer_pricelist mopl on mopl.m_pricelist_id = mpl.m_pricelist_id and mopl.m_offer_id = mop.m_offer_id
+left join m_offer mo on mo.m_offer_id = mopl.m_offer_id and mo.m_offer_id = mop.m_offer_id
+left join m_offer_organization moo on moo.m_offer_id = mo.m_offer_id
+where mopl.m_pricelist_id = mpl.m_pricelist_id
+and mo.m_offer_id = M_OFFER.M_OFFER_ID AND MOP.M_PRODUCT_ID  = @M_PRODUCT_ID@ AND    moo.ad_org_id = @AD_ORG_ID@)]]></CODE>
+<!--F405C2CB276C4DB295958F4A3980CD7B-->  <AD_MODULE_ID><![CDATA[908D10AE12014A76BEEF3169F01EDB16]]></AD_MODULE_ID>
+<!--F405C2CB276C4DB295958F4A3980CD7B--></AD_VAL_RULE>
+
+</data>

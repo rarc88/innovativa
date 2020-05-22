@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_INVREACTIVE_CERT_TRG">
+    <trigger name="SFB_INVREACTIVE_CERT_TRG" table="C_INVOICE" fires="before" insert="false" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+TYPE RECORD IS REF CURSOR;
+CUR_invoiceLINE RECORD;
+CUR_ORDER RECORD;
+V_DOCSTATUS            VARCHAR2(60);
+V_ORDERLINE_ID       VARCHAR2(32);
+v_CERTIFICATE_STATUS  VARCHAR2(60);
+v_budget_cert_line_id VARCHAR2(32);
+V_NEWSTATUS        VARCHAR2(32);
+V_OLDSTATUS        VARCHAR2(32);
+V_COUNT               INTEGER;
+V_DOCSTATUS_I	      VARCHAR2(60);
+v_isnotbudgetable     CHAR(1);
+v_budget              CHAR(1);
+V_INVOICE_ID          VARCHAR2(32);
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF; 
+
+  IF (UPDATING) THEN
+    
+    V_INVOICE_ID:=COALESCE(:OLD.C_invoice_ID,:NEW.C_INVOICE_ID);
+    
+   --VALIDO QUE SEA FACTURA DE COMPRAS
+   IF (:OLD.ISSOTRX='N' and :NEW.EM_SFB_ISNOTBUDGETABLE='N') THEN 
+     IF(:OLD.Docstatus<>:NEW.Docstatus)THEN
+
+        --RECUPERO VALORES
+        V_NEWSTATUS:=:NEW.Docstatus ; 
+        V_OLDSTATUS:=:OLD.Docstatus ; 
+        v_isnotbudgetable:=:NEW.em_sfb_isnotbudgetable ;
+        
+        IF(v_isnotbudgetable=TO_CHAR('N'))THEN
+
+         --VALIDO ANTIGUO ESTADO DE LA FACTURA
+         IF(V_OLDSTATUS = 'CO')THEN
+              
+           --VALIDO NUEVO ESTADO DE LA FACTURA
+           IF(V_NEWSTATUS = 'DR')THEN
+
+              --CURSOR PARA DETALLE DE LA FACTURA
+              FOR CUR_invoiceLINE IN (
+		           Select *from c_invoiceline a 
+               where a.c_invoice_id = V_INVOICE_ID
+               AND A.em_sfb_budget_cert_line_id IS NOT NULL
+
+	      )
+	      LOOP
+          
+                --OBTENGO DATOS DEL CERTIFICADO
+                select CERTIFICATE_STATUS INTO v_CERTIFICATE_STATUS
+                from sfb_budget_certificate a
+                left join sfb_budget_cert_line b on a.sfb_budget_certificate_id = b.sfb_budget_certificate_id
+                where b.sfb_budget_cert_line_id=CUR_invoiceLINE.em_sfb_budget_cert_line_id
+                and CUR_invoiceLINE.em_sfb_budget_cert_line_id is not null;
+                
+                v_budget:= CUR_invoiceLINE.EM_SFB_ISNOTBUDGETABLE;
+                  
+                --VALIDO SI EL ESTADO DEL CERTIFICADO ES CERRADO
+                IF (COALESCE(v_CERTIFICATE_STATUS,'ND') ='CL') and COALESCE(v_budget,'') = 'N'  THEN 
+          
+                  RAISE_APPLICATION_ERROR(-20000, '@ERROR=NO PUEDE REACTIVAR UNA FACTURA QUE TIENE RELACIONADO UN CERTIFICADO CERRADO@') ;
+          
+                END IF;
+    
+            END LOOP;
+	   END IF;
+     	END IF;     	         
+     END IF;
+    END IF; 
+   END IF;   
+  END IF;  
+
+  END SFB_INVREACTIVE_CERT_TRG
+]]></body>
+    </trigger>
+  </database>

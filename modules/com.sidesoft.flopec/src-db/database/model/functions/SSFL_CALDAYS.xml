@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SSFL_CALDAYS">
+    <function name="SSFL_CALDAYS" type="NUMERIC">
+      <parameter name="v_mes" type="NUMERIC" mode="in">
+        <default/>
+      </parameter>
+      <parameter name="anio" type="NUMERIC" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_dias_mes NUMBER(5):=0; --OBTG:NUMBER--
+	v_residuo NUMBER(5):=0; --OBTG:NUMBER--
+BEGIN
+	select mod(anio,4) into v_residuo FROM DUAL;
+	CASE v_mes
+		when 1 then v_dias_mes:=31;
+		when 2 then 
+			   if(v_residuo=0) then
+					v_dias_mes:=29;
+				else				
+					v_dias_mes:=28;
+				end if;
+		when 3 then v_dias_mes:=31;
+		when 4 then v_dias_mes:=30;
+		when 5 then v_dias_mes:=31;
+		when 6 then v_dias_mes:=30;
+		when 7 then v_dias_mes:=31;
+		when 8 then v_dias_mes:=31;
+		when 9 then v_dias_mes:=30;
+		when 10 then v_dias_mes:=31;
+		when 11 then v_dias_mes:=30;
+		when 12 then v_dias_mes:=31;
+		else v_dias_mes:=0;
+	END CASE;
+	RETURN 	v_dias_mes;
+END SSFL_CALDAYS
+]]></body>
+    </function>
+  </database>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="08FDD2C6DF1D4C58B7F634F60900C22D" trl="N">
+    <value column="Name" isTrl="Y" original="Transportation">Transporte</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Transportation">Transporte</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Transportation">Transporte</value>
+  </row>
+  <row id="18062F62BE0E4CA494D97E43D3674FB4" trl="N">
+    <value column="Name" isTrl="N" original="Budget Certificate Detail">Budget Certificate Detail</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1E16BB509D0B48F0A54AFF359E786020" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Settlement Lines">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Viatical Settlement Lines">Líneas</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="">Líneas</value>
+  </row>
+  <row id="1EF098CE8AC64A72A18A3820E032C7DA" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical On Days International">Viático internacional por día</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Viatical On Days International">Viático internacional por día</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Viatical On Days International">Viático internacional por día</value>
+  </row>
+  <row id="258AC0EB210F4911BC063B93AD6BA1C1" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Account Config">Configuración de cuentas para viáticos</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Configuración de cuentas para viáticos</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="">Configuración de cuentas para viáticos</value>
+  </row>
+  <row id="2B5808C260524FF3B7DB4A7B71A29F7A" trl="N">
+    <value column="Name" isTrl="Y" original="National Viatical Value">Valor de viático nacional</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="National Viatical Value">Valor de viático nacional</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="National Viatical Value">Valor de viático nacional</value>
+  </row>
+  <row id="2FF40099F90D4FC9A0A9E84A4FEADEDE" trl="N">
+    <value column="Name" isTrl="Y" original="Zone">Zona</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Zone">Zona</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="">Zona</value>
+  </row>
+  <row id="311B2611B0CB4094866151985C8F079D" trl="N">
+    <value column="Name" isTrl="Y" original="Country Rate">Índice por país</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Country Rate">Índice por país</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5E4F7293DB564592AD7DBCEFDBE21C6A" trl="N">
+    <value column="Name" isTrl="Y" original="City per Zone">Ciudad por zona</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="City per Zone">Ciudad por zona</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="">Ciudad por zona</value>
+  </row>
+  <row id="67B4299FEC3E4463A3247A8CEB31A90D" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Settlement">Liquidación de viático</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Liquidación de viático</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="">Liquidación de viático</value>
+  </row>
+  <row id="6D858F484F894C98AEB6F7496115C738" trl="N">
+    <value column="Name" isTrl="Y" original="Level">Nivel</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Nivel</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="744DA94B1F954DA694CC1D527B6B6A78" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical On Days National">Viático nacional por día</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Viatical On Days National">Viático nacional por día</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Viatical On Days National">Viático nacional por día</value>
+  </row>
+  <row id="893B013D688B4B2893A3B157088AB17F" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Application">Solicitud de viático</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Viatical Application">Solicitud de viático</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Viatical Application">Solicitud de viático</value>
+  </row>
+  <row id="8C1AF41C3FBA47EEA054845D3703AEB1" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Configuration">Configuración de viático</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Viatical Configuration">Configuración de viático</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Viatical Configuration">Configuración de viático</value>
+  </row>
+  <row id="A7B23916069847EE8E2CB92FEF7383BB" trl="N">
+    <value column="Name" isTrl="N" original="Viatical Details">Viatical Details</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A7BBC02C235B4011B6BEF50E64530C06" trl="N">
+    <value column="Name" isTrl="Y" original="Mobilization per City Value">Valor de movilización por ciudad</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Valor de movilización por ciudad</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="">Valor de movilización por ciudad</value>
+  </row>
+  <row id="AE569885B6C64A66B5C4D0D7B1830994" trl="N">
+    <value column="Name" isTrl="Y" original="Accounting">Contabilidad</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="B1A51FB5EF194862B984B97A4F036011" trl="N">
+    <value column="Name" isTrl="Y" original="International Viatical Value">Valor de viático internacional</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="International Viatical Value">Valor de viático internacional</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="International Viatical Value">Valor de viático internacional</value>
+  </row>
+  <row id="CE736D9BE21840D3B5DEE454F8482628" trl="N">
+    <value column="Name" isTrl="Y" original="Transportation">Transporte</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Transporte</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original="">Transporte</value>
+  </row>
+  <row id="E93DCB082F524316B1D4D5B4B2DA4BF1" trl="N">
+    <value column="Name" isTrl="Y" original="Position per Level">Cargo por nivel</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Position per Level">Cargo por nivel</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="EF91BFB53D554E1BA9709D3062C088C2" trl="N">
+    <value column="Name" isTrl="Y" original="Viatical Lines">Líneas</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Viatical Lines">Líneas</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Viatical Lines">Líneas</value>
+  </row>
+</compiereTrl>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="7F570C86DB144A88A088260484C1920F" trl="N">
+    <value column="Name" isTrl="Y" original="SWSIC_Taxes">Impuestos WS</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="86903747B23B43DD9C888C7F22E2C7F8" trl="N">
+    <value column="Name" isTrl="Y" original="SWSIC_Taxpayer">Tipo de Contribuyente</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="9590923C5CB0497EBB44DCAA5AB24BA2" trl="N">
+    <value column="Name" isTrl="N" original="SWSIC_DocumentTypePayment">SWSIC_DocumentTypePayment</value>
+    <value column="Description" isTrl="N" original="Document Type Payment">Document Type Payment</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

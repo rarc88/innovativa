@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE USER1">
+    <table name="USER1" primaryKey="USER1_KEY">
+      <column name="EM_SSFL_CHARTER_FLETE" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[Y]]></default>
+        <onCreateDefault/>
+      </column>
+    </table>
+  </database>

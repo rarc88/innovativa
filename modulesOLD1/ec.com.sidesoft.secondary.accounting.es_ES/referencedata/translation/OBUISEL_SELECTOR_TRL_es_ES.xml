@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="OBUISEL_SELECTOR" version="">
+  <row id="91F1128BFF884302B22794C6DC28EE9A" trl="N">
+    <value column="Name" isTrl="N" original="Account Element Dependent  Selector ">Account Element Dependent  Selector </value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A781BB69054C4E63A4A5B8799B77F1D3" trl="N">
+    <value column="Name" isTrl="Y" original="Element Value Dependen Selector">Account Elemen Selector</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="CDA3A3551E374F528A210ED55FA6873D" trl="N">
+    <value column="Name" isTrl="N" original="Period Select Secondary Account">Period Select Secondary Account</value>
+    <value column="Description" isTrl="N" original="Period Select Secondary Account">Period Select Secondary Account</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="D8E718770B2E46DDBAF0AD884680E896" trl="N">
+    <value column="Name" isTrl="N" original="Element Value Selector">Element Value Selector</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

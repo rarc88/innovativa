@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE SFPR_RVE_DETAIL">
+    <table name="SFPR_RVE_DETAIL" primaryKey="SFPR_RVE_DETAIL_KEY">
+      <column name="EM_SSFL_VESSEL_TYPE_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SSFL_VESSEL_TYPE" name="EM_SSFL_RVEDETAIL_VTYPE">
+        <reference local="EM_SSFL_VESSEL_TYPE_ID" foreign="SSFL_VESSEL_TYPE_ID"/>
+      </foreign-key>
+    </table>
+  </database>

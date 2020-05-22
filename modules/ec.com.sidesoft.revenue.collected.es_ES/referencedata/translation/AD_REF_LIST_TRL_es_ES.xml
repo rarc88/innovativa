@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REF_LIST" version="">
+  <row id="AD4AD727112C4F66902BB056BD8FB5A8" trl="Y">
+    <value column="Name" isTrl="Y" original="Balance Control">Control de Saldos</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

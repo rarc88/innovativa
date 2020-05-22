@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="A7B6FAB6ADCE4F29B1B38D6E58ABBB6E" trl="N">
+    <value column="MsgText" isTrl="Y" original="Duplicated Account.">Cuenta duplicada.</value>
+    <value column="MsgTip" isTrl="Y" original="Configure a different account.">Intente configurar otra cuenta.</value>
+  </row>
+</compiereTrl>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSPEW_EXCLFORWITHHOL_TRG">
+    <trigger name="SSPEW_EXCLFORWITHHOL_TRG" table="C_INVOICELINE" fires="before" insert="true" update="false" delete="false" foreach="row">
+      <body><![CDATA[
+ v_var CHAR(1);
+ v_var1 VARCHAR(32);
+    
+BEGIN
+    
+    IF AD_isTriggerEnabled()='N' THEN RETURN;
+    END IF;
+
+ IF (INSERTING) THEN
+	select d.EM_Sspew_Exclforwithhold, d.c_doctype_id into v_var, v_var1 
+	from c_invoice i
+	inner join c_doctype d on i.C_DocTypeTarget_ID = d.c_doctype_id 
+	where i.c_invoice_id = :NEW.c_invoice_id;
+	IF v_var = 'Y' THEN
+		:NEW.excludeforwithholding := 'Y';
+		return NEW;
+	END IF;
+ END IF;
+
+END SSPEW_EXCLFORWITHHOL_TRG
+]]></body>
+    </trigger>
+  </database>

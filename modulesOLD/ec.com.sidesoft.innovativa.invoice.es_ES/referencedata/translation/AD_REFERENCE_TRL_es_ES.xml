@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="4EC9381E6C3744ABBF4C1FA6290376E6" trl="N">
+    <value column="Name" isTrl="N" original="Innovativa - Unit">Innovativa - Unit</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4FA861973E3D4526A61B781461100335" trl="N">
+    <value column="Name" isTrl="Y" original="SEII User2 - Course">SGMR User2 - Course</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="74E56F9FABBC4D9F83EA2005477C2B32" trl="N">
+    <value column="Name" isTrl="N" original="SEII - M_OFFER">SEII - M_OFFER</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="CBD9F5E584B74DBDB9310AF965F56217" trl="N">
+    <value column="Name" isTrl="Y" original="SEII User1 - Project">SGMR User1 - Project</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFB_BUDGET_LOG_TRG">
+    <trigger name="SFB_BUDGET_LOG_TRG" table="SFB_BUDGET_LOG" fires="before" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+ 
+v_year VARCHAR2(10);
+
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF (INSERTING OR UPDATING) THEN
+
+    SELECT year INTO v_year
+    FROM C_YEAR
+    WHERE c_year_id = :new.c_year_id;
+
+    IF (cast(v_year as double precision) <> extract(year from TO_DATE(:new.reg_date))) THEN
+
+      RAISE_APPLICATION_ERROR(-20000, '@SFB_NoDateWithinYear@');
+
+    END IF;
+
+    IF ((:new.type = 'M' OR :new.type = 'A') AND :new.budget_item_from_id IS NULL) THEN
+
+      RAISE_APPLICATION_ERROR(-20000, '@SFB_NoMovementMandatoryFields@');
+
+    END IF;
+ 
+  ELSIF (DELETING AND :old.process = 'Y') THEN
+
+    RAISE_APPLICATION_ERROR(-20000, '@SFB_AlreadyProcessedBudgetLog@');
+    
+  END IF;
+    
+  END SFB_BUDGET_LOG_TRG
+]]></body>
+    </trigger>
+  </database>

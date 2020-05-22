@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE C_COSTCENTER">
+    <table name="C_COSTCENTER" primaryKey="C_COSTCENTER_KEY">
+      <column name="EM_SSFL_IMOVALUE" primaryKey="false" required="true" type="VARCHAR" size="40" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_VESSEL_TYPE_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_LOAD_TYPE_ID" primaryKey="false" required="true" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_ISOWN" primaryKey="false" required="true" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[Y]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_TRV" primaryKey="false" required="false" type="VARCHAR" size="40" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_TONNAGE" primaryKey="false" required="true" type="DECIMAL" autoIncrement="false">
+        <default><![CDATA[0]]></default>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_C_COUNTRY_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSFL_VALIDCOMBINATION_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="C_COUNTRY" name="EM_SSFL_CCENTER_C_COUNTRY">
+        <reference local="EM_SSFL_C_COUNTRY_ID" foreign="C_COUNTRY_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="C_VALIDCOMBINATION" name="EM_SSFL_COSTCENTER_VALIDCOMB">
+        <reference local="EM_SSFL_VALIDCOMBINATION_ID" foreign="C_VALIDCOMBINATION_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSFL_VESSEL_TYPE" name="EM_SSFL_COSTCENTER_VESSEL_TYPE">
+        <reference local="EM_SSFL_VESSEL_TYPE_ID" foreign="SSFL_VESSEL_TYPE_ID"/>
+      </foreign-key>
+      <foreign-key foreignTable="SSFL_LOAD_TYPE" name="EM_SSFL_LOAD_TYPE">
+        <reference local="EM_SSFL_LOAD_TYPE_ID" foreign="SSFL_LOAD_TYPE_ID"/>
+      </foreign-key>
+      <check name="EM_SSFL_C_CCENTER_ISOWN_CHK"><![CDATA[EM_SSFL_ISOWN IN ('Y', 'N')]]></check>
+    </table>
+  </database>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE SSPR_PAYROLL_TICKET">
+    <table name="SSPR_PAYROLL_TICKET" primaryKey="SSPR_PAYROLL_TICKET_KEY">
+      <column name="EM_SSBP_SFB_BUDGET_AREA_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <column name="EM_SSBP_BUDGET_AREA_ID" primaryKey="false" required="false" type="VARCHAR" size="32" autoIncrement="false">
+        <default/>
+        <onCreateDefault/>
+      </column>
+      <foreign-key foreignTable="SFB_BUDGET_AREA" name="EM_SSBP_PAYROLLTICKET_AREA">
+        <reference local="EM_SSBP_SFB_BUDGET_AREA_ID" foreign="SFB_BUDGET_AREA_ID"/>
+      </foreign-key>
+    </table>
+  </database>

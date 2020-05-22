@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+  <database name="MODIFIED TABLE C_INVOICE">
+    <table name="C_INVOICE" primaryKey="C_INVOICE_KEY">
+      <column name="EM_SIPC_IS_TAX_EXPENCE" primaryKey="false" required="false" type="CHAR" size="1" autoIncrement="false">
+        <default><![CDATA[N]]></default>
+        <onCreateDefault/>
+      </column>
+      <check name="EM_SIPC_C_INVOICE_IS_T_EXP_CHK"><![CDATA[EM_SIPC_IS_TAX_EXPENCE IN ('Y', 'N')]]></check>
+    </table>
+  </database>

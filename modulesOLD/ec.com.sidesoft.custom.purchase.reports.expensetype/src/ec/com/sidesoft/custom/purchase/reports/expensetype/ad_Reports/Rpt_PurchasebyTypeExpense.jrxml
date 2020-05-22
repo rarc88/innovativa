@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rpt_PurchasebyTypeExpense" pageWidth="1129" pageHeight="883" orientation="Landscape" columnWidth="1089" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="53"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="datefrom" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateto" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="c_validcombination_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select h.alias as combinacion_contable,a.dateacct,b.name as tipodoc,a.documentno,c.name as tercero,
+a.totallines,
+sum(CASE WHEN f.istaxdeductable = 'Y' AND f.rate = 0 THEN e.taxamt ELSE 0.00 END) as monto_iva_0,
+sum(CASE WHEN f.istaxdeductable = 'Y' AND f.rate <> 0 THEN e.taxamt ELSE 0.00 END) as monto_iva_12,
+a.totallines+
+sum(CASE WHEN f.istaxdeductable = 'Y' AND f.rate = 0 THEN e.taxamt ELSE 0.00 END) +
+sum(CASE WHEN f.istaxdeductable = 'Y' AND f.rate <> 0 THEN e.taxamt ELSE 0.00 END) as total,
+sum(CASE f.em_sswh_ats_iva WHEN 'Y'::bpchar THEN e.taxamt * (-1)::numeric ELSE 0.00  END) AS ret_iva,
+sum(CASE f.em_sswh_ats_source WHEN 'Y'::bpchar THEN  e.taxamt * (-1)::numeric ELSE 0.00 END) AS ret_renta,
+a.grandtotal
+from c_invoice a
+left join c_doctype b on a.c_doctype_id = b.c_doctype_id
+left join c_bpartner c on a.c_bpartner_id = c.c_bpartner_id
+left join c_invoicetax e on a.c_invoice_id::text = e.c_invoice_id::text
+left join c_tax f on e.c_tax_id::text = f.c_tax_id::text
+left join c_costcenter g on a.c_costcenter_id = g.c_costcenter_id
+left join c_validcombination h on g.em_ssfl_validcombination_id = h.c_validcombination_id
+where
+a.issotrx='N'
+and a.c_doctype_id in (select c_doctype_id from sfb_budget_doctype)
+and (h.c_validcombination_id = $P{c_validcombination_id} or $P{c_validcombination_id} is null)
+and (a.dateacct between $P{datefrom} and $P{dateto})
+group by a.dateacct,b.name,a.documentno,c.name,a.totallines,a.grandtotal,h.alias
+order by h.alias,a.dateacct,a.documentno]]>
+	</queryString>
+	<field name="combinacion_contable" class="java.lang.String"/>
+	<field name="dateacct" class="java.sql.Timestamp"/>
+	<field name="tipodoc" class="java.lang.String"/>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="tercero" class="java.lang.String"/>
+	<field name="totallines" class="java.math.BigDecimal"/>
+	<field name="monto_iva_0" class="java.math.BigDecimal"/>
+	<field name="monto_iva_12" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="ret_iva" class="java.math.BigDecimal"/>
+	<field name="ret_renta" class="java.math.BigDecimal"/>
+	<field name="grandtotal" class="java.math.BigDecimal"/>
+	<variable name="sumTotalPaid" class="java.math.BigDecimal" resetType="Group" resetGroup="CombinacionContable" calculation="Sum">
+		<variableExpression><![CDATA[$F{grandtotal}]]></variableExpression>
+	</variable>
+	<variable name="sumsubtotal" class="java.math.BigDecimal" resetType="Group" resetGroup="CombinacionContable" calculation="Sum">
+		<variableExpression><![CDATA[$F{totallines}]]></variableExpression>
+	</variable>
+	<variable name="sumivacero" class="java.math.BigDecimal" resetType="Group" resetGroup="CombinacionContable" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_iva_0}]]></variableExpression>
+	</variable>
+	<variable name="sumivadoce" class="java.math.BigDecimal" resetType="Group" resetGroup="CombinacionContable">
+		<variableExpression><![CDATA[$F{monto_iva_12}]]></variableExpression>
+	</variable>
+	<variable name="sumtotal" class="java.math.BigDecimal" resetType="Group" resetGroup="CombinacionContable" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="simretiva" class="java.math.BigDecimal" resetType="Group" resetGroup="CombinacionContable" calculation="Sum">
+		<variableExpression><![CDATA[$F{ret_iva}]]></variableExpression>
+	</variable>
+	<variable name="sumretrenta" class="java.math.BigDecimal" resetType="Group" resetGroup="CombinacionContable" calculation="Sum">
+		<variableExpression><![CDATA[$F{ret_renta}]]></variableExpression>
+	</variable>
+	<variable name="sumTotalPaid_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{grandtotal}]]></variableExpression>
+	</variable>
+	<variable name="sumsubtotal_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{totallines}]]></variableExpression>
+	</variable>
+	<variable name="sumivacero_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_iva_0}]]></variableExpression>
+	</variable>
+	<variable name="sumivadoce_1" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{monto_iva_12}]]></variableExpression>
+	</variable>
+	<variable name="sumtotal_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="simretiva_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{ret_iva}]]></variableExpression>
+	</variable>
+	<variable name="sumretrenta_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{ret_renta}]]></variableExpression>
+	</variable>
+	<group name="CombinacionContable">
+		<groupExpression><![CDATA[$F{combinacion_contable}]]></groupExpression>
+		<groupHeader>
+			<band height="51">
+				<staticText>
+					<reportElement x="0" y="0" width="127" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Combinacion Contable :]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="148" y="0" width="436" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{combinacion_contable}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="22" width="72" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="72" y="22" width="176" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tipo Documento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="248" y="22" width="98" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[No. Documento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="346" y="22" width="238" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tercero]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="584" y="22" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Subtotal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="656" y="22" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Iva 0%]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="728" y="22" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Iva]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="800" y="22" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="872" y="22" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ret. Iva]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="944" y="22" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ret Renta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1016" y="22" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total  Pagar]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="27">
+				<staticText>
+					<reportElement x="510" y="4" width="72" height="20"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Subtotal :]]></text>
+				</staticText>
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="1016" y="4" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumTotalPaid}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="584" y="4" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumsubtotal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="656" y="4" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumivacero}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="728" y="4" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumivadoce}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="800" y="4" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumtotal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="872" y="4" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{simretiva}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="944" y="4" width="72" height="20"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumretrenta}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="462" y="3" width="627" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="295" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPRAS POR TIPO DE GASTO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="72" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dateacct}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="72" y="0" width="176" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipodoc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="248" y="0" width="98" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documentno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="346" y="0" width="238" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tercero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="584" y="0" width="72" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totallines}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="656" y="0" width="72" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{monto_iva_0}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="728" y="0" width="72" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{monto_iva_12}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="800" y="0" width="72" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="872" y="0" width="72" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ret_iva}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="944" y="0" width="72" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ret_renta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="1016" y="0" width="72" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{grandtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="24" splitType="Stretch">
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="872" y="3" width="72" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{simretiva_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="1016" y="3" width="72" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumTotalPaid_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="656" y="3" width="72" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumivacero_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="944" y="3" width="72" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumretrenta_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="800" y="3" width="72" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumtotal_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="728" y="3" width="72" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumivadoce_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="510" y="3" width="72" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="584" y="3" width="72" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumsubtotal_1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="462" y="2" width="627" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

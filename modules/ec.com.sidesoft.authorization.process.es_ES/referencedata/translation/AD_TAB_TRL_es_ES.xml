@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_TAB" version="">
+  <row id="29BE3273D343444D83088EB9F9D64AC9" trl="Y">
+    <value column="Name" isTrl="Y" original="Header">Proceso de Autorización</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2E306F98C28D4A70A433DFD8BD8333B9" trl="Y">
+    <value column="Name" isTrl="Y" original="Authorization Level">Proceso de Autorización</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="30D3B4573501440CAE033FAA68D7F5BB" trl="N">
+    <value column="Name" isTrl="Y" original="Header">Cabecera</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Create and edit a sales invoice.">Crea y edita una factura de venta.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Supplier invoices can be registered, booked and managed in the header section of the purchase invoice window.">Crea y edita una factura de venta.</value>
+  </row>
+  <row id="39133CA18CB040C19F115F3824972AAF" trl="Y">
+    <value column="Name" isTrl="Y" original="Header">Cabecera</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="Y" original="Create and edit a sales invoice.">Crea y edita una factura de venta.</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="Y" original="Supplier invoices can be registered, booked and managed in the header section of the purchase invoice window.">Crea y edita una factura de venta.</value>
+  </row>
+  <row id="5E86CAEDD1274AD6B5E837858FB0429F" trl="Y">
+    <value column="Name" isTrl="Y" original="Authorization Detail">Detalle Autorización</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Detalle Autorización</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="882EAA35611642A884D62CEF27F62F1E" trl="N">
+    <value column="Name" isTrl="Y" original="Authorization Detail">Detalle Autorización</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Detalle Autorización</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="C19E3A29E00F4A0EA374D0B684A14785" trl="Y">
+    <value column="Name" isTrl="Y" original="Header">Razón Autorización</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="DB94399303AD47F9B012CF3D956261E4" trl="N">
+    <value column="Name" isTrl="Y" original="Authorization Detail">Detalle Autorización</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Detalle Autorización</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E63DD0DBBA9846F5818670CB3C17EFC4" trl="N">
+    <value column="Name" isTrl="Y" original="Authorization Detail">Detalle Autorización</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original="">Detalle Autorización</value>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E9CA865BA6204022A45AEFE1D3F4A228" trl="N">
+    <value column="Name" isTrl="Y" original="Header">Proceso de Autorización</value>
+    <value column="CommitWarning" isTrl="N" original=""/>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Filtername" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="69CC4E839CBB41CAA588C6DD1BCBBEE6" trl="N">
+    <value column="MsgText" isTrl="Y" original="You must select the budget line on the lines that have this balance control enabled">Debe seleccionar la linea de presupuesto en las líneas que que este habilitado control de saldo</value>
+    <value column="MsgTip" isTrl="N" original="">Debe seleccionar la linea de presupuesto en las líneas que que este habilitado control de saldo</value>
+  </row>
+</compiereTrl>

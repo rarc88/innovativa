@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REFERENCE" version="">
+  <row id="A2F623C998B7497DB66C562884009298" trl="N">
+    <value column="Name" isTrl="Y" original="User2">Usuario 2</value>
+    <value column="Description" isTrl="Y" original="User Dimension 1 filtered by Cost Center and User Dimension 1">Dimensión 1 filtrado por Centro de Costo y Dimensión1</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="A5A06B6C0E6B45D9B60C6327EE56D68F" trl="N">
+    <value column="Name" isTrl="N" original="User2 Payment Detail">User2 Payment Detail</value>
+    <value column="Description" isTrl="N" original="User Dimension 1 filtered by Cost Center and User Dimension 1">User Dimension 1 filtered by Cost Center and User Dimension 1</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="CF232EDA1A1C4785AC1E0D0A2866850A" trl="N">
+    <value column="Name" isTrl="N" original="SSFL_VESSEL_TYPE_ID">Tipo Buque</value>
+    <value column="Description" isTrl="N" original="VESSEL_TYPE">Tipo Buque</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="C27B40318122484E83CDAA7774053219" trl="N">
+    <value column="Name" isTrl="Y" original="EM_Ssfl_Valuerecap1">Valor Recap 1</value>
+    <value column="Description" isTrl="Y" original="Recap 1">Valor Recap 1</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="C5C1FFC033BA445CB6888C9A4D8011FF" trl="N">
+    <value column="Name" isTrl="Y" original="em_ssfl_bank">Banco</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="C7E8E3F19CB44F47B5D37DEDCD89743A" trl="N">
+    <value column="Name" isTrl="Y" original="ssfl_fare_B">Tarifa B</value>
+    <value column="Description" isTrl="Y" original="Fare B">Tarifa B</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E406ECC4E47A4962A996FB487458B295" trl="N">
+    <value column="Name" isTrl="Y" original="em_ssfl_type_recap">Tipo recap</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="FC2DC445EFCB4918B138E8FAED733290" trl="N">
+    <value column="Name" isTrl="Y" original="EM_Ssfl_User1_ID">Dimensión 1</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="F95266F286F74EF883E7C548F6CB5A48" trl="N">
+    <value column="Name" isTrl="Y" original="ssfl_c_contry">País</value>
+    <value column="Description" isTrl="Y" original="Country">País</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="046824D73C35477DA9B359C12B5C787B" trl="N">
+    <value column="Name" isTrl="N" original="ssfl_status_order">ssfl_status_order</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1F457D55546B44CDBD6351E35386C2F8" trl="N">
+    <value column="Name" isTrl="Y" original="ssfl_owner">Propietario</value>
+    <value column="Description" isTrl="Y" original="owner">Propietario</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="1F55895422CF4F56942DF493B0FBBC8A" trl="N">
+    <value column="Name" isTrl="Y" original="User1">Usuario 1</value>
+    <value column="Description" isTrl="Y" original="User Dimension 1 filtered by Cost Center">Dimensión 1 filtrado por Centro de Costos</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="14A059D871DD42AC95B98539CAB44D82" trl="N">
+    <value column="Name" isTrl="N" original="sfpr_vessel_type_id">sfpr_vessel_type_id</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="16F732C4970A4340B2E2EAF7CD4B9CA1" trl="N">
+    <value column="Name" isTrl="N" original="SSLF_VESSEL_TYPE">Tipo Buque</value>
+    <value column="Description" isTrl="N" original="Vessel Type">Tipo Buque</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="2675E6229B854CDF9C6AEB900F6BEF80" trl="N">
+    <value column="Name" isTrl="N" original="User1 Payment Detail">User1 Payment Detail</value>
+    <value column="Description" isTrl="N" original="User Dimension 1 filtered by Cost Center">User Dimension 1 filtered by Cost Center</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4B6AC7640CD244BF80C0847B8C4CD70B" trl="N">
+    <value column="Name" isTrl="Y" original="em_ssfl_valuerecap3">Valor Recap</value>
+    <value column="Description" isTrl="Y" original="Recap 3">Recap</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="4E5AD0D1D4664B7A9DEB15B7C422B208" trl="N">
+    <value column="Name" isTrl="Y" original="ssfl_ws_contract_b">Contrato B Ws</value>
+    <value column="Description" isTrl="Y" original="Ws Contract B">Contrato B Ws</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="42E13E423DFA430FA69C8C2DF0ADB43C" trl="N">
+    <value column="Name" isTrl="Y" original="Port_Type_ID">Tipo de Puerto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5AF4A7D6B5684C91A7D0602D9697A7F1" trl="N">
+    <value column="Name" isTrl="Y" original="EM_Ssfl_Brokervalue">Valor Broker</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="56549FC9BEED4F57BA0557D543A5277C" trl="N">
+    <value column="Name" isTrl="Y" original="em_ssfl_c_costcenter_id">Centro de Costos</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="633CC4D5196D4FE1B0A1C9F09972481D" trl="N">
+    <value column="Name" isTrl="Y" original="ssfl_ws_contract">WS Contrato</value>
+    <value column="Description" isTrl="Y" original="Ws Contract ">Ws Contrato</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="648302BFAE884C92A33850890EC58A10" trl="N">
+    <value column="Name" isTrl="Y" original="print_type_recap">Tipo de impresión recap</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7096FE6C5510429189DBA43EF56A6D16" trl="N">
+    <value column="Name" isTrl="Y" original="EM_Ssfl_Valuerecap2">Valor Recap 2</value>
+    <value column="Description" isTrl="Y" original="Recap 2">Valor Recap 2</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7698393C87044E068A6CB7DAC0B7BED1" trl="N">
+    <value column="Name" isTrl="Y" original="ssfl_fare_a">Tarifa A</value>
+    <value column="Description" isTrl="Y" original="Fare A">Tarifa A</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="8C7ABF372A90471986744F9A42D1BD26" trl="N">
+    <value column="Name" isTrl="Y" original="ssfl_vessel_type">Tipo de Buque</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="81518EEAD1EE45FAABF41D9D04B7CD34" trl="N">
+    <value column="Name" isTrl="Y" original="ssfl_port">Puerto</value>
+    <value column="Description" isTrl="Y" original="Port">Puerto</value>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="85FA0723CA544100B58047433D7B2A60" trl="N">
+    <value column="Name" isTrl="Y" original="ssfl_load_type">Tipo de Carga</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

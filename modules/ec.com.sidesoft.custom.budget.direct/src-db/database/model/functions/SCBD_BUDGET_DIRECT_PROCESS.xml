@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SCBD_BUDGET_DIRECT_PROCESS">
+    <function name="SCBD_BUDGET_DIRECT_PROCESS" type="NULL">
+      <parameter name="pinstance_id" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[TYPE RECORD IS REF CURSOR;
+Cur_Parameter RECORD;
+Cur_InvoiceLine RECORD;
+
+  v_Client_ID VARCHAR2(32);
+  v_Org_ID VARCHAR2(32);
+  v_User_ID VARCHAR2(32) ;
+
+  v_ResultStr VARCHAR2(2000) := '';  
+  V_Result NUMBER:=1; -- Success
+
+  V_RECORD_ID  VARCHAR2(32);
+  v_Mobilization_City_ID  VARCHAR2(32);
+  v_Message VARCHAR2(2000):='';
+  V_Amt NUMBER:=0;
+  V_TotalAmt NUMBER:=0;
+  V_ViaticalAmt NUMBER:=0;
+  V_TransportationAmt NUMBER:=0;
+  V_Fin_Payment_Schedule_Id Varchar2(32); 
+  V_C_City_ID Varchar2(32); 
+  V_Employee_City_ID Varchar2(32); 
+  V_Processed Varchar2(60);
+  V_Processing Varchar2(60);
+  V_Settle CHAR(1);
+  V_OUTSTANDINGAMT NUMBER:=0;
+  V_MobilizationFeedingDays NUMBER:=0;
+  V_MobilizationTransportDays NUMBER:=0;
+  V_MobilizationDepartureDate DATE;
+  V_MobilizationDepartureTime DATE;
+  V_MobilizationArrivalDate DATE;
+  V_MobilizationArrivalTime DATE;
+  V_MobilizationValue NUMBER:=0;
+  V_FeedingValue NUMBER:=0;
+  V_TransportCalculationType Varchar2(60);
+  V_MobilizationDepartTimeLimit DATE;
+  V_MobilizationArrivalTimeLimit DATE;
+  V_Count NUMBER;
+  v_DocAction scbd_budget_direct.DocAction%TYPE;
+
+  v_ViaticalOnPayment Varchar2(32); 
+
+BEGIN
+  --  Update AD_PInstance
+  DBMS_OUTPUT.PUT_LINE('Updating PInstance - Processing ' || PInstance_ID) ;
+  v_ResultStr := 'PInstanceNotFound';
+  AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'Y', NULL, NULL) ;
+
+  BEGIN --BODY
+
+    -- Get Parameters
+    v_ResultStr := 'ReadingParameters';
+
+    FOR Cur_Parameter IN
+      (SELECT i.Record_ID,
+        i.AD_User_ID,
+        i.AD_Client_ID,
+        i.AD_Org_ID
+
+      FROM AD_PInstance i
+      WHERE i.AD_PInstance_ID = PInstance_ID
+      )
+    LOOP
+
+      v_Record_ID := Cur_Parameter.Record_ID;
+      v_Client_ID := Cur_Parameter.AD_Client_ID;
+      v_Org_ID := Cur_Parameter.AD_Org_ID;
+      v_User_ID := Cur_Parameter.AD_User_ID;
+
+    END LOOP; -- End Get Parameter
+
+    -- Get direct budget processed status
+    Select bd.Processed, bd.Processing Into V_Processed, V_Processing From scbd_budget_direct bd Where bd.scbd_budget_direct_id = V_Record_Id;
+
+    If V_Processing = 'Y' Then
+      v_Message := '@Processing@';
+      AD_UPDATE_PINSTANCE(Pinstance_Id, Null, 'N', 0, v_Message);
+      return;
+    End If;
+
+    -- Set processing 'Y'
+    Update scbd_budget_direct bd Set Processing = 'Y' Where bd.scbd_budget_direct_id = V_Record_Id;
+
+    If V_Processed = 'Y' Then -- Unprocess
+
+      -- Unprocess the direct budget
+      update scbd_budget_direct bd
+      set processed = 'N', Docstatus = 'DR', Docaction = 'RE'
+      where bd.scbd_budget_direct_id = V_RECORD_ID;
+
+      v_DocAction := 'RE';
+      V_Message := '@Unprocessed@';
+
+    Elsif V_Processed = 'N' Then -- Process
+
+     -- Process the viatical application
+      update scbd_budget_direct bd
+      set processed = 'Y', Docstatus = 'CO', Docaction = '--'
+      where bd.scbd_budget_direct_id = V_RECORD_ID;
+
+      v_DocAction := 'CO';
+      V_Message := '@ProcessOK@';
+
+    End If;
+
+    SELECT count(*) INTO v_count
+    FROM DUAL
+    where exists (select 1 from ad_ep_procedures where ad_extension_points_id = '3C89047B74EE4B49A6B66AC802E26512');
+    IF (v_count=1) THEN
+      DECLARE
+        v_ep_instance VARCHAR2(32);
+        v_extension_point_id VARCHAR2(32) := '3C89047B74EE4B49A6B66AC802E26512';
+      BEGIN
+        v_ep_instance := get_uuid();
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'Record_ID',
+          v_record_id, NULL, NULL, NULL, NULL, NULL, NULL);
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'DocAction',
+          v_DocAction, NULL, NULL, NULL, NULL, NULL, NULL);
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'User',
+          v_User_ID, NULL, NULL, NULL, NULL, NULL, NULL);
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'Message',
+          NULL, NULL, NULL, NULL, NULL, NULL, v_Message);
+        AD_EP_INSTANCE_PARA_INSERT(v_ep_instance, v_extension_point_id, 'Result',
+          Null, Null, V_Result, Null, Null, Null, Null);
+        AD_EXTENSION_POINT_HANDLER(v_ep_instance, v_extension_point_id);
+
+        DELETE FROM ad_ep_instance_para
+        WHERE ad_ep_instance_id = v_ep_instance;
+      END;
+    END IF;
+
+    -- Set processing 'N'
+    Update scbd_budget_direct bd Set Processing = 'N' Where bd.scbd_budget_direct_Id = V_Record_Id;
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE('Updating PInstance - Finished ' || v_Message) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 1, v_Message) ;
+    RETURN;
+
+  END; --BODY
+  EXCEPTION
+  WHEN OTHERS THEN
+    ROLLBACK;
+    -- Set processing 'N'
+    Update scbd_budget_direct bd Set Processing = 'N' Where bd.scbd_budget_direct_Id = V_Record_Id;
+    v_ResultStr:= '@ERROR=' || SQLERRM;
+    DBMS_OUTPUT.PUT_LINE(v_ResultStr) ;
+    AD_UPDATE_PINSTANCE(PInstance_ID, NULL, 'N', 0, v_ResultStr) ;
+    RETURN;
+END SCBD_BUDGET_DIRECT_PROCESS
+]]></body>
+    </function>
+  </database>

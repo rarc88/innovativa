@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSCT_PAYMENT_FORM_TRG">
+    <trigger name="SSCT_PAYMENT_FORM_TRG" table="SSCT_PAYMENT" fires="before" insert="true" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+  v_Count     NUMBER;
+  v_PaymentFor CHARACTER(1);
+  v_Valor NUMBER;
+
+BEGIN
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+
+
+IF (INSERTING OR UPDATING ) THEN
+
+v_PaymentFor:= :new.paymentform;
+
+	IF (v_PaymentFor='A') THEN
+
+		v_Valor:= coalesce(:new.grandtotal,0);
+		
+		:new.amountpaid := v_Valor;
+	END IF;
+
+
+END IF;
+
+END SSCT_PAYMENT_FORM_TRG
+]]></body>
+    </trigger>
+  </database>

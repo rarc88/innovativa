@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="47357F8B41F141BE82597BA11842C7B8" trl="Y">
+    <value column="Name" isTrl="Y" original="Payroll Payment Approval - File Transfer">Aprobación de Pagos Nómina – Archivo de Tranferencia</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="FE42542EE86B4EAAA91F45C5D9652BBA" trl="N">
+    <value column="Name" isTrl="Y" original="Concept Approval payment">Concepto - Aprobación de pago</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

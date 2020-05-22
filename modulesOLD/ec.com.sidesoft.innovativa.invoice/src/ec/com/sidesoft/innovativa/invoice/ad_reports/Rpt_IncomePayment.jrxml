@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rpt_IncomePayment" pageWidth="4011" pageHeight="2755" orientation="Landscape" columnWidth="3971" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="0.9090909090909101"/>
+	<property name="ireport.x" value="2379"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="DATEFROM" class="java.util.Date"/>
+	<parameter name="DATETO" class="java.util.Date"/>
+	<parameter name="C_COSTCENTER_ID" class="java.lang.String"/>
+	<parameter name="USER1_ID" class="java.lang.String"/>
+	<parameter name="USER2_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+A.DATEINVOICED AS FECHAFACTURA,
+A.DOCUMENTNO AS NOFACTURA,
+C.NAME AS TERCEROFACTURA,
+E.NAME AS DOC_COBRO,
+D.DOCUMENTNO AS NOCOBRO,
+D.DESCRIPTION AS DESC_COBRO,
+F.NAME AS METODOPAGO_COBRO,
+D.REFERENCENO AS REFERENCIA_COBRO,
+round(((round(B.PAIDAMT,2)  * imp.subtotal) / (a.grandtotal)),2) as SUBTOTAL,
+round(((round(B.PAIDAMT,2)) - ((round(B.PAIDAMT,2)  * imp.subtotal) / (a.grandtotal))),2) as IVA,
+round(B.PAIDAMT,2) AS IMPORTE_COBRADO,
+H.DOCUMENTNO AS NO_CREDITO,
+I.NAME AS TIPODOC_CREDITO,
+G.AMOUNT AS IMPORTE_CREDITO,
+J.NAME AS CENTROCOSTO,
+K.NAME AS USER1,
+L.NAME AS USER2,
+d.paymentdate,
+M.name as BANCO,
+M.accountno as NUM_CUENTA
+FROM C_INVOICE A
+LEFT JOIN (
+ SELECT psd.fin_payment_scheduledetail_id AS ssfi_fin_payment_detail_v_id, psd.ad_client_id, psd.ad_org_id, psd.isactive, psd.created, psd.createdby, psd.updated, psd.updatedby, psi.fin_payment_schedule_id AS fin_payment_sched_inv_v_id, pso.fin_payment_schedule_id AS fin_payment_sched_ord_v_id, psi.fin_payment_schedule_id AS fin_payment_sched_inv_id, pso.fin_payment_schedule_id AS fin_payment_sched_ord_id, i.documentno AS invoiceno, o.documentno AS orderno, p.documentno AS paymentno, pd.fin_payment_id, COALESCE(psi.duedate, pso.duedate) AS duedate, COALESCE(i.grandtotal, o.grandtotal) AS invoicedamt, COALESCE(psi.amount, pso.amount) AS expected, psd.amount AS paidamt, p.c_bpartner_id, p.fin_paymentmethod_id, p.fin_financial_account_id, p.c_currency_id, p.paymentdate, gli.name AS glitemname, pd.writeoffamt, fa.c_currency_id AS finacc_currency_id, p.finacc_txn_convert_rate, psd.amount * p.finacc_txn_convert_rate AS paidconverted, COALESCE(psi.amount, pso.amount) * p.finacc_txn_convert_rate AS expectedconverted, psd.iscanceled, psd.c_bpartner_id AS c_bpartner_id_dim, psd.c_activity_id, psd.m_product_id, psd.c_campaign_id, psd.c_project_id, psd.c_salesregion_id, p.status, i.poreference AS invoice_reference
+ ,i.c_invoice_id
+   FROM fin_payment p
+   LEFT JOIN fin_financial_account fa ON p.fin_financial_account_id = fa.fin_financial_account_id, fin_payment_detail pd
+   JOIN fin_payment_scheduledetail psd ON pd.fin_payment_detail_id = psd.fin_payment_detail_id
+   LEFT JOIN fin_payment_schedule psi ON psd.fin_payment_schedule_invoice = psi.fin_payment_schedule_id
+   LEFT JOIN c_invoice i ON psi.c_invoice_id = i.c_invoice_id
+   LEFT JOIN fin_payment_schedule pso ON psd.fin_payment_schedule_order = pso.fin_payment_schedule_id
+   LEFT JOIN c_order o ON pso.c_order_id = o.c_order_id
+   LEFT JOIN c_glitem gli ON pd.c_glitem_id = gli.c_glitem_id
+  WHERE p.fin_payment_id = pd.fin_payment_id
+
+) B on (B.c_invoice_id = A.c_invoice_id)
+left join c_bpartner C on A.c_bpartner_id = C.c_bpartner_id
+LEFT JOIN fin_payment D on D.fin_payment_id = B.fin_payment_id
+LEFT JOIN C_DOCTYPE E ON D.C_DOCTYPE_ID = E.C_DOCTYPE_ID
+left outer join fin_paymentmethod F on (D.fin_paymentmethod_id=F.fin_paymentmethod_id)
+left join FIN_Payment_Credit G on D.fin_payment_id = G.fin_payment_id
+left join fin_payment H on G.fin_payment_id_used = H.fin_payment_id
+LEFT JOIN C_DOCTYPE I ON H.C_DOCTYPE_ID = I.C_DOCTYPE_ID
+LEFT JOIN C_COSTCENTER J ON A.C_COSTCENTER_ID = J.C_COSTCENTER_ID
+LEFT JOIN USER1 K ON A.USER1_ID = K.USER1_ID
+LEFT JOIN USER2 L ON A.USER2_ID = L.USER2_ID
+LEFT JOIN fin_financial_account M on M.fin_financial_account_id=D.fin_financial_account_id
+left join
+
+(
+
+    SELECT
+    c_invoice_id,
+    SUM(importe_bruto) AS importe_bruto,
+    SUM(importe_imponible) AS importe_imponible,
+    SUM(impuesto) AS impuesto,
+    sum(basecero) as basecero,
+    SUM(BASE12) AS base12,
+    (sum(basecero) + SUM(BASE12)) AS subtotal,
+    sum(iva) as iva12
+    FROM
+    (
+
+    select ci.c_invoice_id,
+    ((sum(case when IsTaxDeductable='Y' and ct.rate = 0 then cilt.taxbaseamt when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxbaseamt end)
+    + sum((case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxamt else 0 end))))
+    as "importe_bruto",
+    ((sum((case when IsTaxDeductable='Y' and ct.rate = 0 then cilt.taxbaseamt else 0 end) +
+    (case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxbaseamt else 0 end) +
+    (case when IsTaxDeductable='Y' and ct.rate = 0 then cilt.taxamt else 0 end)))) as "importe_imponible",
+    ((sum((case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxamt else 0 end)))) as "impuesto",
+
+    sum(case when IsTaxDeductable='Y' and ct.rate = 0 then cilt.taxbaseamt else 0 end) AS basecero,
+    sum(case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxbaseamt else 0 end) AS base12,
+    sum(case when IsTaxDeductable='Y' and ct.rate <> 0 then cilt.taxamt else 0 end) AS iva
+    from c_invoice ci
+    left join c_invoicelinetax cilt on cilt.c_invoice_id = ci.C_INVOICE_ID
+    left join c_tax ct on ct.c_tax_id = cilt.c_tax_id
+    group by ci.c_invoice_id
+    ) impuesto
+    group by c_invoice_id
+
+) imp on a.c_invoice_id = imp.c_invoice_id
+WHERE (to_date(to_char(d.paymentdate,'dd/MM/yyyy')) BETWEEN $P{DATEFROM} AND $P{DATETO}
+)
+and (A.c_costcenter_id = $P{C_COSTCENTER_ID} or $P{C_COSTCENTER_ID} is null)
+and (A.user1_id = $P{USER1_ID} or $P{USER1_ID} is null)
+and (A.user2_id =  $P{USER2_ID} or $P{USER2_ID} is null)
+and A.issotrx='Y'
+and  d.isreceipt='Y'
+order by 2]]>
+	</queryString>
+	<field name="fechafactura" class="java.sql.Timestamp"/>
+	<field name="nofactura" class="java.lang.String"/>
+	<field name="tercerofactura" class="java.lang.String"/>
+	<field name="doc_cobro" class="java.lang.String"/>
+	<field name="nocobro" class="java.lang.String"/>
+	<field name="desc_cobro" class="java.lang.String"/>
+	<field name="metodopago_cobro" class="java.lang.String"/>
+	<field name="referencia_cobro" class="java.lang.String"/>
+	<field name="subtotal" class="java.math.BigDecimal"/>
+	<field name="iva" class="java.math.BigDecimal"/>
+	<field name="importe_cobrado" class="java.math.BigDecimal"/>
+	<field name="no_credito" class="java.lang.String"/>
+	<field name="tipodoc_credito" class="java.lang.String"/>
+	<field name="importe_credito" class="java.math.BigDecimal"/>
+	<field name="centrocosto" class="java.lang.String"/>
+	<field name="user1" class="java.lang.String"/>
+	<field name="user2" class="java.lang.String"/>
+	<field name="paymentdate" class="java.sql.Timestamp"/>
+	<field name="banco" class="java.lang.String"/>
+	<field name="num_cuenta" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="0" y="4" width="511" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE INGRESOS BASADO EN COBROS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="0" y="0" width="110" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="110" y="0" width="119" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="229" y="0" width="282" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tercero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="511" y="0" width="239" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="894" y="0" width="197" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Documento Cobro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="1091" y="0" width="278" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripcion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="1369" y="0" width="197" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Metodo de Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="1566" y="0" width="197" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Referencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="1999" y="0" width="119" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importe Cobrado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="2118" y="0" width="197" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Origen de Credito Usado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="2315" y="0" width="197" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Credito Usado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="2512" y="0" width="118" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="2630" y="0" width="283" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Linea de Negocio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="2913" y="0" width="266" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proyecto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="3179" y="0" width="329" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Centro de Capacitacion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="750" y="0" width="144" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Cobro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="3508" y="0" width="241" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Banco]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="3749" y="0" width="221" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Cuenta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="1763" y="0" width="119" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="1882" y="0" width="117" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="0" y="0" width="110" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{fechafactura}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="110" y="0" width="119" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nofactura}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="229" y="0" width="282" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tercerofactura}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="511" y="0" width="239" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{doc_cobro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="894" y="0" width="197" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nocobro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="1091" y="0" width="278" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{desc_cobro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="1369" y="0" width="197" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{metodopago_cobro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="1566" y="0" width="197" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{referencia_cobro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="1999" y="0" width="119" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{importe_cobrado}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="2118" y="0" width="197" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{no_credito}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="2315" y="0" width="197" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipodoc_credito}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="2512" y="0" width="118" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{importe_credito}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="2630" y="0" width="283" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{centrocosto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="2913" y="0" width="266" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{user1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="3179" y="0" width="329" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{user2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField" x="750" y="0" width="144" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{paymentdate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="3508" y="0" width="241" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{banco}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="3749" y="0" width="221" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{num_cuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1882" y="0" width="117" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{iva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1763" y="0" width="119" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

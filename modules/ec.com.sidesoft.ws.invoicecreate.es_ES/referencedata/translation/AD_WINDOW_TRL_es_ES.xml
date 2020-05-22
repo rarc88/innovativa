@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_WINDOW" version="">
+  <row id="49B5BCE138914E90B31C85A5A0825A79" trl="Y">
+    <value column="Name" isTrl="Y" original="Sales Invoice WS Configuration">Configuración WS Factura de Venta</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="BFF4EC2A56E0440F99C3F2658A8BA308" trl="N">
+    <value column="Name" isTrl="Y" original="Sales Invoice WS Log">Log WS Factura de Venta</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

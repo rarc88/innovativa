@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+  <database name="VIEW SFB_BUDGET_PAYMENT_DET_V">
+    <view name="SFB_BUDGET_PAYMENT_DET_V"><![CDATA[SELECT a.fin_payment_id AS sfb_budget_payment_det_v_id, a.ad_client_id, a.ad_org_id, a.created, a.createdby, a.updated, a.updatedby, a.isactive, b.em_sfb_budget_cert_line_id AS sfb_budget_cert_line_id, b.fin_payment_detail_id, a.fin_payment_id, a.c_bpartner_id, a.c_currency_id, a.amount FROM fin_payment a LEFT JOIN fin_payment_detail b ON a.fin_payment_id = b.fin_payment_id WHERE a.isreceipt = 'N' AND a.em_sfb_isnotbudgetable = 'N' AND a.processed = 'Y']]></view>
+  </database>

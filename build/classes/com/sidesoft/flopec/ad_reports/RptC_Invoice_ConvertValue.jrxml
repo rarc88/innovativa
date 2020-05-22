@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptC_Invoice_ConvertValue" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Value" class="java.math.BigDecimal"/>
+	<parameter name="Language" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+UPPER((
+CASE
+	WHEN  $P{Language} = 'es_EC' then (ssfl_convert_numbertoletters(case when $P{Value} <0 then ($P{Value} * -1) else $P{Value} end  )|| '   ' || '	DOLAR(ES)')
+	when $P{Language} = 'en_US' then (ssfl_cnvrt_numtoletters_usa(case when $P{Value} <0 then ($P{Value} * -1) else $P{Value} end )|| '   ' || ' DOLLAR(S)')
+end
+)) as numbertoletters
+FROM DUAL]]>
+	</queryString>
+	<field name="numbertoletters" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="328" height="50"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numbertoletters}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

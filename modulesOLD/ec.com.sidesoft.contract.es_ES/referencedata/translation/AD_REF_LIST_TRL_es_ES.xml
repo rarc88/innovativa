@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_REF_LIST" version="">
+  <row id="C877252CC2AF42EAA22341F549CFA479" trl="N">
+    <value column="Name" isTrl="Y" original="Provider">Proveedor</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="EEFF861A5E0949BA820CB90C9E994842" trl="N">
+    <value column="Name" isTrl="Y" original="Invoice">Factura</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="E97B4C0085FA4B2283CD842CEE1E9624" trl="N">
+    <value column="Name" isTrl="Y" original="Advanced">Anticipo</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="F0C6A3E1B8C340FD9CA43869EA9F43E7" trl="Y">
+    <value column="Name" isTrl="Y" original="In Process">En Curso</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="0126C3D1CE744BACA1C1ED2DA1C18F79" trl="Y">
+    <value column="Name" isTrl="Y" original="In Progress">En Curso</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="1C1E2746F68E41F1BD5CEAEF5A7D2D74" trl="Y">
+    <value column="Name" isTrl="Y" original="Pending">Pendiente</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="2BABFF8FF93F400EB95A57BAE6802A72" trl="N">
+    <value column="Name" isTrl="Y" original="Client">Cliente</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="47124F82BD9144169E33DA72C3E1C6F5" trl="N">
+    <value column="Name" isTrl="Y" original="Contract">Contrato</value>
+    <value column="Description" isTrl="Y" original="Contract">Contrato</value>
+  </row>
+  <row id="6BF5D42D345D4F62B5F83E8EDB68057E" trl="Y">
+    <value column="Name" isTrl="Y" original="Complete">Completado</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+  <row id="65E9509589C84A04843607CF1231C319" trl="N">
+    <value column="Name" isTrl="Y" original="Complete">Completado</value>
+    <value column="Description" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

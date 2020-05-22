@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="102B4554C6F1482181DD221FCFF4840F" trl="N">
+    <value column="MsgText" isTrl="N" original="Zone can't be null">Zone can't be null</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="29D8DFD2D6174037AB3A8616E08B4B69" trl="N">
+    <value column="MsgText" isTrl="N" original="Undefined country rate">Undefined country rate</value>
+    <value column="MsgTip" isTrl="N" original="Check Country Rate">Check Country Rate</value>
+  </row>
+  <row id="2DE3D44550F640D0BFC1AA7BEB434F6B" trl="N">
+    <value column="MsgText" isTrl="N" original="Undefined configuration data for viatical">Undefined configuration data for viatical</value>
+    <value column="MsgTip" isTrl="N" original="Check Viatical Configuration">Check Viatical Configuration</value>
+  </row>
+  <row id="5446C4D157F44F3497672CA6CD30A4D5" trl="N">
+    <value column="MsgText" isTrl="N" original="Wrong date intervals">Wrong date intervals</value>
+    <value column="MsgTip" isTrl="N" original="Date ranges can not have intersection">Date ranges can not have intersection</value>
+  </row>
+  <row id="6221E4836D184789808FE5B8B04EBFB8" trl="N">
+    <value column="MsgText" isTrl="N" original="Only one record allowed">Only one record allowed</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="7320385A31144F6EBE46DECD09362765" trl="N">
+    <value column="MsgText" isTrl="N" original="Region and City are Mandatory for national viatical">Region and City are Mandatory for national viatical</value>
+    <value column="MsgTip" isTrl="N" original="Select Region and City">Select Region and City</value>
+  </row>
+  <row id="8DA7717AE6304EC38EA0394D25A66D6C" trl="N">
+    <value column="MsgText" isTrl="N" original="You can not apply for viatical">You can not apply for viatical</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="8F91CB0F56344BA697D412C358644892" trl="N">
+    <value column="MsgText" isTrl="N" original="Duplicated Level">Duplicated Level</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="B46961305EE74DAFAF4144D51C5ABD1D" trl="N">
+    <value column="MsgText" isTrl="N" original="There is not mobilization value for the selected city">There is not mobilization value for the selected city</value>
+    <value column="MsgTip" isTrl="N" original="Add mobilization value for the selected city or select another city">Add mobilization value for the selected city or select another city</value>
+  </row>
+  <row id="BC33B3DB74824379B06E81FC91DF1F5E" trl="N">
+    <value column="MsgText" isTrl="N" original="City &amp; Region are needed">City &amp; Region are needed</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="C34E2B417CBD4E3BBCD9B5C7C680743B" trl="N">
+    <value column="MsgText" isTrl="N" original="Undefined viatical value for this level/zone">Undefined viatical value for this level/zone</value>
+    <value column="MsgTip" isTrl="N" original="Check National/International Viatical Value">Check National/International Viatical Value</value>
+  </row>
+  <row id="C5FB384FE3DD41F1A4295C7BF6ACC7BE" trl="N">
+    <value column="MsgText" isTrl="N" original="The Viatical Settlement is already settled">The Viatical Settlement is already settled</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="CB53EBDF16AB4EC1A6F726F2570737ED" trl="N">
+    <value column="MsgText" isTrl="N" original="Unprocess is not allowed if there are documents associated">Unprocess is not allowed if there are documents associated</value>
+    <value column="MsgTip" isTrl="N" original="Search for other documents referencing this one.">Search for other documents referencing this one.</value>
+  </row>
+  <row id="D63C7D69903E46BEB37B5E95485640AD" trl="N">
+    <value column="MsgText" isTrl="N" original="Wrong Days Interval">Wrong Days Interval</value>
+    <value column="MsgTip" isTrl="N" original="Correct the intervals.">Correct the intervals.</value>
+  </row>
+  <row id="F2A24FE84D244350B7C63EC862753CBE" trl="N">
+    <value column="MsgText" isTrl="N" original="Viatical Settlement is already paid, it can not be unsettle">Viatical Settlement is already paid, it can not be unsettle</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="F611BF076F5844D0952FAD9A79DCE69D" trl="N">
+    <value column="MsgText" isTrl="N" original="Only processed documents can be liquidated">Only processed documents can be liquidated</value>
+    <value column="MsgTip" isTrl="N" original="First process the document">First process the document</value>
+  </row>
+</compiereTrl>

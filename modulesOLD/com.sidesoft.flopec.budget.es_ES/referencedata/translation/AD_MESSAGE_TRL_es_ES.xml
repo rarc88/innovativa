@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_MESSAGE" version="">
+  <row id="02C1DEED15BC4B7DA461B0380F9A0341" trl="N">
+    <value column="MsgText" isTrl="Y" original="The line has a budget controlled by the concept, and should be budgetable.">La línea tiene un concepto controlado por el presupuesto, y debe ser presupuestable.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="02C6461C0E324997A96C6D6BC16E790C" trl="N">
+    <value column="MsgText" isTrl="Y" original="Process Certificate">Procesar Certificado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="072D8700D4A24FD0BCA7A845444E7DAB" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to alter a processed budget log.">No es posible modificar un registro de presupuesto procesado </value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="07C2ED6863914D5D90D40468DF53E046" trl="N">
+    <value column="MsgText" isTrl="Y" original="There are some lines that must be budgetable according to line account.">Existen líneas que deberian estar en el presupuesto acorde a la cuenta del Item</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="0B110510242E494A83C6D4D98C498B9A" trl="N">
+    <value column="MsgText" isTrl="Y" original="This is a no budget controled document, can not have a product with budget controled account.">Este es un documento no controlado presupuestariamente, no puede tener productos con cuentas controladas por el presupuesto.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="0C2FB715DA8D41B2A8D5478833BD6951" trl="Y">
+    <value column="MsgText" isTrl="Y" original="It is not possible to review or reactivate a certificate that is not in the requested or revised state.&#10;">No es posible revisar o reactivar un certificado que no se encuentre en el estado solicitado o revisado.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="0E1D209242A3407288B4C328E28F7023" trl="N">
+    <value column="MsgText" isTrl="Y" original="Version date from cannot be less than the base version date from.">La fecha de la versión hasta no puede ser menor que la fecha de la versión desde</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="0F938D49C14346FC9158BC8C8344F6A5" trl="N">
+    <value column="MsgText" isTrl="Y" original="Budget Area is mandatory.">Area de presupuesto es mandatoria</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="105A587813C74CEAB24F89EB85288C4F" trl="N">
+    <value column="MsgText" isTrl="Y" original="New version has been created.">La nueva versión ha sido creada.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="10A3100CF81046B2B0838332A2532CCD" trl="N">
+    <value column="MsgText" isTrl="Y" original="Document hashcode and hashcode of the document you are copying from are different.">El código hash que se esta copiando es diferente.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="1397553C4FA54763A1529BD479B9386B" trl="N">
+    <value column="MsgText" isTrl="Y" original="This line of budgeted already being used by another transaction.">Esta línea de presupuesto ya está siendo usada en otra transacción.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="1CC5CC76B9114FF1A1768DE399215926" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to unprocess a certificate that is not in approved status.">No es posible desprocesar un certificao que no tiene estatus aprobado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="1DCBDFF22EE04E2C91AE759A2B5516C6" trl="N">
+    <value column="MsgText" isTrl="Y" original="Not enough value available.">No hay suficiente valor disponible.</value>
+    <value column="MsgTip" isTrl="Y" original="Correct the values.">Corrija los valores.</value>
+  </row>
+  <row id="2888AED5B122454B9C99DE2B3A6E3FB5" trl="N">
+    <value column="MsgText" isTrl="Y" original="Certificate is being used.">Certificado esta siendo usado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="347870D150EE403BBFCA654465849610" trl="N">
+    <value column="MsgText" isTrl="Y" original="Cost Center and  1st Dimension are mandatory.">Buque/Area y Línea de negocio son obligatorias</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="36DA4933901847E2B82709126630D49F" trl="N">
+    <value column="MsgText" isTrl="N" original="G/L Item is not budget controlled">G/L Item is not budget controlled</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="37AA495562474835B6277DB12F707AC3" trl="N">
+    <value column="MsgText" isTrl="Y" original="The from adjustment must be negative.">El ajuste desde debe ser en negativo.</value>
+    <value column="MsgTip" isTrl="Y" original="Correct the value.">Corrija el valor.</value>
+  </row>
+  <row id="3AE7377357754485865C17E9862BCFC9" trl="N">
+    <value column="MsgText" isTrl="Y" original="No budget line for the To Budget Item.">No hay linea de presupuesto para la partida presupuestaria</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="3BD324D22D54466EA9FCDE1811DF314B" trl="N">
+    <value column="MsgText" isTrl="Y" original="Area is required, the Area must be configured in the Budget Configuration tab">Area es requerido, falta configurar el Area en la pestaña Configuración de Presupuesto</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="42A69C2709E44A4EBB5901AB1B968D15" trl="N">
+    <value column="MsgText" isTrl="Y" original="Budget Configuration doesn't exist.">No existe configuración de presupuesto</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="49B35A4C6EEF42AE8700FBE3B8B6DB9E" trl="N">
+    <value column="MsgText" isTrl="Y" original="Date must be within the certificate year.">La fecha debe estar dentro del año del certificado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="4BEBA561028B41E4AAFFF7D040D8E434" trl="N">
+    <value column="MsgText" isTrl="Y" original="The certificate has been unprocessed.">El certifcado ha sido desprocesado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="4FADDE487B5145C6A776E5D75D7F7151" trl="N">
+    <value column="MsgText" isTrl="Y" original="G/L Item is mandatory.">Concepto contable es obligatorio</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="5733C6F4258B4E39BEB7C583BB442BBA" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to alter a copied version.">No es posible alterar una versión copiada.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="581D355007124C21873FA739AF57D533" trl="N">
+    <value column="MsgText" isTrl="Y" original="The Budget Log has been processed.">El registro del presupuesto ha sido procesado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="58502BBFBDE846239DBD34DBC99CDFB0" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to reactivate a certificate that is not in requested status.">No es posible reactivar un certificado que no esta en status requerido</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="58B51514E0254F8D96EDAA08ADCDBDA7" trl="N">
+    <value column="MsgText" isTrl="Y" original="The to adjustment must be positive.">El ajuste para debe ser positivo.</value>
+    <value column="MsgTip" isTrl="Y" original="Correct the value.">Corrija el valor.</value>
+  </row>
+  <row id="5CDC13DF3D4C4977A539730637CA567A" trl="N">
+    <value column="MsgText" isTrl="Y" original="The document have lines, can not change the Document Type.">El documento ya tiene líneas, no puede cambiar el tipo de documento.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="658845FAA8384D2A9BDCD8747911CA3B" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not allowed to close a budgetable document">No se permite cerrar un documento presupuestable</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="6A2ACDD0DC2D4F349778CBDA98A56547" trl="N">
+    <value column="MsgText" isTrl="Y" original="No budget line for the certificate line.">Sin partida presupuestaria para la línea de certificado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="6F2AA2A793CB4C55A975C6262F273282" trl="N">
+    <value column="MsgText" isTrl="Y" original="The certificate has been closed.">EL certificado ha sido cerrado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="6F801C4703254D2BBE0583E380C7D772" trl="N">
+    <value column="MsgText" isTrl="Y" original="The setting value from has not been distributed in its entirety">El valor de ajuste desde no ha sido distribuido en su totalidad</value>
+    <value column="MsgTip" isTrl="Y" original="Correct the from or to values.">Corrija los valores desde o hasta.</value>
+  </row>
+  <row id="6FCCDEE084A54EB098AC8ABD292B7E51" trl="N">
+    <value column="MsgText" isTrl="Y" original="If Cost Center is set then 1st Dimension is mandatory.">Si el Centro de Costos esta parametrizado entonces la 1ra dimensión es obligatoria</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="7302B925E4454B36A9C955DE1241D674" trl="N">
+    <value column="MsgText" isTrl="N" original="The Amortization is being used in a Certificate.">The Amortization is being used in a Certificate.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="7485C99E17504CDFB7903DCA05CEB5AA" trl="N">
+    <value column="MsgText" isTrl="Y" original="The certificate has been requested.">El certificado ha sido requerido</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="77E711A37E444AA1844FB2DA3BDF29CF" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to process a certificate that is not in requested status.">a</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="7A01BD380B554B0BA2B000D5122B8C43" trl="Y">
+    <value column="MsgText" isTrl="Y" original="Preference value &quot;Sfb_ReviewCertificates&quot; set incorrectly (Y or N).">Valor de preferencia "Sfb_ReviewCertificates" configurada incorrectamente (Y ó N).</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="7C6018DFD08A4F9B80222206A27C4360" trl="N">
+    <value column="MsgText" isTrl="Y" original="No budget line for the From Budget Item.">No hay línea de presupuesto para la partida presupuestaria</value>
+    <value column="MsgTip" isTrl="Y" original="Perhaps you don't have enough amount.">Posiblemente usted no tiene suficiente cantidad</value>
+  </row>
+  <row id="7C67A0B7471447C79ABCB242110E5E8C" trl="N">
+    <value column="MsgText" isTrl="Y" original="Document hash code is different from budget certificate hash code.">El código hash del documento es diferente al código hash del certificado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="7E049FD8F6C14853904AA74858B09985" trl="N">
+    <value column="MsgText" isTrl="Y" original="An approved version already exists.">Una versión aprobada ya existe.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="847EA3940E064374BF35D0420511E211" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to alter an approved budget.">No es posible alterar un presupuesto aprobado.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="8E442398A4354DC69910A7CD0187E25D" trl="N">
+    <value column="MsgText" isTrl="Y" original="Cannot Process the Certificate without lines.">No es posible procesar un certificado sin líneas</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="97143E2F55FE4FA08554A488CCE8F88F" trl="N">
+    <value column="MsgText" isTrl="Y" original="The setting value from not cover the value distributed">El valor del ajuste desde no cubre el valor distribuido</value>
+    <value column="MsgTip" isTrl="Y" original="Correct the from or to values.">Corrija los valores desde o hasta.</value>
+  </row>
+  <row id="97714B80D822470F98D9BE6B07BB5032" trl="N">
+    <value column="MsgText" isTrl="Y" original="The certificate has been opened">El certificado ha sido abierto</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="9A4191B5D49D446780A3400CB443A319" trl="N">
+    <value column="MsgText" isTrl="Y" original="The Budget Log has been unprocessed.">El registro de presupuesto has sido desprocesado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="9FE545F3DD20462385180844F28968D3" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to close a certificate that is not in approved status.">No es posible cerrar un certificado que no esta en estatus aprobado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="A1313F6F260B42448DC9BEFBF046E896" trl="N">
+    <value column="MsgText" isTrl="Y" original="Document currency is different from budget certificate currency.">La moneda del documento es diferente a la moneda del certificado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="B6C78A80332B4B5A8A25925DCA639F74" trl="N">
+    <value column="MsgText" isTrl="Y" original="The version has been approved.">La versión ha sido aprobada.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="B84622D810AC43C890EF73CF05692C3B" trl="N">
+    <value column="MsgText" isTrl="Y" original="Document dimensions and dimensions of the document you are copying from are different.">Las dimensiones del documento son diferentes con las dimensiones de los documentos copiados</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="B851FCC13F44484C9CC11FD892455C5C" trl="N">
+    <value column="MsgText" isTrl="Y" original="Nature of account of some lines are not according to budget item accounts.">Las cuentas de varias lineas no son acordes con las cuentas del certificado presupuestario</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="B88A01A96E2B4E89A5B3B1AFF0DE9CBB" trl="N">
+    <value column="MsgText" isTrl="Y" original="Already committed or excecuted line.">Línea ya comprometida o ejecutada.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="C3BB93310AA64CF6A0F8A912C9889B36" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to request a certificate that is not in draft status.">No es posible solicitar un certificado que no este en estatus borrador</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="CBEE33690E404E4889049FD8333D681E" trl="N">
+    <value column="MsgText" isTrl="Y" original="The certificate is already closed.">El certificado ya está cerrado.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="CD63CB0C915941FA8B794C76FA10BE56" trl="N">
+    <value column="MsgText" isTrl="Y" original="The line does not have a certificate related">La línea no tiene relacionado un Certificado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="CD71FFF2F13D4C6DA2826DCC6B4B6A2A" trl="N">
+    <value column="MsgText" isTrl="Y" original="The type of document you are using does not affect budget, and the line ">El tipo de documento que esta usando no afecta presupuesto, y la linea </value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="CE049405F7314897A788755FBF85090F" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to alter a processed budget certificate.">No es posible alterar un certificado de presupuesto procesado.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="D2DD22C442144B8F85B87559CABA1A15" trl="N">
+    <value column="MsgText" isTrl="Y" original="It is not possible to open a certificate that has already been closed.">No es posible abrir un certificado que ha sido cerrado.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="D52C7E68F8BF49569E186240270F89AD" trl="N">
+    <value column="MsgText" isTrl="Y" original="This is a budget controled document, can not have a product without budget controled account.">Este es un documento controlado presupuestariamente, no puede tener productos con cuentas no controladas por el presupuesto.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="D8E5EB5986604BF1A30ACD42A4918387" trl="N">
+    <value column="MsgText" isTrl="Y" original="Document organization is different from budget certificate organization.">El documento de la organización es diferente a la organización del certificado de presupuesto</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="E37970269F214E6E948B2A63CC7A547F" trl="N">
+    <value column="MsgText" isTrl="Y" original="The certificate has been reactivated.">El certificado ha sido reactivado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="E741DA7FB5F44A29B171C589784E077D" trl="N">
+    <value column="MsgText" isTrl="Y" original="No approved budget certificate found.">No se ha encontrado certificados de presupuesto aprobados.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="E84B345D509144C0A7AE89DF8F731A1A" trl="N">
+    <value column="MsgText" isTrl="Y" original="There are some lines without certificate.">Hay varias líneas sin certificado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="E99067F3A9174251BBCA1A9618F22F12" trl="N">
+    <value column="MsgText" isTrl="Y" original="The certificate has been processed.">El certificado ha sido procesado</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="E9C98580204E45409FDCFBC29FA760D8" trl="N">
+    <value column="MsgText" isTrl="Y" original="No budget for the year and budget type.">No hay presupuesto para el año y tipo de presupuesto</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="EA78FE54DF8147EA96D8D08B26089275" trl="N">
+    <value column="MsgText" isTrl="Y" original="1st Dimension is required, it is necessary to configure 1st Dimension in the Budget Configuration tab&#10;&#10;">Línea de negocio es requerido, falta configurar el Línea de negocio en la pestaña Configuración de Presupuesto</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="EEE3C41A135F4AC484619411B7B3E7EC" trl="N">
+    <value column="MsgText" isTrl="Y" original="Certificate Line is mandatory.">Línea de Certificado es mandatoria</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="F113CFB46EB343D8B2500FF51BED67A1" trl="N">
+    <value column="MsgText" isTrl="Y" original="Cost Center is required, it is necessary to configure Cost Center in the Budget Configuration tab">Buque / Area es requerido, falta configurar el Buque / Area en la pestaña Configuración de Presupuesto</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="F3FEBB4E1703409FA633DEE6E1F515A3" trl="N">
+    <value column="MsgText" isTrl="Y" original="Certificate line has not enough amount.">Linea del certificado no tiene suficiente cantidad.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+  <row id="FE8FFB916AD947569036876137C9377C" trl="N">
+    <value column="MsgText" isTrl="Y" original="Budget Item From field is mandatory for Movement or Adjustment type.">El campo partida presupuestaria desde es mandatorio.</value>
+    <value column="MsgTip" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

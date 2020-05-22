@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SSBP_SSPR_PAYROLL_TRG">
+    <trigger name="SSBP_SSPR_PAYROLL_TRG" table="SSPR_PAYROLL" fires="before" insert="false" update="true" delete="false" foreach="row">
+      <body><![CDATA[
+
+  v_Count NUMBER;
+  
+BEGIN
+
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+    
+  IF UPDATING THEN
+    IF(:OLD.Processed='Y' AND :NEW.Processed='N') THEN
+    
+      SELECT COUNT(*) INTO v_Count
+      FROM SFB_BUDGET_CERTIFICATE
+      WHERE EM_SSBP_SSPR_Payroll_ID = :OLD.SSPR_Payroll_ID AND EM_SSBP_LoadPayroll = 'Y';
+      
+      IF (v_Count > 0) THEN
+      
+        RAISE_APPLICATION_ERROR(-20000, '@SSBP_PayrollUsed@') ;
+        
+      END IF;
+    
+    END IF;
+  
+  END IF;
+END SSBP_SSPR_PAYROLL_TRG
+]]></body>
+    </trigger>
+  </database>

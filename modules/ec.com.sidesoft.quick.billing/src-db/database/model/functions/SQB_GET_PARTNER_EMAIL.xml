@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+  <database name="FUNCTION SQB_GET_PARTNER_EMAIL">
+    <function name="SQB_GET_PARTNER_EMAIL" type="VARCHAR">
+      <parameter name="p_partner" type="VARCHAR" mode="in">
+        <default/>
+      </parameter>
+      <body><![CDATA[v_Module NUMBER;  --OBTG:NUMBER--
+    v_SqlEmail VARCHAR2(32767) ;
+    v_Email VARCHAR2(32767) ;
+
+    
+  BEGIN
+	SELECT 
+	COALESCE((SELECT COUNT(*) AS CONTAR FROM AD_MODULE WHERE JAVAPACKAGE = 'ec.cusoft.facturaec'),0)
+	INTO v_Module
+	FROM DUAL;
+	
+	IF (v_Module>0) THEN
+		v_SqlEmail:='SELECT EM_EEI_EMAIL FROM C_BPARTNER WHERE C_BPARTNER_ID =''' || p_partner || '''' ;
+		EXECUTE IMMEDIATE v_SqlEmail INTO v_Email;
+	END IF;
+
+    RETURN(coalesce(v_Email,'')) ;
+END SQB_GET_PARTNER_EMAIL
+]]></body>
+    </function>
+  </database>

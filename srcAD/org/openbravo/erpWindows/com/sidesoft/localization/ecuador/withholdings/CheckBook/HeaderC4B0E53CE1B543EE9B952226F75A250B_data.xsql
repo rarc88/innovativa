@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlClass id="class" name="HeaderC4B0E53CE1B543EE9B952226F75A250BData" package="org.openbravo.erpWindows.com.sidesoft.localization.ecuador.withholdings.CheckBook">
+  <SqlClassComment>WAD Generated class</SqlClassComment>
+
+  <SqlMethod name="dummy" type="preparedStatement" return="multiple">
+    <Sql>
+      SELECT '' AS dummy from DUAL
+    </Sql>
+  </SqlMethod>
+
+
+
+
+  <SqlMethod name="updateDocaction" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        UPDATE SSWH_checkbook
+        SET docaction = ? 
+        WHERE SSWH_checkbook.Sswh_Checkbook_ID = ?
+    ]]></Sql>
+    <Parameter name="docaction"></Parameter>
+    <Parameter id="paramKey" name="sswhCheckbookId"></Parameter>
+  </SqlMethod>
+
+
+
+
+</SqlClass>

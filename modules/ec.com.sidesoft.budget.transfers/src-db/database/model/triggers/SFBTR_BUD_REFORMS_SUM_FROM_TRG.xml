@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+  <database name="TRIGGER SFBTR_BUD_REFORMS_SUM_FROM_TRG">
+    <trigger name="SFBTR_BUD_REFORMS_SUM_FROM_TRG" table="SFBTR_TRANSFER_FROM" fires="after" insert="true" update="true" delete="true" foreach="row">
+      <body><![CDATA[
+ v_sum_from NUMBER;
+ v_sum_to NUMBER;
+ 
+BEGIN
+    
+  IF AD_isTriggerEnabled()='N' THEN RETURN;
+  END IF;
+
+  IF (INSERTING OR UPDATING) THEN
+  
+	SELECT COALESCE((SELECT SUM(value_discounted)
+			FROM sfbtr_transfer_from  
+			WHERE sfbtr_budgetary_reforms_id =  :NEW.sfbtr_budgetary_reforms_id)
+			,0)
+		INTO v_sum_from
+	FROM DUAL;
+	
+	SELECT COALESCE((SELECT SUM(value_increase)
+			FROM sfbtr_transfer_to  
+			WHERE sfbtr_budgetary_reforms_id =  :NEW.sfbtr_budgetary_reforms_id)
+			,0)
+		INTO v_sum_to
+	FROM DUAL;
+	UPDATE  sfbtr_budgetary_reforms  SET 
+			value_discounted =v_sum_from
+			,value_increase =v_sum_to
+	WHERE sfbtr_budgetary_reforms_id =  :NEW.sfbtr_budgetary_reforms_id;
+  ELSIF(TG_OP='DELETE')THEN
+	SELECT COALESCE((SELECT SUM(value_discounted)
+			FROM sfbtr_transfer_from  
+			WHERE sfbtr_budgetary_reforms_id =  :OLD.sfbtr_budgetary_reforms_id)
+			,0)
+		INTO v_sum_from
+	FROM DUAL;
+	
+	SELECT COALESCE((SELECT SUM(value_increase)
+			FROM sfbtr_transfer_to  
+			WHERE sfbtr_budgetary_reforms_id =  :OLD.sfbtr_budgetary_reforms_id)
+			,0)
+		INTO v_sum_to
+	FROM DUAL;
+	UPDATE  sfbtr_budgetary_reforms  SET 
+			value_discounted =v_sum_from
+			,value_increase =v_sum_to
+	WHERE sfbtr_budgetary_reforms_id =  :OLD.sfbtr_budgetary_reforms_id;
+  END IF;
+    
+  END SFBTR_BUD_REFORMS_SUM_FROM_TRG
+]]></body>
+    </trigger>
+  </database>

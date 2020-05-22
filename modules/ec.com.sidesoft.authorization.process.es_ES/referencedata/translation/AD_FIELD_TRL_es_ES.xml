@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_FIELD" version="">
+  <row id="2FD44DC4B050402FBF7D25F22841C898" trl="N">
+    <value column="Name" isTrl="Y" original="Paid In Full Date">Pagado en Fecha</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="44C81CDCA3DF4FCEA59E432864103876" trl="N">
+    <value column="Name" isTrl="Y" original="Days to Pay in Full">Días hasta Pago en Fecha</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="5A5D0014764E4658B5DBF8DE0CA825F7" trl="N">
+    <value column="Name" isTrl="Y" original="Percentage Paid Late">Porcentaje Pagado Tarde</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="7A07D9A6E0FC45B1AD0C0F18083B4D78" trl="N">
+    <value column="Name" isTrl="Y" original="Total Outstanding">Total Pendiente</value>
+    <value column="Description" isTrl="Y" original="Outstanding Amount">Total Pendiente</value>
+    <value column="Help" isTrl="Y" original="Total Outstanding Amount. Amount pending to be paid">Importe Total Pendiente. Importe pendiente a pagar</value>
+  </row>
+  <row id="946CBF5D23BB4C648DD207B0B3B38924" trl="N">
+    <value column="Name" isTrl="Y" original="Paid In Full Date">Pagado en Fecha</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="99A1588D963B4F5B9330B21FB495D7C6" trl="N">
+    <value column="Name" isTrl="Y" original="Total Outstanding">Total Pendiente</value>
+    <value column="Description" isTrl="Y" original="Outstanding Amount">Total Pendiente</value>
+    <value column="Help" isTrl="Y" original="Total Outstanding Amount. Amount pending to be paid">Importe Total Pendiente. Importe pendiente a pagar</value>
+  </row>
+  <row id="A085834F693A4A34B2777C71C52CDD5B" trl="N">
+    <value column="Name" isTrl="Y" original="Invoice No.">N° Factura</value>
+    <value column="Description" isTrl="Y" original="A reference or document order number as listed in business partner application.">Un número de factura o el número de pedido que proviene de la aplicación del tercero.</value>
+    <value column="Help" isTrl="Y" original="Supplier invoice number associated with the payment, i.e., which of the supplier’s invoices you are paying">Número de factura del proveedor asociado al pago, es decir de la factura del proveedor que está pagando</value>
+  </row>
+  <row id="A6E12FDEE2AB4B53A7734B8587A9E785" trl="N">
+    <value column="Name" isTrl="Y" original="Invoice No.">N° Factura</value>
+    <value column="Description" isTrl="Y" original="A reference or document order number as listed in business partner application.">Un número de factura o el número de pedido que proviene de la aplicación del tercero.</value>
+    <value column="Help" isTrl="Y" original="Supplier invoice number associated with the payment, i.e., which of the supplier’s invoices you are paying">Número de factura del proveedor asociado al pago, es decir de la factura del proveedor que está pagando</value>
+  </row>
+  <row id="CD273E694C1D47E79F5D15A3D1BFC698" trl="N">
+    <value column="Name" isTrl="Y" original="Amount Currently Due">Importe Actualmente Vencido</value>
+    <value column="Description" isTrl="Y" original="Due Amount">Importe Vencido</value>
+    <value column="Help" isTrl="Y" original="Total amount due">Importe total vencido</value>
+  </row>
+  <row id="D397CC1DF808495097C8682290CBEDE1" trl="N">
+    <value column="Name" isTrl="Y" original="Update payment monitor">Actualizar seguimiento de pagos</value>
+    <value column="Description" isTrl="Y" original="Update payment monitor process">Actualiza proceso de seguimiento de pagos</value>
+    <value column="Help" isTrl="Y" original="Updates payment monitor information">Actualiza la información del seguimiento de pagos</value>
+  </row>
+  <row id="DDA9334DE05A4462A289B7B7177DB3D7" trl="N">
+    <value column="Name" isTrl="Y" original="Amount Currently Due">Importe Actualmente Vencido</value>
+    <value column="Description" isTrl="Y" original="Due Amount">Importe Vencido</value>
+    <value column="Help" isTrl="Y" original="Total amount due">Importe total vencido</value>
+  </row>
+  <row id="DF40A00E0AF3497889C9AB5927EA3A8F" trl="N">
+    <value column="Name" isTrl="Y" original="Update payment monitor">Actualizar seguimiento de pagos</value>
+    <value column="Description" isTrl="Y" original="Update payment monitor process">Actualiza proceso de seguimiento de pagos</value>
+    <value column="Help" isTrl="Y" original="Updates payment monitor information">Actualiza la información del seguimiento de pagos</value>
+  </row>
+  <row id="E020048D26F04C48B34BA42A47004A0C" trl="N">
+    <value column="Name" isTrl="Y" original="Days to Pay in Full">Días hasta Pago en Fecha</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+  <row id="E6B09C20DD25496FB07AC596CC65DBA7" trl="N">
+    <value column="Name" isTrl="Y" original="Percentage Paid Late">Porcentaje Pagado Tarde</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

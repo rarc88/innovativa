@@ -1,0 +1,2113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<compiereTrl baseLanguage="en_US" language="es_ES" table="AD_ELEMENT" version="">
+  <row id="018238C111394C21B10E2256CCBA22FD" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out Value">Pagado</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out Value">Pagado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="02DA461FB8BE4CC78A5DF3BB8EC5C151" trl="Y">
+    <value column="Name" isTrl="Y" original="Total Amount Invoice">Importe Total Factura</value>
+    <value column="PrintName" isTrl="Y" original="Total Amount Invoice">Importe Total Factura</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="03055F55D57C43F6991B515B534C0A1F" trl="N">
+    <value column="Name" isTrl="N" original="Period to">Período hasta</value>
+    <value column="PrintName" isTrl="N" original="Period to">Período hasta</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="03E4021A14B14D2A8E206510213A4767" trl="N">
+    <value column="Name" isTrl="N" original="Certification No. ">Nro. Certificado </value>
+    <value column="PrintName" isTrl="N" original="Certification No. ">Nro. Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="04930132D2CD443DBBB36F4CC585D79A" trl="Y">
+    <value column="Name" isTrl="Y" original="Name">Nombre</value>
+    <value column="PrintName" isTrl="Y" original="Name">Nombre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="049FCBE153F24700AB3AC9D4E85809BF" trl="Y">
+    <value column="Name" isTrl="Y" original="Version Status">Estado de la Versión</value>
+    <value column="PrintName" isTrl="Y" original="Version Status">Estado de la Versión</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="051F90754A37428FBC09B09589F568D0" trl="Y">
+    <value column="Name" isTrl="Y" original="December Actual Value">Valor Real Diciembre</value>
+    <value column="PrintName" isTrl="Y" original="December Actual Value">Valor Real Diciembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="05252454C7834AD3B7D8599752E18AE3" trl="Y">
+    <value column="Name" isTrl="Y" original="Total Amount Order">Importe Total Pedido</value>
+    <value column="PrintName" isTrl="Y" original="Total Amount Order">Importe Total Pedido</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="05364548ED9845279B64CFE1C1A121B8" trl="N">
+    <value column="Name" isTrl="Y" original="January Adjusted Value">Valor Ajustado Enero</value>
+    <value column="PrintName" isTrl="Y" original="January Adjusted Value">Valor Ajustado Enero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="053F3D0F067E4497869AC3E2F6AA6958" trl="Y">
+    <value column="Name" isTrl="Y" original="October Executed Value">Valor Ejecutado Octubre</value>
+    <value column="PrintName" isTrl="Y" original="October Executed Value">Valor Ejecutado Octubre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="06A2DC548FE24B44B678284F0DB6C420" trl="Y">
+    <value column="Name" isTrl="Y" original="April Executed Value">Valor Ejecutado Abril</value>
+    <value column="PrintName" isTrl="Y" original="April Executed Value">Valor Ejecutado Abril</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="07250F8495624BE7B0A19787F4A7A24C" trl="N">
+    <value column="Name" isTrl="Y" original="October New Adjusted Value">Ajuste octubre</value>
+    <value column="PrintName" isTrl="Y" original="October New Adjusted Value">Ajuste octubre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0743791F961846768287CA9F4D73863B" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Log">Registro de Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Budget Log">Registro de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="09D6E56DFAF54AA48C7A3E46747A664F" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Item">Partida Presupuestaria</value>
+    <value column="PrintName" isTrl="Y" original="Budget Item">Partida Presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0AA6F2BE8D4548CFA0E458852D6D245F" trl="Y">
+    <value column="Name" isTrl="Y" original="January Executed Value">Valor Ejecutado Enero</value>
+    <value column="PrintName" isTrl="Y" original="January Executed Value">Valor Ejecutado Enero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0C7CF56F12E0435B83CB31F30C8374D6" trl="Y">
+    <value column="Name" isTrl="Y" original="June Executed Value">Valor Ejecutado Junio</value>
+    <value column="PrintName" isTrl="Y" original="June Executed Value">Valor Ejecutado Junio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0D696BA2F4CE4C98B0C55339573FA2F0" trl="N">
+    <value column="Name" isTrl="N" original="Budget Item">Partida Presupuestaria</value>
+    <value column="PrintName" isTrl="N" original="Budget Item">Partida Presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0DEE96DC265846358BFCCAAD65293F25" trl="N">
+    <value column="Name" isTrl="Y" original="Date to">Fecha Hasta</value>
+    <value column="PrintName" isTrl="Y" original="Date to">Fecha Hasta</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0E433573822F45338AA41E1DB7B97F0D" trl="Y">
+    <value column="Name" isTrl="Y" original="April Actual Value">Valor Actual Abril</value>
+    <value column="PrintName" isTrl="Y" original="April Actual Value">Valor Actual Abril</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0EEC24878829459CA1CF6AC12E8E41C6" trl="Y">
+    <value column="Name" isTrl="Y" original="September Actual Value">Valor Actual Septiembre</value>
+    <value column="PrintName" isTrl="Y" original="September Actual Value">Valor Actual Septiembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0F67C1024EC85A12E050007F01013297" trl="N">
+    <value column="Name" isTrl="N" original="Type of Certificate">Tipo de Certificado</value>
+    <value column="PrintName" isTrl="N" original="Type of Certificate">Tipo de Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="0FCD8D2B797145078888B6C7BB0EA707" trl="N">
+    <value column="Name" isTrl="N" original="Area">Area</value>
+    <value column="PrintName" isTrl="N" original="Area">Area</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="10B910D49F584FA4B331DCC53E3AD534" trl="Y">
+    <value column="Name" isTrl="Y" original="Voyage">Viaje</value>
+    <value column="PrintName" isTrl="Y" original="Voyage">Viaje</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="10BC8B4DEDF74C468CB7848722CB5355" trl="Y">
+    <value column="Name" isTrl="Y" original="Exclude Taxes on Paidout">Pagado sin impuestos</value>
+    <value column="PrintName" isTrl="Y" original="Exclude Taxes on Paidout">Pagado sin impuestos</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="11256376F01D45D8BC7B072C98BEF42B" trl="N">
+    <value column="Name" isTrl="Y" original="Adjusted Value">Valor Ajustado</value>
+    <value column="PrintName" isTrl="Y" original="Adjusted Value">Valor Ajustado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="112E071085524240BCF5F9041E5B540E" trl="N">
+    <value column="Name" isTrl="Y" original="July New Adjusted Value">Ajuste julio</value>
+    <value column="PrintName" isTrl="Y" original="July New Adjusted Value">Ajuste julio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="11565332D6CA479987B0BF8F7DA483CF" trl="Y">
+    <value column="Name" isTrl="Y" original="July Available Balance">Saldo Disponible Julio</value>
+    <value column="PrintName" isTrl="Y" original="July Available Balance">Saldo Disponible Julio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="1474D29895F7457F887E03489D6C426D" trl="N">
+    <value column="Name" isTrl="Y" original="Area To">Area Para</value>
+    <value column="PrintName" isTrl="Y" original="Area To">Area Para</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="17620911A7A94BE7A85E3B5D2DA15770" trl="Y">
+    <value column="Name" isTrl="Y" original="October Committed Value">Valor Comprometido Octubre</value>
+    <value column="PrintName" isTrl="Y" original="October Committed Value">Valor Comprometido Octubre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="1902D7589C9444159FCC4D0688E1333D" trl="Y">
+    <value column="Name" isTrl="Y" original="August Committed Value">Valor Comprometido Agosto</value>
+    <value column="PrintName" isTrl="Y" original="August Committed Value">Valor Comprometido Agosto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="1A6332EF40B84F809816C74A22E7F7FD" trl="Y">
+    <value column="Name" isTrl="Y" original="October Available Balance">Saldo Disponible Octubre</value>
+    <value column="PrintName" isTrl="Y" original="October Available Balance">Saldo Disponible Octubre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="1B56F69949714EBDAF875372E6C560A2" trl="Y">
+    <value column="Name" isTrl="Y" original="From Budget Item">Partida Presupuestaria Desde</value>
+    <value column="PrintName" isTrl="Y" original="From Budget Item">Partida Presupuestaria Desde</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="1DBC71099F4C4B9BAB679BBAA44ED0DC" trl="Y">
+    <value column="Name" isTrl="Y" original="June Committed Value">Cantidad Comprometida Junio</value>
+    <value column="PrintName" isTrl="Y" original="June Committed Value">Cantidad Comprometida Junio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2153B8624831402BA0F82A5968D22C5B" trl="N">
+    <value column="Name" isTrl="Y" original="Reactivated">Reactivar</value>
+    <value column="PrintName" isTrl="Y" original="Reactivated">Reactivar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="23CCA1964D5343FBB3E61CE94971E0A9" trl="Y">
+    <value column="Name" isTrl="Y" original="May Executed Value">Valor Ejecutado Mayo</value>
+    <value column="PrintName" isTrl="Y" original="May Executed Value">Valor Ejecutado Mayo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2453BA13DACD43B7993E75022B9BBE1E" trl="Y">
+    <value column="Name" isTrl="Y" original="Hash Code">Código Hash</value>
+    <value column="PrintName" isTrl="Y" original="Hash Code">Código Hash</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="24FE72F6A8F34CACBC6433B29C7C9CAF" trl="Y">
+    <value column="Name" isTrl="Y" original="Review">Revisar</value>
+    <value column="PrintName" isTrl="Y" original="Review">Revisar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2563E2F986C9447FB9C92D2C7EF358AD" trl="Y">
+    <value column="Name" isTrl="Y" original="Date of Issue">Fecha de Emisión</value>
+    <value column="PrintName" isTrl="Y" original="Date of Issue">Fecha de Emisión</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="263F6E8C309F440FB8BD21547FBCFA3C" trl="N">
+    <value column="Name" isTrl="Y" original="Type of Operation">Tipo Operación</value>
+    <value column="PrintName" isTrl="Y" original="Type of Operation">Tipo Operación</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="Y" original="Type of Operation">Tipo Operación</value>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2744F8C5BC0A452182E4D71E7BA967C8" trl="N">
+    <value column="Name" isTrl="N" original="Period">Período</value>
+    <value column="PrintName" isTrl="N" original="Period">Período</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="27842492C281402E98E13A84A5DCF73C" trl="Y">
+    <value column="Name" isTrl="Y" original="Paid Out Value">Valor pagado</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out Value">Valor pagado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>  
+  <row id="28BC76DDDDA74918B557B4FDA6A0BEF6" trl="Y">
+    <value column="Name" isTrl="Y" original="Certificate">Certificado</value>
+    <value column="PrintName" isTrl="Y" original="Certificate">Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2A6718A3ECBC4E7CA3F3027D5FCF8FAE" trl="N">
+    <value column="Name" isTrl="Y" original="April Adjusted Value">Valor Ajustado Abril</value>
+    <value column="PrintName" isTrl="Y" original="April Adjusted Value">Valor Ajustado Abril</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2AB3CB6E954248BFB53CFD2B152389BF" trl="Y">
+    <value column="Name" isTrl="Y" original="From Month">Mes desde</value>
+    <value column="PrintName" isTrl="Y" original="From Month">Mes desde</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2BEA56051ED242CFA1373A221A313403" trl="Y">
+    <value column="Name" isTrl="Y" original="Executed Value">Valor Ejecutado</value>
+    <value column="PrintName" isTrl="Y" original="Executed Value">Valor Ejecutado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2DE3D6E57D404BD5A934F58DB2DE2D76" trl="N">
+    <value column="Name" isTrl="Y" original="July Adjusted Value">Valor Ajustado Julio</value>
+    <value column="PrintName" isTrl="Y" original="July Adjusted Value">Valor Ajustado Julio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2F6DD5493E9B4E9EB0BCDB43B358ECE8" trl="Y">
+    <value column="Name" isTrl="Y" original="Status">Estado</value>
+    <value column="PrintName" isTrl="Y" original="Status">Estado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2FB8BCED3290400A8C4C3C1F4F0C9AFF" trl="N">
+    <value column="Name" isTrl="Y" original="August New Adjusted Value">Ajuste agosto</value>
+    <value column="PrintName" isTrl="Y" original="August New Adjusted Value">Ajuste agosto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="2FC6F5B8BB114286BB3243280073E92F" trl="Y">
+    <value column="Name" isTrl="Y" original="December Committed Value">Valor Comprometido Diciembre</value>
+    <value column="PrintName" isTrl="Y" original="December Committed Value">Valor Comprometido Diciembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="3003CA1C1126484EB1A9FD1D2DFAB2AE" trl="Y">
+    <value column="Name" isTrl="Y" original="Business Line">Línea de Negocio</value>
+    <value column="PrintName" isTrl="Y" original="Business Line">Línea de Negocio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="320FB777667347668E17CD970DAC78EF" trl="N">
+    <value column="Name" isTrl="Y" original="September New Adjusted Value">Ajuste septiembre</value>
+    <value column="PrintName" isTrl="Y" original="September New Adjusted Value">Ajuste septiembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="326C6C637EA644A19753F33835C2024A" trl="Y">
+    <value column="Name" isTrl="Y" original="August Actual Value">Valor Real Agosto</value>
+    <value column="PrintName" isTrl="Y" original="August Actual Value">Valor Real Agosto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="36002CFDC9854E7EAD97D080A4B938B4" trl="Y">
+    <value column="Name" isTrl="Y" original="Total Amount Journal">Importe Total Asiento</value>
+    <value column="PrintName" isTrl="Y" original="Total Amount Journal Line">Importe Total Asiento</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="3685008E784E463AB5C71C8EC8E0BF9C" trl="Y">
+    <value column="Name" isTrl="Y" original="Certiificate Available Balance">Saldo Disponible Certificado</value>
+    <value column="PrintName" isTrl="Y" original="Certiificate Available Balance">Saldo Disponible Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="37432BBCFB85459CA40B90D7F413EE7C" trl="N">
+    <value column="Name" isTrl="Y" original="Applied">Aplicado</value>
+    <value column="PrintName" isTrl="Y" original="Applied">Aplicado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="378ED37C8F9E437E8D54D6BDDA71F1C5" trl="N">
+    <value column="Name" isTrl="N" original="SFB_Budget_Journaline_Det_V_ID">SFB_Budget_Journaline_Det_V_ID</value>
+    <value column="PrintName" isTrl="N" original="SFB_Budget_Journaline_Det_V_ID">SFB_Budget_Journaline_Det_V_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="37CB271AC0414515AE16D3ED755D50E4" trl="Y">
+    <value column="Name" isTrl="Y" original="SFB_Budget_Cert_Line_ID">Línea de Certificado Presupuestario</value>
+    <value column="PrintName" isTrl="Y" original="SFB_Budget_Cert_Line_ID">Línea de Certificado Presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="37D6FB17D60A4DF09C0910A0A2FFB7ED" trl="Y">
+    <value column="Name" isTrl="Y" original="March Available Balance">Saldo Disponible Marzo</value>
+    <value column="PrintName" isTrl="Y" original="March Available Balance">Saldo Disponible Marzo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="37DF85629B944AAD9728E4D9E0200AD6" trl="Y">
+    <value column="Name" isTrl="Y" original="Unit - Vessel">Unidad - Embarcaciones</value>
+    <value column="PrintName" isTrl="Y" original="Unit - Vessel">Unidad - Embarcaciones</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="388032E11F9D481BA12C74110225A349" trl="N">
+    <value column="Name" isTrl="Y" original="December New Adjusted Value">Ajuste diciembre</value>
+    <value column="PrintName" isTrl="Y" original="December New Adjusted Value">Ajuste diciembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="38D2BE73542F4D53B9B2C7674CBDF976" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out April">Pagado Abril</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out April">Pagado Abril</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="3A9FA542EEB14F4E8983C11B720DF1F4" trl="Y">
+    <value column="Name" isTrl="Y" original="To Budget Item">Partida Presupuestaria Para</value>
+    <value column="PrintName" isTrl="Y" original="To Budget Item">Partida Presupuestaria Para</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="3BD2733F76FA4299982B6BF4C2BAE7D4" trl="N">
+    <value column="Name" isTrl="Y" original="Resolution No.">Resolución No.</value>
+    <value column="PrintName" isTrl="Y" original="Resolution No.">Resolución No.</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="3D5FB6A20C03485F95B5210C5A157A2A" trl="N">
+    <value column="Name" isTrl="Y" original="November New Adjusted Value">Ajuste noviembre</value>
+    <value column="PrintName" isTrl="Y" original="November New Adjusted Value">Ajuste noviembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4194B59F22A54243B51B3564C84DD794" trl="N">
+    <value column="Name" isTrl="N" original="Payment Total Amount">Payment Total Amount</value>
+    <value column="PrintName" isTrl="N" original="Payment Total Amount">Payment Total Amount</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="42ADB302BDFD4400961DC774D73F2DBF" trl="Y">
+    <value column="Name" isTrl="Y" original="February Budgeted Value">Valor Presupuestado Febrero</value>
+    <value column="PrintName" isTrl="Y" original="February Budgeted Value">Valor Presupuestado Febrero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="453B53BFE6AD44D2B7A7255740C5CD20" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Log Status">Estado de Registros de Cambios</value>
+    <value column="PrintName" isTrl="Y" original="Budget Log Status">Estado de Registros de Cambios</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="45A9B32FD27B44EB95F22F93F33FB65D" trl="Y">
+    <value column="Name" isTrl="Y" original="December Executed Value">Valor Ejecutado Diciembre</value>
+    <value column="PrintName" isTrl="Y" original="December Executed Value">Valor Ejecutado Diciembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="46115D956BE34B1BB29099851BCEA93D" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Item">Partida Presupuestaria</value>
+    <value column="PrintName" isTrl="Y" original="Budget Item">Partida Presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="471CFD5DD0604B2287C201D5B474E457" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Area">Area de Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Budget Area">Area de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4794E3A0AA5B4B94A2495FD413C9148F" trl="N">
+    <value column="Name" isTrl="Y" original="Total Adjusted Amount">Cantidad Total Ajustada</value>
+    <value column="PrintName" isTrl="Y" original="Total Adjusted Amount">Cantidad Total Ajustada</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="48AF670549F04474A22952B122767C7B" trl="N">
+    <value column="Name" isTrl="N" original="Movement Type">Tipo de Movimiento</value>
+    <value column="PrintName" isTrl="N" original="Movement Type">Tipo de Movimiento</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4AFD4793F29D47438040CA052065994E" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Document Type">Tipo de Documento Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Budget Document Type">Tipo de Documento Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4B60157DDFE94D078D70E73C481EFB56" trl="Y">
+    <value column="Name" isTrl="Y" original="August Executed Value">Valor Ejecutado Agosto</value>
+    <value column="PrintName" isTrl="Y" original="August Executed Value">Valor Ejecutado Agosto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4C3A0F9008D045ADBF32E40DAC3C1F55" trl="Y">
+    <value column="Name" isTrl="Y" original="Total Committed Amount">Cantidad Total Comprometida</value>
+    <value column="PrintName" isTrl="Y" original="Total Committed Amount">Cantidad Total Comprometida</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4D36CA887AFB46CFB05C64EA921DF77D" trl="Y">
+    <value column="Name" isTrl="Y" original="January Committed Value">Valor Comprometido de Enero</value>
+    <value column="PrintName" isTrl="Y" original="JAN Committed Value">Valor Comprometido de Enero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4E319E22208A43568D5AFCC63929F51C" trl="Y">
+    <value column="Name" isTrl="Y" original="January Available Balance">Saldo Disponible Enero</value>
+    <value column="PrintName" isTrl="Y" original="January Available Balance">Saldo Disponible Enero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4EAE3FADB5CE469D8D7A7570A7B4660A" trl="N">
+    <value column="Name" isTrl="Y" original="Close">Cierre de Certificado</value>
+    <value column="PrintName" isTrl="Y" original="Close">Cierre de Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4F0853790B3D472FB847BF006C6218AD" trl="N">
+    <value column="Name" isTrl="N" original="Line Detail">Line Detail</value>
+    <value column="PrintName" isTrl="N" original="Line Detail">Line Detail</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="4F697FE41AE247AFB74641F98E2DC300" trl="N">
+    <value column="Name" isTrl="Y" original="February Adjusted Value">Valor Ajustado Febrero</value>
+    <value column="PrintName" isTrl="Y" original="February Adjusted Value">Valor Ajustado Febrero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="52A1DF479EA7463F8355FBB1F5958676" trl="Y">
+    <value column="Name" isTrl="Y" original="March Actual Value">Valor Real Marzo</value>
+    <value column="PrintName" isTrl="Y" original="March Actual Value">Valor Real Marzo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="54CCADC41A6A43D2BE7ED2802CAC3222" trl="Y">
+    <value column="Name" isTrl="Y" original="Available Balance">Saldo disponible</value>
+    <value column="PrintName" isTrl="Y" original="Available Balance">Saldo disponible</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="5594BF2AE73C49ECAF32514FDD29277D" trl="N">
+    <value column="Name" isTrl="Y" original="February New Adjusted Value">Ajuste febrero</value>
+    <value column="PrintName" isTrl="Y" original="February New Adjusted Value">Ajuste febrero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="565844F53EE442AA80378D0C91A76B74" trl="Y">
+    <value column="Name" isTrl="Y" original="Payment Business Partner">Tercero del Pago</value>
+    <value column="PrintName" isTrl="Y" original="Payment Business Partner">Tercero del Pago</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="5722B8BE9CCA418985D8099322933187" trl="N">
+    <value column="Name" isTrl="N" original="Buque">Buque</value>
+    <value column="PrintName" isTrl="N" original="Buque">Buque</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="58E18734FABF4F688E47AE77534031C6" trl="Y">
+    <value column="Name" isTrl="Y" original="Order Business Partner">Tercero del Pedido</value>
+    <value column="PrintName" isTrl="Y" original="Order Business Partner">Tercero del Pedido</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="59EAC3E2686C41B89620DF2E681479C3" trl="N">
+    <value column="Name" isTrl="Y" original="Exchange Difference">Diferencia de Cambio</value>
+    <value column="PrintName" isTrl="Y" original="Exchange Difference">Diferencia de Cambio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="5A05F17C8ADC4496AC6E329775AFA6C8" trl="Y">
+    <value column="Name" isTrl="Y" original="Certificate">Certificado</value>
+    <value column="PrintName" isTrl="Y" original="Certificate">Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="5AB862DCE51345819B404443F59A293C" trl="Y">
+    <value column="Name" isTrl="Y" original="SFB_Budget_Details_V_ID">Codigo Detalle Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="SFB_Budget_Details_V_ID">Codigo Detalle Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="5E02B390A9D24D57A38334F09518312E" trl="Y">
+    <value column="Name" isTrl="Y" original="June Actual Value">Valor Real Junio</value>
+    <value column="PrintName" isTrl="Y" original="June Actual Value">Valor Real Junio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="600258194F0343C0822E10B3D797FFC1" trl="Y">
+    <value column="Name" isTrl="Y" original="April Available Balance">Saldo disponible Abril</value>
+    <value column="PrintName" isTrl="Y" original="April Available Balance">Saldo disponible Abril</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="62DE32C6A3FF4B3B883273FB8B7DBD42" trl="Y">
+    <value column="Name" isTrl="Y" original="Return Order">Reṕosición por Cierre Pedido</value>
+    <value column="PrintName" isTrl="Y" original="Return Order">Reposición por Cierre Pedido</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="633AC3822F49441EA7FCF451B25346B7" trl="Y">
+    <value column="Name" isTrl="Y" original="Budgeted Value">Valor Presupuestado</value>
+    <value column="PrintName" isTrl="Y" original="Budgeted Value">Valor Presupuestado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="63EF841C5DE84B58B9126F9474E759FF" trl="N">
+    <value column="Name" isTrl="Y" original="January New Adjusted Value">Ajuste enero</value>
+    <value column="PrintName" isTrl="Y" original="January New Adjusted Value">Ajuste enero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="64274AA29473406EA58B3F1E578D9A92" trl="Y">
+    <value column="Name" isTrl="Y" original="September Committed Value">Valor Comprometido Septiembre</value>
+    <value column="PrintName" isTrl="Y" original="September Committed Value">Valor Comprometido Septiembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="64DDA3B538BC4D2BADDF647B02A706B0" trl="Y">
+    <value column="Name" isTrl="Y" original="Total Executed Amount">Total Ejecutado</value>
+    <value column="PrintName" isTrl="Y" original="Total Executed Amount">Total Ejecutado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="650E8B0BEDB74648839592241BFDC74C" trl="Y">
+    <value column="Name" isTrl="Y" original="Total Available Balance">Saldo Total Disponible</value>
+    <value column="PrintName" isTrl="Y" original="Total Available Balance">Saldo Total Disponible</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="653A643964D3485190EA15510D839F8F" trl="Y">
+    <value column="Name" isTrl="Y" original="Date From">Fecha Desde</value>
+    <value column="PrintName" isTrl="Y" original="Date From">Fecha Desde</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="669B1DBEA1014EB392B58DB779CAE1E4" trl="Y">
+    <value column="Name" isTrl="Y" original="Certificate Status">Estado del Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Certificate Status">Estado del Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="69B4CDE9E0204B459973C24C84AC4428" trl="Y">
+    <value column="Name" isTrl="Y" original="September Available Balance">Saldo Disponible Septiembre</value>
+    <value column="PrintName" isTrl="Y" original="September Available Balance">Saldo Disponible Septiembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="6B006978AA7B48C4AD30B3D676CC06F7" trl="Y">
+    <value column="Name" isTrl="Y" original="October Budgeted Value">Valor Presupuestado Octubre</value>
+    <value column="PrintName" isTrl="Y" original="October Budgeted Value">Valor Presupuestado Octubre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="6B5C2D32535B485ABB9B404FC2A422DC" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out March">Pagado Marzo</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out March">Pagado Marzo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="6C366F059808495199F14148509D998D" trl="N">
+    <value column="Name" isTrl="N" original="Line Detail">Line Detail</value>
+    <value column="PrintName" isTrl="N" original="Line Detail">Line Detail</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="6DAE16AE1F274E16967CF514618B9901" trl="Y">
+    <value column="Name" isTrl="Y" original="March Executed Value">Valor Ejecutado Marzo</value>
+    <value column="PrintName" isTrl="Y" original="March Executed Value">Valor Ejecutado Marzo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="6F6BCAD86E8B4D8BBF638AAE35ED4067" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Log Status">Registro de Estado del Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Budget Log Status">Registro de Estado del Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="6FC79FB223864527A8700E20B859E09C" trl="Y">
+    <value column="Name" isTrl="Y" original="Approve">Aprobar</value>
+    <value column="PrintName" isTrl="Y" original="Approve">Aprobar</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="733E3608ED9640E396A533CC2678DD31" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out January">Pagado Enero</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out January">Pagado Enero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="75C66AA86BF14442B77C174228DF3ECD" trl="Y">
+    <value column="Name" isTrl="Y" original="November Budgeted Value">Valor Presupuestado Noviembre</value>
+    <value column="PrintName" isTrl="Y" original="November Budgeted Value">Valor Presupuestado Noviembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="775BDE9A98FE48349FA7006CBE1B7C9C" trl="N">
+    <value column="Name" isTrl="Y" original="August Adjusted Value">Valor Ajustado Agosto</value>
+    <value column="PrintName" isTrl="Y" original="August Adjusted Value">Valor Ajustado Agosto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="7C15BF5DAF7C4CEBA23AFC62DDD8DC1D" trl="Y">
+    <value column="Name" isTrl="Y" original="January Actual Value">Valor Real Enero</value>
+    <value column="PrintName" isTrl="Y" original="January Actual Value">Valor Real Enero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="81F861AE8E6548A5A327D7B9B3C075EC" trl="Y">
+    <value column="Name" isTrl="Y" original="June Budgeted Value">Valor Presupuestado Junio</value>
+    <value column="PrintName" isTrl="Y" original="June Budgeted Value">Valor Presupuestado Junio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="84298664E03C478B8E39658C8384FCC2" trl="Y">
+    <value column="Name" isTrl="Y" original="To Month">Mes hasta</value>
+    <value column="PrintName" isTrl="Y" original="To Month">Mes hasta</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="848B667047E1413784F92CACC611F079" trl="Y">
+    <value column="Name" isTrl="Y" original="Registration Date">Fecha de Registro</value>
+    <value column="PrintName" isTrl="Y" original="Registration Date">Fecha de Registro</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="861B3A7E816E485A91FB88D1E855DD86" trl="N">
+    <value column="Name" isTrl="Y" original="Exchange Difference Budget item">Diferencia de Cambio en Partida Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Exchange Difference Budget item">Diferencia de Cambio en Partida Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="87B1DD5FEF9C455EA599CB2E8E4585FA" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Journal Line Log">Registro de presupuesto de línea de asiento</value>
+    <value column="PrintName" isTrl="Y" original="Budget Journal Line Log">Registro de presupuesto de línea de asiento</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="87FAE56298E1409A99EB34C508CC3B51" trl="Y">
+    <value column="Name" isTrl="Y" original="November Committed Value">Valor Comprometido Noviembre</value>
+    <value column="PrintName" isTrl="Y" original="November Committed Value">Valor Comprometido Noviembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="884705A9925241A68C2BD46DA0BE80A5" trl="N">
+    <value column="Name" isTrl="Y" original="May New Adjusted Value">Ajuste mayo</value>
+    <value column="PrintName" isTrl="Y" original="May New Adjusted Value">Ajuste mayo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="88585F0F5C7945C18B18134BAA07A934" trl="Y">
+    <value column="Name" isTrl="Y" original="September Budged Value">Valor Movido Septiembre</value>
+    <value column="PrintName" isTrl="Y" original="September Budged Value">Valor Movido Septiembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="8A4E3FED9D224D509EA67F68138CC1EB" trl="N">
+    <value column="Name" isTrl="Y" original="December Available Balance">Saldo Disponible Diciembre</value>
+    <value column="PrintName" isTrl="Y" original="December Available Balance">Saldo Disponible Diciembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="8BBB1DF202FF41BD9BE782E0509DB530" trl="N">
+    <value column="Name" isTrl="Y" original="December Adjusted Value">Valor Ajustado Diciembre</value>
+    <value column="PrintName" isTrl="Y" original="December Adjusted Value">Valor Ajustado Diciembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="8D64711B3BB343CF97745C5B5D57306B" trl="N">
+    <value column="Name" isTrl="N" original="Area">Area</value>
+    <value column="PrintName" isTrl="N" original="Area">Area</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="8DEFFD2257C64EE0BD4F83AFF8FBB994" trl="Y">
+    <value column="Name" isTrl="Y" original="December Budgeted Value">Valor Presupuestado Diciembre</value>
+    <value column="PrintName" isTrl="Y" original="December Budgeted Value">Valor Presupuestado Diciembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="8E731B48E0944169955FC3494505F23E" trl="Y">
+    <value column="Name" isTrl="Y" original="May Available Balance">Saldo Disponible Mayo</value>
+    <value column="PrintName" isTrl="Y" original="May Available Balance">Saldo Disponible Mayo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="8F38F8B45096434DAC6630121E6A9331" trl="Y">
+    <value column="Name" isTrl="Y" original="February Actual Value">Valor Real Febrero</value>
+    <value column="PrintName" isTrl="Y" original="February Actual Value">Valor Real Febrero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="90B643477248440AAE58C9EDFB3515A9" trl="Y">
+    <value column="Name" isTrl="Y" original="March Budgeted Value">Valor Presupuestado Marzo</value>
+    <value column="PrintName" isTrl="Y" original="March Budgeted Value">Valor Presupuestado Marzo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="918493EC10224C7E98B0483A36B1341D" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget">Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Budget">Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="9200204652CA41F58C53E7FDAC786A0E" trl="Y">
+    <value column="Name" isTrl="Y" original="September Executed Value">Valor Ejecutado Septiembre</value>
+    <value column="PrintName" isTrl="Y" original="September Executed Value">Valor Ejecutado Septiembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="926B31D509B04309971BECD07F64F99B" trl="Y">
+    <value column="Name" isTrl="Y" original="August Available Balance">Saldo Disponible Agosto</value>
+    <value column="PrintName" isTrl="Y" original="August Available Balance">Saldo Disponible Agosto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="931FD95B87814CD19800517E4C030EA4" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out June">Pagado Junio</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out June">Pagado Junio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="938E0BECF680427CB7D2D64FA2AA728C" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out October">Pagado Octubre</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out October">Pagado Octubre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="96C4C83D3F464140BE08D844C59B07D7" trl="N">
+    <value column="Name" isTrl="Y" original="Distribute All">Distribuir todo</value>
+    <value column="PrintName" isTrl="Y" original="Distribute All">Distribuir todo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="980127376D8B420A940BF5A33BA7C418" trl="N">
+    <value column="Name" isTrl="Y" original="Differ Within The Year">Diferir dentro del año</value>
+    <value column="PrintName" isTrl="Y" original="Differ Within The Year">Diferir dentro del año</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="9C77D0E1ABF84BABA906F62EDC851B2B" trl="N">
+    <value column="Name" isTrl="Y" original="Request">Requerido</value>
+    <value column="PrintName" isTrl="Y" original="Request">Requerido</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="9D145757FDEA48D187CDB6EF74F0958A" trl="Y">
+    <value column="Name" isTrl="Y" original="Create Version">Crear Versión</value>
+    <value column="PrintName" isTrl="Y" original="Create Version">Crear Versión</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="9DF55D5D10B34626A396BE599A7FE6BA" trl="Y">
+    <value column="Name" isTrl="Y" original="February Available Balance">Saldo Disponible Febrero</value>
+    <value column="PrintName" isTrl="Y" original="February Available Balance">Saldo Disponible Febrero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="9F3A83E4FEA2426280128660BBE549AF" trl="Y">
+    <value column="Name" isTrl="Y" original="Total Actual Amount">Cantidad Total Actual</value>
+    <value column="PrintName" isTrl="Y" original="Total Actual Amount">Cantidad Total Actual</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A0E2BBA772FD4F9BADC0FBDC51FA89F9" trl="Y">
+    <value column="Name" isTrl="Y" original="Type of Budget">Tipo de Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Type of Budget">Tipo de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A26B0E59A35C44019009938431A22CA1" trl="N">
+    <value column="Name" isTrl="N" original="Affect budget">Affect budget</value>
+    <value column="PrintName" isTrl="N" original="Affect budget">Affect budget</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A53D6D8DB7734CB8A81B6B815A6478AF" trl="N">
+    <value column="Name" isTrl="N" original="SFB_Budget_Payment_Det_V_ID">SFB_Budget_Payment_Det_V_ID</value>
+    <value column="PrintName" isTrl="N" original="SFB_Budget_Payment_Det_V_ID">SFB_Budget_Payment_Det_V_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A5402C79A3654CBA8D161D73156AC908" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Version">Version Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Budget Version">Version Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A9016CE7B1D645EE9DE2324AA8B38837" trl="N">
+    <value column="Name" isTrl="Y" original="Area">Área</value>
+    <value column="PrintName" isTrl="Y" original="Area">Área</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="A96288132F274241BA2F5AFDB54A0D41" trl="Y">
+    <value column="Name" isTrl="Y" original="Certified Value">Valor Certificado</value>
+    <value column="PrintName" isTrl="Y" original="Certified Value">Valor Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="AAE9FAD847A84849A58701E568A30D25" trl="N">
+    <value column="Name" isTrl="Y" original="October Adjusted Value">Valor Ajustado Octubre</value>
+    <value column="PrintName" isTrl="Y" original="October Adjusted Value">Valor Ajustado Octubre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="AB24751485D34FA6B47D46EAAB00C28D" trl="Y">
+    <value column="Name" isTrl="Y" original="July Executed Value">Valor Ejecutado Julio</value>
+    <value column="PrintName" isTrl="Y" original="July Executed Value">Valor Ejecutado Julio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="AC8563EB30294F1DB583BD90E5C4F397" trl="N">
+    <value column="Name" isTrl="Y" original="Budget Configuration">Configuración de Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Budget Configuration">Configuración de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="ACD1CFD0FAA543888136C87446FDBACF" trl="Y">
+    <value column="Name" isTrl="Y" original="April Budgeted Value">Valor Presupuestado Abril</value>
+    <value column="PrintName" isTrl="Y" original="April Budgeted Value">Valor Presupuestado Abril</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="ACDB552AA3CB41ABAAE49222009F9B6A" trl="N">
+    <value column="Name" isTrl="Y" original="May Adjusted Value">Valor Ajustado Mayo</value>
+    <value column="PrintName" isTrl="Y" original="May Adjusted Value">Valor Ajustado Mayo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="AD438DBB746D48948730B3AB78F3BCE0" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out August">Pagado Agosto</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out August">Pagado Agosto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="AD44A56ECFF24C79B388CD3EDD9C9553" trl="Y">
+    <value column="Name" isTrl="Y" original="July Committed Value">Valor Comprometido Julio</value>
+    <value column="PrintName" isTrl="Y" original="July Committed Value">Valor Comprometido Julio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="AE9C0DEB32D544A983EDA22C8BCFA715" trl="N">
+    <value column="Name" isTrl="Y" original="No Budgetable">No Presupuestable</value>
+    <value column="PrintName" isTrl="Y" original="No Budgetable">No Presupuestable</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="AF34A871F4B5464A85E522B665996A26" trl="N">
+    <value column="Name" isTrl="Y" original="September Adjusted Value">Valor Ajustado Septiembre</value>
+    <value column="PrintName" isTrl="Y" original="September Adjusted Value">Valor Ajustado Septiembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B00986242D9D4A8BA5E422A22C53474A" trl="Y">
+    <value column="Name" isTrl="Y" original="April Committed Value">Valor Comprometido Abril</value>
+    <value column="PrintName" isTrl="Y" original="April Committed Value">Valor Comprometido Abril</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B445144212604E91A5872EC31F67E24D" trl="N">
+    <value column="Name" isTrl="N" original="Load Amortization">Load Amortization</value>
+    <value column="PrintName" isTrl="N" original="Load Amortization">Load Amortization</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B49889DAFC8E40549015D4F138670CE1" trl="N">
+    <value column="Name" isTrl="Y" original="April New Adjusted Value">Ajuste abril</value>
+    <value column="PrintName" isTrl="Y" original="April New Adjusted Value">Ajuste abril</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B5A1BA318F89414EBD95A6FAB4063F3C" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out November">Pagado Noviembre</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out November">Pagado Noviembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B5AA7E4CC30C4CFE8CF9E6BE58A50B50" trl="N">
+    <value column="Name" isTrl="Y" original="Direction">Dirección</value>
+    <value column="PrintName" isTrl="Y" original="Is From">Dirección</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="B721904F6E3040D7ABEA13312DF77CD1" trl="N">
+    <value column="Name" isTrl="N" original="EM_Sfb_Budget_Cert_Line_ID">EM_Sfb_Budget_Cert_Line_ID</value>
+    <value column="PrintName" isTrl="N" original="EM_Sfb_Budget_Cert_Line_ID">EM_Sfb_Budget_Cert_Line_ID</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="BC4C2BB5AA314A41A000DE519135E3BC" trl="N">
+    <value column="Name" isTrl="Y" original="Is Deferred">Es diferido</value>
+    <value column="PrintName" isTrl="Y" original="Is Deferred">Es diferido</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="BD753045BD7C4A64BC752C95DBFEEFFB" trl="N">
+    <value column="Name" isTrl="Y" original="Is TBN">Es TBN</value>
+    <value column="PrintName" isTrl="Y" original="Is TBN">Es TBN</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="BFC767210AEF45259B4C8AA02BADFC05" trl="Y">
+    <value column="Name" isTrl="Y" original="February Committed Value">Valor Comprometido Febrero</value>
+    <value column="PrintName" isTrl="Y" original="February Committed Value">Valor Comprometido Febrero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C1EAC24FEF0547E88B6E6FF0EA74B00B" trl="N">
+    <value column="Name" isTrl="Y" original="Get Lines">Obtener líneas</value>
+    <value column="PrintName" isTrl="Y" original="Get Lines">Obtener líneas</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C2E80187E3544F38A03DAE491BFF89AB" trl="Y">
+    <value column="Name" isTrl="Y" original="May Actual Value">Valor Real Mayo</value>
+    <value column="PrintName" isTrl="Y" original="May Actual Value">Valor Real Mayo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C46370F6CAB848FFB524103D925E9F3A" trl="Y">
+    <value column="Name" isTrl="Y" original="Certificate Actual Value">Valor Real Certificado</value>
+    <value column="PrintName" isTrl="Y" original="Certificate Actual Value">Valor Real Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C494CC86FCC248B1BC8134BDBB379470" trl="Y">
+    <value column="Name" isTrl="Y" original="Total Budgeted Amount">Presupuesto Total Importe</value>
+    <value column="PrintName" isTrl="Y" original="Total Budgeted Amount">Presupuesto Total Importe</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C54F77F0E2CB40C1A430E47CE5379586" trl="Y">
+    <value column="Name" isTrl="Y" original="November Actual Value">Valor Real Noviembre</value>
+    <value column="PrintName" isTrl="Y" original="November Actual Value">Valor Real Noviembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C563626CF1F1425FB733DD35FA7A7B31" trl="N">
+    <value column="Name" isTrl="Y" original="1st Dimension To">Línea de negocio para</value>
+    <value column="PrintName" isTrl="Y" original="1st Dimension To">Línea de negocio para</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C5F340DB56B34EDBB2E9C52248AFC162" trl="Y">
+    <value column="Name" isTrl="Y" original="October Actual Value">Valor Real Octubre</value>
+    <value column="PrintName" isTrl="Y" original="October Actual Value">Valor Real Octubre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C6FD46040FCA4F79964229DBB756A393" trl="Y">
+    <value column="Name" isTrl="Y" original="Certificate Executed Value">Valor Ejecutado Certificado</value>
+    <value column="PrintName" isTrl="Y" original="Certificate Executed Value">Valor Ejecutado Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="C92CE6040CE84CD8A087ACA13C7D0DDB" trl="N">
+    <value column="Name" isTrl="Y" original="June New Adjusted Value">Ajuste junio</value>
+    <value column="PrintName" isTrl="Y" original="June New Adjusted Value">Ajuste junio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CBBB50F662BE4A5ABB047D676DA0C9EC" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out May">Pagado Mayo</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out May">Pagado Mayo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CCC1AE63123542EA8262BAB9017AD3CD" trl="Y">
+    <value column="Name" isTrl="Y" original="Certificate Line">Línea de Certificado</value>
+    <value column="PrintName" isTrl="Y" original="Certificate Line">Línea de Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CD169D65D485420C90480DD1BA374ACC" trl="Y">
+    <value column="Name" isTrl="Y" original="November Available Balance">Saldo Disponible Noviembre</value>
+    <value column="PrintName" isTrl="Y" original="November Available Balance">Saldo Disponible Noviembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CF23FF6644384CF8BD4EB7FD141BB404" trl="Y">
+    <value column="Name" isTrl="Y" original="January Budgeted Value">Valor Presupuestado Enero</value>
+    <value column="PrintName" isTrl="Y" original="January Budgeted Value">Valor Presupuestado Enero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CF560F825C6347C89BBBA24A7F96E89C" trl="Y">
+    <value column="Name" isTrl="Y" original="Concept">Concepto</value>
+    <value column="PrintName" isTrl="Y" original="Concept">Concepto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="CF65B11FA6D845678A544FA6123663DA" trl="Y">
+    <value column="Name" isTrl="Y" original="Committed Value">Valor Comprometido</value>
+    <value column="PrintName" isTrl="Y" original="Committed Value">Valor Comprometido</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D04AA8FF67D54131824C5ABF9BD99AF1" trl="N">
+    <value column="Name" isTrl="N" original="SFB_Budget_Log_V_ID">Registro de Cambios</value>
+    <value column="PrintName" isTrl="N" original="SFB_Budget_Log_V_ID">Registro de Cambios</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D1F8696A1FEA4388A06879EF59CE85A8" trl="Y">
+    <value column="Name" isTrl="Y" original="July Budgeted Value">Valor Presupuestado Julio</value>
+    <value column="PrintName" isTrl="Y" original="July Budgeted Value">Valor Presupuestado Julio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D23CD5A8FF924E0EB1EAFCE3DB8D8284" trl="Y">
+    <value column="Name" isTrl="Y" original="Executed Value">Valor Ejecutado</value>
+    <value column="PrintName" isTrl="Y" original="Executed Value">Valor Ejecutado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D267CBDF2A7246D7A5458FF4BC715829" trl="Y">
+    <value column="Name" isTrl="Y" original="August Budgeted Value">Valor Presupuestado Agosto</value>
+    <value column="PrintName" isTrl="Y" original="August Budgeted Value">Valor Presupuestado Agosto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D2851B0BA1C741719567692F057596AC" trl="Y">
+    <value column="Name" isTrl="Y" original="May Budgeted Value">Valor Presupuestado Mayo</value>
+    <value column="PrintName" isTrl="Y" original="May Budgeted Value">Valor Presupuestado Mayo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D8AB64685A6B45F58F6D246FD7B14E25" trl="N">
+    <value column="Name" isTrl="N" original="Period from">Período desde</value>
+    <value column="PrintName" isTrl="N" original="Period from">Período desde</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="D97BD6FFA03A474681BC0D4DACB8DB6A" trl="Y">
+    <value column="Name" isTrl="Y" original="May Committed Value">Valor Comprometido Mayo</value>
+    <value column="PrintName" isTrl="Y" original="May Committed Value">Valor Comprometido Mayo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DAFD6C4905A84D5EB60F110E7FFDF3F3" trl="N">
+    <value column="Name" isTrl="Y" original="June Adjusted Value">Valor Ajustado Junio</value>
+    <value column="PrintName" isTrl="Y" original="June Adjusted Value">Valor Ajustado Junio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DBCACB4EBC714C38B7E6B06837E804E7" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out September">Pagado Septiembre</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out September">Pagado Septiembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DC0C2EAD04E54798BD90130C3936AE16" trl="N">
+    <value column="Name" isTrl="Y" original="SFB_Budget_Addline_ID">Crear Línea Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="SFB_Budget_Addline_ID">Crear Línea Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DD30E6049C484C4381E4E5959A0989CD" trl="N">
+    <value column="Name" isTrl="N" original="Insertprocess">Insertprocess</value>
+    <value column="PrintName" isTrl="N" original="Insertprocess">Insertprocess</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DD9C4A54D34B4732B5104AB498AFA20A" trl="Y">
+    <value column="Name" isTrl="Y" original="February Executed Value">Valor Ejecutado Febrero</value>
+    <value column="PrintName" isTrl="Y" original="February Executed Value">Valor Ejecutado Febrero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="DEFC5CA2EC5F475D849C7E7DE15B209C" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out July">Pagado Julio</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out July">Pagado Julio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E18E491ADED0455AA67D7A4317D1AA14" trl="Y">
+    <value column="Name" isTrl="Y" original="Hash Code">Código Hash</value>
+    <value column="PrintName" isTrl="Y" original="Hash Code">Código Hash</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E3B4C8337683459091A4274F52DD3BF7" trl="Y">
+    <value column="Name" isTrl="Y" original="Base Version">Versión Base</value>
+    <value column="PrintName" isTrl="Y" original="Base Version">Versión Base</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E43C231EF9CE496A840A489CDADB79AF" trl="N">
+    <value column="Name" isTrl="Y" original="March New Adjusted Value">Ajuste marzo</value>
+    <value column="PrintName" isTrl="Y" original="March New Adjusted Value">Ajuste marzo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E4CFE2CBA3CD4A1AB40B7FE9BCA38B60" trl="Y">
+    <value column="Name" isTrl="Y" original="Code">Código</value>
+    <value column="PrintName" isTrl="Y" original="Code">Código</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E53585CF3C5042BFB456BC52CBE2AE18" trl="Y">
+    <value column="Name" isTrl="Y" original="July Actual Value">Valor Real Julio</value>
+    <value column="PrintName" isTrl="Y" original="July Actual Value">Valor Real Julio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E647161B8DCA49829241B0C1FE70342F" trl="Y">
+    <value column="Name" isTrl="Y" original="Committed Value">Valor Comprometido</value>
+    <value column="PrintName" isTrl="Y" original="Committed Value">Valor Comprometido</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E66F7BA5C4B847489AD3EACE90A6D5D6" trl="N">
+    <value column="Name" isTrl="N" original="Linea_Presupuesto">Linea_Presupuesto</value>
+    <value column="PrintName" isTrl="N" original="Linea_Presupuesto">Linea_Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E85B0DF678D544879E89FBB16FC31C83" trl="N">
+    <value column="Name" isTrl="Y" original="Gerencia">Area CBO</value>
+    <value column="PrintName" isTrl="Y" original="Gerencia">Area CBO</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E91691AC33A845B889B6884A922EC1CA" trl="Y">
+    <value column="Name" isTrl="Y" original="Invoice Business Partner">Tercero Factura</value>
+    <value column="PrintName" isTrl="Y" original="Invoice Business Partner">Tercero Factura</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="E9B83DCF53AA4AD5AB610591FADBAB88" trl="N">
+    <value column="Name" isTrl="N" original="Area Budget">Area Budget</value>
+    <value column="PrintName" isTrl="N" original="Area Budget">Area Budget</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="EA2B2D3319DE4AC599A99B8270064558" trl="Y">
+    <value column="Name" isTrl="Y" original="Certiificate Commit Value">Valor Comprometido del Certificado</value>
+    <value column="PrintName" isTrl="Y" original="Certiificate Commit Value">Valor Comprometido del Certificado</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="EB469CE6BDE943598AD38097F0192B95" trl="N">
+    <value column="Name" isTrl="Y" original="March Adjusted Value">Valor Ajustado Marzo</value>
+    <value column="PrintName" isTrl="Y" original="March Adjusted Value">Valor Ajustado Marzo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="EEBAF7CF2908459AA490E4DE4199C1FC" trl="N">
+    <value column="Name" isTrl="Y" original="Cost Center To">Buque / Área para</value>
+    <value column="PrintName" isTrl="Y" original="Cost Center To">Buque / Área para</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F0DEFF17AE5949D6889C197519B0546D" trl="Y">
+    <value column="Name" isTrl="Y" original="November Executed Value">Valor Ejecutado Noviembre</value>
+    <value column="PrintName" isTrl="Y" original="November Executed Value">Valor Ejecutado Noviembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F119060026914E448B586B62C282CCB7" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out February">Pagado Febrero</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out February">Pagado Febrero</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F3EC8F3A79D944D89945A27D4E6A24F7" trl="Y">
+    <value column="Name" isTrl="Y" original="March Committed Value">Cantidad Comprometida Marzo</value>
+    <value column="PrintName" isTrl="Y" original="March Committed Value">Cantidad Comprometida Marzo</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F5CDDC9B03B44E398CF176742B097865" trl="Y">
+    <value column="Name" isTrl="Y" original="Actual Value">Valor real</value>
+    <value column="PrintName" isTrl="Y" original="Actual Value">Valor real</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F670896B37D54A54BB9C2510180DEB19" trl="N">
+    <value column="Name" isTrl="Y" original="November Adjusted Value">Valor Ajustado Noviembre</value>
+    <value column="PrintName" isTrl="Y" original="November Adjusted Value">Valor Ajustado Noviembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F685F2BA9E9C42CDA4F5E8D414BC1992" trl="Y">
+    <value column="Name" isTrl="Y" original="June Balance Available">Balance Disponible de Junio</value>
+    <value column="PrintName" isTrl="Y" original="June Balance Available">Balance Disponible de Junio</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F85B7D2C3F494A53BA60093ABAE5D54D" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Item Account">Cuenta Partida Presupuestaria</value>
+    <value column="PrintName" isTrl="Y" original="Budget Item Account">Cuenta Partida Presupuestaria</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="F8D7D077D028424E8152194742FD482B" trl="N">
+    <value column="Name" isTrl="Y" original="Budgeted">Presupuestable</value>
+    <value column="PrintName" isTrl="Y" original="Budgeted">Presupuestable</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="FA6A7DDA620843B8B775E8512B47A0BC" trl="N">
+    <value column="Name" isTrl="Y" original="Paid Out December">Pagado Diciembre</value>
+    <value column="PrintName" isTrl="Y" original="Paid Out December">Pagado Diciembre</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+  <row id="FF2B73BB546A479EA9CAAE02AF2A6936" trl="Y">
+    <value column="Name" isTrl="Y" original="Budget Line">Línea de Presupuesto</value>
+    <value column="PrintName" isTrl="Y" original="Budget Line">Línea de Presupuesto</value>
+    <value column="Description" isTrl="N" original=""/>
+    <value column="Help" isTrl="N" original=""/>
+    <value column="PO_Description" isTrl="N" original=""/>
+    <value column="PO_Help" isTrl="N" original=""/>
+    <value column="PO_Name" isTrl="N" original=""/>
+    <value column="PO_PrintName" isTrl="N" original=""/>
+  </row>
+</compiereTrl>

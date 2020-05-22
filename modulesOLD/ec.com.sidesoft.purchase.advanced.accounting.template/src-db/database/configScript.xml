@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+  <vector>
+    <versionInfo version="3.0.34312"/>    
+    <columnDataChange tablename="AD_TABLE" columnname="ACCTCLASSNAME" pkRow="D1A97202E832470285C9B1EB026D54E2">
+      <oldValue><![CDATA[ec.com.sidesoft.localization.ecuador.accounting.payments.prvyear.accounting_template.DocFINPayment]]></oldValue>
+      <newValue><![CDATA[ec.com.sidesoft.purchase.advanced.accounting.payment.DocFINPayment]]></newValue>
+    </columnDataChange>
+  </vector>

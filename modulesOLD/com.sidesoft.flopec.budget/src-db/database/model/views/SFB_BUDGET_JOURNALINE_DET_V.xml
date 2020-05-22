@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+  <database name="VIEW SFB_BUDGET_JOURNALINE_DET_V">
+    <view name="SFB_BUDGET_JOURNALINE_DET_V"><![CDATA[SELECT gl.gl_journalline_id AS sfb_budget_journaline_det_v_id, gl.ad_client_id, gl.ad_org_id, gl.created, gl.createdby, gl.updated, gl.updatedby, gl.isactive, gl.em_sfb_budget_cert_line_id AS sfb_budget_cert_line_id, gl.gl_journalline_id, g.gl_journal_id, g.c_currency_id, CASE WHEN gl.amtsourcedr = 0 THEN gl.amtsourcecr ELSE gl.amtsourcedr END AS totalamt FROM gl_journalline gl LEFT JOIN gl_journal g ON gl.gl_journal_id = g.gl_journal_id WHERE gl.em_sfb_budget_cert_line_id IS NOT NULL AND g.docstatus = 'CO']]></view>
+  </database>

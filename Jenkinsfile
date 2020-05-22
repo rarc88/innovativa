@@ -1,17 +1,12 @@
 pipeline {
-    agent {
-        docker {
-            image 'innovativa'
-            args '-p 8084:8080'
-        }
-    }
+    agent { dockerfile true }
     environment {
         CI = 'true'
     }
     stages {
         stage('Build') {
             steps {
-                sh 'ant smartbuild'
+                sh 'docker build . --t innovativa'
             }
         }
         // stage('Test') {

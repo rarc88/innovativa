@@ -1,12 +1,12 @@
 pipeline {
-    agent { dockerfile true }
+    agent any
     environment {
-        CI = 'true'
+        COMPOSE_PROJECT_NAME = "${env.JOB_NAME}-${env.BUILD_ID}"
     }
     stages {
         stage('Build') {
             steps {
-                sh 'docker build . --t innovativa'
+                sh 'docker-compose up -d --build'
             }
         }
         // stage('Test') {

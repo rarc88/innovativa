@@ -121,7 +121,7 @@ static Logger log4j = Logger.getLogger(ArchPaymentCtralBankData.class);
       "                 when C_BP_BankAccount.bankaccounttype = 'C' then '01'" +
       "            end as bankaccounttype," +
       "            c_bpartner.name as employee," +
-      "            'REMUNERACIÓN MENSUAL' as description," +
+      "            'REMUNERACI��N MENSUAL' as description," +
       "            c_bpartner.taxid as ci" +
       "        from sspr_payroll" +
       "        left join sspr_payroll_ticket on sspr_payroll_ticket.sspr_payroll_id = sspr_payroll.sspr_payroll_id" +

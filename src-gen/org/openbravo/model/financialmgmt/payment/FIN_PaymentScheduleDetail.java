@@ -95,8 +95,8 @@ public class FIN_PaymentScheduleDetail extends BaseOBObject implements Traceable
     public static final String COMPUTED_COLUMN_DUEDATE = "dueDate";
     public static final String COMPUTED_COLUMN_APRMFINANCIALACCOUNT = "aPRMFinancialAccount";
     public static final String COMPUTED_COLUMN_APRMPAYMENTMETHOD = "aPRMPaymentMethod";
-    public static final String COMPUTED_COLUMN_SSWSAMOUNTNEW = "sswsAmountNew";
     public static final String COMPUTED_COLUMN_SSWSWITHHOLDINGDATE = "sSWSWithholdingDate";
+    public static final String COMPUTED_COLUMN_SSWSAMOUNTNEW = "sswsAmountNew";
     public static final String COMPUTED_COLUMN_EXPECTED = "expected";
     public static final String COMPUTED_COLUMN_INVOICEAMOUNT = "invoiceAmount";
 
@@ -363,20 +363,20 @@ public class FIN_PaymentScheduleDetail extends BaseOBObject implements Traceable
         set(COMPUTED_COLUMN_APRMPAYMENTMETHOD, aPRMPaymentMethod);
     }
 
-    public BigDecimal getSswsAmountNew() {
-        return (BigDecimal) get(COMPUTED_COLUMN_SSWSAMOUNTNEW);
-    }
-
-    public void setSswsAmountNew(BigDecimal sswsAmountNew) {
-        set(COMPUTED_COLUMN_SSWSAMOUNTNEW, sswsAmountNew);
-    }
-
     public Date getSSWSWithholdingDate() {
         return (Date) get(COMPUTED_COLUMN_SSWSWITHHOLDINGDATE);
     }
 
     public void setSSWSWithholdingDate(Date sSWSWithholdingDate) {
         set(COMPUTED_COLUMN_SSWSWITHHOLDINGDATE, sSWSWithholdingDate);
+    }
+
+    public BigDecimal getSswsAmountNew() {
+        return (BigDecimal) get(COMPUTED_COLUMN_SSWSAMOUNTNEW);
+    }
+
+    public void setSswsAmountNew(BigDecimal sswsAmountNew) {
+        set(COMPUTED_COLUMN_SSWSAMOUNTNEW, sswsAmountNew);
     }
 
     public BigDecimal getExpected() {
@@ -478,17 +478,17 @@ public class FIN_PaymentScheduleDetail extends BaseOBObject implements Traceable
         }
         return get_computedColumns().getAPRMPaymentMethod();
       }
-      if (COMPUTED_COLUMN_SSWSAMOUNTNEW.equals(propName)) {
-        if (get_computedColumns() == null) {
-          return null;
-        }
-        return get_computedColumns().getSswsAmountNew();
-      }
       if (COMPUTED_COLUMN_SSWSWITHHOLDINGDATE.equals(propName)) {
         if (get_computedColumns() == null) {
           return null;
         }
         return get_computedColumns().getSSWSWithholdingDate();
+      }
+      if (COMPUTED_COLUMN_SSWSAMOUNTNEW.equals(propName)) {
+        if (get_computedColumns() == null) {
+          return null;
+        }
+        return get_computedColumns().getSswsAmountNew();
       }
       if (COMPUTED_COLUMN_EXPECTED.equals(propName)) {
         if (get_computedColumns() == null) {

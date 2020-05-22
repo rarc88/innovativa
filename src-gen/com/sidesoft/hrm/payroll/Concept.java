@@ -83,10 +83,10 @@ public class Concept extends BaseOBObject implements Traceable, ClientEnabled, O
     public static final String PROPERTY_ISOVERTIME = "isovertime";
     public static final String PROPERTY_SFPRISOTHER = "sfprIsother";
     public static final String PROPERTY_ORDERPRINT = "orderprint";
-    public static final String PROPERTY_CONCEPTTYPEPAYROLL = "concepttypepayroll";
     public static final String PROPERTY_SFPRISWORKHISTORY = "sfprIsworkhistory";
-    public static final String PROPERTY_CONCEPTFORMULATES = "conceptformulates";
+    public static final String PROPERTY_CONCEPTTYPEPAYROLL = "concepttypepayroll";
     public static final String PROPERTY_SFPRISCONTRIBUTIONIESS = "sfprIscontributioniess";
+    public static final String PROPERTY_CONCEPTFORMULATES = "conceptformulates";
     public static final String PROPERTY_VARIATIONSALARY = "variationsalary";
     public static final String PROPERTY_PRINTOBSERVREPORT = "printObservReport";
     public static final String PROPERTY_CODEFORMULARY107 = "codeFormulary107";
@@ -449,14 +449,6 @@ public class Concept extends BaseOBObject implements Traceable, ClientEnabled, O
         set(PROPERTY_ORDERPRINT, orderprint);
     }
 
-    public String getConcepttypepayroll() {
-        return (String) get(PROPERTY_CONCEPTTYPEPAYROLL);
-    }
-
-    public void setConcepttypepayroll(String concepttypepayroll) {
-        set(PROPERTY_CONCEPTTYPEPAYROLL, concepttypepayroll);
-    }
-
     public Boolean isSfprIsworkhistory() {
         return (Boolean) get(PROPERTY_SFPRISWORKHISTORY);
     }
@@ -465,12 +457,12 @@ public class Concept extends BaseOBObject implements Traceable, ClientEnabled, O
         set(PROPERTY_SFPRISWORKHISTORY, sfprIsworkhistory);
     }
 
-    public Concept getConceptformulates() {
-        return (Concept) get(PROPERTY_CONCEPTFORMULATES);
+    public String getConcepttypepayroll() {
+        return (String) get(PROPERTY_CONCEPTTYPEPAYROLL);
     }
 
-    public void setConceptformulates(Concept conceptformulates) {
-        set(PROPERTY_CONCEPTFORMULATES, conceptformulates);
+    public void setConcepttypepayroll(String concepttypepayroll) {
+        set(PROPERTY_CONCEPTTYPEPAYROLL, concepttypepayroll);
     }
 
     public Boolean isSfprIscontributioniess() {
@@ -479,6 +471,14 @@ public class Concept extends BaseOBObject implements Traceable, ClientEnabled, O
 
     public void setSfprIscontributioniess(Boolean sfprIscontributioniess) {
         set(PROPERTY_SFPRISCONTRIBUTIONIESS, sfprIscontributioniess);
+    }
+
+    public Concept getConceptformulates() {
+        return (Concept) get(PROPERTY_CONCEPTFORMULATES);
+    }
+
+    public void setConceptformulates(Concept conceptformulates) {
+        set(PROPERTY_CONCEPTFORMULATES, conceptformulates);
     }
 
     public Boolean isVariationsalary() {

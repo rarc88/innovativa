@@ -42,14 +42,14 @@ static Logger log4j = Logger.getLogger(LocatorComboData.class);
  }
 
 /**
-Relación de pasillos de un almacen de la aplicacion
+Relaci��n de pasillos de un almacen de la aplicacion
  */
   public static LocatorComboData[] select(ConnectionProvider connectionProvider, String language, String warehouse, String client)    throws ServletException {
     return select(connectionProvider, language, warehouse, client, 0, 0);
   }
 
 /**
-Relación de pasillos de un almacen de la aplicacion
+Relaci��n de pasillos de un almacen de la aplicacion
  */
   public static LocatorComboData[] select(ConnectionProvider connectionProvider, String language, String warehouse, String client, int firstRegister, int numberRegisters)    throws ServletException {
     String strSql = "";

@@ -1,12 +1,9 @@
 pipeline {
-    agent any
-    environment {
-        COMPOSE_PROJECT_NAME = "${env.JOB_NAME}-${env.BUILD_ID}"
-    }
+    agent none
     stages {
         stage('Build') {
             steps {
-                sh 'docker-compose up -d --build'
+                sh 'docker exec innovativa ant smartbuild'
             }
         }
         // stage('Test') {

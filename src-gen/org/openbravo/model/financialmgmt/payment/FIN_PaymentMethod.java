@@ -103,8 +103,8 @@ public class FIN_PaymentMethod extends BaseOBObject implements Traceable, Client
     public static final String PROPERTY_SSWHCODE = "sswhCode";
     public static final String PROPERTY_SSWHPERCENTAGE = "sswhPercentage";
     public static final String PROPERTY_SSWHELECTRONICMONEY = "sswhElectronicMoney";
-    public static final String PROPERTY_EEICODEEI = "eeiCodeEi";
     public static final String PROPERTY_SSPPWIRETRANSFER = "sSPPWireTransfer";
+    public static final String PROPERTY_EEICODEEI = "eeiCodeEi";
     public static final String PROPERTY_APRMPAYMENTPROPOSALPICKEDITLIST = "aPRMPaymentProposalPickEditList";
     public static final String PROPERTY_BUSINESSPARTNERLIST = "businessPartnerList";
     public static final String PROPERTY_BUSINESSPARTNERPOPAYMENTMETHODLIST = "businessPartnerPOPaymentMethodList";
@@ -524,20 +524,20 @@ public class FIN_PaymentMethod extends BaseOBObject implements Traceable, Client
         set(PROPERTY_SSWHELECTRONICMONEY, sswhElectronicMoney);
     }
 
-    public String getEeiCodeEi() {
-        return (String) get(PROPERTY_EEICODEEI);
-    }
-
-    public void setEeiCodeEi(String eeiCodeEi) {
-        set(PROPERTY_EEICODEEI, eeiCodeEi);
-    }
-
     public Boolean isSSPPWireTransfer() {
         return (Boolean) get(PROPERTY_SSPPWIRETRANSFER);
     }
 
     public void setSSPPWireTransfer(Boolean sSPPWireTransfer) {
         set(PROPERTY_SSPPWIRETRANSFER, sSPPWireTransfer);
+    }
+
+    public String getEeiCodeEi() {
+        return (String) get(PROPERTY_EEICODEEI);
+    }
+
+    public void setEeiCodeEi(String eeiCodeEi) {
+        set(PROPERTY_EEICODEEI, eeiCodeEi);
     }
 
     @SuppressWarnings("unchecked")

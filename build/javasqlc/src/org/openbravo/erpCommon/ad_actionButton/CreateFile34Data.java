@@ -103,13 +103,13 @@ static Logger log4j = Logger.getLogger(CreateFile34Data.class);
       "    LPAD(B.DIGITCONTROL||ba.DIGITCONTROL,2,'0')                                          AS DC," +
       "    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(" +
       "    RPAD(O.NAME,36)" +
-      "    ),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U')                                       AS NOMBRE," +
+      "    ),'��','A'),'��','E'),'��','I'),'��','O'),'��','U')                                       AS NOMBRE," +
       "    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(" +
       "    RPAD(l.Address1||' '||l.Address2,36)" +
-      "    ),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U')                                       AS DOMICILIO," +
+      "    ),'��','A'),'��','E'),'��','I'),'��','O'),'��','U')                                       AS DOMICILIO," +
       "    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(" +
       "    RPAD(l.City,36)" +
-      "    ),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U')                                       AS PLAZA," +
+      "    ),'��','A'),'��','E'),'��','I'),'��','O'),'��','U')                                       AS PLAZA," +
       "    rpad(' ',7,' ')                                                                      AS HUECO," +
       "    ''                                                                                   AS PROVINCIA," +
       "    ''                                                                                   AS CONCEPTO," +
@@ -224,15 +224,15 @@ static Logger log4j = Logger.getLogger(CreateFile34Data.class);
       "             SUBSTR(TRIM(LPAD(BP_A.ACCOUNTNO,20,'0')),5,4)|| /*OFICINA*/" +
       "             SUBSTR(TRIM(LPAD(BP_A.ACCOUNTNO,20,'0')),11) AS N_CUENTA," +
       "             SUBSTR(TRIM(LPAD(BP_A.ACCOUNTNO,20,'0')),9,2)AS DC, BP_A.ACCOUNTNO AS ACCT," +
-      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(BP.NAME2,BP.NAME),36,' ')),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U') AS nombre," +
-      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(COALESCE(BP.NAME2,BP.NAME)),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U') AS NOM," +
-      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(to_char(L.ADDRESS1),'')||' '||COALESCE(to_char(L.ADDRESS2),''),36,' ')),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U') AS DOMICILIO," +
-      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(COALESCE(to_char(L.ADDRESS2),'')||COALESCE(to_char(L.ADDRESS1),'')),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U') AS DOM," +
-      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(to_char(L.POSTAL),''),5)||RPAD(COALESCE(to_char(L.CITY),''),31,' ')),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U') AS PLAZA," +
-      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(COALESCE(to_char(L.POSTAL),'')||COALESCE(to_char(L.CITY),'')),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U') AS PLA," +
-      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(to_char(R.DESCRIPTION),' '),36,' ')),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U') AS PROVINCIA," +
-      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(R.DESCRIPTION),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U') AS PROV," +
-      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(to_char(DP.DESCRIPTION),' '),36,' ')),'Á','A'),'É','E'),'Í','I'),'Ó','O'),'Ú','U') AS CONCEPTO" +
+      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(BP.NAME2,BP.NAME),36,' ')),'��','A'),'��','E'),'��','I'),'��','O'),'��','U') AS nombre," +
+      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(COALESCE(BP.NAME2,BP.NAME)),'��','A'),'��','E'),'��','I'),'��','O'),'��','U') AS NOM," +
+      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(to_char(L.ADDRESS1),'')||' '||COALESCE(to_char(L.ADDRESS2),''),36,' ')),'��','A'),'��','E'),'��','I'),'��','O'),'��','U') AS DOMICILIO," +
+      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(COALESCE(to_char(L.ADDRESS2),'')||COALESCE(to_char(L.ADDRESS1),'')),'��','A'),'��','E'),'��','I'),'��','O'),'��','U') AS DOM," +
+      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(to_char(L.POSTAL),''),5)||RPAD(COALESCE(to_char(L.CITY),''),31,' ')),'��','A'),'��','E'),'��','I'),'��','O'),'��','U') AS PLAZA," +
+      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(COALESCE(to_char(L.POSTAL),'')||COALESCE(to_char(L.CITY),'')),'��','A'),'��','E'),'��','I'),'��','O'),'��','U') AS PLA," +
+      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(to_char(R.DESCRIPTION),' '),36,' ')),'��','A'),'��','E'),'��','I'),'��','O'),'��','U') AS PROVINCIA," +
+      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(R.DESCRIPTION),'��','A'),'��','E'),'��','I'),'��','O'),'��','U') AS PROV," +
+      "             REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(RPAD(COALESCE(to_char(DP.DESCRIPTION),' '),36,' ')),'��','A'),'��','E'),'��','I'),'��','O'),'��','U') AS CONCEPTO" +
       "             FROM c_remittanceline S, C_DEBT_PAYMENT DP," +
       "                                  C_BPARTNER BP left join C_BP_BANKACCOUNT BP_A on BP.C_BPARTNER_ID = BP_A.C_BPARTNER_ID" +
       "                                  LEFT JOIN C_BPARTNER_LOCATION BP_L on BP.C_BPARTNER_ID = BP_L.C_BPARTNER_ID" +

@@ -83,8 +83,8 @@ public class Parameter extends BaseOBObject implements Traceable, ClientEnabled,
     public static final String PROPERTY_NUMCOLUMN = "numColumn";
     public static final String PROPERTY_ONCHANGEFUNCTION = "onChangeFunction";
     public static final String PROPERTY_TAB = "tab";
-    public static final String PROPERTY_DISPLAYEDROWS = "displayedRows";
     public static final String PROPERTY_SHOWINDESCRIPTION = "showInDescription";
+    public static final String PROPERTY_DISPLAYEDROWS = "displayedRows";
     public static final String PROPERTY_DISPLAYTITLE = "displayTitle";
     public static final String PROPERTY_PROPERTYPATH = "propertyPath";
     public static final String PROPERTY_ONGRIDLOADFUNCTION = "onGridLoadFunction";
@@ -100,8 +100,8 @@ public class Parameter extends BaseOBObject implements Traceable, ClientEnabled,
         setDefaultValue(PROPERTY_FIXED, false);
         setDefaultValue(PROPERTY_EVALUATEFIXEDVALUE, false);
         setDefaultValue(PROPERTY_STARTINNEWLINE, false);
-        setDefaultValue(PROPERTY_DISPLAYEDROWS, (long) 5);
         setDefaultValue(PROPERTY_SHOWINDESCRIPTION, false);
+        setDefaultValue(PROPERTY_DISPLAYEDROWS, (long) 5);
         setDefaultValue(PROPERTY_DISPLAYTITLE, true);
         setDefaultValue(PROPERTY_OBUIAPPPARAMETERTRLLIST, new ArrayList<Object>());
         setDefaultValue(PROPERTY_OBUIAPPPARAMETERVALUELIST, new ArrayList<Object>());
@@ -392,20 +392,20 @@ public class Parameter extends BaseOBObject implements Traceable, ClientEnabled,
         set(PROPERTY_TAB, tab);
     }
 
-    public Long getDisplayedRows() {
-        return (Long) get(PROPERTY_DISPLAYEDROWS);
-    }
-
-    public void setDisplayedRows(Long displayedRows) {
-        set(PROPERTY_DISPLAYEDROWS, displayedRows);
-    }
-
     public Boolean isShowInDescription() {
         return (Boolean) get(PROPERTY_SHOWINDESCRIPTION);
     }
 
     public void setShowInDescription(Boolean showInDescription) {
         set(PROPERTY_SHOWINDESCRIPTION, showInDescription);
+    }
+
+    public Long getDisplayedRows() {
+        return (Long) get(PROPERTY_DISPLAYEDROWS);
+    }
+
+    public void setDisplayedRows(Long displayedRows) {
+        set(PROPERTY_DISPLAYEDROWS, displayedRows);
     }
 
     public Boolean isDisplayTitle() {

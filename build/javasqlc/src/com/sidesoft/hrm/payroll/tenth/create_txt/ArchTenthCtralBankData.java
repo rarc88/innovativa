@@ -121,7 +121,7 @@ static Logger log4j = Logger.getLogger(ArchTenthCtralBankData.class);
       "                 when C_BP_BankAccount.bankaccounttype = 'C' then '01'" +
       "            end as bankaccounttype," +
       "            c_bpartner.name as employee," +
-      "            'REMUNERACIÓN MENSUAL' as description," +
+      "            'REMUNERACI��N MENSUAL' as description," +
       "            c_bpartner.taxid as ci" +
       "        from ssph_tenth_settlement" +
       "        join ssph_tenth_settlement_line on ssph_tenth_settlement.ssph_tenth_settlement_id = ssph_tenth_settlement_line.ssph_tenth_settlement_id" +

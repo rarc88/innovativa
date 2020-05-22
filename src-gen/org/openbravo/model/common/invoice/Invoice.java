@@ -185,8 +185,8 @@ public class Invoice extends BaseOBObject implements Traceable, ClientEnabled, O
     public static final String PROPERTY_SFBHASHCODE = "sfbHashCode";
     public static final String PROPERTY_SFBNOBUDGETABLE = "sFBNoBudgetable";
     public static final String PROPERTY_SSRELOCKDATE = "ssreLockdate";
-    public static final String PROPERTY_SFBBUDGETAREA = "sfbBudgetArea";
     public static final String PROPERTY_SIPCTAXEXPENSES = "sIPCTaxExpenses";
+    public static final String PROPERTY_SFBBUDGETAREA = "sfbBudgetArea";
     public static final String PROPERTY_SSRECBPARTNER = "ssreCBpartner";
     public static final String PROPERTY_SCNRISREFINV = "scnrIsrefInv";
     public static final String PROPERTY_SSFLBILLINGPERIODFROM = "ssflBillingPeriodFrom";
@@ -1026,20 +1026,20 @@ public class Invoice extends BaseOBObject implements Traceable, ClientEnabled, O
         set(PROPERTY_SSRELOCKDATE, ssreLockdate);
     }
 
-    public SFBBudgetArea getSfbBudgetArea() {
-        return (SFBBudgetArea) get(PROPERTY_SFBBUDGETAREA);
-    }
-
-    public void setSfbBudgetArea(SFBBudgetArea sfbBudgetArea) {
-        set(PROPERTY_SFBBUDGETAREA, sfbBudgetArea);
-    }
-
     public Boolean isSIPCTaxExpenses() {
         return (Boolean) get(PROPERTY_SIPCTAXEXPENSES);
     }
 
     public void setSIPCTaxExpenses(Boolean sIPCTaxExpenses) {
         set(PROPERTY_SIPCTAXEXPENSES, sIPCTaxExpenses);
+    }
+
+    public SFBBudgetArea getSfbBudgetArea() {
+        return (SFBBudgetArea) get(PROPERTY_SFBBUDGETAREA);
+    }
+
+    public void setSfbBudgetArea(SFBBudgetArea sfbBudgetArea) {
+        set(PROPERTY_SFBBUDGETAREA, sfbBudgetArea);
     }
 
     public BusinessPartner getSsreCBpartner() {

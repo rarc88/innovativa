@@ -195,7 +195,7 @@ static Logger log4j = Logger.getLogger(UtilitiesCSVData.class);
       "   join sspr_settlementline ssl on ss.sspr_settlement_id = ssl.sspr_settlement_id   " +
       "   join c_bpartner cbp on cbp.c_bpartner_id = ss.c_bpartner_id    " +
       "   where to_number(to_char(ss.movementdate,'yyyy')) = (select c_year.year from c_year where c_year_id = ?     " +
-      "    )  and ssl.sspr_concept_id in (select sspr_concept_id from sspr_benefit_dismissal where value in ('13TH','13a Remuneración'))    " +
+      "    )  and ssl.sspr_concept_id in (select sspr_concept_id from sspr_benefit_dismissal where value in ('13TH','13a Remuneraci��n'))    " +
       "  group by cbp.c_bpartner_id,cbp.name  " +
       ") liq_dt on liq_dt.c_bpartner_id = su.c_bpartner_id  " +
       "   left join ( " +
@@ -236,7 +236,7 @@ static Logger log4j = Logger.getLogger(UtilitiesCSVData.class);
       "   join sspr_settlementline ssl on ss.sspr_settlement_id = ssl.sspr_settlement_id  " +
       "   join c_bpartner cbp on cbp.c_bpartner_id = ss.c_bpartner_id    " +
       "   where to_number(to_char(ss.movementdate,'yyyy')) = (select c_year.year from c_year where c_year_id = ?      " +
-      "    )    and ssl.sspr_concept_id in (select sspr_concept_id from sspr_benefit_dismissal where value in ('14TH','14a Remuneración'))     " +
+      "    )    and ssl.sspr_concept_id in (select sspr_concept_id from sspr_benefit_dismissal where value in ('14TH','14a Remuneraci��n'))     " +
       "  group by cbp.c_bpartner_id,cbp.name  " +
       " ) liq_dc on liq_dc.c_bpartner_id = su.c_bpartner_id  " +
       "   left join (  " +

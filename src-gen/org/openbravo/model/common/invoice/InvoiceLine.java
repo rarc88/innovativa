@@ -137,8 +137,8 @@ public class InvoiceLine extends BaseOBObject implements Traceable, ClientEnable
     public static final String PROPERTY_NDDIMENSION = "ndDimension";
     public static final String PROPERTY_EXPLODE = "explode";
     public static final String PROPERTY_BOMPARENT = "bOMParent";
-    public static final String PROPERTY_SFBHASHCODE = "sfbHashCode";
     public static final String PROPERTY_SIPCTAXEXPENSES = "sIPCTaxExpenses";
+    public static final String PROPERTY_SFBHASHCODE = "sfbHashCode";
     public static final String PROPERTY_SSAMASSET = "ssamAsset";
     public static final String PROPERTY_MATCHLCCOSTS = "matchLCCosts";
     public static final String PROPERTY_SFBBUDGETCERTLINE = "sfbBudgetCertLine";
@@ -671,20 +671,20 @@ public class InvoiceLine extends BaseOBObject implements Traceable, ClientEnable
         set(PROPERTY_BOMPARENT, bOMParent);
     }
 
-    public String getSfbHashCode() {
-        return (String) get(PROPERTY_SFBHASHCODE);
-    }
-
-    public void setSfbHashCode(String sfbHashCode) {
-        set(PROPERTY_SFBHASHCODE, sfbHashCode);
-    }
-
     public Boolean isSIPCTaxExpenses() {
         return (Boolean) get(PROPERTY_SIPCTAXEXPENSES);
     }
 
     public void setSIPCTaxExpenses(Boolean sIPCTaxExpenses) {
         set(PROPERTY_SIPCTAXEXPENSES, sIPCTaxExpenses);
+    }
+
+    public String getSfbHashCode() {
+        return (String) get(PROPERTY_SFBHASHCODE);
+    }
+
+    public void setSfbHashCode(String sfbHashCode) {
+        set(PROPERTY_SFBHASHCODE, sfbHashCode);
     }
 
     public Boolean isSsamAsset() {

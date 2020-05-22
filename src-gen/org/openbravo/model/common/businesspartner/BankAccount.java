@@ -85,8 +85,8 @@ public class BankAccount extends BaseOBObject implements Traceable, ClientEnable
     public static final String PROPERTY_SSPRBANCO = "sSPRBanco";
     public static final String PROPERTY_SSFIBANKTRANSFER = "ssfiBanktransfer";
     public static final String PROPERTY_SSFICLOCATION = "ssfiCLocation";
-    public static final String PROPERTY_SSFIEXBANK = "ssfiExBank";
     public static final String PROPERTY_SSFLIBAN = "ssflIban";
+    public static final String PROPERTY_SSFIEXBANK = "ssfiExBank";
     public static final String PROPERTY_SSFIABA = "ssfiAba";
     public static final String PROPERTY_SSPRISPAYROLL = "ssprIspayroll";
     public static final String PROPERTY_SSWHTAXIDTYPE = "sswhTaxidtype";
@@ -417,20 +417,20 @@ public class BankAccount extends BaseOBObject implements Traceable, ClientEnable
         set(PROPERTY_SSFICLOCATION, ssfiCLocation);
     }
 
-    public String getSsfiExBank() {
-        return (String) get(PROPERTY_SSFIEXBANK);
-    }
-
-    public void setSsfiExBank(String ssfiExBank) {
-        set(PROPERTY_SSFIEXBANK, ssfiExBank);
-    }
-
     public String getSsflIban() {
         return (String) get(PROPERTY_SSFLIBAN);
     }
 
     public void setSsflIban(String ssflIban) {
         set(PROPERTY_SSFLIBAN, ssflIban);
+    }
+
+    public String getSsfiExBank() {
+        return (String) get(PROPERTY_SSFIEXBANK);
+    }
+
+    public void setSsfiExBank(String ssfiExBank) {
+        set(PROPERTY_SSFIEXBANK, ssfiExBank);
     }
 
     public String getSsfiAba() {

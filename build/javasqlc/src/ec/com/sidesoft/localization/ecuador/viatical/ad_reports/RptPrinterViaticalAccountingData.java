@@ -95,7 +95,7 @@ static Logger log4j = Logger.getLogger(RptPrinterViaticalAccountingData.class);
     strSql = strSql + 
       "			select" +
       "			i.ad_org_id as organizationid," +
-      "			'ASIENTO DE VIÁTICOS ' || i.documentno as documentno," +
+      "			'ASIENTO DE VI��TICOS ' || i.documentno as documentno," +
       "			i.description as description," +
       "			to_char(i.viaticaldate) as date1," +
       "			bp.name as partner," +

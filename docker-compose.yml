@@ -18,7 +18,6 @@ services:
     volumes:
       - ./:/opt/innovativa
     working_dir: /opt/innovativa
-    command: /bin/sh -c "./clean.sh && ant update.database compile.complete smartbuild"
     networks:
       - default
 

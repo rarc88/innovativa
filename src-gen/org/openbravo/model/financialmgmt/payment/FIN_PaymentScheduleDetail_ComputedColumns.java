@@ -38,8 +38,8 @@ public class FIN_PaymentScheduleDetail_ComputedColumns extends BaseOBObject impl
     public static final String PROPERTY_DUEDATE = "dueDate";
     public static final String PROPERTY_APRMFINANCIALACCOUNT = "aPRMFinancialAccount";
     public static final String PROPERTY_APRMPAYMENTMETHOD = "aPRMPaymentMethod";
-    public static final String PROPERTY_SSWSAMOUNTNEW = "sswsAmountNew";
     public static final String PROPERTY_SSWSWITHHOLDINGDATE = "sSWSWithholdingDate";
+    public static final String PROPERTY_SSWSAMOUNTNEW = "sswsAmountNew";
     public static final String PROPERTY_EXPECTED = "expected";
     public static final String PROPERTY_INVOICEAMOUNT = "invoiceAmount";
     public static final String PROPERTY_CLIENT = "client";
@@ -71,19 +71,19 @@ public class FIN_PaymentScheduleDetail_ComputedColumns extends BaseOBObject impl
     public void setAPRMPaymentMethod(FIN_PaymentMethod aPRMPaymentMethod) {
       set(PROPERTY_APRMPAYMENTMETHOD, aPRMPaymentMethod);
     }
-    public BigDecimal getSswsAmountNew() {
-      return (BigDecimal) get(PROPERTY_SSWSAMOUNTNEW);
-    }
-
-    public void setSswsAmountNew(BigDecimal sswsAmountNew) {
-      set(PROPERTY_SSWSAMOUNTNEW, sswsAmountNew);
-    }
     public Date getSSWSWithholdingDate() {
       return (Date) get(PROPERTY_SSWSWITHHOLDINGDATE);
     }
 
     public void setSSWSWithholdingDate(Date sSWSWithholdingDate) {
       set(PROPERTY_SSWSWITHHOLDINGDATE, sSWSWithholdingDate);
+    }
+    public BigDecimal getSswsAmountNew() {
+      return (BigDecimal) get(PROPERTY_SSWSAMOUNTNEW);
+    }
+
+    public void setSswsAmountNew(BigDecimal sswsAmountNew) {
+      set(PROPERTY_SSWSAMOUNTNEW, sswsAmountNew);
     }
     public BigDecimal getExpected() {
       return (BigDecimal) get(PROPERTY_EXPECTED);

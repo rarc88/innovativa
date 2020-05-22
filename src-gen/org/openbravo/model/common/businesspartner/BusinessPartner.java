@@ -402,8 +402,8 @@ public class BusinessPartner extends BaseOBObject implements Traceable, ClientEn
     public static final String PROPERTY_SSPRSEVERANCEFOUNDS = "ssprSeverancefounds";
     public static final String PROPERTY_SSPRCREATEPAYROLL = "ssprCreatePayroll";
     public static final String PROPERTY_SSPRLEVELED = "ssprLevelEd";
-    public static final String PROPERTY_SFPRISFPR = "sfprIsfpr";
     public static final String PROPERTY_SSFLRELACIONADO = "sSFLRelacionado";
+    public static final String PROPERTY_SFPRISFPR = "sfprIsfpr";
     public static final String PROPERTY_SFPRNODAYS = "sfprNodays";
     public static final String PROPERTY_SSFLADDITIONAL = "ssflAdditional";
     public static final String PROPERTY_SSHRDEPARTMENT = "sshrDepartment";
@@ -445,6 +445,8 @@ public class BusinessPartner extends BaseOBObject implements Traceable, ClientEn
     public static final String PROPERTY_SSPRESTABLISHMENTCODE = "ssprEstablishmentcode";
     public static final String PROPERTY_SSBPSFBBUDGETAREA = "ssbpSfbBudgetArea";
     public static final String PROPERTY_SBPCCLIENTTYPE = "sbpcClientType";
+    public static final String PROPERTY_SSFLISCHARTERER = "sSFLIsCharterer";
+    public static final String PROPERTY_SSWHCODETAXPAYER = "sswhCodetaxpayer";
     public static final String PROPERTY_SBPCAGE = "sbpcAge";
     public static final String PROPERTY_SBPCDATEBIRTH = "sbpcDatebirth";
     public static final String PROPERTY_SBPCDATEENTRY = "sbpcDateentry";
@@ -452,9 +454,7 @@ public class BusinessPartner extends BaseOBObject implements Traceable, ClientEn
     public static final String PROPERTY_SBPCEDUCATION = "sbpcEducation";
     public static final String PROPERTY_SBPCGENDER = "sbpcGender";
     public static final String PROPERTY_SSFIFOREIGN = "ssfiForeign";
-    public static final String PROPERTY_SSFLISCHARTERER = "sSFLIsCharterer";
     public static final String PROPERTY_SSFLISOWNER = "ssflIsowner";
-    public static final String PROPERTY_SSWHCODETAXPAYER = "sswhCodetaxpayer";
     public static final String PROPERTY_ADUSERLIST = "aDUserList";
     public static final String PROPERTY_ADUSEREMOPCRMREPORTSTOLIST = "aDUserEMOPCRMReportsToList";
     public static final String PROPERTY_APRMFINACCTRANSACTIONACCTVLIST = "aPRMFinAccTransactionAcctVList";
@@ -718,8 +718,8 @@ public class BusinessPartner extends BaseOBObject implements Traceable, ClientEn
         setDefaultValue(PROPERTY_SSPRRESERVEFUNDSCOMPANY, false);
         setDefaultValue(PROPERTY_SSPRSEVERANCEFOUNDS, false);
         setDefaultValue(PROPERTY_SSPRCREATEPAYROLL, true);
-        setDefaultValue(PROPERTY_SFPRISFPR, false);
         setDefaultValue(PROPERTY_SSFLRELACIONADO, false);
+        setDefaultValue(PROPERTY_SFPRISFPR, false);
         setDefaultValue(PROPERTY_SSPRISDISABLED, false);
         setDefaultValue(PROPERTY_SSPRISEXECUTIVE, false);
         setDefaultValue(PROPERTY_SSPRTHIRTEENTH, false);
@@ -729,8 +729,8 @@ public class BusinessPartner extends BaseOBObject implements Traceable, ClientEn
         setDefaultValue(PROPERTY_SSPREXTRAHOURS, false);
         setDefaultValue(PROPERTY_SSPRBONUSPUNCTUAL, false);
         setDefaultValue(PROPERTY_SSPRREPRESENTSDISABLED, false);
-        setDefaultValue(PROPERTY_SSFIFOREIGN, false);
         setDefaultValue(PROPERTY_SSFLISCHARTERER, false);
+        setDefaultValue(PROPERTY_SSFIFOREIGN, false);
         setDefaultValue(PROPERTY_SSFLISOWNER, false);
         setDefaultValue(PROPERTY_ADUSERLIST, new ArrayList<Object>());
         setDefaultValue(PROPERTY_ADUSEREMOPCRMREPORTSTOLIST, new ArrayList<Object>());
@@ -2226,20 +2226,20 @@ public class BusinessPartner extends BaseOBObject implements Traceable, ClientEn
         set(PROPERTY_SSPRLEVELED, ssprLevelEd);
     }
 
-    public Boolean isSfprIsfpr() {
-        return (Boolean) get(PROPERTY_SFPRISFPR);
-    }
-
-    public void setSfprIsfpr(Boolean sfprIsfpr) {
-        set(PROPERTY_SFPRISFPR, sfprIsfpr);
-    }
-
     public Boolean isSSFLRelacionado() {
         return (Boolean) get(PROPERTY_SSFLRELACIONADO);
     }
 
     public void setSSFLRelacionado(Boolean sSFLRelacionado) {
         set(PROPERTY_SSFLRELACIONADO, sSFLRelacionado);
+    }
+
+    public Boolean isSfprIsfpr() {
+        return (Boolean) get(PROPERTY_SFPRISFPR);
+    }
+
+    public void setSfprIsfpr(Boolean sfprIsfpr) {
+        set(PROPERTY_SFPRISFPR, sfprIsfpr);
     }
 
     public Long getSfprNodays() {
@@ -2570,6 +2570,22 @@ public class BusinessPartner extends BaseOBObject implements Traceable, ClientEn
         set(PROPERTY_SBPCCLIENTTYPE, sbpcClientType);
     }
 
+    public Boolean isSSFLIsCharterer() {
+        return (Boolean) get(PROPERTY_SSFLISCHARTERER);
+    }
+
+    public void setSSFLIsCharterer(Boolean sSFLIsCharterer) {
+        set(PROPERTY_SSFLISCHARTERER, sSFLIsCharterer);
+    }
+
+    public String getSswhCodetaxpayer() {
+        return (String) get(PROPERTY_SSWHCODETAXPAYER);
+    }
+
+    public void setSswhCodetaxpayer(String sswhCodetaxpayer) {
+        set(PROPERTY_SSWHCODETAXPAYER, sswhCodetaxpayer);
+    }
+
     public String getSbpcAge() {
         return (String) get(PROPERTY_SBPCAGE);
     }
@@ -2626,28 +2642,12 @@ public class BusinessPartner extends BaseOBObject implements Traceable, ClientEn
         set(PROPERTY_SSFIFOREIGN, ssfiForeign);
     }
 
-    public Boolean isSSFLIsCharterer() {
-        return (Boolean) get(PROPERTY_SSFLISCHARTERER);
-    }
-
-    public void setSSFLIsCharterer(Boolean sSFLIsCharterer) {
-        set(PROPERTY_SSFLISCHARTERER, sSFLIsCharterer);
-    }
-
     public Boolean isSsflIsowner() {
         return (Boolean) get(PROPERTY_SSFLISOWNER);
     }
 
     public void setSsflIsowner(Boolean ssflIsowner) {
         set(PROPERTY_SSFLISOWNER, ssflIsowner);
-    }
-
-    public String getSswhCodetaxpayer() {
-        return (String) get(PROPERTY_SSWHCODETAXPAYER);
-    }
-
-    public void setSswhCodetaxpayer(String sswhCodetaxpayer) {
-        set(PROPERTY_SSWHCODETAXPAYER, sswhCodetaxpayer);
     }
 
     @SuppressWarnings("unchecked")
